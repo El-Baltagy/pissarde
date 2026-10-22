@@ -99,21 +99,22 @@ class AttendanceRecordContentWidget extends StatelessWidget {
   }
 
   Widget _buildFilterChips() {
+    final filters = [
+      (label: 'الكل', isSelected: true),
+      (label: 'حاضر', isSelected: false),
+      (label: 'متأخر', isSelected: false),
+      (label: 'إجازة', isSelected: false),
+      (label: 'غياب', isSelected: false),
+    ];
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       reverse: true,
       child: Row(
-        children: [
-          _buildChip(label: 'الكل', isSelected: true),
-          8.horizontalSpace,
-          _buildChip(label: 'حاضر', isSelected: false),
-          8.horizontalSpace,
-          _buildChip(label: 'متأخر', isSelected: false),
-          8.horizontalSpace,
-          _buildChip(label: 'إجازة', isSelected: false),
-          8.horizontalSpace,
-          _buildChip(label: 'غياب', isSelected: false),
-        ],
+        spacing: AppSizes.s8,
+        children: filters
+            .map((item) => _buildChip(label: item.label, isSelected: item.isSelected))
+            .toList(),
       ),
     );
   }

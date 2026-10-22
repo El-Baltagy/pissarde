@@ -140,7 +140,44 @@ Row(children: [
 
 **Example**:
 ```dart
-// ✅ CORRECT — uniform gap via spacing property
+// ✅ CORRECT — uniform gap via spacing property + list mapping
+Row(
+  spacing: AppSizes.s8,
+  children: [
+    'الكل',
+    'حاضر',
+    'متأخر',
+    'غياب',
+  ].map((chip) => _buildChip(chip)).toList(),
+)
+
+// ❌ WRONG — manual SizedBox between each child and repeating widget calls
+Row(children: [
+  _buildChip('الكل'),
+  8.horizontalSpace,
+  _buildChip('حاضر'),
+  8.horizontalSpace,
+  _buildChip('متأخر'),
+  8.horizontalSpace,
+  _buildChip('غياب'),
+])
+```
+
+---
+
+## 14. 🔁 DRY List / Component Mapping (Don't Repeat Widgets)
+
+> [!IMPORTANT]
+> **NEVER** rewrite/duplicate the same widget multiple times with different data inside a `Row`, `Column`, or `Wrap`. Always iterate or map over a collection using `.map().toList()` (or collection `for`).
+
+**Rules**:
+- Group repetitive data items into a `List` (of Strings, Records, Models, or Enums).
+- Map the list to widgets using `.map((item) => ...).toList()`.
+- Avoid manually copy-pasting the same widget call with different hardcoded arguments.
+
+**Example**:
+```dart
+// ❌ WRONG — Duplicating same widget with different data
 Row(
   spacing: AppSizes.s8,
   children: [
@@ -151,14 +188,14 @@ Row(
   ],
 )
 
-// ❌ WRONG — manual SizedBox between each child
-Row(children: [
-  _buildChip('الكل'),
-  8.horizontalSpace,
-  _buildChip('حاضر'),
-  8.horizontalSpace,
-  _buildChip('متأخر'),
-  8.horizontalSpace,
-  _buildChip('غياب'),
-])
+// ✅ CORRECT — Map collection to widgets
+Row(
+  spacing: AppSizes.s8,
+  children: [
+    'الكل',
+    'حاضر',
+    'متأخر',
+    'غياب',
+  ].map((chip) => _buildChip(chip)).toList(),
+)
 ```

@@ -24,21 +24,22 @@ class PolicyNoticeCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          /// RTL-first: icon (right) → title (left)
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const Icon(
+                Icons.info_outline_rounded,
+                color: AppColors.policyCardText,
+                size: AppSizes.s18,
+              ),
+              6.horizontalSpace,
               Text(
                 'policy_title'.tr(),
                 style: AppTextStyles.font13Medium.copyWith(
                   color: AppColors.policyCardText,
                   fontWeight: FontWeight.bold,
                 ),
-              ),
-              6.horizontalSpace,
-              const Icon(
-                Icons.info_outline_rounded,
-                color: AppColors.policyCardText,
-                size: AppSizes.s18,
               ),
             ],
           ),
@@ -49,7 +50,7 @@ class PolicyNoticeCardWidget extends StatelessWidget {
               color: AppColors.policyCardText,
               height: 1.5,
             ),
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.start,
           ),
         ],
       ),

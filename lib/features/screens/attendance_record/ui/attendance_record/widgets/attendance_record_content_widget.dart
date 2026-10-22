@@ -61,11 +61,24 @@ class AttendanceRecordContentWidget extends StatelessWidget {
           width: AppSizes.s1,
         ),
       ),
+      /// RTL-first: icon (right) → hours text (left)
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Container(
+            padding: const EdgeInsets.all(AppPadding.p10),
+            decoration: BoxDecoration(
+              color: AppColors.roleSwitchBg,
+              borderRadius: BorderRadius.circular(AppSizes.r12),
+            ),
+            child: const Icon(
+              Icons.calendar_month_outlined,
+              color: AppColors.headerBackground,
+              size: AppSizes.s24,
+            ),
+          ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 'ساعات الحضور هذا الشهر',
@@ -79,18 +92,6 @@ class AttendanceRecordContentWidget extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          Container(
-            padding: const EdgeInsets.all(AppPadding.p10),
-            decoration: BoxDecoration(
-              color: AppColors.roleSwitchBg,
-              borderRadius: BorderRadius.circular(AppSizes.r12),
-            ),
-            child: const Icon(
-              Icons.calendar_month_outlined,
-              color: AppColors.headerBackground,
-              size: AppSizes.s24,
-            ),
           ),
         ],
       ),
@@ -154,6 +155,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
           width: AppSizes.s1,
         ),
       ),
+      /// RTL-first: date+times (right) → status badge (left)
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

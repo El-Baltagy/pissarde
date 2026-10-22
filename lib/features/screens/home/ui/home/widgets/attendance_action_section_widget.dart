@@ -60,20 +60,21 @@ class AttendanceActionSectionWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppSizes.r14),
         ),
       ),
+      /// RTL-first: text (right) → icon (left)
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.logout_rounded,
-            color: AppColors.roleSwitchSelectedBg,
-            size: AppSizes.s20,
-          ),
-          8.horizontalSpace,
           Text(
             'btn_check_out_gps'.tr(),
             style: AppTextStyles.font16Bold.copyWith(
               color: AppColors.roleSwitchSelectedBg,
             ),
+          ),
+          8.horizontalSpace,
+          const Icon(
+            Icons.logout_rounded,
+            color: AppColors.roleSwitchSelectedBg,
+            size: AppSizes.s20,
           ),
         ],
       ),
@@ -85,8 +86,8 @@ class AttendanceActionSectionWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildQuickLink(
-          icon: Icons.access_time_rounded,
-          labelKey: 'btn_request_permission',
+          icon: Icons.description_outlined,
+          labelKey: 'btn_request_correction',
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppPadding.p12),
@@ -98,8 +99,8 @@ class AttendanceActionSectionWidget extends StatelessWidget {
           ),
         ),
         _buildQuickLink(
-          icon: Icons.description_outlined,
-          labelKey: 'btn_request_correction',
+          icon: Icons.access_time_rounded,
+          labelKey: 'btn_request_permission',
         ),
       ],
     );
@@ -111,20 +112,21 @@ class AttendanceActionSectionWidget extends StatelessWidget {
   }) {
     return InkWell(
       onTap: () {},
+      /// RTL-first inside each link: icon (right) → text (left)
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Icon(
+            icon,
+            color: AppColors.headerBackground,
+            size: AppSizes.s16,
+          ),
+          6.horizontalSpace,
           Text(
             labelKey.tr(),
             style: AppTextStyles.font12Medium.copyWith(
               color: AppColors.headerBackground,
             ),
-          ),
-          6.horizontalSpace,
-          Icon(
-            icon,
-            color: AppColors.headerBackground,
-            size: AppSizes.s16,
           ),
         ],
       ),

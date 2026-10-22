@@ -42,9 +42,42 @@ class GpsVerificationCardWidget extends StatelessWidget {
   }
 
   Widget _buildHeaderRow() {
+    /// RTL-first: icon+title group (right) → badge (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppPadding.p8),
+              decoration: BoxDecoration(
+                color: AppColors.gpsTagBg,
+                borderRadius: BorderRadius.circular(AppSizes.r12),
+              ),
+              child: const Icon(
+                Icons.location_on_rounded,
+                color: AppColors.onlineGreen,
+                size: AppSizes.s20,
+              ),
+            ),
+            10.horizontalSpace,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'gps_verification_title'.tr(),
+                  style: AppTextStyles.font14Bold,
+                ),
+                2.verticalSpace,
+                Text(
+                  'gps_branch_location'.tr(),
+                  style: AppTextStyles.font11Regular,
+                ),
+              ],
+            ),
+          ],
+        ),
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: AppPadding.p10,
@@ -61,38 +94,6 @@ class GpsVerificationCardWidget extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'gps_verification_title'.tr(),
-                  style: AppTextStyles.font14Bold,
-                ),
-                2.verticalSpace,
-                Text(
-                  'gps_branch_location'.tr(),
-                  style: AppTextStyles.font11Regular,
-                ),
-              ],
-            ),
-            10.horizontalSpace,
-            Container(
-              padding: const EdgeInsets.all(AppPadding.p8),
-              decoration: BoxDecoration(
-                color: AppColors.gpsTagBg,
-                borderRadius: BorderRadius.circular(AppSizes.r12),
-              ),
-              child: const Icon(
-                Icons.location_on_rounded,
-                color: AppColors.onlineGreen,
-                size: AppSizes.s20,
-              ),
-            ),
-          ],
         ),
       ],
     );
@@ -133,9 +134,9 @@ class GpsVerificationCardWidget extends StatelessWidget {
               size: AppSizes.s20,
             ),
           ),
-          // User position pin
-          Positioned(
-            right: AppSizes.s28,
+          // User position pin — use PositionedDirectional so it mirrors in LTR
+          PositionedDirectional(
+            end: AppSizes.s28,
             top: AppSizes.s24,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -172,24 +173,24 @@ class GpsVerificationCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          // GPS accuracy badge at bottom right
-          Positioned(
+          // GPS accuracy badge — use PositionedDirectional
+          PositionedDirectional(
             bottom: AppSizes.s8,
-            right: AppSizes.s12,
+            start: AppSizes.s12,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const Icon(
+                  Icons.navigation_rounded,
+                  color: AppColors.gpsRadarIndicator,
+                  size: AppSizes.s12,
+                ),
+                4.horizontalSpace,
                 Text(
                   'gps_accuracy'.tr(),
                   style: AppTextStyles.font10Regular.copyWith(
                     color: AppColors.gpsRadarIndicator,
                   ),
-                ),
-                4.horizontalSpace,
-                const Icon(
-                  Icons.navigation_rounded,
-                  color: AppColors.gpsRadarIndicator,
-                  size: AppSizes.s12,
                 ),
               ],
             ),
@@ -200,27 +201,28 @@ class GpsVerificationCardWidget extends StatelessWidget {
   }
 
   Widget _buildDistanceFooter() {
+    /// RTL-first: verified icon+range (right) → current distance (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'gps_current_distance'.tr(),
-          style: AppTextStyles.font12SemiBold,
-        ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'gps_allowed_range'.tr(),
-              style: AppTextStyles.font12Medium,
-            ),
-            6.horizontalSpace,
             const Icon(
               Icons.verified_user_outlined,
               color: AppColors.onlineGreen,
               size: AppSizes.s16,
             ),
+            6.horizontalSpace,
+            Text(
+              'gps_allowed_range'.tr(),
+              style: AppTextStyles.font12Medium,
+            ),
           ],
+        ),
+        Text(
+          'gps_current_distance'.tr(),
+          style: AppTextStyles.font12SemiBold,
         ),
       ],
     );

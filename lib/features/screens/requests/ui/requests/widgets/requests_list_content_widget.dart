@@ -55,6 +55,7 @@ class RequestsListContentWidget extends StatelessWidget {
         color: AppColors.headerBackground,
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
+      /// RTL-first: text block (right) → button (left)
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -122,8 +123,9 @@ class RequestsListContentWidget extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// RTL-first: title (right) → status badge (left)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -155,13 +157,13 @@ class RequestsListContentWidget extends StatelessWidget {
           Text(
             descKey.tr(),
             style: AppTextStyles.font11Regular,
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.start,
           ),
           6.verticalSpace,
           Text(
             dateKey.tr(),
             style: AppTextStyles.font10Regular,
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.start,
           ),
         ],
       ),

@@ -42,9 +42,42 @@ class BranchStatusCardWidget extends StatelessWidget {
   }
 
   Widget _buildHeaderRow() {
+    /// RTL-first: icon+title group (right) → badge (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppPadding.p8),
+              decoration: BoxDecoration(
+                color: AppColors.roleSwitchBg,
+                borderRadius: BorderRadius.circular(AppSizes.r12),
+              ),
+              child: const Icon(
+                Icons.groups_rounded,
+                color: AppColors.headerBackground,
+                size: AppSizes.s20,
+              ),
+            ),
+            10.horizontalSpace,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'branch_status_title'.tr(),
+                  style: AppTextStyles.font14Bold,
+                ),
+                2.verticalSpace,
+                Text(
+                  'branch_total_employees'.tr(),
+                  style: AppTextStyles.font11Regular,
+                ),
+              ],
+            ),
+          ],
+        ),
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: AppPadding.p10,
@@ -62,57 +95,19 @@ class BranchStatusCardWidget extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'branch_status_title'.tr(),
-                  style: AppTextStyles.font14Bold,
-                ),
-                2.verticalSpace,
-                Text(
-                  'branch_total_employees'.tr(),
-                  style: AppTextStyles.font11Regular,
-                ),
-              ],
-            ),
-            10.horizontalSpace,
-            Container(
-              padding: const EdgeInsets.all(AppPadding.p8),
-              decoration: BoxDecoration(
-                color: AppColors.roleSwitchBg,
-                borderRadius: BorderRadius.circular(AppSizes.r12),
-              ),
-              child: const Icon(
-                Icons.groups_rounded,
-                color: AppColors.headerBackground,
-                size: AppSizes.s20,
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }
 
   Widget _buildStatusMetricsRow() {
+    /// RTL-first: present → late → absent → leave
     return Row(
       children: [
         _buildMetricBox(
-          count: '2',
-          labelKey: 'status_leave',
-          bgColor: AppColors.statusLeaveBg,
-          textColor: AppColors.statusLeaveText,
-        ),
-        8.horizontalSpace,
-        _buildMetricBox(
-          count: '3',
-          labelKey: 'status_absent',
-          bgColor: AppColors.statusAbsentBg,
-          textColor: AppColors.statusAbsentText,
+          count: '38',
+          labelKey: 'status_present',
+          bgColor: AppColors.statusPresentBg,
+          textColor: AppColors.statusPresentText,
         ),
         8.horizontalSpace,
         _buildMetricBox(
@@ -123,10 +118,17 @@ class BranchStatusCardWidget extends StatelessWidget {
         ),
         8.horizontalSpace,
         _buildMetricBox(
-          count: '38',
-          labelKey: 'status_present',
-          bgColor: AppColors.statusPresentBg,
-          textColor: AppColors.statusPresentText,
+          count: '3',
+          labelKey: 'status_absent',
+          bgColor: AppColors.statusAbsentBg,
+          textColor: AppColors.statusAbsentText,
+        ),
+        8.horizontalSpace,
+        _buildMetricBox(
+          count: '2',
+          labelKey: 'status_leave',
+          bgColor: AppColors.statusLeaveBg,
+          textColor: AppColors.statusLeaveText,
         ),
       ],
     );
@@ -167,32 +169,33 @@ class BranchStatusCardWidget extends StatelessWidget {
   }
 
   Widget _buildPendingApprovalNotice() {
+    /// RTL-first: warning group (right) → review link (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'review_requests'.tr(),
-          style: AppTextStyles.font12SemiBold.copyWith(
-            color: AppColors.headerBackground,
-            decoration: TextDecoration.underline,
-          ),
-        ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.statusLateText,
+              size: AppSizes.s18,
+            ),
+            6.horizontalSpace,
             Text(
               'pending_fingerprint_requests'.tr(),
               style: AppTextStyles.font12Medium.copyWith(
                 color: AppColors.alertWarningText,
               ),
             ),
-            6.horizontalSpace,
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.statusLateText,
-              size: AppSizes.s18,
-            ),
           ],
+        ),
+        Text(
+          'review_requests'.tr(),
+          style: AppTextStyles.font12SemiBold.copyWith(
+            color: AppColors.headerBackground,
+            decoration: TextDecoration.underline,
+          ),
         ),
       ],
     );

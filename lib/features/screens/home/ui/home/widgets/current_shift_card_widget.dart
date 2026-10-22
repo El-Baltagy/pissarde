@@ -44,28 +44,21 @@ class CurrentShiftCardWidget extends StatelessWidget {
   }
 
   Widget _buildShiftHeaderRow() {
+    /// RTL-first: shift name+icon (right) → hours (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'shift_hours_label'.tr(),
-              style: AppTextStyles.font11Regular,
-            ),
-            2.verticalSpace,
-            Text(
-              'shift_hours_time'.tr(),
-              style: AppTextStyles.font14Bold,
-            ),
-          ],
-        ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const Icon(
+              Icons.storefront_rounded,
+              color: AppColors.headerBackground,
+              size: AppSizes.s20,
+            ),
+            8.horizontalSpace,
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'current_shift_label'.tr(),
@@ -80,11 +73,19 @@ class CurrentShiftCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            8.horizontalSpace,
-            const Icon(
-              Icons.storefront_rounded,
-              color: AppColors.headerBackground,
-              size: AppSizes.s20,
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              'shift_hours_label'.tr(),
+              style: AppTextStyles.font11Regular,
+            ),
+            2.verticalSpace,
+            Text(
+              'shift_hours_time'.tr(),
+              style: AppTextStyles.font14Bold,
             ),
           ],
         ),
@@ -109,6 +110,25 @@ class CurrentShiftCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              /// RTL-first: status dot + text (right) → badge (left)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: AppSizes.s8,
+                    height: AppSizes.s8,
+                    decoration: const BoxDecoration(
+                      color: AppColors.statusLateText,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  6.horizontalSpace,
+                  Text(
+                    'shift_status_late_desc'.tr(),
+                    style: AppTextStyles.font14Bold,
+                  ),
+                ],
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppPadding.p8,
@@ -126,29 +146,11 @@ class CurrentShiftCardWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'shift_status_late_desc'.tr(),
-                    style: AppTextStyles.font14Bold,
-                  ),
-                  6.horizontalSpace,
-                  Container(
-                    width: AppSizes.s8,
-                    height: AppSizes.s8,
-                    decoration: const BoxDecoration(
-                      color: AppColors.statusLateText,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
           6.verticalSpace,
           Align(
-            alignment: Alignment.centerRight,
+            alignment: AlignmentDirectional.centerStart,
             child: Text(
               'delay_explanation'.tr(),
               style: AppTextStyles.font12Medium.copyWith(
@@ -162,11 +164,12 @@ class CurrentShiftCardWidget extends StatelessWidget {
   }
 
   Widget _buildShiftMetricsRow() {
+    /// RTL-first: check-in (right) → departure → work hours (left)
     return Row(
       children: [
         _buildMetricBox(
-          label: 'work_hours_today_label'.tr(),
-          value: 'work_hours_today_val'.tr(),
+          label: 'check_in_time_label'.tr(),
+          value: 'check_in_time_val'.tr(),
         ),
         8.horizontalSpace,
         _buildMetricBox(
@@ -175,8 +178,8 @@ class CurrentShiftCardWidget extends StatelessWidget {
         ),
         8.horizontalSpace,
         _buildMetricBox(
-          label: 'check_in_time_label'.tr(),
-          value: 'check_in_time_val'.tr(),
+          label: 'work_hours_today_label'.tr(),
+          value: 'work_hours_today_val'.tr(),
         ),
       ],
     );
@@ -227,13 +230,14 @@ class CurrentShiftCardWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '65%',
-              style: AppTextStyles.font12SemiBold,
-            ),
+            /// LTR-end / RTL-start: percentage
             Text(
               'daily_hours_completion'.tr(),
               style: AppTextStyles.font11Regular,
+            ),
+            Text(
+              '65%',
+              style: AppTextStyles.font12SemiBold,
             ),
           ],
         ),

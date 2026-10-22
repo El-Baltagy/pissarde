@@ -40,14 +40,16 @@ class AttendanceHeaderWidget extends StatelessWidget {
     );
   }
 
+  /// Row order (RTL-first): avatar → user details → spacer → notification
+  /// Flutter reverses this in LTR so it becomes: notification → spacer → user details → avatar
   Widget _buildUserInfoRow() {
     return Row(
       children: [
-        _buildNotificationButton(),
-        const Spacer(),
-        _buildUserDetails(),
-        12.horizontalSpace,
         _buildAvatar(),
+        12.horizontalSpace,
+        _buildUserDetails(),
+        const Spacer(),
+        _buildNotificationButton(),
       ],
     );
   }
@@ -73,9 +75,9 @@ class AttendanceHeaderWidget extends StatelessWidget {
             size: AppSizes.s32,
           ),
         ),
-        Positioned(
+        PositionedDirectional(
           bottom: AppSizes.s0,
-          right: AppSizes.s0,
+          end: AppSizes.s0,
           child: Container(
             width: AppSizes.s12,
             height: AppSizes.s12,
@@ -95,12 +97,20 @@ class AttendanceHeaderWidget extends StatelessWidget {
 
   Widget _buildUserDetails() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        /// Row (RTL-first): name → job badge
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text(
+              'user_name'.tr(),
+              style: AppTextStyles.font16Bold.copyWith(
+                color: AppColors.roleSwitchSelectedBg,
+              ),
+            ),
+            8.horizontalSpace,
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppPadding.p8,
@@ -117,16 +127,10 @@ class AttendanceHeaderWidget extends StatelessWidget {
                 ),
               ),
             ),
-            8.horizontalSpace,
-            Text(
-              'user_name'.tr(),
-              style: AppTextStyles.font16Bold.copyWith(
-                color: AppColors.roleSwitchSelectedBg,
-              ),
-            ),
           ],
         ),
         4.verticalSpace,
+        /// Row (RTL-first): branch text → building icon
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -165,9 +169,9 @@ class AttendanceHeaderWidget extends StatelessWidget {
             size: AppSizes.s20,
           ),
         ),
-        Positioned(
+        PositionedDirectional(
           top: -AppSizes.s4,
-          right: -AppSizes.s4,
+          end: -AppSizes.s4,
           child: Container(
             padding: const EdgeInsets.all(AppPadding.p4),
             decoration: const BoxDecoration(
@@ -199,35 +203,37 @@ class AttendanceHeaderWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          /// LTR side: date (icon then text — reversed for LTR)
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
-                Icons.access_time_rounded,
+                Icons.calendar_month_outlined,
                 color: AppColors.roleSwitchSelectedBg,
                 size: AppSizes.s16,
               ),
               6.horizontalSpace,
-              Text(
-                'current_time'.tr(),
-                style: AppTextStyles.font12Medium.copyWith(
-                  color: AppColors.roleSwitchSelectedBg,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
               Text(
                 'current_date'.tr(),
                 style: AppTextStyles.font12Medium.copyWith(
                   color: AppColors.roleSwitchSelectedBg,
                 ),
               ),
+            ],
+          ),
+          /// RTL side: time (text then icon)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'current_time'.tr(),
+                style: AppTextStyles.font12Medium.copyWith(
+                  color: AppColors.roleSwitchSelectedBg,
+                ),
+              ),
               6.horizontalSpace,
               const Icon(
-                Icons.calendar_month_outlined,
+                Icons.access_time_rounded,
                 color: AppColors.roleSwitchSelectedBg,
                 size: AppSizes.s16,
               ),

@@ -56,29 +56,30 @@ class RecentRequestsCardWidget extends StatelessWidget {
   }
 
   Widget _buildHeaderRow() {
+    /// RTL-first: icon+title (right) → view all (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'view_all'.tr(),
-          style: AppTextStyles.font12SemiBold.copyWith(
-            color: AppColors.headerBackground,
-          ),
-        ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'recent_requests_title'.tr(),
-              style: AppTextStyles.font14Bold,
-            ),
-            8.horizontalSpace,
             const Icon(
               Icons.assignment_outlined,
               color: AppColors.headerBackground,
               size: AppSizes.s20,
             ),
+            8.horizontalSpace,
+            Text(
+              'recent_requests_title'.tr(),
+              style: AppTextStyles.font14Bold,
+            ),
           ],
+        ),
+        Text(
+          'view_all'.tr(),
+          style: AppTextStyles.font12SemiBold.copyWith(
+            color: AppColors.headerBackground,
+          ),
         ),
       ],
     );
@@ -103,8 +104,9 @@ class RecentRequestsCardWidget extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// RTL-first: title (right) → status badge (left)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -136,13 +138,13 @@ class RecentRequestsCardWidget extends StatelessWidget {
           Text(
             descKey.tr(),
             style: AppTextStyles.font11Regular,
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.start,
           ),
           6.verticalSpace,
           Text(
             dateKey.tr(),
             style: AppTextStyles.font10Regular,
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.start,
           ),
         ],
       ),

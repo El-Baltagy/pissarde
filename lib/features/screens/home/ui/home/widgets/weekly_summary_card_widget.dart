@@ -52,40 +52,42 @@ class WeeklySummaryCardWidget extends StatelessWidget {
   }
 
   Widget _buildHeaderRow() {
+    /// RTL-first: icon+title (right) → subtitle (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'current_week_label'.tr(),
-          style: AppTextStyles.font11Regular,
-        ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'weekly_summary_title'.tr(),
-              style: AppTextStyles.font14Bold,
-            ),
-            8.horizontalSpace,
             const Icon(
               Icons.bar_chart_rounded,
               color: AppColors.headerBackground,
               size: AppSizes.s20,
             ),
+            8.horizontalSpace,
+            Text(
+              'weekly_summary_title'.tr(),
+              style: AppTextStyles.font14Bold,
+            ),
           ],
+        ),
+        Text(
+          'current_week_label'.tr(),
+          style: AppTextStyles.font11Regular,
         ),
       ],
     );
   }
 
   Widget _buildDaysRow() {
+    /// RTL-first: present → delayed → absent
     return Row(
       children: [
         _buildDayBox(
-          count: '0',
-          labelKey: 'days_absent',
-          bgColor: AppColors.statusAbsentBg,
-          textColor: AppColors.statusAbsentText,
+          count: '4',
+          labelKey: 'days_present',
+          bgColor: AppColors.statusPresentBg,
+          textColor: AppColors.statusPresentText,
         ),
         10.horizontalSpace,
         _buildDayBox(
@@ -96,10 +98,10 @@ class WeeklySummaryCardWidget extends StatelessWidget {
         ),
         10.horizontalSpace,
         _buildDayBox(
-          count: '4',
-          labelKey: 'days_present',
-          bgColor: AppColors.statusPresentBg,
-          textColor: AppColors.statusPresentText,
+          count: '0',
+          labelKey: 'days_absent',
+          bgColor: AppColors.statusAbsentBg,
+          textColor: AppColors.statusAbsentText,
         ),
       ],
     );
@@ -144,19 +146,20 @@ class WeeklySummaryCardWidget extends StatelessWidget {
     required String valueKey,
     required Color valueColor,
   }) {
+    /// RTL-first: value (right) → label (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Text(
+          labelKey.tr(),
+          style: AppTextStyles.font12Regular,
+        ),
         Text(
           valueKey.tr(),
           style: AppTextStyles.font13Medium.copyWith(
             color: valueColor,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        Text(
-          labelKey.tr(),
-          style: AppTextStyles.font12Regular,
         ),
       ],
     );

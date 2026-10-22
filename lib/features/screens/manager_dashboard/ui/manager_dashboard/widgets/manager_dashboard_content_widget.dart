@@ -32,7 +32,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'لوحة تحكم مدير الفرع',
@@ -70,6 +70,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
   }
 
   Widget _buildQuickStatsGrid() {
+    /// RTL-first: pending requests (right) → total employees (left)
     return Row(
       children: [
         _buildStatCard(
@@ -106,7 +107,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppSizes.r14),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(icon, color: color, size: AppSizes.s24),
             8.verticalSpace,
@@ -137,7 +138,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'حضور الأقسام اليوم',
@@ -154,6 +155,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
     );
   }
 
+  /// RTL-first: dept name (right) → status (left)
   Widget _buildDeptRow(String dept, String status, Color statusColor) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

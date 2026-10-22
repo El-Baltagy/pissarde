@@ -25,11 +25,12 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
       child: Row(
+        /// RTL-first: employee (right) → branch manager → hr (left)
         children: [
           _buildRoleItem(
-            index: 2,
-            icon: Icons.shield_outlined,
-            labelKey: 'role_hr',
+            index: 0,
+            icon: Icons.person_outline_rounded,
+            labelKey: 'role_employee_view',
           ),
           4.horizontalSpace,
           _buildRoleItem(
@@ -39,9 +40,9 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
           ),
           4.horizontalSpace,
           _buildRoleItem(
-            index: 0,
-            icon: Icons.person_outline_rounded,
-            labelKey: 'role_employee_view',
+            index: 2,
+            icon: Icons.shield_outlined,
+            labelKey: 'role_hr',
           ),
         ],
       ),
@@ -73,9 +74,18 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
                   ]
                 : null,
           ),
+          /// RTL-first inside each pill: icon (right) → text (left)
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                icon,
+                size: AppSizes.s18,
+                color: isSelected
+                    ? AppColors.roleSwitchSelectedText
+                    : AppColors.roleSwitchUnselectedText,
+              ),
+              6.horizontalSpace,
               Text(
                 labelKey.tr(),
                 style: isSelected
@@ -86,14 +96,6 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
                     : AppTextStyles.font13Regular.copyWith(
                         color: AppColors.roleSwitchUnselectedText,
                       ),
-              ),
-              6.horizontalSpace,
-              Icon(
-                icon,
-                size: AppSizes.s18,
-                color: isSelected
-                    ? AppColors.roleSwitchSelectedText
-                    : AppColors.roleSwitchUnselectedText,
               ),
             ],
           ),

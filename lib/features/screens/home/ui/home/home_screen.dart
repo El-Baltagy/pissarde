@@ -44,52 +44,53 @@ class _HomePageState extends HomePageBaseState {
         backgroundColor: AppColors.lightSurface,
         body: SingleChildScrollView(
           child: Column(
+            spacing:16 ,
             children: [
               Semantics(
                 label: 'Attendance Header Section',
                 child: const AttendanceHeaderWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Role Selector Switch',
                 child: const RoleSelectorWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Branch Status Overview',
                 child: const BranchStatusCardWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Current Shift Details',
                 child: const CurrentShiftCardWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'GPS Geolocation Verification',
                 child: const GpsVerificationCardWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Check Out Action Section',
                 child: const AttendanceActionSectionWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Weekly Performance Summary',
                 child: const WeeklySummaryCardWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Recent Requests and Alerts',
                 child: const RecentRequestsCardWidget(),
               ),
-              16.verticalSpace,
+
               Semantics(
                 label: 'Attendance and Delay Policy',
                 child: const PolicyNoticeCardWidget(),
               ),
-              24.verticalSpace,
+              8.verticalSpace,
             ],
           ),
         ),

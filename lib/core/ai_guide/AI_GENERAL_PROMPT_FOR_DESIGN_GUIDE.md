@@ -55,10 +55,11 @@ When building a screen, you must follow the `AutoRouteWrapper` pattern as seen i
 - Colors: Use `AppColors` ONLY.
 - Typography: ALWAYS use `AppTextStyles` from `lib/core/theming/app_text_styles.dart` with `.copyWith()` for minor adjustments.
 
-- Sizing :NEVER use raw `SizedBox` for vertical or horizontal spacing.
-- **Extensions**: Use the custom extensions from `lib/core/extension/double.dart`:
-  - *Vertical Space*: `10.verticalSpace`
-  - *Horizontal Space*: `10.horizontalSpace`
+- Sizing: NEVER use raw `SizedBox` for vertical or horizontal spacing.
+  - **Row / Column Spacing First**: As soon as possible, when you have multiple items inside a `Row` or `Column` with a separator (e.g., 10 items with a 10 separator), you can easily do it if there are little spacers: avoid adding a `SizedBox` with width/height 10 between each item and instead use `spacing: 10` (or `spacing: AppSizes.s10`) directly on the `Row` or `Column`.
+  - **Extensions**: For non-uniform or one-off gaps between widgets outside of Row/Column spacing, use the custom extensions from `lib/core/extension/double.dart`:
+    - *Vertical Space*: `10.verticalSpace`
+    - *Horizontal Space*: `10.horizontalSpace`
 
 - Padding & Sizes: 
   - Use constant values for all Padding, Margins, and fixed Sizes. 
@@ -128,8 +129,9 @@ Row(children: [
 
 ## 13. 📐 Row / Column Spacing (No SizedBox Separators)
 
-> [!IMPORTANT]
-> **NEVER** add individual `SizedBox` / `.horizontalSpace` / `.verticalSpace` between every item in a `Row` or `Column` as separators. Use the built-in `spacing` property instead.
+> [!TIP]
+> **As soon as possible**, avoid adding individual `SizedBox` / `.horizontalSpace` / `.verticalSpace` between items in a `Row` or `Column` as separators. You can easily do it using `spacing` if there are little spacers.
+> For example: if you have 10 items inside a `Row` and the separator is 10, don't add a `SizedBox` with `width: 10` between them. Instead, add `spacing: 10` (or `spacing: AppSizes.s10`) directly to the `Row`. Use the built-in `spacing` property on `Row` and `Column`.
 
 **Rules**:
 - Use `Row(spacing: AppSizes.sN, children: [...])` for uniform horizontal gaps.

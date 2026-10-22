@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -29,10 +28,10 @@ class RecentRequestsCardWidget extends StatelessWidget {
         ],
       ),
       child: Column(
+        spacing: AppSizes.s12,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeaderRow(),
-          14.verticalSpace,
           _buildRequestItem(
             titleKey: 'req_departure_edit',
             descKey: 'req_departure_desc',
@@ -41,7 +40,6 @@ class RecentRequestsCardWidget extends StatelessWidget {
             statusBgColor: AppColors.tagReviewBg,
             statusTextColor: AppColors.tagReviewText,
           ),
-          10.verticalSpace,
           _buildRequestItem(
             titleKey: 'req_permission_2h',
             descKey: 'req_permission_desc',
@@ -61,6 +59,7 @@ class RecentRequestsCardWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
+          spacing: AppSizes.s8,
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
@@ -68,7 +67,6 @@ class RecentRequestsCardWidget extends StatelessWidget {
               color: AppColors.headerBackground,
               size: AppSizes.s20,
             ),
-            8.horizontalSpace,
             Text(
               'recent_requests_title'.tr(),
               style: AppTextStyles.font14Bold,
@@ -104,6 +102,7 @@ class RecentRequestsCardWidget extends StatelessWidget {
         ),
       ),
       child: Column(
+        spacing: AppSizes.s6,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// RTL-first: title (right) → status badge (left)
@@ -134,13 +133,11 @@ class RecentRequestsCardWidget extends StatelessWidget {
               ),
             ],
           ),
-          6.verticalSpace,
           Text(
             descKey.tr(),
             style: AppTextStyles.font11Regular,
             textAlign: TextAlign.start,
           ),
-          6.verticalSpace,
           Text(
             dateKey.tr(),
             style: AppTextStyles.font10Regular,

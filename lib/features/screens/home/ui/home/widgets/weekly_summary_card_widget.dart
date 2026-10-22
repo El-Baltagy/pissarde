@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -29,18 +28,16 @@ class WeeklySummaryCardWidget extends StatelessWidget {
         ],
       ),
       child: Column(
+        spacing: AppSizes.s14,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeaderRow(),
-          14.verticalSpace,
           _buildDaysRow(),
-          16.verticalSpace,
           _buildMetricRow(
             labelKey: 'total_critical_month_delay',
             valueKey: 'delay_minutes_val',
             valueColor: AppColors.statusLateText,
           ),
-          8.verticalSpace,
           _buildMetricRow(
             labelKey: 'overtime_hours_label',
             valueKey: 'overtime_hours_val',
@@ -57,6 +54,7 @@ class WeeklySummaryCardWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
+          spacing: AppSizes.s8,
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
@@ -64,7 +62,6 @@ class WeeklySummaryCardWidget extends StatelessWidget {
               color: AppColors.headerBackground,
               size: AppSizes.s20,
             ),
-            8.horizontalSpace,
             Text(
               'weekly_summary_title'.tr(),
               style: AppTextStyles.font14Bold,
@@ -82,6 +79,7 @@ class WeeklySummaryCardWidget extends StatelessWidget {
   Widget _buildDaysRow() {
     /// RTL-first: present → delayed → absent
     return Row(
+      spacing: AppSizes.s10,
       children: [
         _buildDayBox(
           count: '4',
@@ -89,14 +87,12 @@ class WeeklySummaryCardWidget extends StatelessWidget {
           bgColor: AppColors.statusPresentBg,
           textColor: AppColors.statusPresentText,
         ),
-        10.horizontalSpace,
         _buildDayBox(
           count: '1',
           labelKey: 'days_delayed',
           bgColor: AppColors.statusLateBg,
           textColor: AppColors.statusLateText,
         ),
-        10.horizontalSpace,
         _buildDayBox(
           count: '0',
           labelKey: 'days_absent',
@@ -121,6 +117,7 @@ class WeeklySummaryCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppSizes.r12),
         ),
         child: Column(
+          spacing: AppSizes.s4,
           children: [
             Text(
               count,
@@ -128,7 +125,6 @@ class WeeklySummaryCardWidget extends StatelessWidget {
                 color: textColor,
               ),
             ),
-            4.verticalSpace,
             Text(
               labelKey.tr(),
               style: AppTextStyles.font12Medium.copyWith(

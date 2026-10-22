@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -22,10 +21,12 @@ class PolicyNoticeCardWidget extends StatelessWidget {
         ),
       ),
       child: Column(
+        spacing: AppSizes.s8,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           /// RTL-first: icon (right) → title (left)
           Row(
+            spacing: AppSizes.s6,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Icon(
@@ -33,7 +34,6 @@ class PolicyNoticeCardWidget extends StatelessWidget {
                 color: AppColors.policyCardText,
                 size: AppSizes.s18,
               ),
-              6.horizontalSpace,
               Text(
                 'policy_title'.tr(),
                 style: AppTextStyles.font13Medium.copyWith(
@@ -43,7 +43,6 @@ class PolicyNoticeCardWidget extends StatelessWidget {
               ),
             ],
           ),
-          8.verticalSpace,
           Text(
             'policy_content'.tr(),
             style: AppTextStyles.font11Regular.copyWith(

@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -16,10 +15,7 @@ class AttendanceActionSectionWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(AppSizes.r16),
-        border: Border.all(
-          color: AppColors.cardBorder,
-          width: AppSizes.s1,
-        ),
+        border: Border.all(color: AppColors.cardBorder, width: AppSizes.s1),
         boxShadow: [
           BoxShadow(
             color: AppColors.lightBorder.withValues(alpha: 0.3),
@@ -30,18 +26,15 @@ class AttendanceActionSectionWidget extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: AppSizes.s12,
         children: [
           Center(
             child: Text(
               'current_status_attendance_time'.tr(),
-              style: AppTextStyles.font12Medium.copyWith(
-                color: AppColors.lightTextSecondary,
-              ),
+              style: AppTextStyles.font12Medium.copyWith(color: AppColors.lightTextSecondary),
             ),
           ),
-          12.verticalSpace,
           _buildCheckOutButton(),
-          14.verticalSpace,
           _buildQuickActionLinks(),
         ],
       ),
@@ -56,26 +49,18 @@ class AttendanceActionSectionWidget extends StatelessWidget {
         foregroundColor: AppColors.roleSwitchSelectedBg,
         elevation: AppSizes.s2,
         padding: const EdgeInsets.symmetric(vertical: AppPadding.p14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.r14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.r14)),
       ),
-      /// RTL-first: text (right) → icon (left)
+      /// RTL-first: text → icon
       child: Row(
+        spacing: AppSizes.s8,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             'btn_check_out_gps'.tr(),
-            style: AppTextStyles.font16Bold.copyWith(
-              color: AppColors.roleSwitchSelectedBg,
-            ),
+            style: AppTextStyles.font16Bold.copyWith(color: AppColors.roleSwitchSelectedBg),
           ),
-          8.horizontalSpace,
-          const Icon(
-            Icons.logout_rounded,
-            color: AppColors.roleSwitchSelectedBg,
-            size: AppSizes.s20,
-          ),
+          const Icon(Icons.logout_rounded, color: AppColors.roleSwitchSelectedBg, size: AppSizes.s20),
         ],
       ),
     );
@@ -85,49 +70,25 @@ class AttendanceActionSectionWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildQuickLink(
-          icon: Icons.description_outlined,
-          labelKey: 'btn_request_correction',
-        ),
+        _buildQuickLink(icon: Icons.description_outlined, labelKey: 'btn_request_correction'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppPadding.p12),
-          child: Text(
-            '•',
-            style: AppTextStyles.font14Regular.copyWith(
-              color: AppColors.lightBorder,
-            ),
-          ),
+          child: Text('•', style: AppTextStyles.font14Regular.copyWith(color: AppColors.lightBorder)),
         ),
-        _buildQuickLink(
-          icon: Icons.access_time_rounded,
-          labelKey: 'btn_request_permission',
-        ),
+        _buildQuickLink(icon: Icons.access_time_rounded, labelKey: 'btn_request_permission'),
       ],
     );
   }
 
-  Widget _buildQuickLink({
-    required IconData icon,
-    required String labelKey,
-  }) {
+  Widget _buildQuickLink({required IconData icon, required String labelKey}) {
     return InkWell(
       onTap: () {},
-      /// RTL-first inside each link: icon (right) → text (left)
       child: Row(
+        spacing: AppSizes.s6,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: AppColors.headerBackground,
-            size: AppSizes.s16,
-          ),
-          6.horizontalSpace,
-          Text(
-            labelKey.tr(),
-            style: AppTextStyles.font12Medium.copyWith(
-              color: AppColors.headerBackground,
-            ),
-          ),
+          Icon(icon, color: AppColors.headerBackground, size: AppSizes.s16),
+          Text(labelKey.tr(), style: AppTextStyles.font12Medium.copyWith(color: AppColors.headerBackground)),
         ],
       ),
     );

@@ -16,10 +16,7 @@ class BranchStatusCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(AppSizes.r16),
-        border: Border.all(
-          color: AppColors.cardBorder,
-          width: AppSizes.s1,
-        ),
+        border: Border.all(color: AppColors.cardBorder, width: AppSizes.s1),
         boxShadow: [
           BoxShadow(
             color: AppColors.lightBorder.withValues(alpha: 0.3),
@@ -29,12 +26,11 @@ class BranchStatusCardWidget extends StatelessWidget {
         ],
       ),
       child: Column(
+        spacing: AppSizes.s14,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeaderRow(),
-          14.verticalSpace,
           _buildStatusMetricsRow(),
-          14.verticalSpace,
           _buildPendingApprovalNotice(),
         ],
       ),
@@ -42,11 +38,12 @@ class BranchStatusCardWidget extends StatelessWidget {
   }
 
   Widget _buildHeaderRow() {
-    /// RTL-first: icon+title group (right) → badge (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        /// RTL-first: icon + title (right)
         Row(
+          spacing: AppSizes.s10,
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
@@ -55,34 +52,20 @@ class BranchStatusCardWidget extends StatelessWidget {
                 color: AppColors.roleSwitchBg,
                 borderRadius: BorderRadius.circular(AppSizes.r12),
               ),
-              child: const Icon(
-                Icons.groups_rounded,
-                color: AppColors.headerBackground,
-                size: AppSizes.s20,
-              ),
+              child: const Icon(Icons.groups_rounded, color: AppColors.headerBackground, size: AppSizes.s20),
             ),
-            10.horizontalSpace,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'branch_status_title'.tr(),
-                  style: AppTextStyles.font14Bold,
-                ),
-                2.verticalSpace,
-                Text(
-                  'branch_total_employees'.tr(),
-                  style: AppTextStyles.font11Regular,
-                ),
+                Text('branch_status_title'.tr(), style: AppTextStyles.font14Bold),
+                Text('branch_total_employees'.tr(), style: AppTextStyles.font11Regular),
               ],
             ),
           ],
         ),
+        /// badge (left)
         Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppPadding.p10,
-            vertical: AppPadding.p4,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10, vertical: AppPadding.p4),
           decoration: BoxDecoration(
             color: AppColors.commitmentBadgeBg,
             borderRadius: BorderRadius.circular(AppSizes.r20),
@@ -100,36 +83,13 @@ class BranchStatusCardWidget extends StatelessWidget {
   }
 
   Widget _buildStatusMetricsRow() {
-    /// RTL-first: present → late → absent → leave
     return Row(
+      spacing: AppSizes.s8,
       children: [
-        _buildMetricBox(
-          count: '38',
-          labelKey: 'status_present',
-          bgColor: AppColors.statusPresentBg,
-          textColor: AppColors.statusPresentText,
-        ),
-        8.horizontalSpace,
-        _buildMetricBox(
-          count: '5',
-          labelKey: 'status_late',
-          bgColor: AppColors.statusLateBg,
-          textColor: AppColors.statusLateText,
-        ),
-        8.horizontalSpace,
-        _buildMetricBox(
-          count: '3',
-          labelKey: 'status_absent',
-          bgColor: AppColors.statusAbsentBg,
-          textColor: AppColors.statusAbsentText,
-        ),
-        8.horizontalSpace,
-        _buildMetricBox(
-          count: '2',
-          labelKey: 'status_leave',
-          bgColor: AppColors.statusLeaveBg,
-          textColor: AppColors.statusLeaveText,
-        ),
+        _buildMetricBox(count: '38', labelKey: 'status_present', bgColor: AppColors.statusPresentBg, textColor: AppColors.statusPresentText),
+        _buildMetricBox(count: '5',  labelKey: 'status_late',    bgColor: AppColors.statusLateBg,    textColor: AppColors.statusLateText),
+        _buildMetricBox(count: '3',  labelKey: 'status_absent',  bgColor: AppColors.statusAbsentBg,  textColor: AppColors.statusAbsentText),
+        _buildMetricBox(count: '2',  labelKey: 'status_leave',   bgColor: AppColors.statusLeaveBg,   textColor: AppColors.statusLeaveText),
       ],
     );
   }
@@ -143,25 +103,12 @@ class BranchStatusCardWidget extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: AppPadding.p12),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(AppSizes.r12),
-        ),
+        decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(AppSizes.r12)),
         child: Column(
+          spacing: AppSizes.s4,
           children: [
-            Text(
-              count,
-              style: AppTextStyles.font18Bold.copyWith(
-                color: textColor,
-              ),
-            ),
-            4.verticalSpace,
-            Text(
-              labelKey.tr(),
-              style: AppTextStyles.font12Medium.copyWith(
-                color: textColor,
-              ),
-            ),
+            Text(count, style: AppTextStyles.font18Bold.copyWith(color: textColor)),
+            Text(labelKey.tr(), style: AppTextStyles.font12Medium.copyWith(color: textColor)),
           ],
         ),
       ),
@@ -169,27 +116,22 @@ class BranchStatusCardWidget extends StatelessWidget {
   }
 
   Widget _buildPendingApprovalNotice() {
-    /// RTL-first: warning group (right) → review link (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        /// RTL-first: warning icon + text (right)
         Row(
+          spacing: AppSizes.s6,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.statusLateText,
-              size: AppSizes.s18,
-            ),
-            6.horizontalSpace,
+            const Icon(Icons.warning_amber_rounded, color: AppColors.statusLateText, size: AppSizes.s18),
             Text(
               'pending_fingerprint_requests'.tr(),
-              style: AppTextStyles.font12Medium.copyWith(
-                color: AppColors.alertWarningText,
-              ),
+              style: AppTextStyles.font12Medium.copyWith(color: AppColors.alertWarningText),
             ),
           ],
         ),
+        /// review link (left)
         Text(
           'review_requests'.tr(),
           style: AppTextStyles.font12SemiBold.copyWith(

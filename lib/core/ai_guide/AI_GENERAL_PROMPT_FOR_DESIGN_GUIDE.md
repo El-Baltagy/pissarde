@@ -91,3 +91,72 @@ When building a screen, you must follow the `AutoRouteWrapper` pattern as seen i
 > 5. Hot‑restart the app to load the new translations.
 
 **System Design Language**: `ar` *(will be refined later)*
+
+---
+
+## 12. 🔄 RTL-First Row Layout (Arabic Support)
+
+> [!IMPORTANT]
+> This project's default language is **Arabic (RTL)**. All `Row` widget children MUST be written in **RTL-first order** (right → left). Flutter automatically mirrors the order for LTR locales.
+
+**Rules**:
+- Write `Row` children starting with the **rightmost element first** (as it appears in Arabic).
+- Flutter's `Directionality` (driven by `MaterialApp locale`) will automatically reverse the order in LTR (English).
+- **NEVER** hardcode `TextAlign.right` or `TextAlign.left` — use `TextAlign.start` / `TextAlign.end` so they respect the active direction.
+- **NEVER** use `Positioned(right: x)` or `Positioned(left: x)` inside a `Stack` — use `PositionedDirectional(end: x)` / `PositionedDirectional(start: x)` instead.
+- **NEVER** use `Alignment.centerRight` / `Alignment.centerLeft` — use `AlignmentDirectional.centerStart` / `AlignmentDirectional.centerEnd`.
+- Use `CrossAxisAlignment.start` in `Column` for the **leading edge** (right in RTL, left in LTR).
+
+**Example**:
+```dart
+// ✅ CORRECT — RTL-first: icon (right) → text (left)
+Row(children: [
+  const Icon(Icons.location_on),
+  8.horizontalSpace,
+  Text('المكان'),
+])
+
+// ❌ WRONG — LTR order, icon will appear on the left in Arabic
+Row(children: [
+  Text('المكان'),
+  8.horizontalSpace,
+  const Icon(Icons.location_on),
+])
+```
+
+---
+
+## 13. 📐 Row / Column Spacing (No SizedBox Separators)
+
+> [!IMPORTANT]
+> **NEVER** add individual `SizedBox` / `.horizontalSpace` / `.verticalSpace` between every item in a `Row` or `Column` as separators. Use the built-in `spacing` property instead.
+
+**Rules**:
+- Use `Row(spacing: AppSizes.sN, children: [...])` for uniform horizontal gaps.
+- Use `Column(spacing: AppSizes.sN, children: [...])` for uniform vertical gaps.
+- Only use `.horizontalSpace` / `.verticalSpace` when spacing is **non-uniform** (different gaps between specific items) or when you need a one-off spacer that is not repeated between every child.
+
+**Example**:
+```dart
+// ✅ CORRECT — uniform gap via spacing property
+Row(
+  spacing: AppSizes.s8,
+  children: [
+    _buildChip('الكل'),
+    _buildChip('حاضر'),
+    _buildChip('متأخر'),
+    _buildChip('غياب'),
+  ],
+)
+
+// ❌ WRONG — manual SizedBox between each child
+Row(children: [
+  _buildChip('الكل'),
+  8.horizontalSpace,
+  _buildChip('حاضر'),
+  8.horizontalSpace,
+  _buildChip('متأخر'),
+  8.horizontalSpace,
+  _buildChip('غياب'),
+])
+```

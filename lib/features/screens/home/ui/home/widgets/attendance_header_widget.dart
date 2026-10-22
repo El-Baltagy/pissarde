@@ -28,10 +28,10 @@ class AttendanceHeaderWidget extends StatelessWidget {
             AppPadding.p16,
           ),
           child: Column(
+            spacing: AppSizes.s16,
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildUserInfoRow(),
-              16.verticalSpace,
               _buildDateTimeRow(),
             ],
           ),
@@ -40,13 +40,12 @@ class AttendanceHeaderWidget extends StatelessWidget {
     );
   }
 
-  /// Row order (RTL-first): avatar → user details → spacer → notification
-  /// Flutter reverses this in LTR so it becomes: notification → spacer → user details → avatar
+  /// RTL-first: avatar → user details → spacer → notification
   Widget _buildUserInfoRow() {
     return Row(
+      spacing: AppSizes.s12,
       children: [
         _buildAvatar(),
-        12.horizontalSpace,
         _buildUserDetails(),
         const Spacer(),
         _buildNotificationButton(),
@@ -99,9 +98,11 @@ class AttendanceHeaderWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      spacing: AppSizes.s4,
       children: [
-        /// Row (RTL-first): name → job badge
+        /// RTL-first: name → job badge
         Row(
+          spacing: AppSizes.s8,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
@@ -110,7 +111,6 @@ class AttendanceHeaderWidget extends StatelessWidget {
                 color: AppColors.roleSwitchSelectedBg,
               ),
             ),
-            8.horizontalSpace,
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppPadding.p8,
@@ -129,9 +129,9 @@ class AttendanceHeaderWidget extends StatelessWidget {
             ),
           ],
         ),
-        4.verticalSpace,
-        /// Row (RTL-first): branch text → building icon
+        /// RTL-first: branch text → building icon
         Row(
+          spacing: AppSizes.s4,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
@@ -140,7 +140,6 @@ class AttendanceHeaderWidget extends StatelessWidget {
                 color: AppColors.darkTextSecondary,
               ),
             ),
-            4.horizontalSpace,
             const Icon(
               Icons.business_rounded,
               color: AppColors.darkTextSecondary,
@@ -203,8 +202,8 @@ class AttendanceHeaderWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          /// LTR side: date (icon then text — reversed for LTR)
           Row(
+            spacing: AppSizes.s6,
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
@@ -212,7 +211,6 @@ class AttendanceHeaderWidget extends StatelessWidget {
                 color: AppColors.roleSwitchSelectedBg,
                 size: AppSizes.s16,
               ),
-              6.horizontalSpace,
               Text(
                 'current_date'.tr(),
                 style: AppTextStyles.font12Medium.copyWith(
@@ -221,8 +219,8 @@ class AttendanceHeaderWidget extends StatelessWidget {
               ),
             ],
           ),
-          /// RTL side: time (text then icon)
           Row(
+            spacing: AppSizes.s6,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
@@ -231,7 +229,6 @@ class AttendanceHeaderWidget extends StatelessWidget {
                   color: AppColors.roleSwitchSelectedBg,
                 ),
               ),
-              6.horizontalSpace,
               const Icon(
                 Icons.access_time_rounded,
                 color: AppColors.roleSwitchSelectedBg,

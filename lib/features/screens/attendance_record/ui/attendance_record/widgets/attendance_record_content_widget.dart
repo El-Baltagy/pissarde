@@ -13,7 +13,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(AppPadding.p16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSummaryHeader(),
           16.verticalSpace,

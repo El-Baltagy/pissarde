@@ -16,6 +16,7 @@ class _ProfileContentWidgetState extends State<ProfileContentWidget> {
   static const _languages = [
     _LanguageOption(code: 'ar', nativeName: 'العربية', flag: '🇸🇦'),
     _LanguageOption(code: 'en', nativeName: 'English', flag: '🇬🇧'),
+    _LanguageOption(code: 'tr', nativeName: 'Türkçe', flag: '🇹🇷'),
   ];
 
   @override

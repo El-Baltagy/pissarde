@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -25,25 +24,11 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
       child: Row(
-        /// RTL-first: employee (right) → branch manager → hr (left)
+        spacing: AppSizes.s4,
         children: [
-          _buildRoleItem(
-            index: 0,
-            icon: Icons.person_outline_rounded,
-            labelKey: 'role_employee_view',
-          ),
-          4.horizontalSpace,
-          _buildRoleItem(
-            index: 1,
-            icon: Icons.groups_outlined,
-            labelKey: 'role_branch_manager',
-          ),
-          4.horizontalSpace,
-          _buildRoleItem(
-            index: 2,
-            icon: Icons.shield_outlined,
-            labelKey: 'role_hr',
-          ),
+          _buildRoleItem(index: 0, icon: Icons.person_outline_rounded, labelKey: 'role_employee_view'),
+          _buildRoleItem(index: 1, icon: Icons.groups_outlined, labelKey: 'role_branch_manager'),
+          _buildRoleItem(index: 2, icon: Icons.shield_outlined, labelKey: 'role_hr'),
         ],
       ),
     );
@@ -74,18 +59,15 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
                   ]
                 : null,
           ),
-          /// RTL-first inside each pill: icon (right) → text (left)
           child: Row(
+            spacing: AppSizes.s6,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 icon,
                 size: AppSizes.s18,
-                color: isSelected
-                    ? AppColors.roleSwitchSelectedText
-                    : AppColors.roleSwitchUnselectedText,
+                color: isSelected ? AppColors.roleSwitchSelectedText : AppColors.roleSwitchUnselectedText,
               ),
-              6.horizontalSpace,
               Text(
                 labelKey.tr(),
                 style: isSelected

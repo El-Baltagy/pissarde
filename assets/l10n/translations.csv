@@ -70,3 +70,12 @@ nav_manager_dashboard,Manager Dashboard,لوحة المدير,Yönetici Kontrol 
 nav_my_account,My Account,حسابي,Hesabım
 req_fingerprint_unresponsive,Request attendance fingerprint modification due to device unresponsiveness,طلب تعديل بصمة حضور لعدم استجابة الجهاز,Cihazın yanıt vermemesi nedeniyle katılım parmak izi değişikliği talep etme
 date_05_may,05 May 2024,05 مايو 2024,05 Mayıs 2024
+login,Login,تسجيل الدخول,Giriş Yap
+email,Email,البريد الإلكتروني,E-posta
+password,Password,كلمة المرور,Şifre
+can't_be_empty,This field cannot be empty,لا يمكن أن يكون فارغاً,Bu alan boş bırakılamaz
+please_enter_valid_email,Please enter a valid email,يرجى إدخال بريد إلكتروني صحيح,Lütfen geçerli bir e-posta girin
+the_password_must_be_at_least_6_characters,The password must be at least 6 characters,يجب أن تتكون كلمة المرور من 6 أحرف على الأقل,Şifre en az 6 karakter olmalıdır
+do_you_forget_password,Forgot Password?,هل نسيت كلمة المرور؟,Şifrenizi mi unuttunuz?
+enter_email_to_receive_reset_link,Enter your email to receive password reset link,أدخل بريدك الإلكتروني لاستلام رابط إعادة الضبط,Şifre sıfırlama bağlantısını almak için e-postanızı girin
+send,Send,إرسال,Gönder

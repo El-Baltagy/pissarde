@@ -10,6 +10,12 @@ library;
 // ── requests ──────────────────────────────────────────────────────
 // ── manager_dashboard ──────────────────────────────────────────────────────
 // ── profile ──────────────────────────────────────────────────────
+// ── login ──────────────────────────────────────────────────────
+import 'package:newf/features/screens/login/data/repo/base_login_repo.dart';
+import 'package:newf/features/screens/login/data/repo/login_remote_repo.dart';
+import 'package:newf/features/screens/login/service/base_login_service.dart';
+import 'package:newf/features/screens/login/service/login_remote_service.dart';
+import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/profile/data/repo/base_profile_repo.dart';
 import 'package:newf/features/screens/profile/data/repo/profile_remote_repo.dart';
 import 'package:newf/features/screens/profile/service/base_profile_service.dart';
@@ -58,6 +64,14 @@ class AppLocator {
   GetIt call()=>_sl;
   
   void init(){
+    ///..................login.................///
+    // Repo layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseLoginRepo>(() => LoginRemoteRepo(_sl()));
+    // Service layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseLoginService>(() => LoginRemoteService(_sl<BaseLoginRepo>(), _sl()));
+    // Controller layer: factory so a fresh cubit is created per BlocProvider
+    _sl.registerFactory(() => LoginCubit(_sl<BaseLoginService>()));
+
     ///..................profile.................///
     // Repo layer: register the concrete impl under the abstract type
     _sl.registerLazySingleton<BaseProfileRepo>(() => ProfileRemoteRepo(_sl()));

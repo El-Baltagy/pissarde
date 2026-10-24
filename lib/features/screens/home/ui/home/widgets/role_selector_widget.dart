@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:newf/core/shared/widgets/ticker_text.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -17,7 +18,9 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppPadding.p12,
+      ).copyWith(top: 10),
       padding: const EdgeInsets.all(AppPadding.p4),
       decoration: BoxDecoration(
         color: AppColors.roleSwitchBg,
@@ -26,9 +29,21 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
       child: Row(
         spacing: AppSizes.s4,
         children: [
-          _buildRoleItem(index: 0, icon: Icons.person_outline_rounded, labelKey: 'role_employee_view'),
-          _buildRoleItem(index: 1, icon: Icons.groups_outlined, labelKey: 'role_branch_manager'),
-          _buildRoleItem(index: 2, icon: Icons.shield_outlined, labelKey: 'role_hr'),
+          _buildRoleItem(
+            index: 0,
+            icon: Icons.person_outline_rounded,
+            labelKey: 'role_employee_view',
+          ),
+          _buildRoleItem(
+            index: 1,
+            icon: Icons.groups_outlined,
+            labelKey: 'role_branch_manager',
+          ),
+          _buildRoleItem(
+            index: 2,
+            icon: Icons.shield_outlined,
+            labelKey: 'role_hr',
+          ),
         ],
       ),
     );
@@ -45,9 +60,17 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
         onTap: () => setState(() => _selectedIndex = index),
         borderRadius: BorderRadius.circular(AppSizes.r12),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: AppPadding.p10),
+          padding: const EdgeInsets.symmetric(vertical: AppPadding.p10,horizontal:AppPadding.p4 ),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.roleSwitchSelectedBg : Colors.transparent,
+            border: Border.all(
+              color: isSelected
+                  ? AppColors.roleSwitchSelectedBg
+                  : AppColors.roleSwitchSelectedBg,
+              width: 1.0,
+            ),
+            color: isSelected
+                ? AppColors.roleSwitchSelectedBg
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(AppSizes.r12),
             boxShadow: isSelected
                 ? [
@@ -60,24 +83,34 @@ class _RoleSelectorWidgetState extends State<RoleSelectorWidget> {
                 : null,
           ),
           child: Row(
-            spacing: AppSizes.s6,
+            spacing: AppSizes.s4,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 icon,
                 size: AppSizes.s18,
-                color: isSelected ? AppColors.roleSwitchSelectedText : AppColors.roleSwitchUnselectedText,
+                color: isSelected
+                    ? AppColors.roleSwitchSelectedText
+                    : AppColors.roleSwitchUnselectedText,
               ),
-              Text(
-                labelKey.tr(),
-                style: isSelected
-                    ? AppTextStyles.font13Medium.copyWith(
-                        color: AppColors.roleSwitchSelectedText,
-                        fontWeight: FontWeight.bold,
-                      )
-                    : AppTextStyles.font13Regular.copyWith(
-                        color: AppColors.roleSwitchUnselectedText,
-                      ),
+
+              Expanded(
+                child: SizedBox(
+                  // width: 10,
+                  child: TickerText(
+                    child: Text(
+                      labelKey.tr(),
+                      style: isSelected
+                          ? AppTextStyles.font13Medium.copyWith(
+                              color: AppColors.roleSwitchSelectedText,
+                              fontWeight: FontWeight.bold,
+                            )
+                          : AppTextStyles.font13Regular.copyWith(
+                              color: AppColors.roleSwitchUnselectedText,
+                            ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -72,7 +72,7 @@ class AttendanceActionSectionWidget extends StatelessWidget {
       children: [
         _buildQuickLink(icon: Icons.description_outlined, labelKey: 'btn_request_correction'),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p12),
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p6),
           child: Text('•', style: AppTextStyles.font14Regular.copyWith(color: AppColors.lightBorder)),
         ),
         _buildQuickLink(icon: Icons.access_time_rounded, labelKey: 'btn_request_permission'),
@@ -81,16 +81,15 @@ class AttendanceActionSectionWidget extends StatelessWidget {
   }
 
   Widget _buildQuickLink({required IconData icon, required String labelKey}) {
-    return InkWell(
-      onTap: () {},
-      child: Row(
-        spacing: AppSizes.s6,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: AppColors.headerBackground, size: AppSizes.s16),
-          Text(labelKey.tr(), style: AppTextStyles.font12Medium.copyWith(color: AppColors.headerBackground)),
-        ],
-      ),
+    return Row(
+      spacing: AppSizes.s6,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: AppColors.headerBackground, size: AppSizes.s16),
+        Text(labelKey.tr(), style: AppTextStyles.font12Medium.copyWith(
+            fontSize: 11,
+            color: AppColors.headerBackground)),
+      ],
     );
   }
 }

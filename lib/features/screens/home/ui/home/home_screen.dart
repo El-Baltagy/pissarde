@@ -42,14 +42,16 @@ class _HomePageState extends HomePageBaseState {
       listener: (context, state) {},
       child: Scaffold(
         backgroundColor: AppColors.lightSurface,
+        appBar: AppBar(
+          // title: const Text('Home'),
+          // centerTitle: true,
+          leading:SizedBox.shrink(),
+          toolbarHeight: 5,
+        ),
         body: SingleChildScrollView(
           child: Column(
             spacing:16 ,
             children: [
-              Semantics(
-                label: 'Attendance Header Section',
-                child: const AttendanceHeaderWidget(),
-              ),
 
               Semantics(
                 label: 'Role Selector Switch',

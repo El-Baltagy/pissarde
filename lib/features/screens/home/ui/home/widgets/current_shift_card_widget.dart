@@ -29,9 +29,11 @@ class CurrentShiftCardWidget extends StatelessWidget {
         spacing: AppSizes.s14,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+
           _buildShiftHeaderRow(),
           _buildDelayAlertBox(),
           _buildShiftMetricsRow(),
+
           _buildProgressBar(),
         ],
       ),

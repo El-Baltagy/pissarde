@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/extension/double.dart';
+import 'package:newf/core/shared/widgets/ticker_text.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -31,7 +33,7 @@ class BranchStatusCardWidget extends StatelessWidget {
         children: [
           _buildHeaderRow(),
           _buildStatusMetricsRow(),
-          _buildPendingApprovalNotice(),
+          _buildPendingApprovalNotice(context),
         ],
       ),
     );
@@ -64,20 +66,20 @@ class BranchStatusCardWidget extends StatelessWidget {
           ],
         ),
         /// badge (left)
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10, vertical: AppPadding.p4),
-          decoration: BoxDecoration(
-            color: AppColors.commitmentBadgeBg,
-            borderRadius: BorderRadius.circular(AppSizes.r20),
-          ),
-          child: Text(
-            'commitment_rate'.tr(),
-            style: AppTextStyles.font11Regular.copyWith(
-              color: AppColors.commitmentBadgeText,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10, vertical: AppPadding.p4),
+        //   decoration: BoxDecoration(
+        //     color: AppColors.commitmentBadgeBg,
+        //     borderRadius: BorderRadius.circular(AppSizes.r20),
+        //   ),
+        //   child: Text(
+        //     'commitment_rate'.tr(),
+        //     style: AppTextStyles.font11Regular.copyWith(
+        //       color: AppColors.commitmentBadgeText,
+        //       fontWeight: FontWeight.w600,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -115,7 +117,7 @@ class BranchStatusCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPendingApprovalNotice() {
+  Widget _buildPendingApprovalNotice(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -125,9 +127,14 @@ class BranchStatusCardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.warning_amber_rounded, color: AppColors.statusLateText, size: AppSizes.s18),
-            Text(
-              'pending_fingerprint_requests'.tr(),
-              style: AppTextStyles.font12Medium.copyWith(color: AppColors.alertWarningText),
+            SizedBox(
+              width: context.width * 0.5, // Adjust width as needed
+              child: TickerText(
+                child: Text(
+                  'pending_fingerprint_requests'.tr(),
+                  style: AppTextStyles.font12Medium.copyWith(color: AppColors.alertWarningText),
+                ),
+              ),
             ),
           ],
         ),

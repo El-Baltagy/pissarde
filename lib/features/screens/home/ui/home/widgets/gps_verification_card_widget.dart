@@ -39,38 +39,23 @@ class GpsVerificationCardWidget extends StatelessWidget {
 
   Widget _buildHeaderRow() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      spacing: AppSizes.s10,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        /// RTL-first: icon + title (right)
-        Row(
-          spacing: AppSizes.s10,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(AppPadding.p8),
-              decoration: BoxDecoration(
-                color: AppColors.gpsTagBg,
-                borderRadius: BorderRadius.circular(AppSizes.r12),
-              ),
-              child: const Icon(Icons.location_on_rounded, color: AppColors.onlineGreen, size: AppSizes.s20),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('gps_verification_title'.tr(), style: AppTextStyles.font14Bold),
-                Text('gps_branch_location'.tr(), style: AppTextStyles.font11Regular),
-              ],
-            ),
-          ],
-        ),
-        /// badge (left)
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10, vertical: AppPadding.p4),
-          decoration: BoxDecoration(color: AppColors.gpsTagBg, borderRadius: BorderRadius.circular(AppSizes.r20)),
-          child: Text(
-            'gps_within_range'.tr(),
-            style: AppTextStyles.font11Regular.copyWith(color: AppColors.gpsTagText, fontWeight: FontWeight.w600),
+          padding: const EdgeInsets.all(AppPadding.p8),
+          decoration: BoxDecoration(
+            color: AppColors.gpsTagBg,
+            borderRadius: BorderRadius.circular(AppSizes.r12),
           ),
+          child: const Icon(Icons.location_on_rounded, color: AppColors.onlineGreen, size: AppSizes.s20),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('gps_verification_title'.tr(), style: AppTextStyles.font14Bold),
+            Text('gps_branch_location'.tr(), style: AppTextStyles.font11Regular),
+          ],
         ),
       ],
     );
@@ -155,7 +140,16 @@ class GpsVerificationCardWidget extends StatelessWidget {
             Text('gps_allowed_range'.tr(), style: AppTextStyles.font12Medium),
           ],
         ),
-        Text('gps_current_distance'.tr(), style: AppTextStyles.font12SemiBold),
+        // Text('gps_current_distance'.tr(), style: AppTextStyles.font12SemiBold),
+        /// badge (left)
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10, vertical: AppPadding.p4),
+          decoration: BoxDecoration(color: AppColors.gpsTagBg, borderRadius: BorderRadius.circular(AppSizes.r20)),
+          child: Text(
+            'gps_within_range'.tr(),
+            style: AppTextStyles.font11Regular.copyWith(color: AppColors.gpsTagText, fontWeight: FontWeight.w600),
+          ),
+        ),
       ],
     );
   }

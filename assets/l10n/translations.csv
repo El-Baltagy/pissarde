@@ -29,7 +29,7 @@ check_in_time_val,08:14 AM,08:14 ص,08:14
 expected_departure_label,Expected Departure,الانصراف المتوقع,Beklenen Kalkış
 expected_departure_val,04:00 PM,04:00 م,16:00
 work_hours_today_label,Work Hours Today,ساعات العمل اليوم,Bugünkü Çalışma Saatleri
-work_hours_today_val,5.2 / 8 hrs,5.2 / 8 س,5,2 / 8 saat
+work_hours_today_val,5.2 / 8 hrs,5.2 / 8 س,5
 daily_hours_completion,Today's hours completion rate,نسبة إنجاز ساعات اليوم,Bugünkü saatlerin tamamlanma oranı
 gps_verification_title,Geographic Verification (GPS),التحقق الجغرافي (GPS),Coğrafi Doğrulama (GPS)
 gps_branch_location,Riyadh Branch - Headquarters,فرع الرياض - المقر الرئيسي,Riyad Şubesi - Genel Merkez
@@ -50,7 +50,7 @@ days_absent,Days Absent,أيام غياب,Devamsız Günler
 total_critical_month_delay,Total critical month delay:,إجمالي التأخير الشهر الحرج:,Toplam kritik ay gecikmesi:
 delay_minutes_val,28 minutes,28 دقيقة,28 dakika
 overtime_hours_label,Overtime hours:,ساعات العمل الإضافي:,Fazla mesai saatleri:
-overtime_hours_val,3.5 hours,3.5 ساعة,3,5 saat
+overtime_hours_val,3.5 hours,3.5 ساعة,3
 recent_requests_title,Recent Requests & Alerts,الطلبات الأخيرة والتنبيهات,Son İstekler ve Uyarılar
 view_all,View All,عرض الكل,Tümünü Görüntüle
 req_departure_edit,Departure Time Edit Request,طلب تعديل وقت انصراف,Kalkış Saati Düzenleme Talebi
@@ -79,3 +79,23 @@ the_password_must_be_at_least_6_characters,The password must be at least 6 chara
 do_you_forget_password,Forgot Password?,هل نسيت كلمة المرور؟,Şifrenizi mi unuttunuz?
 enter_email_to_receive_reset_link,Enter your email to receive password reset link,أدخل بريدك الإلكتروني لاستلام رابط إعادة الضبط,Şifre sıfırlama bağlantısını almak için e-postanızı girin
 send,Send,إرسال,Gönder
+
+all,All,الكل,Tümü
+
+
+present,Present,حاضر,Sunmak
+late,late,متأخر,geç
+vacation,Vacation,أجازة,Tatil
+absence,Absence,غياب,Yokluk
+
+attendance_hours_this_month,attendance hours this month,ساعات الحضور هذا الشهر,bu ay katılım saatleri
+
+check_in,check in,تسجيل حضور,Geliş kaydı
+check_out,check out,الانصراف,Gitmek
+
+hour,hour,ساعة,saat
+
+new_request,new request,طلب جديد,yeni istek
+
+requests_and_justifications,Requests and justifications,الطلبات والمبررات,Talepler ve gerekçeler
+tracking_order_status_and_credit_details,Tracking order status and credit details,تتبع حالة الطلب وتفاصيل الائتمان,Sipariş durumunu ve kredi ayrıntılarını izleme

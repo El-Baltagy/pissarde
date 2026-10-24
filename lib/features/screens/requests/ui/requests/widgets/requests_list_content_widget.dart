@@ -59,6 +59,24 @@ class RequestsListContentWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'requests_and_justifications'.tr(),
+                style: AppTextStyles.font16Bold.copyWith(
+                  color: AppColors.roleSwitchSelectedBg,
+                ),
+              ),//Requests_and_justifications Tracking_order_status_and_credit_details
+              2.verticalSpace,
+              Text(
+                'tracking_order_status_and_credit_details'.tr(),
+                style: AppTextStyles.font11Regular.copyWith(
+                  color: AppColors.darkTextSecondary,
+                ),
+              ),
+            ],
+          ),
           ElevatedButton.icon(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -74,31 +92,14 @@ class RequestsListContentWidget extends StatelessWidget {
             ),
             icon: const Icon(Icons.add, size: AppSizes.s18),
             label: Text(
-              'طلب جديد',
+              'new_request'.tr(),
               style: AppTextStyles.font13Medium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.headerBackground,
               ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'الطلبات والتبريرات',
-                style: AppTextStyles.font16Bold.copyWith(
-                  color: AppColors.roleSwitchSelectedBg,
-                ),
-              ),
-              2.verticalSpace,
-              Text(
-                'متابعة حالة الطلبات وتفاصيل الاعتماد',
-                style: AppTextStyles.font11Regular.copyWith(
-                  color: AppColors.darkTextSecondary,
-                ),
-              ),
-            ],
-          ),
+
         ],
       ),
     );

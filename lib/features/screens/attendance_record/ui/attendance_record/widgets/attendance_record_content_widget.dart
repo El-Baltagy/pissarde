@@ -81,12 +81,12 @@ class AttendanceRecordContentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                'ساعات الحضور هذا الشهر',
+                'attendance_hours_this_month'.tr(),
                 style: AppTextStyles.font11Regular,
               ),
               4.verticalSpace,
               Text(
-                '160 / 176 ساعة',
+                '160 / 176'+' '+'hour'.tr(),
                 style: AppTextStyles.font16Bold.copyWith(
                   color: AppColors.headerBackground,
                 ),
@@ -100,11 +100,11 @@ class AttendanceRecordContentWidget extends StatelessWidget {
 
   Widget _buildFilterChips() {
     final filters = [
-      (label: 'الكل', isSelected: true),
-      (label: 'حاضر', isSelected: false),
-      (label: 'متأخر', isSelected: false),
-      (label: 'إجازة', isSelected: false),
-      (label: 'غياب', isSelected: false),
+      (label: 'all', isSelected: true),
+      (label: 'present', isSelected: false),
+      (label: 'late', isSelected: false),
+      (label: 'vacation', isSelected: false),
+      (label: 'absence', isSelected: false),
     ];
 
     return SingleChildScrollView(
@@ -113,7 +113,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
       child: Row(
         spacing: AppSizes.s8,
         children: filters
-            .map((item) => _buildChip(label: item.label, isSelected: item.isSelected))
+            .map((item) => _buildChip(label: item.label.tr(), isSelected: item.isSelected))
             .toList(),
       ),
     );
@@ -188,7 +188,9 @@ class AttendanceRecordContentWidget extends StatelessWidget {
               ),
               4.verticalSpace,
               Text(
-                'حضور: $checkIn  •  انصراف: $checkOut',
+                'check_in'.tr() + ': $checkIn'+'  •  '+'check_out'.tr() + ': $checkOut',
+                // 'حضور: $checkIn  •  انصراف: $checkOut',
+                // 'حضور: $checkIn  •  انصراف: $checkOut',
                 style: AppTextStyles.font11Regular,
               ),
             ],

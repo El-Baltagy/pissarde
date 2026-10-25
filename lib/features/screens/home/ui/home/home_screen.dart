@@ -49,6 +49,7 @@ class _HomePageState extends HomePageBaseState {
           toolbarHeight: 5,
         ),
         body: SingleChildScrollView(
+          padding: .only(bottom: 100),
           child: Column(
             spacing:16 ,
             children: [

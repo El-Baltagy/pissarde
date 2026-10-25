@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -7,17 +6,51 @@ import 'package:newf/core/theming/app_values.dart';
 class ManagerDashboardContentWidget extends StatelessWidget {
   const ManagerDashboardContentWidget({super.key});
 
+  static const _quickStats = [
+    (
+      title: 'طلبات معلقة',
+      value: '3',
+      icon: Icons.pending_actions_rounded,
+      color: AppColors.statusLateText,
+      bgColor: AppColors.statusLateBg,
+    ),
+    (
+      title: 'إجمالي الموظفين',
+      value: '48',
+      icon: Icons.people_outline_rounded,
+      color: AppColors.headerBackground,
+      bgColor: AppColors.policyCardBg,
+    ),
+  ];
+
+  static const _departments = [
+    (
+      name: 'إدارة تقنية المعلومات',
+      status: '12 / 12 حاضر',
+      statusColor: AppColors.onlineGreen,
+    ),
+    (
+      name: 'إدارة العمليات والتشغيل',
+      status: '20 / 22 حاضر',
+      statusColor: AppColors.statusLateText,
+    ),
+    (
+      name: 'المبيعات والتسويق',
+      status: '14 / 14 حاضر',
+      statusColor: AppColors.onlineGreen,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppPadding.p16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: AppSizes.s16,
         children: [
           _buildBranchHeaderCard(),
-          16.verticalSpace,
           _buildQuickStatsGrid(),
-          16.verticalSpace,
           _buildDepartmentList(),
         ],
       ),
@@ -33,6 +66,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSizes.s4,
         children: [
           Text(
             'لوحة تحكم مدير الفرع',
@@ -40,27 +74,28 @@ class ManagerDashboardContentWidget extends StatelessWidget {
               color: AppColors.roleSwitchSelectedBg,
             ),
           ),
-          4.verticalSpace,
           Text(
             'فرع الرياض الرئيسي - متابعة فورية للحضور والانضباط',
             style: AppTextStyles.font11Regular.copyWith(
               color: AppColors.darkTextSecondary,
             ),
           ),
-          12.verticalSpace,
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppPadding.p12,
-              vertical: AppPadding.p6,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.headerBadgeBg,
-              borderRadius: BorderRadius.circular(AppSizes.r12),
-            ),
-            child: Text(
-              'نسبة الانضباط العام اليوم: 92%',
-              style: AppTextStyles.font12SemiBold.copyWith(
-                color: AppColors.roleSwitchSelectedBg,
+          Padding(
+            padding: const EdgeInsets.only(top: AppPadding.p8),
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppPadding.p12,
+                vertical: AppPadding.p6,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.headerBadgeBg,
+                borderRadius: BorderRadius.circular(AppSizes.r12),
+              ),
+              child: Text(
+                'نسبة الانضباط العام اليوم: 92%',
+                style: AppTextStyles.font12SemiBold.copyWith(
+                  color: AppColors.roleSwitchSelectedBg,
+                ),
               ),
             ),
           ),
@@ -72,23 +107,16 @@ class ManagerDashboardContentWidget extends StatelessWidget {
   Widget _buildQuickStatsGrid() {
     /// RTL-first: pending requests (right) → total employees (left)
     return Row(
-      children: [
-        _buildStatCard(
-          title: 'طلبات معلقة',
-          value: '3',
-          icon: Icons.pending_actions_rounded,
-          color: AppColors.statusLateText,
-          bgColor: AppColors.statusLateBg,
-        ),
-        10.horizontalSpace,
-        _buildStatCard(
-          title: 'إجمالي الموظفين',
-          value: '48',
-          icon: Icons.people_outline_rounded,
-          color: AppColors.headerBackground,
-          bgColor: AppColors.policyCardBg,
-        ),
-      ],
+      spacing: AppSizes.s10,
+      children: _quickStats
+          .map((stat) => _buildStatCard(
+                title: stat.title,
+                value: stat.value,
+                icon: stat.icon,
+                color: stat.color,
+                bgColor: stat.bgColor,
+              ))
+          .toList(),
     );
   }
 
@@ -108,14 +136,13 @@ class ManagerDashboardContentWidget extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: AppSizes.s4,
           children: [
             Icon(icon, color: color, size: AppSizes.s24),
-            8.verticalSpace,
             Text(
               value,
               style: AppTextStyles.font20Bold.copyWith(color: color),
             ),
-            2.verticalSpace,
             Text(
               title,
               style: AppTextStyles.font11Regular.copyWith(color: color),
@@ -139,17 +166,15 @@ class ManagerDashboardContentWidget extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSizes.s10,
         children: [
           Text(
             'حضور الأقسام اليوم',
             style: AppTextStyles.font14Bold,
           ),
-          12.verticalSpace,
-          _buildDeptRow('إدارة تقنية المعلومات', '12 / 12 حاضر', AppColors.onlineGreen),
-          8.verticalSpace,
-          _buildDeptRow('إدارة العمليات والتشغيل', '20 / 22 حاضر', AppColors.statusLateText),
-          8.verticalSpace,
-          _buildDeptRow('المبيعات والتسويق', '14 / 14 حاضر', AppColors.onlineGreen),
+          ..._departments.map(
+            (dept) => _buildDeptRow(dept.name, dept.status, dept.statusColor),
+          ),
         ],
       ),
     );

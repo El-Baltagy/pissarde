@@ -14,52 +14,52 @@ class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
+  static const _leftTabs = [
+    (index: 0, icon: Icons.home_rounded, labelKey: 'nav_home'),
+    (index: 1, icon: Icons.calendar_month_outlined, labelKey: 'attendance'),
+  ];
+
+  static const _rightTabs = [
+    (index: 2, icon: Icons.description_outlined, labelKey: 'nav_requests'),
+    (index: 4, icon: Icons.person_outline_rounded, labelKey: 'nav_my_account'),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.bottomNavBg,
-        border: Border(
-          top: BorderSide(
-            color: AppColors.lightBorder,
-            width: AppSizes.s1,
-          ),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: AppPadding.p8,
-      ),
+    return BottomAppBar(
+      shape: const CircularNotchedRectangle(),
+      notchMargin: AppSizes.s8,
+      color: AppColors.bottomNavBg,
+      elevation: AppSizes.s8,
+      clipBehavior: Clip.antiAlias,
+      padding: EdgeInsets.zero,
       child: SafeArea(
         top: false,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(
-              index: 0,
-              icon: Icons.home_rounded,
-              labelKey: 'nav_home',
-            ),
-            _buildNavItem(
-              index: 1,
-              icon: Icons.calendar_month_outlined,
-              labelKey: 'nav_attendance_record',
-            ),
-            _buildNavItem(
-              index: 2,
-              icon: Icons.description_outlined,
-              labelKey: 'nav_requests',
-            ),
-            _buildNavItem(
-              index: 3,
-              icon: Icons.grid_view_rounded,
-              labelKey: 'nav_manager_dashboard',
-            ),
-            _buildNavItem(
-              index: 4,
-              icon: Icons.person_outline_rounded,
-              labelKey: 'nav_my_account',
-            ),
-          ],
+        child: SizedBox(
+          height: AppSizes.s60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ..._leftTabs.map(
+                (tab) => _buildNavItem(
+                  index: tab.index,
+                  icon: tab.icon,
+                  labelKey: tab.labelKey,
+                ),
+              ),
+              // Center gap for the notched floating action button
+              const Expanded(
+                child: SizedBox.shrink(),
+              ),
+              ..._rightTabs.map(
+                (tab) => _buildNavItem(
+                  index: tab.index,
+                  icon: tab.icon,
+                  labelKey: tab.labelKey,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -77,26 +77,27 @@ class CustomBottomNavBar extends StatelessWidget {
     return Expanded(
       child: Semantics(
         label: label,
-        selected: isSelected,
         button: true,
+        selected: isSelected,
         child: InkWell(
           onTap: () => onTap(index),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: AppSizes.s4,
             children: [
               Icon(
                 icon,
                 color: color,
                 size: AppSizes.s24,
               ),
-              const SizedBox(height: AppPadding.p4),
               Text(
                 label,
                 style: isSelected
-                    ? AppTextStyles.font12SemiBold.copyWith(color: color)
-                    : AppTextStyles.font11Regular.copyWith(color: color),
+                    ? AppTextStyles.font14Bold.copyWith(color: color)
+                    : AppTextStyles.font13Medium.copyWith(color: color),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

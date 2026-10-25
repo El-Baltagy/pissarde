@@ -7,6 +7,40 @@ import 'package:newf/core/theming/app_values.dart';
 class WeeklySummaryCardWidget extends StatelessWidget {
   const WeeklySummaryCardWidget({super.key});
 
+  static const _dayStats = [
+    (
+      count: '4',
+      labelKey: 'days_present',
+      bgColor: AppColors.statusPresentBg,
+      textColor: AppColors.statusPresentText,
+    ),
+    (
+      count: '1',
+      labelKey: 'days_delayed',
+      bgColor: AppColors.statusLateBg,
+      textColor: AppColors.statusLateText,
+    ),
+    (
+      count: '0',
+      labelKey: 'days_absent',
+      bgColor: AppColors.statusAbsentBg,
+      textColor: AppColors.statusAbsentText,
+    ),
+  ];
+
+  static const _metrics = [
+    (
+      labelKey: 'total_critical_month_delay',
+      valueKey: 'delay_minutes_val',
+      valueColor: AppColors.statusLateText,
+    ),
+    (
+      labelKey: 'overtime_hours_label',
+      valueKey: 'overtime_hours_val',
+      valueColor: AppColors.onlineGreen,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,15 +67,12 @@ class WeeklySummaryCardWidget extends StatelessWidget {
         children: [
           _buildHeaderRow(),
           _buildDaysRow(),
-          _buildMetricRow(
-            labelKey: 'total_critical_month_delay',
-            valueKey: 'delay_minutes_val',
-            valueColor: AppColors.statusLateText,
-          ),
-          _buildMetricRow(
-            labelKey: 'overtime_hours_label',
-            valueKey: 'overtime_hours_val',
-            valueColor: AppColors.onlineGreen,
+          ..._metrics.map(
+            (m) => _buildMetricRow(
+              labelKey: m.labelKey,
+              valueKey: m.valueKey,
+              valueColor: m.valueColor,
+            ),
           ),
         ],
       ),
@@ -80,26 +111,16 @@ class WeeklySummaryCardWidget extends StatelessWidget {
     /// RTL-first: present → delayed → absent
     return Row(
       spacing: AppSizes.s10,
-      children: [
-        _buildDayBox(
-          count: '4',
-          labelKey: 'days_present',
-          bgColor: AppColors.statusPresentBg,
-          textColor: AppColors.statusPresentText,
-        ),
-        _buildDayBox(
-          count: '1',
-          labelKey: 'days_delayed',
-          bgColor: AppColors.statusLateBg,
-          textColor: AppColors.statusLateText,
-        ),
-        _buildDayBox(
-          count: '0',
-          labelKey: 'days_absent',
-          bgColor: AppColors.statusAbsentBg,
-          textColor: AppColors.statusAbsentText,
-        ),
-      ],
+      children: _dayStats
+          .map(
+            (stat) => _buildDayBox(
+              count: stat.count,
+              labelKey: stat.labelKey,
+              bgColor: stat.bgColor,
+              textColor: stat.textColor,
+            ),
+          )
+          .toList(),
     );
   }
 

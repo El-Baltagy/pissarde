@@ -90,12 +90,15 @@ class _LoginPageState extends LoginPageBaseState {
                               context,
                               listRecorder: [field1, field2],
                             )) {
-                              await argData.login(
-                                parameter: LoginParameters(
-                                  emailController.text.trim(),
-                                  passwordController.text.trim(),
-                                ),
+                              context.replace(
+                                MainNavigationRoute(args: MainNavigationRouteArgs()),
                               );
+                              // await argData.login(
+                              //   parameter: LoginParameters(
+                              //     emailController.text.trim(),
+                              //     passwordController.text.trim(),
+                              //   ),
+                              // );
                             }
                           },
                           style: ElevatedButton.styleFrom(

@@ -47,14 +47,10 @@ class _ProfilePageState extends ProfilePageBaseState {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Semantics(
-                label: 'User Profile and Account Settings',
-                child: const ProfileContentWidget(),
-              ),
-            ],
-          ),
+          child: Semantics(
+            label: 'User Profile and Account Settings',
+            child: const ProfileContentWidget(),
+          )
         ),
       ),
     );

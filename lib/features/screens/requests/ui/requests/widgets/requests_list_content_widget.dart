@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -8,40 +7,51 @@ import 'package:newf/core/theming/app_values.dart';
 class RequestsListContentWidget extends StatelessWidget {
   const RequestsListContentWidget({super.key});
 
+  static const _requests = [
+    (
+      titleKey: 'req_departure_edit',
+      descKey: 'req_departure_desc',
+      dateKey: 'date_14_may',
+      statusKey: 'status_under_review',
+      statusBgColor: AppColors.tagReviewBg,
+      statusTextColor: AppColors.tagReviewText,
+    ),
+    (
+      titleKey: 'req_permission_2h',
+      descKey: 'req_permission_desc',
+      dateKey: 'date_10_may',
+      statusKey: 'status_approved',
+      statusBgColor: AppColors.tagApprovedBg,
+      statusTextColor: AppColors.tagApprovedText,
+    ),
+    (
+      titleKey: 'btn_request_correction',
+      descKey: 'req_fingerprint_unresponsive',
+      dateKey: 'date_05_may',
+      statusKey: 'status_approved',
+      statusBgColor: AppColors.tagApprovedBg,
+      statusTextColor: AppColors.tagApprovedText,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppPadding.p16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: AppSizes.s12,
         children: [
           _buildCreateRequestBanner(),
-          16.verticalSpace,
-          _buildRequestCard(
-            titleKey: 'req_departure_edit',
-            descKey: 'req_departure_desc',
-            dateKey: 'date_14_may',
-            statusKey: 'status_under_review',
-            statusBgColor: AppColors.tagReviewBg,
-            statusTextColor: AppColors.tagReviewText,
-          ),
-          12.verticalSpace,
-          _buildRequestCard(
-            titleKey: 'req_permission_2h',
-            descKey: 'req_permission_desc',
-            dateKey: 'date_10_may',
-            statusKey: 'status_approved',
-            statusBgColor: AppColors.tagApprovedBg,
-            statusTextColor: AppColors.tagApprovedText,
-          ),
-          12.verticalSpace,
-          _buildRequestCard(
-            titleKey: 'btn_request_correction',
-            descKey: 'req_fingerprint_unresponsive',
-            dateKey: 'date_05_may',
-            statusKey: 'status_approved',
-            statusBgColor: AppColors.tagApprovedBg,
-            statusTextColor: AppColors.tagApprovedText,
+          ..._requests.map(
+            (req) => _buildRequestCard(
+              titleKey: req.titleKey,
+              descKey: req.descKey,
+              dateKey: req.dateKey,
+              statusKey: req.statusKey,
+              statusBgColor: req.statusBgColor,
+              statusTextColor: req.statusTextColor,
+            ),
           ),
         ],
       ),
@@ -61,14 +71,14 @@ class RequestsListContentWidget extends StatelessWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            spacing: AppSizes.s2,
             children: [
               Text(
                 'requests_and_justifications'.tr(),
                 style: AppTextStyles.font16Bold.copyWith(
                   color: AppColors.roleSwitchSelectedBg,
                 ),
-              ),//Requests_and_justifications Tracking_order_status_and_credit_details
-              2.verticalSpace,
+              ),
               Text(
                 'tracking_order_status_and_credit_details'.tr(),
                 style: AppTextStyles.font11Regular.copyWith(
@@ -99,7 +109,6 @@ class RequestsListContentWidget extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -125,6 +134,7 @@ class RequestsListContentWidget extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSizes.s6,
         children: [
           /// RTL-first: title (right) → status badge (left)
           Row(
@@ -154,13 +164,11 @@ class RequestsListContentWidget extends StatelessWidget {
               ),
             ],
           ),
-          6.verticalSpace,
           Text(
             descKey.tr(),
             style: AppTextStyles.font11Regular,
             textAlign: TextAlign.start,
           ),
-          6.verticalSpace,
           Text(
             dateKey.tr(),
             style: AppTextStyles.font10Regular,

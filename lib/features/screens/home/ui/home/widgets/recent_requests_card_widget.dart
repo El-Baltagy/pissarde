@@ -7,6 +7,25 @@ import 'package:newf/core/theming/app_values.dart';
 class RecentRequestsCardWidget extends StatelessWidget {
   const RecentRequestsCardWidget({super.key});
 
+  static const _recentRequests = [
+    (
+      titleKey: 'req_departure_edit',
+      descKey: 'req_departure_desc',
+      dateKey: 'date_14_may',
+      statusKey: 'status_under_review',
+      statusBgColor: AppColors.tagReviewBg,
+      statusTextColor: AppColors.tagReviewText,
+    ),
+    (
+      titleKey: 'req_permission_2h',
+      descKey: 'req_permission_desc',
+      dateKey: 'date_10_may',
+      statusKey: 'status_approved',
+      statusBgColor: AppColors.tagApprovedBg,
+      statusTextColor: AppColors.tagApprovedText,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,21 +51,15 @@ class RecentRequestsCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeaderRow(),
-          _buildRequestItem(
-            titleKey: 'req_departure_edit',
-            descKey: 'req_departure_desc',
-            dateKey: 'date_14_may',
-            statusKey: 'status_under_review',
-            statusBgColor: AppColors.tagReviewBg,
-            statusTextColor: AppColors.tagReviewText,
-          ),
-          _buildRequestItem(
-            titleKey: 'req_permission_2h',
-            descKey: 'req_permission_desc',
-            dateKey: 'date_10_may',
-            statusKey: 'status_approved',
-            statusBgColor: AppColors.tagApprovedBg,
-            statusTextColor: AppColors.tagApprovedText,
+          ..._recentRequests.map(
+            (req) => _buildRequestItem(
+              titleKey: req.titleKey,
+              descKey: req.descKey,
+              dateKey: req.dateKey,
+              statusKey: req.statusKey,
+              statusBgColor: req.statusBgColor,
+              statusTextColor: req.statusTextColor,
+            ),
           ),
         ],
       ),

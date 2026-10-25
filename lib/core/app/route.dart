@@ -6,6 +6,7 @@ import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart'
 import 'package:newf/features/screens/manager_dashboard/ui/manager_dashboard/manager_dashboard_screen.dart';
 import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/login/ui/login/login_screen.dart';
+import 'package:newf/features/screens/splash/ui/splash_screen.dart';
 part  'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -15,12 +16,14 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
       AutoRoute(
+        page: SplashRoute.page,
+        initial: true,
+      ),
+      AutoRoute(
         page: LoginRoute.page,
-        // initial: true,
       ),
       AutoRoute(
         page: MainNavigationRoute.page,
-        initial: true,
       ),
       AutoRoute(
         page: HomeRoute.page,

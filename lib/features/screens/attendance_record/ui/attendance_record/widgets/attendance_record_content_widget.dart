@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -8,42 +7,52 @@ import 'package:newf/core/theming/app_values.dart';
 class AttendanceRecordContentWidget extends StatelessWidget {
   const AttendanceRecordContentWidget({super.key});
 
+  static const _records = [
+    (
+      date: 'الأربعاء، 15 مايو 2024',
+      checkIn: '08:14 ص',
+      checkOut: '--:--',
+      statusKey: 'status_late',
+      statusColor: AppColors.statusLateText,
+      statusBgColor: AppColors.statusLateBg,
+    ),
+    (
+      date: 'الثلاثاء، 14 مايو 2024',
+      checkIn: '07:55 ص',
+      checkOut: '04:02 م',
+      statusKey: 'status_present',
+      statusColor: AppColors.statusPresentText,
+      statusBgColor: AppColors.statusPresentBg,
+    ),
+    (
+      date: 'الاثنين، 13 مايو 2024',
+      checkIn: '08:00 ص',
+      checkOut: '04:05 م',
+      statusKey: 'status_present',
+      statusColor: AppColors.statusPresentText,
+      statusBgColor: AppColors.statusPresentBg,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppPadding.p16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSizes.s12,
         children: [
           _buildSummaryHeader(),
-          16.verticalSpace,
           _buildFilterChips(),
-          16.verticalSpace,
-          _buildRecordItem(
-            date: 'الأربعاء، 15 مايو 2024',
-            checkIn: '08:14 ص',
-            checkOut: '--:--',
-            statusKey: 'status_late',
-            statusColor: AppColors.statusLateText,
-            statusBgColor: AppColors.statusLateBg,
-          ),
-          12.verticalSpace,
-          _buildRecordItem(
-            date: 'الثلاثاء، 14 مايو 2024',
-            checkIn: '07:55 ص',
-            checkOut: '04:02 م',
-            statusKey: 'status_present',
-            statusColor: AppColors.statusPresentText,
-            statusBgColor: AppColors.statusPresentBg,
-          ),
-          12.verticalSpace,
-          _buildRecordItem(
-            date: 'الاثنين، 13 مايو 2024',
-            checkIn: '08:00 ص',
-            checkOut: '04:05 م',
-            statusKey: 'status_present',
-            statusColor: AppColors.statusPresentText,
-            statusBgColor: AppColors.statusPresentBg,
+          ..._records.map(
+            (record) => _buildRecordItem(
+              date: record.date,
+              checkIn: record.checkIn,
+              checkOut: record.checkOut,
+              statusKey: record.statusKey,
+              statusColor: record.statusColor,
+              statusBgColor: record.statusBgColor,
+            ),
           ),
         ],
       ),
@@ -79,14 +88,14 @@ class AttendanceRecordContentWidget extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            spacing: AppSizes.s4,
             children: [
               Text(
                 'attendance_hours_this_month'.tr(),
                 style: AppTextStyles.font11Regular,
               ),
-              4.verticalSpace,
               Text(
-                '160 / 176'+' '+'hour'.tr(),
+                '160 / 176 ${'hour'.tr()}',
                 style: AppTextStyles.font16Bold.copyWith(
                   color: AppColors.headerBackground,
                 ),
@@ -179,6 +188,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            spacing: AppSizes.s4,
             children: [
               Text(
                 date,
@@ -186,11 +196,8 @@ class AttendanceRecordContentWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              4.verticalSpace,
               Text(
-                'check_in'.tr() + ': $checkIn'+'  •  '+'check_out'.tr() + ': $checkOut',
-                // 'حضور: $checkIn  •  انصراف: $checkOut',
-                // 'حضور: $checkIn  •  انصراف: $checkOut',
+                '${'check_in'.tr()}: $checkIn  •  ${'check_out'.tr()}: $checkOut',
                 style: AppTextStyles.font11Regular,
               ),
             ],

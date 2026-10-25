@@ -99,3 +99,19 @@ new_request,new request,طلب جديد,yeni istek
 
 requests_and_justifications,Requests and justifications,الطلبات والمبررات,Talepler ve gerekçeler
 tracking_order_status_and_credit_details,Tracking order status and credit details,تتبع حالة الطلب وتفاصيل الائتمان,Sipariş durumunu ve kredi ayrıntılarını izleme
+
+attendance,attendance,حضور,katılım
+
+logout,logout,تسجيل الخروج,oturumu kapat
+
+job_data,Job data,بيانات الوظيفة,İş verileri
+the_official_morning_shift,the official morning shift,الدوام الصباحي الرسمي,resmi sabah vardiyası
+fingerprint_and_location_settings,fingerprint and location settings,إعدادات بصمة الإصبع والموقع,parmak izi ve konum ayarları
+attendance_reminder_notifications,attendance reminder notifications,إشعارات تذكير الحضور,katılım hatırlatma bildirimleri
+reminder_15_minutes_before_your_shift_starts,reminder 15 minutes before your shift starts,تذكير قبل 15 دقيقة من بدء مناوبتك,vardiyanız başlamadan 15 dakika önce hatırlatma
+
+employee_id,employee ID,معرف الموظف,çalışan kimliği
+activated_via_gps_and_the_app,activated via GPS and the app,تفعيلها عن طريق GPS والتطبيق,GPS ve uygulama aracılığıyla etkinleştirildi
+shift_schedule_and_working_hours,shift schedule and working hours,جدول التحول وساعات العمل,vardiya programı ve çalışma saatleri
+
+language,language,لغة,dil

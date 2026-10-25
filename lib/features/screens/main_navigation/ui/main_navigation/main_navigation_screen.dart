@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/constants/app_locator.dart';
+import 'package:newf/core/theming/app_colors.dart';
+import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/attendance_record/ui/attendance_record/attendance_record_screen.dart';
 import 'package:newf/features/screens/home/ui/home/home_screen.dart';
 import 'package:newf/features/screens/main_navigation/controller/main_navigation_cubit.dart';
@@ -50,10 +53,38 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
     return BlocBuilder<MainNavigationCubit, MainNavigationState>(
       builder: (context, state) {
         final selectedIndex = state is MainNavigationLoaded ? state.selectedIndex : 0;
+        final isManagerTabSelected = selectedIndex == 3;
+
         return Scaffold(
+          extendBody: true,
           body: IndexedStack(
             index: selectedIndex,
             children: _pages,
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Semantics(
+            label: 'nav_manager_dashboard'.tr(),
+            button: true,
+            selected: isManagerTabSelected,
+            child: SizedBox(
+              width: AppSizes.s56,
+              height: AppSizes.s56,
+              child: FloatingActionButton(
+                onPressed: () {
+                  mainNavigationCubit.changeTab(3);
+                },
+                elevation: AppSizes.s4,
+                backgroundColor: isManagerTabSelected
+                    ? AppColors.primaryGoldStart
+                    : AppColors.headerBackground,
+                shape: const CircleBorder(),
+                child: const Icon(
+                  Icons.grid_view_rounded,
+                  color: AppColors.roleSwitchSelectedBg,
+                  size: AppSizes.s28,
+                ),
+              ),
+            ),
           ),
           bottomNavigationBar: CustomBottomNavBar(
             currentIndex: selectedIndex,

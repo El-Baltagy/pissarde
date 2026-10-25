@@ -7,6 +7,7 @@ import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/localization/localization.dart';
 import 'package:newf/core/theming/theme_cubit.dart';
 import 'package:newf/core/storage/hive_storage.dart';
+import 'package:newf/features/screens/splash/ui/splash_screen.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'dart:io';
 
@@ -24,7 +25,7 @@ void main() {
     }
   });
 
-  testWidgets('App starts and loads MainNavigationPage properly', (WidgetTester tester) async {
+  testWidgets('App starts and loads SplashPage properly', (WidgetTester tester) async {
     await tester.pumpWidget(
       BlocProvider<ThemeCubit>(
         create: (context) => AppLocator()()(),
@@ -42,7 +43,8 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    // Verify app rendered without exceptions
+    // Verify app rendered without exceptions and shows SplashPage
     expect(find.byType(MyApp), findsOneWidget);
+    expect(find.byType(SplashPage), findsOneWidget);
   });
 }

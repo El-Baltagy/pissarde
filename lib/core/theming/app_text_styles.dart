@@ -136,6 +136,13 @@ class AppTextStyles {
     color: AppColors.contractorGreyText,
   );
 
+  static const TextStyle font11Bold = TextStyle(
+    fontFamily: 'Cairo',
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
+    color: AppColors.lightTextPrimary,
+  );
+
   static const TextStyle font10SemiBold = TextStyle(
     fontFamily: 'Cairo',
     fontSize: 10,

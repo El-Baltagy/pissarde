@@ -1,21 +1,10 @@
-import 'package:flutter/Material.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
 
 class TickerText extends StatefulWidget {
-
   /// Creates a widget that scrolls to reveal child contents if it overflows,
   /// and scrolls back up when it reaches the end.
   /// Optionally accepts a [TickerTextController] to control scroll behavior.
-  ///
-  /// Example:
-  /// ```
-  /// TickerText(
-  ///   scrollDirection: Axis.horizontal,
-  ///   speed: 20,
-  ///   startPauseDuration: const Duration(milliseconds: 500),
-  ///   endPauseDuration: const Duration(seconds: 2),
-  ///   child: Text("Very long paragraph of text...")
-  /// );
-  /// ```
   const TickerText({
     super.key,
     required this.child,
@@ -27,30 +16,16 @@ class TickerText extends StatefulWidget {
     this.controller,
     this.primaryCurve = Curves.linear,
     this.returnCurve = Curves.easeOut,
-  })  : assert(speed > 0, 'Speed has to be greater than zero');
+  }) : assert(speed > 0, 'Speed has to be greater than zero');
+
   final Widget child;
   final Axis scrollDirection;
-
-  /// Speed at which the widget scrolls in pixels per second.
-  /// Has to be greater than zero.
   final int speed;
-
-  /// How long it takes for the widget to scroll back up from the end.
   final Duration returnDuration;
-
-  /// How long it takes for widget to begin scrolling.
   final Duration startPauseDuration;
-
-  /// How long the scrolling pauses at the end before scrolling back up.
-  /// If null, it is the same as [startPauseDuration].
   final Duration? endPauseDuration;
-
-  /// Controls the state of scrolling. If not provided, uses its default internal controller
-  /// with `autoStart` enabled.
   final TickerTextController? controller;
-
   final Curve primaryCurve;
-
   final Curve returnCurve;
 
   @override
@@ -60,93 +35,105 @@ class TickerText extends StatefulWidget {
 class _TickerTextState extends State<TickerText> {
   late final ScrollController _scrollController;
   late final TickerTextController _autoScrollController;
+  Timer? _activeTimer;
 
   double get maxScrollExtent => _scrollController.position.maxScrollExtent;
   Duration get scrollDuration => Duration(
-    milliseconds: ((maxScrollExtent / widget.speed) * 1000).toInt(),
-  );
+        milliseconds: ((maxScrollExtent / widget.speed) * 1000).toInt(),
+      );
 
   @override
   void initState() {
+    super.initState();
     _scrollController = ScrollController();
     _autoScrollController =
         widget.controller ?? TickerTextController(autoStart: true);
 
     if (_autoScrollController.started) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _scroll());
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _scroll();
+      });
     } else {
       _autoScrollController.addListener(_scroll);
     }
-
-    super.initState();
   }
 
   @override
   void dispose() {
+    _activeTimer?.cancel();
     _scrollController.dispose();
-    _autoScrollController.dispose();
+    if (widget.controller == null) {
+      _autoScrollController.dispose();
+    }
     super.dispose();
+  }
+
+  Future<bool> _waitWithCancel(Duration duration) {
+    final completer = Completer<bool>();
+    _activeTimer?.cancel();
+    _activeTimer = Timer(duration, () {
+      if (!completer.isCompleted) completer.complete(true);
+    });
+    return completer.future;
   }
 
   @override
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
+    return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: widget.scrollDirection,
       controller: _scrollController,
       child: widget.child,
-    )
-    ;
+    );
   }
 
   Future<void> _scroll() async {
+    if (!mounted) return;
     if (_scrollController.hasClients &&
         _scrollController.offset > 0 &&
         !_autoScrollController.started) {
       _scrollController.jumpTo(0);
       return;
     }
-    while (_scrollController.hasClients && _autoScrollController.started) {
-      // Run futures in succession
-      await Future.delayed(widget.startPauseDuration).then((_) {
-        if (_scrollController.hasClients &&
-            _autoScrollController.started &&
-            _scrollController.offset == 0) {
-          return _scrollController.animateTo(
-            maxScrollExtent,
-            duration: scrollDuration,
-            curve: widget.primaryCurve,
-          );
-        }
-      }).then((_) {
-        if (_scrollController.hasClients &&
-            _autoScrollController.started &&
-            _scrollController.offset == maxScrollExtent) {
-          return Future.delayed(
-            widget.endPauseDuration ?? widget.startPauseDuration,
-          );
-        }
-      }).then((_) {
-        if (_scrollController.hasClients &&
-            _scrollController.offset == maxScrollExtent) {
-          return _scrollController.animateTo(
-            0.0,
-            duration: widget.returnDuration,
-            curve: widget.returnCurve,
-          );
-        }
-      });
+    while (mounted &&
+        _scrollController.hasClients &&
+        _autoScrollController.started) {
+      await _waitWithCancel(widget.startPauseDuration);
+      if (!mounted) break;
+      if (_scrollController.hasClients &&
+          _autoScrollController.started &&
+          _scrollController.offset == 0) {
+        await _scrollController.animateTo(
+          maxScrollExtent,
+          duration: scrollDuration,
+          curve: widget.primaryCurve,
+        );
+      }
+      if (!mounted) break;
+      if (_scrollController.hasClients &&
+          _autoScrollController.started &&
+          _scrollController.offset == maxScrollExtent) {
+        await _waitWithCancel(
+          widget.endPauseDuration ?? widget.startPauseDuration,
+        );
+      }
+      if (!mounted) break;
+      if (_scrollController.hasClients &&
+          _scrollController.offset == maxScrollExtent) {
+        await _scrollController.animateTo(
+          0.0,
+          duration: widget.returnDuration,
+          curve: widget.returnCurve,
+        );
+      }
     }
   }
 }
 
-
 class TickerTextController extends ChangeNotifier {
-
   TickerTextController({bool autoStart = false}) : _started = autoStart;
   bool _started;
 
-  /// Check if scrolling has started
   bool get started => _started;
 
   void startScroll() {

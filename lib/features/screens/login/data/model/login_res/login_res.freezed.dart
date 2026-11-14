@@ -20,9 +20,8 @@ LoginRes _$LoginResFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoginRes {
-  String get status => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  Data get data => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,9 +34,9 @@ abstract class $LoginResCopyWith<$Res> {
   factory $LoginResCopyWith(LoginRes value, $Res Function(LoginRes) then) =
       _$LoginResCopyWithImpl<$Res, LoginRes>;
   @useResult
-  $Res call({String status, String message, Data data});
+  $Res call({String message, User user});
 
-  $DataCopyWith<$Res> get data;
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -53,197 +52,13 @@ class _$LoginResCopyWithImpl<$Res, $Val extends LoginRes>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = null,
     Object? message = null,
-    Object? data = null,
-  }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Data,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $DataCopyWith<$Res> get data {
-    return $DataCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$LoginResImplCopyWith<$Res>
-    implements $LoginResCopyWith<$Res> {
-  factory _$$LoginResImplCopyWith(
-          _$LoginResImpl value, $Res Function(_$LoginResImpl) then) =
-      __$$LoginResImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String status, String message, Data data});
-
-  @override
-  $DataCopyWith<$Res> get data;
-}
-
-/// @nodoc
-class __$$LoginResImplCopyWithImpl<$Res>
-    extends _$LoginResCopyWithImpl<$Res, _$LoginResImpl>
-    implements _$$LoginResImplCopyWith<$Res> {
-  __$$LoginResImplCopyWithImpl(
-      _$LoginResImpl _value, $Res Function(_$LoginResImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? message = null,
-    Object? data = null,
-  }) {
-    return _then(_$LoginResImpl(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Data,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$LoginResImpl extends _LoginRes {
-  const _$LoginResImpl(
-      {required this.status, required this.message, required this.data})
-      : super._();
-
-  factory _$LoginResImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LoginResImplFromJson(json);
-
-  @override
-  final String status;
-  @override
-  final String message;
-  @override
-  final Data data;
-
-  @override
-  String toString() {
-    return 'LoginRes(status: $status, message: $message, data: $data)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoginResImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, status, message, data);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoginResImplCopyWith<_$LoginResImpl> get copyWith =>
-      __$$LoginResImplCopyWithImpl<_$LoginResImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$LoginResImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _LoginRes extends LoginRes {
-  const factory _LoginRes(
-      {required final String status,
-      required final String message,
-      required final Data data}) = _$LoginResImpl;
-  const _LoginRes._() : super._();
-
-  factory _LoginRes.fromJson(Map<String, dynamic> json) =
-      _$LoginResImpl.fromJson;
-
-  @override
-  String get status;
-  @override
-  String get message;
-  @override
-  Data get data;
-  @override
-  @JsonKey(ignore: true)
-  _$$LoginResImplCopyWith<_$LoginResImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Data _$DataFromJson(Map<String, dynamic> json) {
-  return _Data.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Data {
-  String get token => throw _privateConstructorUsedError;
-  User get user => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $DataCopyWith<Data> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DataCopyWith<$Res> {
-  factory $DataCopyWith(Data value, $Res Function(Data) then) =
-      _$DataCopyWithImpl<$Res, Data>;
-  @useResult
-  $Res call({String token, User user});
-
-  $UserCopyWith<$Res> get user;
-}
-
-/// @nodoc
-class _$DataCopyWithImpl<$Res, $Val extends Data>
-    implements $DataCopyWith<$Res> {
-  _$DataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? token = null,
     Object? user = null,
   }) {
     return _then(_value.copyWith(
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
       user: null == user
           ? _value.user
@@ -262,35 +77,37 @@ class _$DataCopyWithImpl<$Res, $Val extends Data>
 }
 
 /// @nodoc
-abstract class _$$DataImplCopyWith<$Res> implements $DataCopyWith<$Res> {
-  factory _$$DataImplCopyWith(
-          _$DataImpl value, $Res Function(_$DataImpl) then) =
-      __$$DataImplCopyWithImpl<$Res>;
+abstract class _$$LoginResImplCopyWith<$Res>
+    implements $LoginResCopyWith<$Res> {
+  factory _$$LoginResImplCopyWith(
+          _$LoginResImpl value, $Res Function(_$LoginResImpl) then) =
+      __$$LoginResImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, User user});
+  $Res call({String message, User user});
 
   @override
   $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class __$$DataImplCopyWithImpl<$Res>
-    extends _$DataCopyWithImpl<$Res, _$DataImpl>
-    implements _$$DataImplCopyWith<$Res> {
-  __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
+class __$$LoginResImplCopyWithImpl<$Res>
+    extends _$LoginResCopyWithImpl<$Res, _$LoginResImpl>
+    implements _$$LoginResImplCopyWith<$Res> {
+  __$$LoginResImplCopyWithImpl(
+      _$LoginResImpl _value, $Res Function(_$LoginResImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = null,
+    Object? message = null,
     Object? user = null,
   }) {
-    return _then(_$DataImpl(
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
+    return _then(_$LoginResImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
       user: null == user
           ? _value.user
@@ -302,63 +119,47 @@ class __$$DataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DataImpl extends _Data {
-  const _$DataImpl({required this.token, required this.user}) : super._();
+class _$LoginResImpl extends _LoginRes {
+  const _$LoginResImpl({required this.message, required this.user}) : super._();
 
-  factory _$DataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DataImplFromJson(json);
+  factory _$LoginResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LoginResImplFromJson(json);
 
   @override
-  final String token;
+  final String message;
   @override
   final User user;
-
-  @override
-  String toString() {
-    return 'Data(token: $token, user: $user)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DataImpl &&
-            (identical(other.token, token) || other.token == token) &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, token, user);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DataImplCopyWith<_$DataImpl> get copyWith =>
-      __$$DataImplCopyWithImpl<_$DataImpl>(this, _$identity);
+  _$$LoginResImplCopyWith<_$LoginResImpl> get copyWith =>
+      __$$LoginResImplCopyWithImpl<_$LoginResImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DataImplToJson(
+    return _$$LoginResImplToJson(
       this,
     );
   }
 }
 
-abstract class _Data extends Data {
-  const factory _Data({required final String token, required final User user}) =
-      _$DataImpl;
-  const _Data._() : super._();
+abstract class _LoginRes extends LoginRes {
+  const factory _LoginRes(
+      {required final String message,
+      required final User user}) = _$LoginResImpl;
+  const _LoginRes._() : super._();
 
-  factory _Data.fromJson(Map<String, dynamic> json) = _$DataImpl.fromJson;
+  factory _LoginRes.fromJson(Map<String, dynamic> json) =
+      _$LoginResImpl.fromJson;
 
   @override
-  String get token;
+  String get message;
   @override
   User get user;
   @override
   @JsonKey(ignore: true)
-  _$$DataImplCopyWith<_$DataImpl> get copyWith =>
+  _$$LoginResImplCopyWith<_$LoginResImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -370,14 +171,18 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
-  String get dob => throw _privateConstructorUsedError;
-  String? get phone => throw _privateConstructorUsedError;
-  String? get specialization => throw _privateConstructorUsedError;
-  String get role => throw _privateConstructorUsedError;
-  String? get avatar => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get employee_code => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
+  Role get role => throw _privateConstructorUsedError;
+  Employeetype get employee_type => throw _privateConstructorUsedError;
+  Worktype get work_type => throw _privateConstructorUsedError;
+  Branch get branch => throw _privateConstructorUsedError;
+  dynamic get supervisor => throw _privateConstructorUsedError;
+  Shift get shift => throw _privateConstructorUsedError;
+  dynamic get duty_authorized_branch_ids => throw _privateConstructorUsedError;
+  bool get is_active => throw _privateConstructorUsedError;
   String get created_at => throw _privateConstructorUsedError;
-  String get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -392,14 +197,24 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String? email,
-      String dob,
-      String? phone,
-      String? specialization,
-      String role,
-      String? avatar,
-      String created_at,
-      String updated_at});
+      String email,
+      String employee_code,
+      String phone,
+      Role role,
+      Employeetype employee_type,
+      Worktype work_type,
+      Branch branch,
+      dynamic supervisor,
+      Shift shift,
+      dynamic duty_authorized_branch_ids,
+      bool is_active,
+      String created_at});
+
+  $RoleCopyWith<$Res> get role;
+  $EmployeetypeCopyWith<$Res> get employee_type;
+  $WorktypeCopyWith<$Res> get work_type;
+  $BranchCopyWith<$Res> get branch;
+  $ShiftCopyWith<$Res> get shift;
 }
 
 /// @nodoc
@@ -417,14 +232,18 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? email = freezed,
-    Object? dob = null,
-    Object? phone = freezed,
-    Object? specialization = freezed,
+    Object? email = null,
+    Object? employee_code = null,
+    Object? phone = null,
     Object? role = null,
-    Object? avatar = freezed,
+    Object? employee_type = null,
+    Object? work_type = null,
+    Object? branch = null,
+    Object? supervisor = freezed,
+    Object? shift = null,
+    Object? duty_authorized_branch_ids = freezed,
+    Object? is_active = null,
     Object? created_at = null,
-    Object? updated_at = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -435,39 +254,95 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dob: null == dob
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: freezed == phone
+      employee_code: null == employee_code
+          ? _value.employee_code
+          : employee_code // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      specialization: freezed == specialization
-          ? _value.specialization
-          : specialization // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatar: freezed == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Role,
+      employee_type: null == employee_type
+          ? _value.employee_type
+          : employee_type // ignore: cast_nullable_to_non_nullable
+              as Employeetype,
+      work_type: null == work_type
+          ? _value.work_type
+          : work_type // ignore: cast_nullable_to_non_nullable
+              as Worktype,
+      branch: null == branch
+          ? _value.branch
+          : branch // ignore: cast_nullable_to_non_nullable
+              as Branch,
+      supervisor: freezed == supervisor
+          ? _value.supervisor
+          : supervisor // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      shift: null == shift
+          ? _value.shift
+          : shift // ignore: cast_nullable_to_non_nullable
+              as Shift,
+      duty_authorized_branch_ids: freezed == duty_authorized_branch_ids
+          ? _value.duty_authorized_branch_ids
+          : duty_authorized_branch_ids // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      is_active: null == is_active
+          ? _value.is_active
+          : is_active // ignore: cast_nullable_to_non_nullable
+              as bool,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
               as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RoleCopyWith<$Res> get role {
+    return $RoleCopyWith<$Res>(_value.role, (value) {
+      return _then(_value.copyWith(role: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $EmployeetypeCopyWith<$Res> get employee_type {
+    return $EmployeetypeCopyWith<$Res>(_value.employee_type, (value) {
+      return _then(_value.copyWith(employee_type: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $WorktypeCopyWith<$Res> get work_type {
+    return $WorktypeCopyWith<$Res>(_value.work_type, (value) {
+      return _then(_value.copyWith(work_type: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BranchCopyWith<$Res> get branch {
+    return $BranchCopyWith<$Res>(_value.branch, (value) {
+      return _then(_value.copyWith(branch: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ShiftCopyWith<$Res> get shift {
+    return $ShiftCopyWith<$Res>(_value.shift, (value) {
+      return _then(_value.copyWith(shift: value) as $Val);
+    });
   }
 }
 
@@ -481,14 +356,29 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String? email,
-      String dob,
-      String? phone,
-      String? specialization,
-      String role,
-      String? avatar,
-      String created_at,
-      String updated_at});
+      String email,
+      String employee_code,
+      String phone,
+      Role role,
+      Employeetype employee_type,
+      Worktype work_type,
+      Branch branch,
+      dynamic supervisor,
+      Shift shift,
+      dynamic duty_authorized_branch_ids,
+      bool is_active,
+      String created_at});
+
+  @override
+  $RoleCopyWith<$Res> get role;
+  @override
+  $EmployeetypeCopyWith<$Res> get employee_type;
+  @override
+  $WorktypeCopyWith<$Res> get work_type;
+  @override
+  $BranchCopyWith<$Res> get branch;
+  @override
+  $ShiftCopyWith<$Res> get shift;
 }
 
 /// @nodoc
@@ -503,14 +393,18 @@ class __$$UserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? email = freezed,
-    Object? dob = null,
-    Object? phone = freezed,
-    Object? specialization = freezed,
+    Object? email = null,
+    Object? employee_code = null,
+    Object? phone = null,
     Object? role = null,
-    Object? avatar = freezed,
+    Object? employee_type = null,
+    Object? work_type = null,
+    Object? branch = null,
+    Object? supervisor = freezed,
+    Object? shift = null,
+    Object? duty_authorized_branch_ids = freezed,
+    Object? is_active = null,
     Object? created_at = null,
-    Object? updated_at = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -521,37 +415,53 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dob: null == dob
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: freezed == phone
+      employee_code: null == employee_code
+          ? _value.employee_code
+          : employee_code // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      specialization: freezed == specialization
-          ? _value.specialization
-          : specialization // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatar: freezed == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Role,
+      employee_type: null == employee_type
+          ? _value.employee_type
+          : employee_type // ignore: cast_nullable_to_non_nullable
+              as Employeetype,
+      work_type: null == work_type
+          ? _value.work_type
+          : work_type // ignore: cast_nullable_to_non_nullable
+              as Worktype,
+      branch: null == branch
+          ? _value.branch
+          : branch // ignore: cast_nullable_to_non_nullable
+              as Branch,
+      supervisor: freezed == supervisor
+          ? _value.supervisor
+          : supervisor // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      shift: null == shift
+          ? _value.shift
+          : shift // ignore: cast_nullable_to_non_nullable
+              as Shift,
+      duty_authorized_branch_ids: freezed == duty_authorized_branch_ids
+          ? _value.duty_authorized_branch_ids
+          : duty_authorized_branch_ids // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      is_active: null == is_active
+          ? _value.is_active
+          : is_active // ignore: cast_nullable_to_non_nullable
+              as bool,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -564,13 +474,17 @@ class _$UserImpl extends _User {
       {required this.id,
       required this.name,
       required this.email,
-      required this.dob,
+      required this.employee_code,
       required this.phone,
-      required this.specialization,
       required this.role,
-      required this.avatar,
-      required this.created_at,
-      required this.updated_at})
+      required this.employee_type,
+      required this.work_type,
+      required this.branch,
+      required this.supervisor,
+      required this.shift,
+      required this.duty_authorized_branch_ids,
+      required this.is_active,
+      required this.created_at})
       : super._();
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -581,51 +495,29 @@ class _$UserImpl extends _User {
   @override
   final String name;
   @override
-  final String? email;
+  final String email;
   @override
-  final String dob;
+  final String employee_code;
   @override
-  final String? phone;
+  final String phone;
   @override
-  final String? specialization;
+  final Role role;
   @override
-  final String role;
+  final Employeetype employee_type;
   @override
-  final String? avatar;
+  final Worktype work_type;
+  @override
+  final Branch branch;
+  @override
+  final dynamic supervisor;
+  @override
+  final Shift shift;
+  @override
+  final dynamic duty_authorized_branch_ids;
+  @override
+  final bool is_active;
   @override
   final String created_at;
-  @override
-  final String updated_at;
-
-  @override
-  String toString() {
-    return 'User(id: $id, name: $name, email: $email, dob: $dob, phone: $phone, specialization: $specialization, role: $role, avatar: $avatar, created_at: $created_at, updated_at: $updated_at)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.specialization, specialization) ||
-                other.specialization == specialization) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at) &&
-            (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, name, email, dob, phone,
-      specialization, role, avatar, created_at, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -645,14 +537,18 @@ abstract class _User extends User {
   const factory _User(
       {required final int id,
       required final String name,
-      required final String? email,
-      required final String dob,
-      required final String? phone,
-      required final String? specialization,
-      required final String role,
-      required final String? avatar,
-      required final String created_at,
-      required final String updated_at}) = _$UserImpl;
+      required final String email,
+      required final String employee_code,
+      required final String phone,
+      required final Role role,
+      required final Employeetype employee_type,
+      required final Worktype work_type,
+      required final Branch branch,
+      required final dynamic supervisor,
+      required final Shift shift,
+      required final dynamic duty_authorized_branch_ids,
+      required final bool is_active,
+      required final String created_at}) = _$UserImpl;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -662,23 +558,930 @@ abstract class _User extends User {
   @override
   String get name;
   @override
-  String? get email;
+  String get email;
   @override
-  String get dob;
+  String get employee_code;
   @override
-  String? get phone;
+  String get phone;
   @override
-  String? get specialization;
+  Role get role;
   @override
-  String get role;
+  Employeetype get employee_type;
   @override
-  String? get avatar;
+  Worktype get work_type;
+  @override
+  Branch get branch;
+  @override
+  dynamic get supervisor;
+  @override
+  Shift get shift;
+  @override
+  dynamic get duty_authorized_branch_ids;
+  @override
+  bool get is_active;
   @override
   String get created_at;
   @override
-  String get updated_at;
-  @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Role _$RoleFromJson(Map<String, dynamic> json) {
+  return _Role.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Role {
+  String get value => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RoleCopyWith<Role> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RoleCopyWith<$Res> {
+  factory $RoleCopyWith(Role value, $Res Function(Role) then) =
+      _$RoleCopyWithImpl<$Res, Role>;
+  @useResult
+  $Res call({String value, String label});
+}
+
+/// @nodoc
+class _$RoleCopyWithImpl<$Res, $Val extends Role>
+    implements $RoleCopyWith<$Res> {
+  _$RoleCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+    Object? label = null,
+  }) {
+    return _then(_value.copyWith(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RoleImplCopyWith<$Res> implements $RoleCopyWith<$Res> {
+  factory _$$RoleImplCopyWith(
+          _$RoleImpl value, $Res Function(_$RoleImpl) then) =
+      __$$RoleImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String value, String label});
+}
+
+/// @nodoc
+class __$$RoleImplCopyWithImpl<$Res>
+    extends _$RoleCopyWithImpl<$Res, _$RoleImpl>
+    implements _$$RoleImplCopyWith<$Res> {
+  __$$RoleImplCopyWithImpl(_$RoleImpl _value, $Res Function(_$RoleImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+    Object? label = null,
+  }) {
+    return _then(_$RoleImpl(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RoleImpl extends _Role {
+  const _$RoleImpl({required this.value, required this.label}) : super._();
+
+  factory _$RoleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RoleImplFromJson(json);
+
+  @override
+  final String value;
+  @override
+  final String label;
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RoleImplCopyWith<_$RoleImpl> get copyWith =>
+      __$$RoleImplCopyWithImpl<_$RoleImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RoleImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Role extends Role {
+  const factory _Role(
+      {required final String value, required final String label}) = _$RoleImpl;
+  const _Role._() : super._();
+
+  factory _Role.fromJson(Map<String, dynamic> json) = _$RoleImpl.fromJson;
+
+  @override
+  String get value;
+  @override
+  String get label;
+  @override
+  @JsonKey(ignore: true)
+  _$$RoleImplCopyWith<_$RoleImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Employeetype _$EmployeetypeFromJson(Map<String, dynamic> json) {
+  return _Employeetype.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Employeetype {
+  String get value => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EmployeetypeCopyWith<Employeetype> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmployeetypeCopyWith<$Res> {
+  factory $EmployeetypeCopyWith(
+          Employeetype value, $Res Function(Employeetype) then) =
+      _$EmployeetypeCopyWithImpl<$Res, Employeetype>;
+  @useResult
+  $Res call({String value, String label});
+}
+
+/// @nodoc
+class _$EmployeetypeCopyWithImpl<$Res, $Val extends Employeetype>
+    implements $EmployeetypeCopyWith<$Res> {
+  _$EmployeetypeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+    Object? label = null,
+  }) {
+    return _then(_value.copyWith(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$EmployeetypeImplCopyWith<$Res>
+    implements $EmployeetypeCopyWith<$Res> {
+  factory _$$EmployeetypeImplCopyWith(
+          _$EmployeetypeImpl value, $Res Function(_$EmployeetypeImpl) then) =
+      __$$EmployeetypeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String value, String label});
+}
+
+/// @nodoc
+class __$$EmployeetypeImplCopyWithImpl<$Res>
+    extends _$EmployeetypeCopyWithImpl<$Res, _$EmployeetypeImpl>
+    implements _$$EmployeetypeImplCopyWith<$Res> {
+  __$$EmployeetypeImplCopyWithImpl(
+      _$EmployeetypeImpl _value, $Res Function(_$EmployeetypeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+    Object? label = null,
+  }) {
+    return _then(_$EmployeetypeImpl(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$EmployeetypeImpl extends _Employeetype {
+  const _$EmployeetypeImpl({required this.value, required this.label})
+      : super._();
+
+  factory _$EmployeetypeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EmployeetypeImplFromJson(json);
+
+  @override
+  final String value;
+  @override
+  final String label;
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EmployeetypeImplCopyWith<_$EmployeetypeImpl> get copyWith =>
+      __$$EmployeetypeImplCopyWithImpl<_$EmployeetypeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EmployeetypeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Employeetype extends Employeetype {
+  const factory _Employeetype(
+      {required final String value,
+      required final String label}) = _$EmployeetypeImpl;
+  const _Employeetype._() : super._();
+
+  factory _Employeetype.fromJson(Map<String, dynamic> json) =
+      _$EmployeetypeImpl.fromJson;
+
+  @override
+  String get value;
+  @override
+  String get label;
+  @override
+  @JsonKey(ignore: true)
+  _$$EmployeetypeImplCopyWith<_$EmployeetypeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Worktype _$WorktypeFromJson(Map<String, dynamic> json) {
+  return _Worktype.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Worktype {
+  String get value => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+  bool get requires_qr => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $WorktypeCopyWith<Worktype> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $WorktypeCopyWith<$Res> {
+  factory $WorktypeCopyWith(Worktype value, $Res Function(Worktype) then) =
+      _$WorktypeCopyWithImpl<$Res, Worktype>;
+  @useResult
+  $Res call({String value, String label, bool requires_qr});
+}
+
+/// @nodoc
+class _$WorktypeCopyWithImpl<$Res, $Val extends Worktype>
+    implements $WorktypeCopyWith<$Res> {
+  _$WorktypeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+    Object? label = null,
+    Object? requires_qr = null,
+  }) {
+    return _then(_value.copyWith(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      requires_qr: null == requires_qr
+          ? _value.requires_qr
+          : requires_qr // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$WorktypeImplCopyWith<$Res>
+    implements $WorktypeCopyWith<$Res> {
+  factory _$$WorktypeImplCopyWith(
+          _$WorktypeImpl value, $Res Function(_$WorktypeImpl) then) =
+      __$$WorktypeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String value, String label, bool requires_qr});
+}
+
+/// @nodoc
+class __$$WorktypeImplCopyWithImpl<$Res>
+    extends _$WorktypeCopyWithImpl<$Res, _$WorktypeImpl>
+    implements _$$WorktypeImplCopyWith<$Res> {
+  __$$WorktypeImplCopyWithImpl(
+      _$WorktypeImpl _value, $Res Function(_$WorktypeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+    Object? label = null,
+    Object? requires_qr = null,
+  }) {
+    return _then(_$WorktypeImpl(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      requires_qr: null == requires_qr
+          ? _value.requires_qr
+          : requires_qr // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$WorktypeImpl extends _Worktype {
+  const _$WorktypeImpl(
+      {required this.value, required this.label, required this.requires_qr})
+      : super._();
+
+  factory _$WorktypeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WorktypeImplFromJson(json);
+
+  @override
+  final String value;
+  @override
+  final String label;
+  @override
+  final bool requires_qr;
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WorktypeImplCopyWith<_$WorktypeImpl> get copyWith =>
+      __$$WorktypeImplCopyWithImpl<_$WorktypeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WorktypeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Worktype extends Worktype {
+  const factory _Worktype(
+      {required final String value,
+      required final String label,
+      required final bool requires_qr}) = _$WorktypeImpl;
+  const _Worktype._() : super._();
+
+  factory _Worktype.fromJson(Map<String, dynamic> json) =
+      _$WorktypeImpl.fromJson;
+
+  @override
+  String get value;
+  @override
+  String get label;
+  @override
+  bool get requires_qr;
+  @override
+  @JsonKey(ignore: true)
+  _$$WorktypeImplCopyWith<_$WorktypeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Branch _$BranchFromJson(Map<String, dynamic> json) {
+  return _Branch.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Branch {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+  int get geofence_radius_meters => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BranchCopyWith<Branch> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BranchCopyWith<$Res> {
+  factory $BranchCopyWith(Branch value, $Res Function(Branch) then) =
+      _$BranchCopyWithImpl<$Res, Branch>;
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String code,
+      double latitude,
+      double longitude,
+      int geofence_radius_meters});
+}
+
+/// @nodoc
+class _$BranchCopyWithImpl<$Res, $Val extends Branch>
+    implements $BranchCopyWith<$Res> {
+  _$BranchCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? code = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? geofence_radius_meters = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      geofence_radius_meters: null == geofence_radius_meters
+          ? _value.geofence_radius_meters
+          : geofence_radius_meters // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BranchImplCopyWith<$Res> implements $BranchCopyWith<$Res> {
+  factory _$$BranchImplCopyWith(
+          _$BranchImpl value, $Res Function(_$BranchImpl) then) =
+      __$$BranchImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String code,
+      double latitude,
+      double longitude,
+      int geofence_radius_meters});
+}
+
+/// @nodoc
+class __$$BranchImplCopyWithImpl<$Res>
+    extends _$BranchCopyWithImpl<$Res, _$BranchImpl>
+    implements _$$BranchImplCopyWith<$Res> {
+  __$$BranchImplCopyWithImpl(
+      _$BranchImpl _value, $Res Function(_$BranchImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? code = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? geofence_radius_meters = null,
+  }) {
+    return _then(_$BranchImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      geofence_radius_meters: null == geofence_radius_meters
+          ? _value.geofence_radius_meters
+          : geofence_radius_meters // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BranchImpl extends _Branch {
+  const _$BranchImpl(
+      {required this.id,
+      required this.name,
+      required this.code,
+      required this.latitude,
+      required this.longitude,
+      required this.geofence_radius_meters})
+      : super._();
+
+  factory _$BranchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BranchImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String code;
+  @override
+  final double latitude;
+  @override
+  final double longitude;
+  @override
+  final int geofence_radius_meters;
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
+      __$$BranchImplCopyWithImpl<_$BranchImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BranchImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Branch extends Branch {
+  const factory _Branch(
+      {required final int id,
+      required final String name,
+      required final String code,
+      required final double latitude,
+      required final double longitude,
+      required final int geofence_radius_meters}) = _$BranchImpl;
+  const _Branch._() : super._();
+
+  factory _Branch.fromJson(Map<String, dynamic> json) = _$BranchImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+  @override
+  String get code;
+  @override
+  double get latitude;
+  @override
+  double get longitude;
+  @override
+  int get geofence_radius_meters;
+  @override
+  @JsonKey(ignore: true)
+  _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Shift _$ShiftFromJson(Map<String, dynamic> json) {
+  return _Shift.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Shift {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  String get start_time => throw _privateConstructorUsedError;
+  String get end_time => throw _privateConstructorUsedError;
+  bool get is_overnight => throw _privateConstructorUsedError;
+  int get grace_period_minutes => throw _privateConstructorUsedError;
+  List<int> get working_days => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ShiftCopyWith<Shift> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ShiftCopyWith<$Res> {
+  factory $ShiftCopyWith(Shift value, $Res Function(Shift) then) =
+      _$ShiftCopyWithImpl<$Res, Shift>;
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String code,
+      String start_time,
+      String end_time,
+      bool is_overnight,
+      int grace_period_minutes,
+      List<int> working_days});
+}
+
+/// @nodoc
+class _$ShiftCopyWithImpl<$Res, $Val extends Shift>
+    implements $ShiftCopyWith<$Res> {
+  _$ShiftCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? code = null,
+    Object? start_time = null,
+    Object? end_time = null,
+    Object? is_overnight = null,
+    Object? grace_period_minutes = null,
+    Object? working_days = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      start_time: null == start_time
+          ? _value.start_time
+          : start_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      end_time: null == end_time
+          ? _value.end_time
+          : end_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      is_overnight: null == is_overnight
+          ? _value.is_overnight
+          : is_overnight // ignore: cast_nullable_to_non_nullable
+              as bool,
+      grace_period_minutes: null == grace_period_minutes
+          ? _value.grace_period_minutes
+          : grace_period_minutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      working_days: null == working_days
+          ? _value.working_days
+          : working_days // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ShiftImplCopyWith<$Res> implements $ShiftCopyWith<$Res> {
+  factory _$$ShiftImplCopyWith(
+          _$ShiftImpl value, $Res Function(_$ShiftImpl) then) =
+      __$$ShiftImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String code,
+      String start_time,
+      String end_time,
+      bool is_overnight,
+      int grace_period_minutes,
+      List<int> working_days});
+}
+
+/// @nodoc
+class __$$ShiftImplCopyWithImpl<$Res>
+    extends _$ShiftCopyWithImpl<$Res, _$ShiftImpl>
+    implements _$$ShiftImplCopyWith<$Res> {
+  __$$ShiftImplCopyWithImpl(
+      _$ShiftImpl _value, $Res Function(_$ShiftImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? code = null,
+    Object? start_time = null,
+    Object? end_time = null,
+    Object? is_overnight = null,
+    Object? grace_period_minutes = null,
+    Object? working_days = null,
+  }) {
+    return _then(_$ShiftImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      start_time: null == start_time
+          ? _value.start_time
+          : start_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      end_time: null == end_time
+          ? _value.end_time
+          : end_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      is_overnight: null == is_overnight
+          ? _value.is_overnight
+          : is_overnight // ignore: cast_nullable_to_non_nullable
+              as bool,
+      grace_period_minutes: null == grace_period_minutes
+          ? _value.grace_period_minutes
+          : grace_period_minutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      working_days: null == working_days
+          ? _value._working_days
+          : working_days // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ShiftImpl extends _Shift {
+  const _$ShiftImpl(
+      {required this.id,
+      required this.name,
+      required this.code,
+      required this.start_time,
+      required this.end_time,
+      required this.is_overnight,
+      required this.grace_period_minutes,
+      required final List<int> working_days})
+      : _working_days = working_days,
+        super._();
+
+  factory _$ShiftImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ShiftImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String code;
+  @override
+  final String start_time;
+  @override
+  final String end_time;
+  @override
+  final bool is_overnight;
+  @override
+  final int grace_period_minutes;
+  final List<int> _working_days;
+  @override
+  List<int> get working_days {
+    if (_working_days is EqualUnmodifiableListView) return _working_days;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_working_days);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
+      __$$ShiftImplCopyWithImpl<_$ShiftImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ShiftImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Shift extends Shift {
+  const factory _Shift(
+      {required final int id,
+      required final String name,
+      required final String code,
+      required final String start_time,
+      required final String end_time,
+      required final bool is_overnight,
+      required final int grace_period_minutes,
+      required final List<int> working_days}) = _$ShiftImpl;
+  const _Shift._() : super._();
+
+  factory _Shift.fromJson(Map<String, dynamic> json) = _$ShiftImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+  @override
+  String get code;
+  @override
+  String get start_time;
+  @override
+  String get end_time;
+  @override
+  bool get is_overnight;
+  @override
+  int get grace_period_minutes;
+  @override
+  List<int> get working_days;
+  @override
+  @JsonKey(ignore: true)
+  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

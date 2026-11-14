@@ -4,11 +4,10 @@ import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/api_helper/dio_helper.dart';
 import 'package:newf/core/api_helper/response_handler.dart';
 import 'package:newf/core/constants/app_api.dart';
-import 'package:newf/features/screens/login/data/model/forget_password_link/forget_password_link.dart';
-import 'package:newf/features/screens/login/data/model/forget_password_parameter.dart';
-import 'package:newf/features/screens/login/data/model/login_parameters.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
 import 'package:newf/features/screens/login/data/repo/base_login_repo.dart';
+
+import '../model/login_req_param.dart';
 
 /// Concrete remote implementation of [BaseLoginRepo].
 class LoginRemoteRepo implements BaseLoginRepo {
@@ -17,7 +16,7 @@ class LoginRemoteRepo implements BaseLoginRepo {
 
   @override
   Future<Either<Failure, LoginRes>> loginApi(
-    LoginParameters? parameter, {
+      LoginReqParam? parameter, {
     CancelToken? cancelToken,
   }) async {
     return handleResponse(
@@ -30,18 +29,5 @@ class LoginRemoteRepo implements BaseLoginRepo {
     );
   }
 
-  @override
-  Future<Either<Failure, ForgetPasswordLink>> sendresetpwlinkApi(
-    ForgetPasswordParameter? parameter, {
-    CancelToken? cancelToken,
-  }) async {
-    return handleResponse(
-      onCallData: dio.postData(
-        data: parameter?.toJson(),
-        uri: EndPoints.sendResetPWLink,
-        cancelToken: cancelToken,
-      ),
-      asObject: ForgetPasswordLink.fromJson,
-    );
-  }
+
 }

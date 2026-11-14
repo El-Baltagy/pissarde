@@ -6,12 +6,11 @@ import 'package:newf/core/base/base_service.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
-import 'package:newf/features/screens/login/data/model/forget_password_link/forget_password_link.dart';
-import 'package:newf/features/screens/login/data/model/forget_password_parameter.dart';
-import 'package:newf/features/screens/login/data/model/login_parameters.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
 import 'package:newf/features/screens/login/service/base_login_service.dart';
 import 'package:newf/main.dart';
+
+import '../data/model/login_req_param.dart';
 
 class LoginCubit extends BaseCubit<LoginState> {
   LoginCubit(this._service) : super(LoginInitial());
@@ -26,10 +25,10 @@ class LoginCubit extends BaseCubit<LoginState> {
   @override
   Future<void> init() async {}
 
-  Future<void> login({required LoginParameters parameter}) async {
+  Future<void> login({required LoginReqParam parameter}) async {
     await CancelManager.runCancelableFun(loginKeyCode, (token) async {
       await _service.loginServ(
-        RequestCallbackObserver<LoginRes, LoginParameters>(
+        RequestCallbackObserver<LoginRes, LoginReqParam>(
           baseRequestBackType: Reload(),
           parameter: parameter,
           cancelToken: token,
@@ -49,20 +48,5 @@ class LoginCubit extends BaseCubit<LoginState> {
     return super.close();
   }
 
-  Future<void> sendResetPWLinkFunc({ForgetPasswordParameter? parameter}) async {
-    await CancelManager.runCancelableFun(sendResetPWLinkKeyCode, (token) async {
-      await _service.sendResetPWLinkServ(
-        RequestCallbackObserver<ForgetPasswordLink, ForgetPasswordParameter>(
-          baseRequestBackType: Reload(),
-          parameter: parameter,
-          cancelToken: token,
-          onLoadCallback: () => safeEmit(ForgetPasswordLinkState(Loading())),
-          onRightCallback: (data) =>
-              safeEmit(ForgetPasswordLinkState(Success(data))),
-          onLeftCallback: (failure) =>
-              safeEmit(ForgetPasswordLinkState(ErrorState(failure))),
-        ),
-      );
-    });
-  }
+
 }

@@ -9,35 +9,15 @@ part 'login_res.g.dart';
 class LoginRes with _$LoginRes, EquatableMixin {
   const LoginRes._();
   const factory LoginRes({
-    required String status,
     required String message,
-    required Data data,
+    required User user,
   }) = _LoginRes;
 
   factory LoginRes.fromJson(Map<String, dynamic> json) => _$LoginResFromJson(json);
 
   @override
   List<Object?> get props => [
-    status,
     message,
-    data,
-  ];
-
-}
-
-@freezed
-class Data with _$Data, EquatableMixin {
-  const Data._();
-  const factory Data({
-    required String token,
-    required User user,
-  }) = _Data;
-
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-
-  @override
-  List<Object?> get props => [
-    token,
     user,
   ];
 
@@ -49,30 +29,150 @@ class User with _$User, EquatableMixin {
   const factory User({
     required int id,
     required String name,
-    required String? email,
-    required String dob,
-    required String? phone,
-    required String? specialization,
-    required String role,
-    required String? avatar,
+    required String email,
+    required String employee_code,
+    required String phone,
+    required Role role,
+    required Employeetype employee_type,
+    required Worktype work_type,
+    required Branch branch,
+    required dynamic supervisor,
+    required Shift shift,
+    required dynamic duty_authorized_branch_ids,
+    required bool is_active,
     required String created_at,
-    required String updated_at,
   }) = _User;
 
-  factory User.fromJson(dynamic json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   @override
   List<Object?> get props => [
     id,
     name,
     email,
-    dob,
+    employee_code,
     phone,
-    specialization,
     role,
-    avatar,
+    employee_type,
+    work_type,
+    branch,
+    supervisor,
+    shift,
+    duty_authorized_branch_ids,
+    is_active,
     created_at,
-    updated_at,
+  ];
+
+}
+
+@freezed
+class Role with _$Role, EquatableMixin {
+  const Role._();
+  const factory Role({
+    required String value,
+    required String label,
+  }) = _Role;
+
+  factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
+
+  @override
+  List<Object?> get props => [
+    value,
+    label,
+  ];
+
+}
+
+@freezed
+class Employeetype with _$Employeetype, EquatableMixin {
+  const Employeetype._();
+  const factory Employeetype({
+    required String value,
+    required String label,
+  }) = _Employeetype;
+
+  factory Employeetype.fromJson(Map<String, dynamic> json) => _$EmployeetypeFromJson(json);
+
+  @override
+  List<Object?> get props => [
+    value,
+    label,
+  ];
+
+}
+
+@freezed
+class Worktype with _$Worktype, EquatableMixin {
+  const Worktype._();
+  const factory Worktype({
+    required String value,
+    required String label,
+    required bool requires_qr,
+  }) = _Worktype;
+
+  factory Worktype.fromJson(Map<String, dynamic> json) => _$WorktypeFromJson(json);
+
+  @override
+  List<Object?> get props => [
+    value,
+    label,
+    requires_qr,
+  ];
+
+}
+
+@freezed
+class Branch with _$Branch, EquatableMixin {
+  const Branch._();
+  const factory Branch({
+    required int id,
+    required String name,
+    required String code,
+    required double latitude,
+    required double longitude,
+    required int geofence_radius_meters,
+  }) = _Branch;
+
+  factory Branch.fromJson(Map<String, dynamic> json) => _$BranchFromJson(json);
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    code,
+    latitude,
+    longitude,
+    geofence_radius_meters,
+  ];
+
+}
+
+@freezed
+class Shift with _$Shift, EquatableMixin {
+  const Shift._();
+  const factory Shift({
+    required int id,
+    required String name,
+    required String code,
+    required String start_time,
+    required String end_time,
+    required bool is_overnight,
+    required int grace_period_minutes,
+    required List<int> working_days,
+  }) = _Shift;
+
+  factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    code,
+    start_time,
+    end_time,
+    is_overnight,
+    grace_period_minutes,
+    working_days,
   ];
 
 }

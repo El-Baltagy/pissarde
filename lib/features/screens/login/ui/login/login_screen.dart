@@ -16,9 +16,7 @@ import 'package:newf/core/shared/widgets/text_inputs/text_input_widget.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
-import 'package:newf/features/screens/login/data/model/login_parameters.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
-import 'package:newf/features/screens/login/ui/login/widgets/forget_password.dart';
 
 part 'login_base_state.dart';
 
@@ -74,9 +72,6 @@ class _LoginPageState extends LoginPageBaseState {
                       ),
                     ),
 
-                    forgetPasswordWidget(),
-
-                    const SizedBox(height: AppSizes.s8),
 
                     // Login Button
                     BlocBuilder<LoginCubit, LoginState>(
@@ -138,22 +133,5 @@ class _LoginPageState extends LoginPageBaseState {
     );
   }
 
-  Widget forgetPasswordWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-          onTap: () => context.pushNavigation(const ForgetPasswordScreen()),
-          child: Text(
-            "do_you_forget_password".tr(),
-            style: TextStyle(
-              color: context.theme.primaryColor,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+
 }

@@ -19,8 +19,8 @@ abstract class LoginPageBaseState extends State<LoginPage> {
     super.initState();
     argData = LoginCubit.get(context: context);
     if (kDebugMode) {
-      emailController.text = 'admin@themesbrand.com';
-      passwordController.text = '123456';
+      emailController.text = 'admin@pissarde.com';
+      passwordController.text = 'Password123!';
     }
   }
 

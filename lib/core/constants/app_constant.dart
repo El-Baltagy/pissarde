@@ -121,5 +121,9 @@ abstract class AppConstant {
   static const String getProjectsKeyCash = 'main_screen_getProjects_cache';
 
   static const int getProjectsKeyCode = 9033;
+
+  static const String getProfileKeyCash = 'login_getProfile_cache';
+
+  static const int getProfileKeyCode = 6312;
 }
 

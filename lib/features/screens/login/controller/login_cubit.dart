@@ -10,6 +10,7 @@ import 'package:newf/features/screens/login/data/model/login_res/login_res.dart'
 import 'package:newf/features/screens/login/service/base_login_service.dart';
 import 'package:newf/main.dart';
 
+import '../../../../core/shared/methods/no_parameter.dart';
 import '../data/model/login_req_param.dart';
 
 class LoginCubit extends BaseCubit<LoginState> {
@@ -21,6 +22,10 @@ class LoginCubit extends BaseCubit<LoginState> {
 
   int get loginKeyCode => AppConstant.loginKeyCode;
   int get sendResetPWLinkKeyCode => AppConstant.sendResetPWLinkKeyCode;
+
+    int get logoutKeyCode => AppConstant.logoutKeyCode;
+
+    int get getProfileKeyCode => AppConstant.getProfileKeyCode;
 
   @override
   Future<void> init() async {}
@@ -43,10 +48,48 @@ class LoginCubit extends BaseCubit<LoginState> {
 
   @override
   Future<void> close() {
+    // add every key in file
+    CancelManager.cancel(getProfileKeyCode);
+
+    // add every key in file
+    CancelManager.cancel(logoutKeyCode);
+
     CancelManager.cancel(sendResetPWLinkKeyCode);
     CancelManager.cancel(loginKeyCode);
     return super.close();
   }
 
 
+
+  Future<void> logoutFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
+    await CancelManager.runCancelableFun(logoutKeyCode, (token) async {
+      await _service.logoutServ(
+        RequestCallbackObserver<bool, NoParameters>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(LogoutState(Loading())),
+          onRightCallback: (data) => safeEmit(LogoutState(Success(data))),
+          onLeftCallback: (failure) =>
+              safeEmit(LogoutState(ErrorState(failure))),
+        ),
+      );
+    });
+  }
+
+  Future<void> getProfileFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
+    await CancelManager.runCancelableFun(getProfileKeyCode, (token) async {
+      await _service.getProfileServ(
+        RequestCallbackObserver<User, NoParameters>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(GetProfileState(Loading())),
+          onRightCallback: (data) => safeEmit(GetProfileState(Success(data))),
+          onLeftCallback: (failure) =>
+              safeEmit(GetProfileState(ErrorState(failure))),
+        ),
+      );
+    });
+  }
 }

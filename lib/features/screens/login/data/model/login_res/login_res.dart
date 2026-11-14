@@ -10,6 +10,8 @@ class LoginRes with _$LoginRes, EquatableMixin {
   const LoginRes._();
   const factory LoginRes({
     required String message,
+    required String token,
+    required String token_type,
     required User user,
   }) = _LoginRes;
 
@@ -18,6 +20,8 @@ class LoginRes with _$LoginRes, EquatableMixin {
   @override
   List<Object?> get props => [
     message,
+    token,
+    token_type,
     user,
   ];
 

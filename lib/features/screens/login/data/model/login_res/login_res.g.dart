@@ -9,12 +9,16 @@ part of 'login_res.dart';
 _$LoginResImpl _$$LoginResImplFromJson(Map<String, dynamic> json) =>
     _$LoginResImpl(
       message: json['message'] as String,
+      token: json['token'] as String,
+      token_type: json['token_type'] as String,
       user: User.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$LoginResImplToJson(_$LoginResImpl instance) =>
     <String, dynamic>{
       'message': instance.message,
+      'token': instance.token,
+      'token_type': instance.token_type,
       'user': instance.user,
     };
 

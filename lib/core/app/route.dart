@@ -7,6 +7,8 @@ import 'package:newf/features/screens/manager_dashboard/ui/manager_dashboard/man
 import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/login/ui/login/login_screen.dart';
 import 'package:newf/features/screens/splash/ui/splash_screen.dart';
+
+import '../storage/storage_helper.dart';
 part  'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -24,6 +26,7 @@ class AppRouter extends _$AppRouter {
       ),
       AutoRoute(
         page: MainNavigationRoute.page,
+        guards: [AuthGuard()],
       ),
       AutoRoute(
         page: HomeRoute.page,
@@ -42,15 +45,15 @@ class AppRouter extends _$AppRouter {
       ),
   ];
 }
-// class AuthGuard extends AutoRouteGuard {
-//   @override
-//   void onNavigation(NavigationResolver resolver, StackRouter router) {
-//     final isLoggedIn = false; // check your auth state
-//     if (isLoggedIn) {
-//       resolver.next(true);
-//     } else {
-//       router.replace(const AuthRoute());
-//     }
-//   }
-// }
+class AuthGuard extends AutoRouteGuard {
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    final isLoggedIn = StorageHelper.isLogined;
+    if (isLoggedIn) {
+      resolver.next();
+    } else {
+      router.replace(const LoginRoute());
+    }
+  }
+}
       

@@ -18,6 +18,8 @@ import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
 
+import '../../data/model/login_req_param.dart';
+
 part 'login_base_state.dart';
 
 @RoutePage()
@@ -85,15 +87,14 @@ class _LoginPageState extends LoginPageBaseState {
                               context,
                               listRecorder: [field1, field2],
                             )) {
-                              context.replace(
-                                MainNavigationRoute(args: MainNavigationRouteArgs()),
+
+                              await argData.login(
+                                parameter: LoginReqParam(
+                                email:    emailController.text.trim(),
+                                 password:   passwordController.text.trim(),
+                                  device_name: 'Postman'
+                                ),
                               );
-                              // await argData.login(
-                              //   parameter: LoginParameters(
-                              //     emailController.text.trim(),
-                              //     passwordController.text.trim(),
-                              //   ),
-                              // );
                             }
                           },
                           style: ElevatedButton.styleFrom(

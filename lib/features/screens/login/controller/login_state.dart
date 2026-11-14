@@ -7,10 +7,18 @@ abstract class LoginState {}
 class LoginInitial extends LoginState {}
 
 class LoginResState extends LoginState {
-  final BaseEmit baseEmit;
+  final BaseEmit baseEmit  ;
   LoginResState(this.baseEmit);
 }
+class LogoutState extends LoginState {
+  final BaseEmit baseEmit ;
+  LogoutState(this.baseEmit);
+}
 
+class GetProfileState extends LoginState {
+  final BaseEmit baseEmit ;
+  GetProfileState(this.baseEmit);
+}
 class ForgetPasswordLinkState extends LoginState {
   final BaseEmit baseEmit;
   ForgetPasswordLinkState(this.baseEmit);

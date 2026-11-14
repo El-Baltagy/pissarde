@@ -9,6 +9,8 @@ import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/profile/widgets/profile_content_widget.dart';
 
+import '../../../login/controller/login_cubit.dart';
+
 part 'profile_base_state.dart';
 
 @RoutePage()
@@ -18,10 +20,13 @@ class ProfilePage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<ProfileCubit>(
-      create: (context) => AppLocator()()(),
-      child: this,
-    );
+    return MultiBlocProvider(providers: [
+      BlocProvider<ProfileCubit>(
+        create: (context) => AppLocator()()()
+      ),
+      BlocProvider .value(value: args.loginCubit),
+
+    ], child: this);
   }
 
   @override

@@ -58,12 +58,11 @@ class LoginCubit extends BaseCubit<LoginState> {
 
 
 
-  Future<void> logoutFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
+  Future<void> logoutFunc( {NoParameters? parameter}) async {
     await CancelManager.runCancelableFun(logoutKeyCode, (token) async {
       await _service.logoutServ(
         RequestCallbackObserver<bool, NoParameters>(
-          baseRequestBackType: baseRequestBackType ,
-          parameter: parameter,
+           parameter: parameter,
           cancelToken: token,
           onLoadCallback: () => safeEmit(LogoutState(Loading())),
           onRightCallback: (data) => safeEmit(LogoutState(Success(data))),

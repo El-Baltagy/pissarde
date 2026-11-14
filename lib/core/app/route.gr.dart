@@ -16,7 +16,7 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     ProfileRoute.name: (routeData) {
-      final args = routeData.argsAs<ProfileRouteArgs>(orElse: () =>   ProfileRouteArgs.noArgs());
+      final args = routeData.argsAs<ProfileRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -248,6 +248,6 @@ class ProfileRoute extends PageRouteInfo<ProfileRouteArgs> {
   PageInfo<ProfileRouteArgs>(name);
 }
 class ProfileRouteArgs {
-  const ProfileRouteArgs( );
-   static ProfileRouteArgs noArgs()=>ProfileRouteArgs();
+  const ProfileRouteArgs( this.loginCubit);
+  final LoginCubit loginCubit;
 }

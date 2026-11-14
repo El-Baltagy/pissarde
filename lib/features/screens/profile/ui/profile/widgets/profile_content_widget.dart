@@ -1,10 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
+import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/login/controller/login_cubit.dart';
+import 'package:newf/features/screens/login/controller/login_state.dart';
+
+import '../../../../../../core/base/base_state.dart';
 
 class ProfileContentWidget extends StatefulWidget {
   const ProfileContentWidget({super.key});
@@ -74,7 +80,20 @@ class _ProfileContentWidgetState extends State<ProfileContentWidget> {
                   .toList(),
             ),
           ),
-          _buildLogoutButton(),
+          BlocConsumer<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state is LogoutState && state.baseEmit is Success) {
+                context.router.replaceAll([const LoginRoute()]);
+              }
+            },
+            builder: (context, state) {
+              final isLoading = state is LogoutState && state.baseEmit is Loading;
+              if (isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return _buildLogoutButton(() => LoginCubit.get(context: context).logoutFunc());
+            },
+          ),
         ],
       ),
     );
@@ -269,11 +288,9 @@ class _ProfileContentWidgetState extends State<ProfileContentWidget> {
     );
   }
 
-  Widget _buildLogoutButton() {
+  Widget _buildLogoutButton(void Function()? logout) {
     return OutlinedButton.icon(
-      onPressed: () => context.replace(
-        LoginRoute(),
-      ),
+      onPressed: logout,
       style: OutlinedButton.styleFrom(
         foregroundColor: AppColors.notificationRed,
         side: const BorderSide(color: AppColors.notificationRed),

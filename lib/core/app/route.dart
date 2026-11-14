@@ -8,6 +8,7 @@ import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/login/ui/login/login_screen.dart';
 import 'package:newf/features/screens/splash/ui/splash_screen.dart';
 
+import '../../features/screens/login/controller/login_cubit.dart';
 import '../storage/storage_helper.dart';
 part  'route.gr.dart';
 

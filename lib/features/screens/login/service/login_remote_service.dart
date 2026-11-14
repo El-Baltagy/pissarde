@@ -31,12 +31,8 @@ class LoginRemoteService implements BaseLoginService {
         if (newData?.user.id != null) {
           BaseLocalRepo.setSecSessionId(
               (DateTime.now().millisecondsSinceEpoch + 1111).toString());
-          print('.........................');
-          print(StorageHelper.isLogined);
           await _localRepo.saveData(AppConstant.userKeyCash,
               savedData: newData!.user .toJson());
-          print(StorageHelper.isLogined);
-          print(newData!.user .toJson());
           await HWSecureSaver.save(
               AppConstant.tokenKeyCash, newData.token .toString());
         }

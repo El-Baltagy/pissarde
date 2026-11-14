@@ -143,7 +143,8 @@ String generateFreezedEquatable(String fileName, String className) {
     if (fields.isEmpty) {
       buffer.writeln('  const factory $cls() = _$cls;\n');
     } else {
-      buffer.writeln('  const factory $cls({');
+      buffer.writeln('  @JsonSerializable(explicitToJson: true)');
+    buffer.writeln('  const factory $cls({');
       fields.forEach((name, type) {
         final t = type == null ? 'dynamic' : dartTypeFor(type);
         buffer.writeln('    required $t $name,');

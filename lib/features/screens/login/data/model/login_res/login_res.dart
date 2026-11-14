@@ -8,6 +8,7 @@ part 'login_res.g.dart';
 @freezed
 class LoginRes with _$LoginRes, EquatableMixin {
   const LoginRes._();
+  @JsonSerializable(explicitToJson: true)
   const factory LoginRes({
     required String message,
     required String token,
@@ -30,6 +31,7 @@ class LoginRes with _$LoginRes, EquatableMixin {
 @freezed
 class User with _$User, EquatableMixin {
   const User._();
+  @JsonSerializable(explicitToJson: true)
   const factory User({
     required int id,
     required String name,
@@ -72,6 +74,7 @@ class User with _$User, EquatableMixin {
 @freezed
 class Role with _$Role, EquatableMixin {
   const Role._();
+  @JsonSerializable(explicitToJson: true)
   const factory Role({
     required String value,
     required String label,
@@ -90,6 +93,7 @@ class Role with _$Role, EquatableMixin {
 @freezed
 class Employeetype with _$Employeetype, EquatableMixin {
   const Employeetype._();
+  @JsonSerializable(explicitToJson: true)
   const factory Employeetype({
     required String value,
     required String label,
@@ -108,6 +112,7 @@ class Employeetype with _$Employeetype, EquatableMixin {
 @freezed
 class Worktype with _$Worktype, EquatableMixin {
   const Worktype._();
+  @JsonSerializable(explicitToJson: true)
   const factory Worktype({
     required String value,
     required String label,
@@ -128,6 +133,7 @@ class Worktype with _$Worktype, EquatableMixin {
 @freezed
 class Branch with _$Branch, EquatableMixin {
   const Branch._();
+  @JsonSerializable(explicitToJson: true)
   const factory Branch({
     required int id,
     required String name,
@@ -154,6 +160,7 @@ class Branch with _$Branch, EquatableMixin {
 @freezed
 class Shift with _$Shift, EquatableMixin {
   const Shift._();
+  @JsonSerializable(explicitToJson: true)
   const factory Shift({
     required int id,
     required String name,

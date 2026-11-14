@@ -140,7 +140,8 @@ class __$$LoginResImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$LoginResImpl extends _LoginRes {
   const _$LoginResImpl(
       {required this.message,
@@ -505,7 +506,8 @@ class __$$UserImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$UserImpl extends _User {
   const _$UserImpl(
       {required this.id,

@@ -19,7 +19,7 @@ Map<String, dynamic> _$$LoginResImplToJson(_$LoginResImpl instance) =>
       'message': instance.message,
       'token': instance.token,
       'token_type': instance.token_type,
-      'user': instance.user,
+      'user': instance.user.toJson(),
     };
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
@@ -47,12 +47,12 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'email': instance.email,
       'employee_code': instance.employee_code,
       'phone': instance.phone,
-      'role': instance.role,
-      'employee_type': instance.employee_type,
-      'work_type': instance.work_type,
-      'branch': instance.branch,
+      'role': instance.role.toJson(),
+      'employee_type': instance.employee_type.toJson(),
+      'work_type': instance.work_type.toJson(),
+      'branch': instance.branch.toJson(),
       'supervisor': instance.supervisor,
-      'shift': instance.shift,
+      'shift': instance.shift.toJson(),
       'duty_authorized_branch_ids': instance.duty_authorized_branch_ids,
       'is_active': instance.is_active,
       'created_at': instance.created_at,

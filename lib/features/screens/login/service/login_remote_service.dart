@@ -8,6 +8,7 @@ import 'package:newf/features/screens/login/service/base_login_service.dart';
 import 'package:token_saver/secure_token_manager.dart';
 
 import '../../../../core/shared/methods/no_parameter.dart';
+import '../../../../core/storage/storage_helper.dart';
 import '../data/model/login_req_param.dart';
 
 /// Concrete implementation of [BaseLoginService].
@@ -30,8 +31,12 @@ class LoginRemoteService implements BaseLoginService {
         if (newData?.user.id != null) {
           BaseLocalRepo.setSecSessionId(
               (DateTime.now().millisecondsSinceEpoch + 1111).toString());
+          print('.........................');
+          print(StorageHelper.isLogined);
           await _localRepo.saveData(AppConstant.userKeyCash,
               savedData: newData!.user .toJson());
+          print(StorageHelper.isLogined);
+          print(newData!.user .toJson());
           await HWSecureSaver.save(
               AppConstant.tokenKeyCash, newData.token .toString());
         }

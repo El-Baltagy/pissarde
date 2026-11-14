@@ -42,7 +42,7 @@ class _SplashPageState extends State<SplashPage>
     // Navigate to LoginRoute after 4 seconds
     _navigationTimer = Timer(const Duration(seconds: 4), () {
       if (mounted) {
-        context.replace(const LoginRoute());
+        context.replace(  MainNavigationRoute(args: MainNavigationRouteArgs()));
       }
     });
   }

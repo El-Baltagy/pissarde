@@ -13,10 +13,12 @@ import 'package:newf/core/shared/widgets/loading_widget_app.dart';
 import 'package:newf/core/shared/widgets/text_inputs/email_text_input_data.dart';
 import 'package:newf/core/shared/widgets/text_inputs/password_text_input_data.dart';
 import 'package:newf/core/shared/widgets/text_inputs/text_input_widget.dart';
+import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
+import 'package:token_saver/secure_token_manager.dart';
 
 import '../../data/model/login_req_param.dart';
 
@@ -87,7 +89,10 @@ class _LoginPageState extends LoginPageBaseState {
                               context,
                               listRecorder: [field1, field2],
                             )) {
-
+                              // await HWSecureSaver.save(
+                              //     'wasd', '1444s');
+                              // print(await HWSecureSaver.get('wasd'));
+                              // return ;
                               await argData.login(
                                 parameter: LoginReqParam(
                                 email:    emailController.text.trim(),
@@ -95,6 +100,7 @@ class _LoginPageState extends LoginPageBaseState {
                                   device_name: 'Postman'
                                 ),
                               );
+
                             }
                           },
                           style: ElevatedButton.styleFrom(

@@ -21,7 +21,6 @@ class LoginCubit extends BaseCubit<LoginState> {
       BlocProvider.of(context ?? navigatorKey.currentContext!, listen: listen);
 
   int get loginKeyCode => AppConstant.loginKeyCode;
-  int get sendResetPWLinkKeyCode => AppConstant.sendResetPWLinkKeyCode;
 
     int get logoutKeyCode => AppConstant.logoutKeyCode;
 
@@ -53,8 +52,6 @@ class LoginCubit extends BaseCubit<LoginState> {
 
     // add every key in file
     CancelManager.cancel(logoutKeyCode);
-
-    CancelManager.cancel(sendResetPWLinkKeyCode);
     CancelManager.cancel(loginKeyCode);
     return super.close();
   }

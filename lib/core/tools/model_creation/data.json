@@ -1,5 +1,7 @@
 {
   "message": "Login successful",
+  "token": "3|b3tgyX59v4pQzA0P5R3Aqlr24EDi99nZ12eRqrB96820accd",
+  "token_type": "Bearer",
   "user": {
     "id": 1,
     "name": "Alexander Vance (App Manager)",

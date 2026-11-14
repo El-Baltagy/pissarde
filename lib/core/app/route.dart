@@ -48,8 +48,8 @@ class AppRouter extends _$AppRouter {
 class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    final isLoggedIn = StorageHelper.isLogined;
-    if (isLoggedIn) {
+
+    if (StorageHelper.isLogined) {
       resolver.next();
     } else {
       router.replace(const LoginRoute());

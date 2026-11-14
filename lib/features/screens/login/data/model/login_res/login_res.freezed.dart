@@ -714,7 +714,8 @@ class __$$RoleImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$RoleImpl extends _Role {
   const _$RoleImpl({required this.value, required this.label}) : super._();
 
@@ -849,7 +850,8 @@ class __$$EmployeetypeImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$EmployeetypeImpl extends _Employeetype {
   const _$EmployeetypeImpl({required this.value, required this.label})
       : super._();
@@ -997,7 +999,8 @@ class __$$WorktypeImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$WorktypeImpl extends _Worktype {
   const _$WorktypeImpl(
       {required this.value, required this.label, required this.requires_qr})
@@ -1194,7 +1197,8 @@ class __$$BranchImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$BranchImpl extends _Branch {
   const _$BranchImpl(
       {required this.id,
@@ -1436,7 +1440,8 @@ class __$$ShiftImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$ShiftImpl extends _Shift {
   const _$ShiftImpl(
       {required this.id,

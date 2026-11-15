@@ -53,11 +53,7 @@ class _HomePageState extends HomePageBaseState {
           child: Column(
             spacing:16 ,
             children: [
-
-              Semantics(
-                label: 'Role Selector Switch',
-                child: const RoleSelectorWidget(),
-              ),
+              SizedBox.shrink(),
 
               Semantics(
                 label: 'Branch Status Overview',
@@ -89,10 +85,7 @@ class _HomePageState extends HomePageBaseState {
                 child: const RecentRequestsCardWidget(),
               ),
 
-              Semantics(
-                label: 'Attendance and Delay Policy',
-                child: const PolicyNoticeCardWidget(),
-              ),
+
               8.verticalSpace,
             ],
           ),

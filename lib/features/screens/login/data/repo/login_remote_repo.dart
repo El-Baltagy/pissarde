@@ -62,7 +62,11 @@ class LoginRemoteRepo implements BaseLoginRepo {
         cancelToken: cancelToken,
         caller: callerTag(),
       ),
-      asObject: User.fromJson,
+      asObject: (json) => User.fromJson(
+        json.containsKey('user') && json['user'] is Map<String, dynamic>
+            ? json['user'] as Map<String, dynamic>
+            : json,
+      ),
     );
   }
 }

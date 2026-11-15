@@ -65,10 +65,6 @@ class _HomePageState extends HomePageBaseState {
                 child: const CurrentShiftCardWidget(),
               ),
 
-              Semantics(
-                label: 'GPS Geolocation Verification',
-                child: const GpsVerificationCardWidget(),
-              ),
 
               Semantics(
                 label: 'Check Out Action Section',

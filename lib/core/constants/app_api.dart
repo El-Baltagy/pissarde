@@ -29,6 +29,7 @@ abstract class EndPoints {
   static const String leaveTypes = "/api/leaves/types";
   static const String listAttendanceCorrections = "/api/attendance/corrections";
   static const String createAttendanceCorrection = "/api/attendance/corrections";
+
   static const String attendanceHistory = "/api/attendance/history";
   static const String attendanceToday = "/api/attendance/today";
   static const String checkOut = "/api/attendance/check-out";

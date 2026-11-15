@@ -11,7 +11,7 @@ import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
 
 import '../../../../../../core/base/base_state.dart';
-
+part 'list_options.dart';
 class ProfileContentWidget extends StatefulWidget {
   const ProfileContentWidget({super.key});
 
@@ -26,28 +26,7 @@ class _ProfileContentWidgetState extends State<ProfileContentWidget> {
     _LanguageOption(code: 'tr', nativeName: 'Türkçe', flag: '🇹🇷'),
   ];
 
-   var   _settingsItems = [
-    (
-      icon: Icons.badge_outlined,
-      title: 'job_data'.tr(),
-      subtitle: 'EMP-2024-88'+' : '+'employee_id'.tr(),
-    ),
-    (
-      icon: Icons.schedule_outlined,
-      title: 'shift_schedule_and_working_hours'.tr(),
-      subtitle: '(08:00 - 16:00)'+'${ 'the_official_morning_shift'.tr()} ',
-    ),
-    (
-      icon: Icons.fingerprint_rounded,
-      title: 'fingerprint_and_location_settings'.tr(),
-      subtitle: 'activated_via_gps_and_the_app'.tr(),
-    ),
-    (
-      icon: Icons.notifications_none_rounded,
-      title: 'attendance_reminder_notifications'.tr(),
-      subtitle: 'reminder_15_minutes_before_your_shift_starts'.tr(),
-    ),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,27 +38,7 @@ class _ProfileContentWidgetState extends State<ProfileContentWidget> {
         children: [
           _buildProfileCard(),
           _buildLanguageSelector(context),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.cardBackground,
-              borderRadius: BorderRadius.circular(AppSizes.r14),
-              border: Border.all(
-                color: AppColors.cardBorder,
-                width: AppSizes.s1,
-              ),
-            ),
-            child: Column(
-              children: _settingsItems
-                  .map(
-                    (item) => _buildSettingItem(
-                      icon: item.icon,
-                      title: item.title,
-                      subtitle: item.subtitle,
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
+          ListOptionsWidget(),
           BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LogoutState && state.baseEmit is Success) {
@@ -234,59 +193,7 @@ class _ProfileContentWidgetState extends State<ProfileContentWidget> {
 
   // ──────────────────────────── Settings Group ──────────────────────────────
 
-  Widget _buildSettingItem({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppPadding.p14,
-        vertical: AppPadding.p12,
-      ),
-      child: Row(
-        spacing: AppSizes.s12,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(AppPadding.p8),
-            decoration: BoxDecoration(
-              color: AppColors.roleSwitchBg,
-              borderRadius: BorderRadius.circular(AppSizes.r10),
-            ),
-            child: Icon(
-              icon,
-              color: AppColors.headerBackground,
-              size: AppSizes.s20,
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppSizes.s2,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.font13Medium.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: AppTextStyles.font11Regular,
-                ),
-              ],
-            ),
-          ),
-          /// LTR side: arrow chevron
-          const Icon(
-            Icons.arrow_forward_ios_rounded,
-            size: AppSizes.s14,
-            color: AppColors.contractorGreyText,
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildLogoutButton(void Function()? logout) {
     return OutlinedButton.icon(

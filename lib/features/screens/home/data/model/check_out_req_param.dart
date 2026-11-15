@@ -5,10 +5,10 @@ class CheckOutReqParam {
   final String target_user_id;
 
   const CheckOutReqParam({
-    required this.qr_token,
-    required this.latitude,
-    required this.longitude,
-    required this.target_user_id,
+    this.qr_token = '',
+    this.latitude = '0.0',
+    this.longitude = '0.0',
+    this.target_user_id = '',
   });
 
   Map<String, dynamic> toJson() => {

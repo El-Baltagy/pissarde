@@ -1,86 +1,40 @@
 {
-  "date": "2026-11-15",
-  "has_checked_in": true,
-  "is_open": false,
-  "active_attendance": {
-    "id": 8,
-    "user": {
-      "id": 1,
-      "name": "Alexander Vance (App Manager)",
-      "employee_code": "EMP-ADM-000"
+  "data": [
+    {
+      "id": 2,
+      "name": "Ankara Regional Branch",
+      "code": "ANK-01",
+      "address": "Cankaya, Ataturk Bulvari No: 88, Ankara",
+      "latitude": 39.9207999999999998408384271897375583648681640625,
+      "longitude": 32.8541000000000025238477974198758602142333984375,
+      "geofence_radius_meters": 120,
+      "is_active": true,
+      "employees_count": 2,
+      "created_at": "2026-10-25T09:49:38+00:00"
     },
-    "branch": {
+    {
       "id": 1,
       "name": "Istanbul Headquarters",
-      "code": "IST-HQ"
+      "code": "IST-HQ",
+      "address": "Levent, Buyukdere Cad. No: 142, Sisli, Istanbul",
+      "latitude": 41.0784000000000020236257114447653293609619140625,
+      "longitude": 29.01180000000000092086338554508984088897705078125,
+      "geofence_radius_meters": 150,
+      "is_active": true,
+      "employees_count": 6,
+      "created_at": "2026-10-25T09:49:38+00:00"
     },
-    "shift": {
-      "id": 1,
-      "name": "Regular Morning Shift",
-      "start_time": "09:00:00",
-      "end_time": "17:00:00",
-      "is_overnight": false
-    },
-    "date": "2026-11-15",
-    "check_in_at": "2026-11-15T01:51:53+00:00",
-    "check_out_at": "2026-11-15T01:52:28+00:00",
-    "check_in_method": {
-      "value": "qr_in_office",
-      "label": "In-Office (QR & Geofence)"
-    },
-    "check_out_method": {
-      "value": "qr_in_office",
-      "label": "In-Office (QR & Geofence)"
-    },
-    "recorded_by": null,
-    "duty_reason": null,
-    "status": {
-      "value": "early_leave",
-      "label": "Early Departure"
-    },
-    "late_minutes": 0,
-    "early_departure_minutes": 907,
-    "total_work_minutes": 0,
-    "overtime_minutes": 0,
-    "is_open": false
-  },
-  "shift": {
-    "id": 1,
-    "name": "Regular Morning Shift",
-    "code": "SHIFT-DAY-01",
-    "start_time": "09:00:00",
-    "end_time": "17:00:00",
-    "is_overnight": false,
-    "grace_period_minutes": 15,
-    "checkin_window_start_minutes": 60,
-    "checkin_window_end_minutes": 120,
-    "break_duration_minutes": 60,
-    "working_days": [
-      0,
-      1,
-      2,
-      3,
-      4
-    ],
-    "is_active": true,
-    "deleted_at": null,
-    "created_at": "2026-10-25T09:49:38.000000Z",
-    "updated_at": "2026-10-25T09:49:38.000000Z"
-  },
-  "branch": {
-    "id": 1,
-    "name": "Istanbul Headquarters",
-    "code": "IST-HQ",
-    "address": "Levent, Buyukdere Cad. No: 142, Sisli, Istanbul",
-    "latitude": 41.0784000000000020236257114447653293609619140625,
-    "longitude": 29.01180000000000092086338554508984088897705078125,
-    "geofence_radius_meters": 150,
-    "qr_secret": "zFGEWGlVr7yxKfgJuIcUcMm4o4aJxqb5qS9B2SXaUPHDmSTtsIHq846OgJ0JUiHS",
-    "qr_token": "QR_IST-HQ_e0Wfdph1tlZ4H77PPIN8GZtelzemKfnn",
-    "qr_generated_at": "2026-10-25T09:49:38.000000Z",
-    "is_active": true,
-    "deleted_at": null,
-    "created_at": "2026-10-25T09:49:38.000000Z",
-    "updated_at": "2026-10-25T09:49:38.000000Z"
-  }
+    {
+      "id": 3,
+      "name": "Izmir Coastal Branch",
+      "code": "IZM-01",
+      "address": "Alsancak, Kordon Boyu No: 23, Izmir",
+      "latitude": 38.435699999999997089616954326629638671875,
+      "longitude": 27.14150000000000062527760746888816356658935546875,
+      "geofence_radius_meters": 100,
+      "is_active": true,
+      "employees_count": 0,
+      "created_at": "2026-10-25T09:49:38+00:00"
+    }
+  ]
 }

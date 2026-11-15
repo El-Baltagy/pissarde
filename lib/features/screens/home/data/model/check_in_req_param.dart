@@ -7,12 +7,12 @@ class CheckInReqParam {
   final String duty_reason;
 
   const CheckInReqParam({
-    required this.qr_token,
-    required this.latitude,
-    required this.longitude,
-    required this.idempotency_key,
-    required this.target_user_id,
-    required this.duty_reason,
+    this.qr_token = '',
+    this.latitude = '0.0',
+    this.longitude = '0.0',
+    this.idempotency_key = '',
+    this.target_user_id = '',
+    this.duty_reason = '',
   });
 
   Map<String, dynamic> toJson() => {

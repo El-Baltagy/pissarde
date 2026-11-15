@@ -6,8 +6,9 @@ abstract class HomePageBaseState extends State<HomePage> {
   @override
   void initState() {
     homeCubit = HomeCubit.get(context: context);
-    // TODO: implement initState
     super.initState();
+    homeCubit.init();
+
   }
 
   @override

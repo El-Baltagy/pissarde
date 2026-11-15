@@ -13,5 +13,17 @@ abstract class AppConstant {
    static const String getProfileKeyCash = 'login_getProfile_cache';
   //
   static const int getProfileKeyCode = 6312;
+
+  static const String attendanceTodayKeyCash = 'home_attendanceToday_cache';
+
+  static const int attendanceTodayKeyCode = 8215;
+
+  static const String checkInKeyCash = 'home_checkIn_cache';
+
+  static const int checkInKeyCode = 8256;
+
+  static const String checkOutKeyCash = 'home_checkOut_cache';
+
+  static const int checkOutKeyCode = 8129;
 }
 

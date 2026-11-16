@@ -16,17 +16,18 @@ part 'profile_base_state.dart';
 @RoutePage()
 class ProfilePage extends StatefulWidget implements AutoRouteWrapper {
   const ProfilePage({super.key, required this.args});
+
   final ProfileRouteArgs args;
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<ProfileCubit>(
-        create: (context) => AppLocator()()()
-      ),
-      BlocProvider .value(value: args.loginCubit),
-
-    ], child: this);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProfileCubit>(create: (context) => AppLocator()()()),
+        BlocProvider.value(value: args.loginCubit),
+      ],
+      child: this,
+    );
   }
 
   @override
@@ -54,8 +55,15 @@ class _ProfilePageState extends ProfilePageBaseState {
         body: SingleChildScrollView(
           child: Semantics(
             label: 'User Profile and Account Settings',
-            child: const ProfileContentWidget(),
-          )
+            child: Column(
+              children: [
+                ///extracted --NewFeature
+                SizedBox.shrink(),
+
+                const ProfileContentWidget(),
+              ],
+            ),
+          ),
         ),
       ),
     );

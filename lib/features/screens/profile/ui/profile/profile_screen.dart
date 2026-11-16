@@ -10,8 +10,8 @@ import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/profile/widgets/profile_content_widget.dart';
 
 import '../../../login/controller/login_cubit.dart';
-
 part 'profile_base_state.dart';
+part 'widgets/new_feature.dart';
 
 @RoutePage()
 class ProfilePage extends StatefulWidget implements AutoRouteWrapper {
@@ -57,8 +57,7 @@ class _ProfilePageState extends ProfilePageBaseState {
             label: 'User Profile and Account Settings',
             child: Column(
               children: [
-                ///extracted --NewFeature
-                SizedBox.shrink(),
+                const NewFeature(),
 
                 const ProfileContentWidget(),
               ],

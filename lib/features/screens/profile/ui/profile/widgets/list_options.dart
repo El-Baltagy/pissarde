@@ -1,7 +1,7 @@
-part of 'profile_content_widget.dart';
+part of '../profile_screen.dart';
 
 class ListOptionsWidget extends StatelessWidget {
-  ListOptionsWidget({super.key});
+  const ListOptionsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

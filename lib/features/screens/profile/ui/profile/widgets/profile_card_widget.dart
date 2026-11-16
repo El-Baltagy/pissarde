@@ -1,0 +1,59 @@
+part of '../profile_screen.dart';
+
+/// Extracted mini widget: [ProfileCardWidget]
+class ProfileCardWidget extends StatelessWidget {
+  const ProfileCardWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppPadding.p16),
+      decoration: BoxDecoration(
+        color: AppColors.headerBackground,
+        borderRadius: BorderRadius.circular(AppSizes.r16),
+      ),
+      /// RTL-first: avatar (right) → text (left)
+      child: Row(
+        spacing: AppSizes.s14,
+        children: [
+          Container(
+            width: AppSizes.s56,
+            height: AppSizes.s56,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.headerBadgeBg,
+              border: Border.all(
+                color: AppColors.roleSwitchSelectedBg,
+                width: AppSizes.s2,
+              ),
+            ),
+            child: const Icon(
+              Icons.person,
+              color: AppColors.roleSwitchSelectedBg,
+              size: AppSizes.s32,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: AppSizes.s4,
+            children: [
+              Text(
+                'user_name'.tr(),
+                style: AppTextStyles.font16Bold.copyWith(
+                  color: AppColors.roleSwitchSelectedBg,
+                ),
+              ),
+              Text(
+                'job_title'.tr(),
+                style: AppTextStyles.font12Medium.copyWith(
+                  color: AppColors.darkTextSecondary,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+

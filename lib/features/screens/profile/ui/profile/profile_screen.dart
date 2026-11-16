@@ -7,11 +7,21 @@ import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
-import 'package:newf/features/screens/profile/ui/profile/widgets/profile_content_widget.dart';
 
+import '../../../../../core/base/base_state.dart';
+import '../../../../../core/theming/app_values.dart';
 import '../../../login/controller/login_cubit.dart';
+import '../../../login/controller/login_state.dart';
+
 part 'profile_base_state.dart';
-part 'widgets/new_feature.dart';
+
+part 'widgets/list_options.dart';
+
+part 'widgets/logout_button_widget.dart';
+
+part 'widgets/language_selector_widget.dart';
+
+part 'widgets/profile_card_widget.dart';
 
 @RoutePage()
 class ProfilePage extends StatefulWidget implements AutoRouteWrapper {
@@ -55,12 +65,20 @@ class _ProfilePageState extends ProfilePageBaseState {
         body: SingleChildScrollView(
           child: Semantics(
             label: 'User Profile and Account Settings',
-            child: Column(
-              children: [
-                const NewFeature(),
-
-                const ProfileContentWidget(),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(
+                AppPadding.p16,
+              ).copyWith(bottom: 120),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: AppSizes.s16,
+                children: [
+                  ProfileCardWidget(),
+                  LanguageSelectorWidget(),
+                  ListOptionsWidget(),
+                  LogoutButtonWidget(),
+                ],
+              ),
             ),
           ),
         ),

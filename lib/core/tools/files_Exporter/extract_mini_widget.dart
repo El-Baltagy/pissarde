@@ -147,7 +147,7 @@ String _readProjectName() {
 
 Future<int> _processFile(File file, String projectName) async {
   String content = await file.readAsString();
-  final markerRegex = RegExp(r'///\s*extracted\s*--\s*([A-Za-z0-9_]+)', multiLine: true);
+  final markerRegex = RegExp(r'///\s*extract(?:ed)?\s*--\s*([A-Za-z0-9_]+)', multiLine: true);
   final matches = markerRegex.allMatches(content).toList();
 
   if (matches.isEmpty) return 0;

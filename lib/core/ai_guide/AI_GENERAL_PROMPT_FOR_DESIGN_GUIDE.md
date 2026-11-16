@@ -188,3 +188,160 @@ When creating new feature functions, endpoints, or data models, you must follow 
 ## 16. 🔁 DRY List / Component Mapping (Don't Repeat Widgets)
 > [!IMPORTANT]
 > **NEVER** rewrite/duplicate the same widget multiple times with different data inside a `Row`, `Column`, or `Wrap`. Always iterate or map over a collection using `.map().toList()` (or collection `for`).
+
+---
+
+## 17. 🧩 Widget Extraction Script (`extract_mini_widget.dart`)
+
+A Dart CLI tool that **automatically extracts inline widget trees** marked with `///extract --Name` or `///extracted --Name` into their own files in the `widgets/` subfolder, using `part`/`part of` conventions.
+
+### Script Locations
+Both files are identical:
+- `lib/core/tools/extract_widgets/extract_mini_widget.dart`
+- `lib/core/tools/files_Exporter/extract_mini_widget.dart`
+
+### Usage
+```sh
+dart run lib/core/tools/extract_widgets/extract_mini_widget.dart [uiFolderOrFile]
+```
+**Examples:**
+```sh
+# Full path to the UI folder
+dart run lib/core/tools/extract_widgets/extract_mini_widget.dart lib/features/screens/profile/ui/profile
+
+# Short name — script resolves automatically
+dart run lib/core/tools/extract_widgets/extract_mini_widget.dart profile
+
+# No argument — prompts interactively
+dart run lib/core/tools/extract_widgets/extract_mini_widget.dart
+```
+
+### How to Mark a Widget for Extraction
+Add the marker comment **directly above** the widget you want to extract:
+```dart
+///extract --MyHeaderWidget
+Container(
+  color: AppColors.primary,
+  child: Text('Hello'),
+),
+```
+or use `///extracted --MyHeaderWidget` (both forms are supported).
+
+### What the Script Does
+1. **Finds** all `.dart` files in the target folder (skips `widgets/`, `.g.dart`, `.freezed.dart`, `.gr.dart`).
+2. **Parses** the file to locate the widget node following each marker using the Dart analyzer AST.
+3. **Creates** a new file in `<screen_folder>/widgets/<snake_case_name>.dart` with:
+   - `part of '../<parentFileName>';` at the top (inherits all imports from parent — no extra imports needed)
+   - A `StatelessWidget` subclass wrapping the extracted code in `build()`.
+4. **Replaces** the extracted code in the parent file with `const WidgetName()` or `WidgetName()`.
+5. **Injects** `part 'widgets/<fileName>';` into the parent file (after existing `part` directives or after the last `import`).
+6. **Removes** any existing package import for the new widget file (now a `part`, not an import).
+7. **Auto-injects** missing parent imports if the extracted code uses `AppColors`, `AppTextStyles`, `AppSizes`, `.tr()`, `.horizontalSpace`, `.verticalSpace`.
+
+### Output Example
+**Before** (`profile_screen.dart`):
+```dart
+///extracted --ProfileHeader
+Container(
+  padding: EdgeInsets.all(AppPadding.p16),
+  child: Text('Profile', style: AppTextStyles.font20Bold),
+),
+```
+
+**After** (`profile_screen.dart`):
+```dart
+part 'widgets/profile_header.dart';
+// ...
+const ProfileHeader(),
+```
+
+**New file** (`widgets/profile_header.dart`):
+```dart
+part of '../profile_screen.dart';
+
+/// Extracted mini widget: [ProfileHeader]
+class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(AppPadding.p16),
+      child: Text('Profile', style: AppTextStyles.font20Bold),
+    );
+  }
+}
+```
+
+### Rules & Conventions
+- **Marker format**: `///extract --Name` or `///extracted --Name` (spaces around `--` are optional).
+- **Widget class name**: Converted to PascalCase from the marker name (e.g., `my_header` → `MyHeader`).
+- **File name**: Converted to snake_case from the class name (e.g., `MyHeader` → `my_header.dart`).
+- **No imports in mini widget**: The `part of` declaration inherits everything from the parent — do not add `import` statements.
+- **`const` constructor**: Generated automatically; remove manually if the widget uses non-const fields.
+
+---
+
+## 18. ⚙️ Creating New Functions (`create_auto_functions`)
+
+When adding a new API-backed feature function, use the layered automation script instead of manually editing each layer:
+
+```sh
+dart run lib/core/tools/create_auto_functions/add_function_script.dart \
+  <featureName> <functionName> <returnType> <paramType>
+```
+
+**Example:**
+```sh
+dart run lib/core/tools/create_auto_functions/add_function_script.dart \
+  profile listEmployees GetAllEmployeesRes void
+```
+
+**What it does for you:**
+| Layer | File | Change |
+|---|---|---|
+| Constants | `app_api.dart` (`EndPoints`) | Adds endpoint constant |
+| Constants | `app_constant.dart` (`AppConstant`) | Adds key constant |
+| Repo (abstract) | `base_<feature>_repo.dart` | Adds `Future<Either<Failure, ReturnType>> functionName(...)` |
+| Repo (concrete) | `<feature>_remote_repo.dart` | Adds `dio.getData`/`dio.postData` with `handleResponse` |
+| Service (abstract) | `base_<feature>_service.dart` | Adds abstract method signature |
+| Service (concrete) | `<feature>_remote_service.dart` | Adds orchestration logic |
+| Cubit | `<feature>_cubit.dart` | Adds async method emitting `Loading → Success/Error` |
+| State | `<feature>_state.dart` | Adds `BaseEmit? <functionName>Emit` field + `copyWith` entry |
+
+> [!IMPORTANT]
+> Always use this script for new functions. Do NOT manually add partial layers — the script ensures all 8 layers are consistent.
+
+---
+
+## 19. 🗺️ Route Registration
+
+After creating a new screen, register it in **both** route files:
+
+**`lib/core/app/route.dart`** — add import and `AutoRoute` entry:
+```dart
+import 'package:newf/features/screens/<feature>/ui/<screen>/<screen>_screen.dart';
+
+// inside _router routes list:
+AutoRoute(page: MyScreenRoute.page),
+```
+
+**`lib/core/app/route.gr.dart`** — add `PageRouteInfo` class and `pagesMap` entry:
+```dart
+// pagesMap entry:
+MyScreenRoute.name: (data) => const MyScreenPage(),
+
+// Class:
+class MyScreenRoute extends PageRouteInfo<void> {
+  const MyScreenRoute({List<PageRouteInfo>? children})
+      : super(MyScreenRoute.name, initialChildren: children);
+
+  static const String name = 'MyScreenRoute';
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+```
+
+Or run the generator script:
+```sh
+dart run lib/core/tools/create_auto_files/route_generator_data.dart
+```

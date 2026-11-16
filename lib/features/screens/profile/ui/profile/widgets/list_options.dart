@@ -1,14 +1,33 @@
-part of'profile_content_widget.dart';
+part of 'profile_content_widget.dart';
+
 class ListOptionsWidget extends StatelessWidget {
-    ListOptionsWidget({super.key});
-  final   _settingsItems = [
-    (
-    icon: Icons.badge_outlined,
-    title: 'job_data'.tr()
-    )
-  ];
+  ListOptionsWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final items = [
+      (
+        icon: Icons.people_alt_outlined,
+        title: 'employees'.tr(),
+        onTap: () => context.router.push(const EmployeesRoute()),
+      ),
+      (
+        icon: Icons.schedule_outlined,
+        title: 'shifts'.tr(),
+        onTap: () => context.router.push(const ShiftsRoute()),
+      ),
+      (
+        icon: Icons.location_city_outlined,
+        title: 'branches'.tr(),
+        onTap: () => context.router.push(const BranchesRoute()),
+      ),
+      (
+        icon: Icons.badge_outlined,
+        title: 'job_data'.tr(),
+        onTap: () {},
+      ),
+    ];
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
@@ -19,22 +38,40 @@ class ListOptionsWidget extends StatelessWidget {
         ),
       ),
       child: Column(
-        children: _settingsItems
-            .map(
-              (item) => _buildSettingItem(
-              icon: item.icon,
-              title: item.title
-          ),
-        )
-            .toList(),
+        children: items.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
+          return Column(
+            children: [
+              _buildSettingItem(
+                icon: item.icon,
+                title: item.title,
+                onTap: item.onTap,
+              ),
+              if (index < items.length - 1)
+                const Divider(
+                  height: AppSizes.s1,
+                  thickness: AppSizes.s1,
+                  color: AppColors.cardBorder,
+                  indent: AppPadding.p16,
+                  endIndent: AppPadding.p16,
+                ),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
-    Widget _buildSettingItem({
-      required IconData icon,
-      required String title
-    }) {
-      return Padding(
+
+  Widget _buildSettingItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppSizes.r14),
+      child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.p14,
           vertical: AppPadding.p12,
@@ -64,11 +101,10 @@ class ListOptionsWidget extends StatelessWidget {
                     style: AppTextStyles.font13Medium.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-            /// LTR side: arrow chevron
             const Icon(
               Icons.arrow_forward_ios_rounded,
               size: AppSizes.s14,
@@ -76,6 +112,7 @@ class ListOptionsWidget extends StatelessWidget {
             ),
           ],
         ),
-      );
-    }
+      ),
+    );
+  }
 }

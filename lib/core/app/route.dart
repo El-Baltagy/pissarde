@@ -5,6 +5,9 @@ import 'package:newf/features/screens/attendance_record/ui/attendance_record/att
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
 import 'package:newf/features/screens/manager_dashboard/ui/manager_dashboard/manager_dashboard_screen.dart';
 import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
+import 'package:newf/features/screens/profile/ui/employees/employees_screen.dart';
+import 'package:newf/features/screens/profile/ui/shifts/shifts_screen.dart';
+import 'package:newf/features/screens/profile/ui/branches/branches_screen.dart';
 import 'package:newf/features/screens/login/ui/login/login_screen.dart';
 import 'package:newf/features/screens/splash/ui/splash_screen.dart';
 
@@ -44,12 +47,21 @@ class AppRouter extends _$AppRouter {
       AutoRoute(
         page: ProfileRoute.page,
       ),
+      AutoRoute(
+        page: EmployeesRoute.page,
+      ),
+      AutoRoute(
+        page: ShiftsRoute.page,
+      ),
+      AutoRoute(
+        page: BranchesRoute.page,
+      ),
   ];
 }
+
 class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-
     if (StorageHelper.isLogined) {
       resolver.next();
     } else {
@@ -57,4 +69,3 @@ class AuthGuard extends AutoRouteGuard {
     }
   }
 }
-      

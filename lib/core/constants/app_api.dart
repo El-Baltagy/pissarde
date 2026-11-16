@@ -1,24 +1,30 @@
 abstract class EndPoints {
   static const String assignEmployeeShift = "/api/employees/1/assign-shift";
   static const String transferEmployee = "/api/employees/1/transfer";
+
   static const String deleteEmployee = "/api/employees/1";
   static const String updateEmployee = "/api/employees/1";
   static const String showEmployee = "/api/employees/1";
   static const String createEmployee = "/api/employees";
   static const String listEmployees = "/api/employees";
-  static const String deleteShift = "/api/shifts/1";
-  static const String updateShift = "/api/shifts/1";
+
+  static   String deleteShift (String id)=> "/api/shifts/$id";
+  static   String updateShift (String id)=> "/api/shifts/$id";
   static const String showShift = "/api/shifts/1";
   static const String createShift = "/api/shifts";
   static const String listShifts = "/api/shifts";
+
   static const String rotateBranchQrSecret = "/api/branches/1/rotate-secret";
   static const String verifyBranchQr = "/api/branches/1/verify-qr";
   static const String branchLiveQr = "/api/branches/1/live-qr";
-  static const String deleteBranch = "/api/branches/1";
-  static const String updateBranch = "/api/branches/1";
+
+  static   String deleteBranch (String id)=> "/api/branches/$id";
+  static   String updateBranch (String id)=> "/api/branches/$id";
   static const String showBranch = "/api/branches/1";
   static const String createBranch = "/api/branches";
   static const String listBranches = "/api/branches";
+
+
   static const String holidays = "/api/holidays";
   static const String cancelLeaveRequest = "/api/leaves/1/cancel";
   static const String reviewLeaveRequest = "/api/leaves/1/review";

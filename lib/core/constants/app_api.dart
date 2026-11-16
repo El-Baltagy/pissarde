@@ -1,28 +1,34 @@
 abstract class EndPoints {
-  static const String assignEmployeeShift = "/api/employees/1/assign-shift";
-  static const String transferEmployee = "/api/employees/1/transfer";
 
-  static const String deleteEmployee = "/api/employees/1";
-  static const String updateEmployee = "/api/employees/1";
-  static const String showEmployee = "/api/employees/1";
+
+///emplyees
+  static   String deleteEmployee (String id)=> "/api/employees/$id";
+  static   String updateEmployee (String id)=> "/api/employees/$id";
+  static   String showEmployee (String id)=> "/api/employees/$id";
   static const String createEmployee = "/api/employees";
   static const String listEmployees = "/api/employees";
 
+  static const String assignEmployeeShift = "/api/employees/1/assign-shift";
+  static const String transferEmployee = "/api/employees/1/transfer";
+
+  ///shifts
   static   String deleteShift (String id)=> "/api/shifts/$id";
   static   String updateShift (String id)=> "/api/shifts/$id";
   static const String showShift = "/api/shifts/1";
   static const String createShift = "/api/shifts";
   static const String listShifts = "/api/shifts";
 
-  static const String rotateBranchQrSecret = "/api/branches/1/rotate-secret";
-  static const String verifyBranchQr = "/api/branches/1/verify-qr";
-  static const String branchLiveQr = "/api/branches/1/live-qr";
-
+  ///branches
   static   String deleteBranch (String id)=> "/api/branches/$id";
   static   String updateBranch (String id)=> "/api/branches/$id";
   static const String showBranch = "/api/branches/1";
   static const String createBranch = "/api/branches";
   static const String listBranches = "/api/branches";
+
+  static const String rotateBranchQrSecret = "/api/branches/1/rotate-secret";
+  static const String verifyBranchQr = "/api/branches/1/verify-qr";
+  static const String branchLiveQr = "/api/branches/1/live-qr";
+
 
 
   static const String holidays = "/api/holidays";
@@ -36,6 +42,7 @@ abstract class EndPoints {
   static const String listAttendanceCorrections = "/api/attendance/corrections";
   static const String createAttendanceCorrection = "/api/attendance/corrections";
 
+  ///attendance
   static const String attendanceHistory = "/api/attendance/history";
   static const String attendanceToday = "/api/attendance/today";
   static const String checkOut = "/api/attendance/check-out";

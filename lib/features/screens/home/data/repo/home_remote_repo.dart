@@ -6,11 +6,12 @@ import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_helper.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_status/chech_in_status.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
+ import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
 import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 import 'package:newf/features/screens/home/data/repo/base_home_repo.dart';
+
+import '../model/check_in_today_status_res/check_in_today_status_res.dart';
 
 /// Concrete remote implementation of [BaseHomeRepo].
 class HomeRemoteRepo implements BaseHomeRepo {
@@ -18,7 +19,7 @@ class HomeRemoteRepo implements BaseHomeRepo {
   HomeRemoteRepo(this.dio);
 
   @override
-  Future<Either<Failure, ChechInStatus>> attendanceTodayApi(
+  Future<Either<Failure, CheckInTodayStatusRes>> attendanceTodayApi(
     NoParameters? parameter, {
     CancelToken? cancelToken,
   }) async {
@@ -28,7 +29,7 @@ class HomeRemoteRepo implements BaseHomeRepo {
         cancelToken: cancelToken,
         caller: callerTag(),
       ),
-      asObject: ChechInStatus.fromJson,
+      asObject: CheckInTodayStatusRes.fromJson,
     );
   }
 

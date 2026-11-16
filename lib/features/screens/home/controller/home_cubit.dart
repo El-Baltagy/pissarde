@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_status/chech_in_status.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
+ import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
 import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 import 'package:newf/main.dart';
 import 'package:newf/features/screens/home/service/base_home_service.dart';
+
+import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 part 'home_state.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {
@@ -43,7 +44,7 @@ class HomeCubit extends BaseCubit<HomeState> {
   Future<void> attendanceTodayFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
     await CancelManager.runCancelableFun(attendanceTodayKeyCode, (token) async {
       await _service.attendanceTodayServ(
-        RequestCallbackObserver<ChechInStatus, NoParameters>(
+        RequestCallbackObserver<CheckInTodayStatusRes, NoParameters>(
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
           cancelToken: token,

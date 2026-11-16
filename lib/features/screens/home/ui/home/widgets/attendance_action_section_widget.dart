@@ -10,9 +10,10 @@ import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/home/controller/home_cubit.dart';
 import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_status/chech_in_status.dart';
-import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
+ import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
+
+import '../../../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 
 class AttendanceActionSectionWidget extends StatefulWidget {
   const AttendanceActionSectionWidget({super.key});
@@ -29,9 +30,9 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     return BlocConsumer<HomeCubit, HomeState>(
       listener: _cubitListener,
       builder: (context, state) {
-        ChechInStatus? status;
-        if (state is HomeLoaded && state.attendanceTodayState is Success<ChechInStatus>) {
-          status = (state.attendanceTodayState as Success<ChechInStatus>).data;
+        CheckInTodayStatusRes? status;
+        if (state is HomeLoaded && state.attendanceTodayState is Success<CheckInTodayStatusRes>) {
+          status = (state.attendanceTodayState as Success<CheckInTodayStatusRes>).data;
         }
 
         final bool isCheckedIn = status?.has_checked_in ?? false;
@@ -131,7 +132,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
   }
 
   Widget _buildStatusHeader({
-    required ChechInStatus? status,
+    required CheckInTodayStatusRes? status,
     required bool isCheckedIn,
     required bool isLoading,
   }) {
@@ -191,7 +192,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     );
   }
 
-  String _resolveStatusText(ChechInStatus? status, bool isCheckedIn) {
+  String _resolveStatusText(CheckInTodayStatusRes? status, bool isCheckedIn) {
     if (status == null) {
       return 'current_status_attendance_time'.tr();
     }

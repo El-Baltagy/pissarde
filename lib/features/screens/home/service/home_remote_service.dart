@@ -2,12 +2,13 @@ import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/base/base_local_repo.dart';
 import 'package:newf/core/base/base_service.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_status/chech_in_status.dart';
-import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
+ import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
 import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 import 'package:newf/features/screens/home/data/repo/base_home_repo.dart';
 import 'package:newf/features/screens/home/service/base_home_service.dart';
+
+import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 
 /// Concrete implementation of [BaseHomeService].
 /// Depends on [BaseHomeRepo] (abstraction), not on the remote repo directly.
@@ -19,7 +20,7 @@ class HomeRemoteService implements BaseHomeService {
 
   @override
   Future<void> attendanceTodayServ(
-    RequestCallbackObserver<ChechInStatus, NoParameters> requestInfo,
+    RequestCallbackObserver<CheckInTodayStatusRes, NoParameters> requestInfo,
   ) {
     const cacheKey = AppConstant.attendanceTodayKeyCash;
     return requestInfo.handleRequest(
@@ -31,7 +32,7 @@ class HomeRemoteService implements BaseHomeService {
         final tuple = await _localRepo.readData(cacheKey);
 
         if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
-          return ChechInStatus.fromJson(tuple!.$2);
+          return CheckInTodayStatusRes.fromJson(tuple!.$2);
         }
         return null;
       },

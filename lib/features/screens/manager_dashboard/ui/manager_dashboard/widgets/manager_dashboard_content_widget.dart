@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class ManagerDashboardContentWidget extends StatelessWidget {
   const ManagerDashboardContentWidget({super.key});
 
-  static const _quickStats = [
+  static   _quickStats (BuildContext context)=> [
     (
       title: 'طلبات معلقة',
       value: '3',
@@ -18,7 +19,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
       title: 'إجمالي الموظفين',
       value: '48',
       icon: Icons.people_outline_rounded,
-      color: AppColors.headerBackground,
+      color: context.theme.primaryColor,
       bgColor: AppColors.policyCardBg,
     ),
   ];
@@ -49,19 +50,19 @@ class ManagerDashboardContentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSizes.s16,
         children: [
-          _buildBranchHeaderCard(),
-          _buildQuickStatsGrid(),
+          _buildBranchHeaderCard(  context),
+          _buildQuickStatsGrid(  context),
           _buildDepartmentList(),
         ],
       ),
     );
   }
 
-  Widget _buildBranchHeaderCard() {
+  Widget _buildBranchHeaderCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppPadding.p16),
       decoration: BoxDecoration(
-        color: AppColors.headerBackground,
+        color: context.theme.primaryColor,
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
       child: Column(
@@ -104,11 +105,11 @@ class ManagerDashboardContentWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickStatsGrid() {
+  Widget _buildQuickStatsGrid(BuildContext context) {
     /// RTL-first: pending requests (right) → total employees (left)
     return Row(
       spacing: AppSizes.s10,
-      children: _quickStats
+      children: _quickStats(  context)
           .map((stat) => _buildStatCard(
                 title: stat.title,
                 value: stat.value,

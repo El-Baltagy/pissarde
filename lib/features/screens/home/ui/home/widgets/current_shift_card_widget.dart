@@ -4,6 +4,7 @@ import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class CurrentShiftCardWidget extends StatelessWidget {
   const CurrentShiftCardWidget({super.key});
@@ -30,17 +31,17 @@ class CurrentShiftCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
 
-          _buildShiftHeaderRow(),
+          _buildShiftHeaderRow(  context),
           _buildDelayAlertBox(),
           _buildShiftMetricsRow(),
 
-          _buildProgressBar(),
+          _buildProgressBar(  context),
         ],
       ),
     );
   }
 
-  Widget _buildShiftHeaderRow() {
+  Widget _buildShiftHeaderRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -49,14 +50,14 @@ class CurrentShiftCardWidget extends StatelessWidget {
           spacing: AppSizes.s8,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.storefront_rounded, color: AppColors.headerBackground, size: AppSizes.s20),
+              Icon(Icons.storefront_rounded, color: context.theme.primaryColor, size: AppSizes.s20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('current_shift_label'.tr(), style: AppTextStyles.font11Regular),
                 Text(
                   'current_shift_name'.tr(),
-                  style: AppTextStyles.font14Bold.copyWith(color: AppColors.headerBackground),
+                  style: AppTextStyles.font14Bold.copyWith(color: context.theme.primaryColor),
                 ),
               ],
             ),
@@ -162,7 +163,7 @@ class CurrentShiftCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressBar() {
+  Widget _buildProgressBar(BuildContext context) {
     return Column(
       spacing: AppSizes.s8,
       children: [
@@ -179,7 +180,7 @@ class CurrentShiftCardWidget extends StatelessWidget {
             value: 0.65,
             minHeight: AppSizes.s8,
             backgroundColor: AppColors.metricBorder,
-            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.headerBackground),
+            valueColor:   AlwaysStoppedAnimation<Color>(context.theme.primaryColor),
           ),
         ),
       ],

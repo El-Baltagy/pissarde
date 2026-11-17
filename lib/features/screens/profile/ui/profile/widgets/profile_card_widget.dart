@@ -1,3 +1,4 @@
+
 part of '../profile_screen.dart';
 
 /// Extracted mini widget: [ProfileCardWidget]
@@ -9,7 +10,7 @@ class ProfileCardWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppPadding.p16),
       decoration: BoxDecoration(
-        color: AppColors.headerBackground,
+        color: context.theme.primaryColor,
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
       /// RTL-first: avatar (right) → text (left)

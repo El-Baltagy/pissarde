@@ -3,6 +3,7 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
+import 'package:newf/core/extension/context.dart';
 
 /// Displays summary information for a single employee.
 class EmployeeCardWidget extends StatelessWidget {
@@ -32,9 +33,9 @@ class EmployeeCardWidget extends StatelessWidget {
                 color: AppColors.roleSwitchBg,
                 borderRadius: BorderRadius.circular(AppSizes.r24),
               ),
-              child: const Icon(
+              child:   Icon(
                 Icons.person_outline,
-                color: AppColors.headerBackground,
+                color: context.theme.primaryColor,
                 size: AppSizes.s24,
               ),
             ),
@@ -49,7 +50,7 @@ class EmployeeCardWidget extends StatelessWidget {
                   Text(
                     employee.role.label,
                     style: AppTextStyles.font12Medium
-                        .copyWith(color: AppColors.headerBackground),
+                        .copyWith(color: context.theme.primaryColor),
                   ),
                 ],
               ),

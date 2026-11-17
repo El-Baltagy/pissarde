@@ -1,3 +1,5 @@
+
+
 part of '../profile_screen.dart';
 
 /// Extracted mini widget: [LanguageSelectorWidget]
@@ -47,9 +49,9 @@ class LanguageSelectorWidget extends StatelessWidget {
                   color: AppColors.roleSwitchBg,
                   borderRadius: BorderRadius.circular(AppSizes.r10),
                 ),
-                child: const Icon(
+                child:   Icon(
                   Icons.language_rounded,
-                  color: AppColors.headerBackground,
+                  color: context.theme.primaryColor,
                   size: AppSizes.s20,
                 ),
               ),
@@ -65,9 +67,9 @@ class LanguageSelectorWidget extends StatelessWidget {
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: currentLang.code,
-              icon: const Icon(
+              icon:   Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: AppColors.headerBackground,
+                color: context.theme.primaryColor,
               ),
               style: AppTextStyles.font13Medium.copyWith(
                 color: AppColors.lightTextPrimary,

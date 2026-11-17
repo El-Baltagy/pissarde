@@ -31,7 +31,7 @@ class BranchStatusCardWidget extends StatelessWidget {
         spacing: AppSizes.s14,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildHeaderRow(),
+          _buildHeaderRow(  context),
           _buildStatusMetricsRow(),
           _buildPendingApprovalNotice(context),
         ],
@@ -39,7 +39,7 @@ class BranchStatusCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderRow() {
+  Widget _buildHeaderRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -54,7 +54,7 @@ class BranchStatusCardWidget extends StatelessWidget {
                 color: AppColors.roleSwitchBg,
                 borderRadius: BorderRadius.circular(AppSizes.r12),
               ),
-              child: const Icon(Icons.groups_rounded, color: AppColors.headerBackground, size: AppSizes.s20),
+              child:   Icon(Icons.groups_rounded, color: context.theme.primaryColor, size: AppSizes.s20),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +142,7 @@ class BranchStatusCardWidget extends StatelessWidget {
         Text(
           'review_requests'.tr(),
           style: AppTextStyles.font12SemiBold.copyWith(
-            color: AppColors.headerBackground,
+            color: context.theme.primaryColor,
             decoration: TextDecoration.underline,
           ),
         ),

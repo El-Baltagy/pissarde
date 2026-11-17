@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class AttendanceRecordContentWidget extends StatelessWidget {
   const AttendanceRecordContentWidget({super.key});
@@ -42,8 +43,8 @@ class AttendanceRecordContentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: AppSizes.s12,
         children: [
-          _buildSummaryHeader(),
-          _buildFilterChips(),
+          _buildSummaryHeader(  context),
+          _buildFilterChips(  context),
           ..._records.map(
             (record) => _buildRecordItem(
               date: record.date,
@@ -59,7 +60,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryHeader() {
+  Widget _buildSummaryHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppPadding.p16),
       decoration: BoxDecoration(
@@ -80,9 +81,9 @@ class AttendanceRecordContentWidget extends StatelessWidget {
               color: AppColors.roleSwitchBg,
               borderRadius: BorderRadius.circular(AppSizes.r12),
             ),
-            child: const Icon(
+            child:   Icon(
               Icons.calendar_month_outlined,
-              color: AppColors.headerBackground,
+              color: context.theme.primaryColor,
               size: AppSizes.s24,
             ),
           ),
@@ -97,7 +98,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
               Text(
                 '160 / 176 ${'hour'.tr()}',
                 style: AppTextStyles.font16Bold.copyWith(
-                  color: AppColors.headerBackground,
+                  color: context.theme.primaryColor,
                 ),
               ),
             ],
@@ -107,7 +108,7 @@ class AttendanceRecordContentWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChips() {
+  Widget _buildFilterChips(BuildContext context) {
     final filters = [
       (label: 'all', isSelected: true),
       (label: 'present', isSelected: false),
@@ -122,20 +123,20 @@ class AttendanceRecordContentWidget extends StatelessWidget {
       child: Row(
         spacing: AppSizes.s8,
         children: filters
-            .map((item) => _buildChip(label: item.label.tr(), isSelected: item.isSelected))
+            .map((item) => _buildChip(context, label: item.label.tr(), isSelected: item.isSelected))
             .toList(),
       ),
     );
   }
 
-  Widget _buildChip({required String label, required bool isSelected}) {
+  Widget _buildChip(BuildContext context,{required String label, required bool isSelected}) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppPadding.p14,
         vertical: AppPadding.p6,
       ),
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.headerBackground : AppColors.roleSwitchBg,
+        color: isSelected ? context.theme.primaryColor : AppColors.roleSwitchBg,
         borderRadius: BorderRadius.circular(AppSizes.r20),
       ),
       child: Text(

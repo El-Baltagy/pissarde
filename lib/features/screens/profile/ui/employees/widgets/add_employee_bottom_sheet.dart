@@ -6,6 +6,7 @@ import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
+import 'package:newf/core/extension/context.dart';
 
 /// Bottom sheet form for adding a new employee.
 class AddEmployeeBottomSheet extends StatefulWidget {
@@ -105,7 +106,7 @@ class _AddEmployeeBottomSheetState extends State<AddEmployeeBottomSheet> {
                 ElevatedButton(
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.headerBackground,
+                    backgroundColor: context.theme.primaryColor,
                     padding: const EdgeInsets.symmetric(
                         vertical: AppPadding.p14),
                     shape: RoundedRectangleBorder(

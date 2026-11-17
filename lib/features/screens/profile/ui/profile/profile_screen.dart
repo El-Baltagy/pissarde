@@ -12,6 +12,7 @@ import '../../../../../core/base/base_state.dart';
 import '../../../../../core/theming/app_values.dart';
 import '../../../login/controller/login_cubit.dart';
 import '../../../login/controller/login_state.dart';
+import 'package:newf/core/extension/context.dart' as c;
 
 part 'profile_base_state.dart';
 
@@ -58,7 +59,7 @@ class _ProfilePageState extends ProfilePageBaseState {
               color: AppColors.roleSwitchSelectedBg,
             ),
           ),
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
         ),

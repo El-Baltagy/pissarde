@@ -8,6 +8,7 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
 import 'package:newf/features/screens/requests/ui/requests/widgets/requests_list_content_widget.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'requests_base_state.dart';
 
@@ -42,7 +43,7 @@ class _RequestsPageState extends RequestsPageBaseState {
               color: AppColors.roleSwitchSelectedBg,
             ),
           ),
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
         ),

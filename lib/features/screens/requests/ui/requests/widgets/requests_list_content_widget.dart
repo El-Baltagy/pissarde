@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class RequestsListContentWidget extends StatelessWidget {
   const RequestsListContentWidget({super.key});
@@ -42,7 +43,7 @@ class RequestsListContentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSizes.s12,
         children: [
-          _buildCreateRequestBanner(),
+          _buildCreateRequestBanner(  context),
           ..._requests.map(
             (req) => _buildRequestCard(
               titleKey: req.titleKey,
@@ -58,11 +59,11 @@ class RequestsListContentWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildCreateRequestBanner() {
+  Widget _buildCreateRequestBanner(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppPadding.p16),
+      padding:   EdgeInsets.all(AppPadding.p16),
       decoration: BoxDecoration(
-        color: AppColors.headerBackground,
+        color: context.theme.primaryColor,
         borderRadius: BorderRadius.circular(AppSizes.r16),
       ),
       /// RTL-first: text block (right) → button (left)
@@ -91,7 +92,7 @@ class RequestsListContentWidget extends StatelessWidget {
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.roleSwitchSelectedBg,
-              foregroundColor: AppColors.headerBackground,
+              foregroundColor: context.theme.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSizes.r12),
               ),
@@ -105,7 +106,7 @@ class RequestsListContentWidget extends StatelessWidget {
               'new_request'.tr(),
               style: AppTextStyles.font13Medium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.headerBackground,
+                color: context.theme.primaryColor,
               ),
             ),
           ),

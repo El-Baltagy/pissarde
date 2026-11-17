@@ -19,6 +19,7 @@ import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
 
 import '../../../login/controller/login_cubit.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'main_navigation_base_state.dart';
 
@@ -135,7 +136,7 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
                     elevation: AppSizes.s4,
                     backgroundColor: isManagerTabSelected
                         ? AppColors.primaryGoldStart
-                        : AppColors.headerBackground,
+                        : context.theme.primaryColor,
                     shape: const CircleBorder(),
                     child: const Icon(
                       Icons.grid_view_rounded,

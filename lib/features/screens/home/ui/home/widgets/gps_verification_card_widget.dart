@@ -4,6 +4,7 @@ import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class GpsVerificationCardWidget extends StatelessWidget {
   const GpsVerificationCardWidget({super.key});
@@ -30,7 +31,7 @@ class GpsVerificationCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeaderRow(),
-          _buildRadarDisplay(),
+          _buildRadarDisplay(  context),
           _buildDistanceFooter(),
         ],
       ),
@@ -61,7 +62,7 @@ class GpsVerificationCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildRadarDisplay() {
+  Widget _buildRadarDisplay(BuildContext context) {
     return Container(
       height: AppSizes.s120,
       decoration: BoxDecoration(color: AppColors.gpsRadarBg, borderRadius: BorderRadius.circular(AppSizes.r12)),
@@ -78,7 +79,7 @@ class GpsVerificationCardWidget extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(AppPadding.p10),
-            decoration: const BoxDecoration(color: AppColors.headerBackground, shape: BoxShape.circle),
+            decoration:   BoxDecoration(color: context.theme.primaryColor, shape: BoxShape.circle),
             child: const Icon(Icons.business_rounded, color: AppColors.roleSwitchSelectedBg, size: AppSizes.s20),
           ),
           PositionedDirectional(

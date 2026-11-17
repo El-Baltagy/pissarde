@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class WeeklySummaryCardWidget extends StatelessWidget {
   const WeeklySummaryCardWidget({super.key});
@@ -65,7 +66,7 @@ class WeeklySummaryCardWidget extends StatelessWidget {
         spacing: AppSizes.s14,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildHeaderRow(),
+          _buildHeaderRow(  context),
           _buildDaysRow(),
           ..._metrics.map(
             (m) => _buildMetricRow(
@@ -79,7 +80,7 @@ class WeeklySummaryCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderRow() {
+  Widget _buildHeaderRow(BuildContext context) {
     /// RTL-first: icon+title (right) → subtitle (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,9 +89,9 @@ class WeeklySummaryCardWidget extends StatelessWidget {
           spacing: AppSizes.s8,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+              Icon(
               Icons.bar_chart_rounded,
-              color: AppColors.headerBackground,
+              color: context.theme.primaryColor,
               size: AppSizes.s20,
             ),
             Text(

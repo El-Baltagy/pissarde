@@ -4,6 +4,7 @@ import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class AttendanceHeaderWidget extends StatelessWidget {
   const AttendanceHeaderWidget({super.key});
@@ -11,8 +12,8 @@ class AttendanceHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.headerBackground,
+      decoration:   BoxDecoration(
+        color: context.theme.primaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(AppSizes.r24),
           bottomRight: Radius.circular(AppSizes.r24),
@@ -31,7 +32,7 @@ class AttendanceHeaderWidget extends StatelessWidget {
             spacing: AppSizes.s16,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildUserInfoRow(),
+              _buildUserInfoRow(  context),
               _buildDateTimeRow(),
             ],
           ),
@@ -41,11 +42,11 @@ class AttendanceHeaderWidget extends StatelessWidget {
   }
 
   /// RTL-first: avatar → user details → spacer → notification
-  Widget _buildUserInfoRow() {
+  Widget _buildUserInfoRow(BuildContext context) {
     return Row(
       spacing: AppSizes.s12,
       children: [
-        _buildAvatar(),
+        _buildAvatar(context),
         _buildUserDetails(),
         const Spacer(),
         _buildNotificationButton(),
@@ -53,7 +54,7 @@ class AttendanceHeaderWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildAvatar() {
+  Widget _buildAvatar(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -84,7 +85,7 @@ class AttendanceHeaderWidget extends StatelessWidget {
               color: AppColors.onlineGreen,
               shape: BoxShape.circle,
               border: Border.all(
-                color: AppColors.headerBackground,
+                color: context.theme.primaryColor,
                 width: AppSizes.s2,
               ),
             ),

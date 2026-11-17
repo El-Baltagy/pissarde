@@ -4,6 +4,7 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
+import 'package:newf/core/extension/context.dart';
 
 /// Displays summary information for a single holiday item.
 class HolidayCardWidget extends StatelessWidget {
@@ -35,9 +36,9 @@ class HolidayCardWidget extends StatelessWidget {
                     color: AppColors.roleSwitchBg,
                     borderRadius: BorderRadius.circular(AppSizes.r10),
                   ),
-                  child: const Icon(
+                  child:   Icon(
                     Icons.beach_access_outlined,
-                    color: AppColors.headerBackground,
+                    color: context.theme.primaryColor,
                     size: AppSizes.s20,
                   ),
                 ),
@@ -89,11 +90,11 @@ class HolidayCardWidget extends StatelessWidget {
               spacing: AppSizes.s8,
               runSpacing: AppSizes.s6,
               children: [
-                _tagChip(holiday.type),
+                _tagChip(  context,holiday.type),
                 if (holiday.is_company_wide)
-                  _tagChip('company_wide'.tr()),
+                  _tagChip(  context,'company_wide'.tr()),
                 if (!holiday.is_company_wide && holiday.branch_name.isNotEmpty)
-                  _tagChip(holiday.branch_name),
+                  _tagChip(  context,holiday.branch_name),
               ],
             ),
           ],
@@ -113,7 +114,7 @@ class HolidayCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _tagChip(String label) {
+  Widget _tagChip(BuildContext context,String label) {
     return Container(
       padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.p8, vertical: AppPadding.p4),
@@ -122,7 +123,7 @@ class HolidayCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppSizes.r8),
       ),
       child: Text(label, style: AppTextStyles.font11Bold.copyWith(
-        color: AppColors.headerBackground,
+        color: context.theme.primaryColor,
       )),
     );
   }

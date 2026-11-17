@@ -8,6 +8,7 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/attendance_record/controller/attendance_record_cubit.dart';
 import 'package:newf/features/screens/attendance_record/ui/attendance_record/widgets/attendance_record_content_widget.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'attendance_record_base_state.dart';
 
@@ -42,7 +43,7 @@ class _AttendanceRecordPageState extends AttendanceRecordPageBaseState {
               color: AppColors.roleSwitchSelectedBg,
             ),
           ),
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
         ),

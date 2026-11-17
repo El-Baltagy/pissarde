@@ -11,6 +11,7 @@ import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/official_holidays/widgets/holidays_list_widget.dart';
 
 import '../../../../../core/app/route.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'official_holidays_base_state.dart';
 
@@ -33,7 +34,7 @@ class _OfficialHolidaysPageState extends OfficialHolidaysPageBaseState {
     return Scaffold(
       backgroundColor: AppColors.lightSurface,
       appBar: AppBar(
-        backgroundColor: AppColors.headerBackground,
+        backgroundColor: context.theme.primaryColor,
         elevation: 0,
         centerTitle: true,
         iconTheme:

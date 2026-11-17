@@ -12,6 +12,7 @@ import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/branches/widgets/branches_list_widget.dart';
 import 'package:newf/features/screens/profile/ui/branches/widgets/add_branch_bottom_sheet.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'branches_base_state.dart';
 
@@ -36,7 +37,7 @@ class _BranchesPageState extends BranchesPageBaseState {
       child: Scaffold(
         backgroundColor: AppColors.lightSurface,
         appBar: AppBar(
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
           iconTheme:
@@ -48,7 +49,7 @@ class _BranchesPageState extends BranchesPageBaseState {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           onPressed: () => _showAddBranchSheet(context),
           child: const Icon(Icons.add,
               color: AppColors.roleSwitchSelectedBg),

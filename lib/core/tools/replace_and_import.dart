@@ -4,8 +4,8 @@ void main( ) {
 
 
   final dirPath = "lib/features/screens";
-  final findText = "AppColors.contractorDarkText";
-  final replaceText = "context.theme.colorScheme.tertiaryFixed";
+  final findText = "AppColors.headerBackground";
+  final replaceText = "context.theme.primaryColor";
   final importToAdd = "import 'package:newf/core/extension/context.dart';";
 
   final directory = Directory(dirPath);

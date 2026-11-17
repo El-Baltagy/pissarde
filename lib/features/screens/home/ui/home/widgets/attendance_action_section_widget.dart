@@ -299,12 +299,12 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
       spacing: AppSizes.s6,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.headerBackground, size: AppSizes.s16),
+        Icon(icon, color: context.theme.primaryColor, size: AppSizes.s16),
         Text(
           labelKey.tr(),
           style: AppTextStyles.font12Medium.copyWith(
             fontSize: 11,
-            color: AppColors.headerBackground,
+            color: context.theme.primaryColor,
           ),
         ),
       ],

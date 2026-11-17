@@ -3,6 +3,7 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
+import 'package:newf/core/extension/context.dart';
 
 /// Displays summary information for a single branch.
 class BranchCardWidget extends StatelessWidget {
@@ -32,9 +33,9 @@ class BranchCardWidget extends StatelessWidget {
                 color: AppColors.roleSwitchBg,
                 borderRadius: BorderRadius.circular(AppSizes.r10),
               ),
-              child: const Icon(
+              child:   Icon(
                 Icons.location_city_outlined,
-                color: AppColors.headerBackground,
+                color: context.theme.primaryColor,
                 size: AppSizes.s24,
               ),
             ),

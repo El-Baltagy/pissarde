@@ -12,6 +12,7 @@ import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/employees/widgets/employees_list_widget.dart';
 import 'package:newf/features/screens/profile/ui/employees/widgets/add_employee_bottom_sheet.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'employees_base_state.dart';
 
@@ -37,7 +38,7 @@ class _EmployeesPageState extends EmployeesPageBaseState {
       child: Scaffold(
         backgroundColor: AppColors.lightSurface,
         appBar: AppBar(
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.roleSwitchSelectedBg),
@@ -48,7 +49,7 @@ class _EmployeesPageState extends EmployeesPageBaseState {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           onPressed: () => _showAddEmployeeSheet(context),
           child:
               const Icon(Icons.add, color: AppColors.roleSwitchSelectedBg),

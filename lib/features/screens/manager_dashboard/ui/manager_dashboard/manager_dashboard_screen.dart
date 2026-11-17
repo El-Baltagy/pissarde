@@ -8,6 +8,7 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/manager_dashboard/controller/manager_dashboard_cubit.dart';
 import 'package:newf/features/screens/manager_dashboard/ui/manager_dashboard/widgets/manager_dashboard_content_widget.dart';
+import 'package:newf/core/extension/context.dart';
 
 part 'manager_dashboard_base_state.dart';
 
@@ -42,7 +43,7 @@ class _ManagerDashboardPageState extends ManagerDashboardPageBaseState {
               color: AppColors.roleSwitchSelectedBg,
             ),
           ),
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
         ),

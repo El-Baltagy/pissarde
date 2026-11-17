@@ -34,7 +34,7 @@ class _ShiftsPageState extends ShiftsPageBaseState {
       child: Scaffold(
         backgroundColor: AppColors.lightSurface,
         appBar: AppBar(
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           elevation: 0,
           centerTitle: true,
           iconTheme:
@@ -46,7 +46,7 @@ class _ShiftsPageState extends ShiftsPageBaseState {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.headerBackground,
+          backgroundColor: context.theme.primaryColor,
           onPressed: () => context.push(
             AddEditShiftRoute(
               args: AddEditShiftRouteArgs(profileCubit: profileCubit),

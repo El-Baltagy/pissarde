@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/core/extension/context.dart';
 
 class RecentRequestsCardWidget extends StatelessWidget {
   const RecentRequestsCardWidget({super.key});
@@ -50,7 +51,7 @@ class RecentRequestsCardWidget extends StatelessWidget {
         spacing: AppSizes.s12,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildHeaderRow(),
+          _buildHeaderRow(  context),
           ..._recentRequests.map(
             (req) => _buildRequestItem(
               titleKey: req.titleKey,
@@ -66,7 +67,7 @@ class RecentRequestsCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderRow() {
+  Widget _buildHeaderRow(BuildContext context) {
     /// RTL-first: icon+title (right) → view all (left)
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,9 +76,9 @@ class RecentRequestsCardWidget extends StatelessWidget {
           spacing: AppSizes.s8,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+              Icon(
               Icons.assignment_outlined,
-              color: AppColors.headerBackground,
+              color: context.theme.primaryColor,
               size: AppSizes.s20,
             ),
             Text(
@@ -89,7 +90,7 @@ class RecentRequestsCardWidget extends StatelessWidget {
         Text(
           'view_all'.tr(),
           style: AppTextStyles.font12SemiBold.copyWith(
-            color: AppColors.headerBackground,
+            color: context.theme.primaryColor,
           ),
         ),
       ],

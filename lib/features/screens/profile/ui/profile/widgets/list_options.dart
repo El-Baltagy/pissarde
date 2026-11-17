@@ -1,3 +1,5 @@
+
+
 part of '../profile_screen.dart';
 
 class ListOptionsWidget extends StatelessWidget {
@@ -88,7 +90,7 @@ class ListOptionsWidget extends StatelessWidget {
               ),
               child: Icon(
                 icon,
-                color: AppColors.headerBackground,
+                color: context.theme.primaryColor,
                 size: AppSizes.s20,
               ),
             ),

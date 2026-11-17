@@ -3,6 +3,23 @@ import '../create_auto_files/path_constants.dart';
 
 
 
+Future<void> main(List<String> args) async {
+  if (args.length < 2) {
+    print('❌ Missing parameters.');
+    print('Usage: dart run lib/core/tools/create_auto_files/route_generator_data.dart <featureName> <screenName>');
+    print('Example: dart run lib/core/tools/create_auto_files/route_generator_data.dart profile employees');
+    exit(1);
+  }
+  final featureName = args[0];
+  final screenName = args[1];
+  PathConstants().setData(featureName);
+  await addAutoRoute(
+    PathConstants().routeName(screenName),
+    PathConstants().screenFileName(screenName),
+  );
+  print('✅ Route "${PathConstants().routeName(screenName)}" successfully registered for "$featureName"');
+}
+
 Future<void> addAutoRoute(String routeName,String screenFileName) async {
    final routeFile = File(PathConstants().appRoutePath());
   if (!routeFile.existsSync()) {

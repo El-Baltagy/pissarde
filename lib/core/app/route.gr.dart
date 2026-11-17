@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AddEditShiftRoute.name: (routeData) {
+      final args = routeData.argsAs<AddEditShiftRouteArgs>(orElse: () =>   AddEditShiftRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AddEditShiftPage(
+           args: args ,
+        )),
+      );
+    },
     ProfileRoute.name: (routeData) {
       final args = routeData.argsAs<ProfileRouteArgs>( );
       return AutoRoutePage<dynamic>(
@@ -376,3 +386,25 @@ class OfficialHolidaysRouteArgs {
 }
 
 
+
+/// generated route for
+/// [AddEditShiftPage]
+class AddEditShiftRoute extends PageRouteInfo<AddEditShiftRouteArgs> {
+  AddEditShiftRoute({
+   required AddEditShiftRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    AddEditShiftRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'AddEditShiftRoute';
+
+  static const PageInfo<AddEditShiftRouteArgs> page =
+  PageInfo<AddEditShiftRouteArgs>(name);
+}
+class AddEditShiftRouteArgs {
+  const AddEditShiftRouteArgs( );
+   static AddEditShiftRouteArgs noArgs()=>AddEditShiftRouteArgs();
+}

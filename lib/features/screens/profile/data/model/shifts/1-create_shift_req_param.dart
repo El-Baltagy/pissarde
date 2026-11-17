@@ -1,6 +1,9 @@
+import 'dart:math';
+
 class AddEditShiftReqParam {
+  final int? id;
   final String name;
-  final String code;
+
   final String start_time;
   final String end_time;
   final String is_overnight;
@@ -12,8 +15,9 @@ class AddEditShiftReqParam {
   final String is_active;
 
   const AddEditShiftReqParam({
+    this.id,
     required this.name,
-    required this.code,
+
     required this.start_time,
     required this.end_time,
     required this.is_overnight,
@@ -27,7 +31,7 @@ class AddEditShiftReqParam {
 
   Map<String, dynamic> toJson() => {
         'name': name,
-        'code': code,
+        'code': Random().nextInt(40000).toString(),
         'start_time': start_time,
         'end_time': end_time,
         'is_overnight': is_overnight,

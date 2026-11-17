@@ -15,7 +15,7 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldWindowEnd = (.new(), .new());
 
   final TextEditingController controllerName = .new();
-  final TextEditingController controllerCode = .new();
+  // final TextEditingController controllerCode = .new();
   final TextEditingController controllerStartTime = .new();
   final TextEditingController controllerEndTime = .new();
   final TextEditingController controllerGracePeriod = .new();
@@ -30,17 +30,20 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
 
   bool _isSuccessHandled = false;
 
+  /// Whether we're editing an existing shift (true) or creating new (false).
+  bool get _isEditMode => widget.args.shiftItem != null;
+
   @override
   void initState() {
     super.initState();
     isLoadingNotifier = .new(false);
     profileCubit = ProfileCubit.get(context: context);
     profileCubit.resetCreateShift();
+    profileCubit.resetUpdateShift();
 
     final shift = widget.args.shiftItem;
     if (shift != null) {
       controllerName.text = shift.name;
-      controllerCode.text = shift.code;
       controllerStartTime.text = shift.start_time;
       controllerEndTime.text = shift.end_time;
       controllerGracePeriod.text = shift.grace_period_minutes.toString();
@@ -72,7 +75,6 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
     fieldWindowEnd.$2?.dispose();
 
     controllerName.dispose();
-    controllerCode.dispose();
     controllerStartTime.dispose();
     controllerEndTime.dispose();
     controllerGracePeriod.dispose();
@@ -96,10 +98,11 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
       listRecorder: [fieldName, fieldCode, fieldStartTime, fieldEndTime],
     )) {
       final param = AddEditShiftReqParam(
+        id: widget.args.shiftItem?.id,
         name: controllerName.text.trim(),
-        code: controllerCode.text.trim(),
-        start_time: controllerStartTime.text.trim(),
-        end_time: controllerEndTime.text.trim(),
+
+        start_time: DateTimeHelper.toHourMinute(controllerStartTime.text.trim()),
+        end_time:DateTimeHelper.toHourMinute(controllerEndTime.text.trim()) ,
         is_overnight: isOvernightNotifier.value ? '1' : '0',
         grace_period_minutes: controllerGracePeriod.text.trim().isEmpty
             ? '10'
@@ -117,16 +120,20 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
         is_active: isActiveNotifier.value ? '1' : '0',
       );
 
-      await profileCubit.createShiftFunc(
-        Init(),
-        parameter: param,
-      );
+      if (_isEditMode) {
+        await profileCubit.updateShiftFunc(Init(), parameter: param);
+      } else {
+        await profileCubit.createShiftFunc(Init(), parameter: param);
+      }
     }
   }
 
   void createShiftListener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
-      if (state.createShiftState is Success && !_isSuccessHandled) {
+      // ── Create success ───────────────────────────────────────────────
+      if (!_isEditMode &&
+          state.createShiftState is Success &&
+          !_isSuccessHandled) {
         _isSuccessHandled = true;
         final res = (state.createShiftState as Success).data;
         final message = res is ShiftCreatingRes
@@ -135,13 +142,28 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
         context.showToast(message);
         profileCubit.resetCreateShift();
         context.pop(true);
-      } else if (state.createShiftState is ErrorState) {
+      } else if (!_isEditMode && state.createShiftState is ErrorState) {
         final err = state.createShiftState as ErrorState;
-        context.showToast(
-          err.failure.message,
-          isSuccess: false,
-        );
+        context.showToast(err.failure.message, isSuccess: false);
+      }
+
+      // ── Update success ───────────────────────────────────────────────
+      if (_isEditMode &&
+          state.updateShiftState is Success &&
+          !_isSuccessHandled) {
+        _isSuccessHandled = true;
+        final res = (state.updateShiftState as Success).data;
+        final message = res is ShiftCreatingRes
+            ? res.message
+            : 'shift_updated_success'.tr();
+        context.showToast(message);
+        profileCubit.resetUpdateShift();
+        context.pop(true);
+      } else if (_isEditMode && state.updateShiftState is ErrorState) {
+        final err = state.updateShiftState as ErrorState;
+        context.showToast(err.failure.message, isSuccess: false);
       }
     }
   }
 }
+

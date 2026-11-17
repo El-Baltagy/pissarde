@@ -10,7 +10,9 @@ import 'package:newf/features/screens/profile/data/model/employees/create_employ
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
@@ -52,11 +54,21 @@ class ProfileCubit extends BaseCubit<ProfileState> {
 
   int get createShiftKeyCode => AppConstant.createShiftKeyCode;
 
+    int get deleteShiftKeyCode => AppConstant.deleteShiftKeyCode;
+
+    int get updateShiftKeyCode => AppConstant.updateShiftKeyCode;
+
   @override
   Future<void> init() async {}
 
   @override
   Future<void> close() {
+    // add every key in file
+    CancelManager.cancel(updateShiftKeyCode);
+
+    // add every key in file
+    CancelManager.cancel(deleteShiftKeyCode);
+
     // add every key in file
     CancelManager.cancel(createBranchKeyCode);
 
@@ -229,6 +241,42 @@ class ProfileCubit extends BaseCubit<ProfileState> {
       getListHolidaysState: _current.getListHolidaysState,
       refreshOrInit: _current.refreshOrInit,
       allWorkersEmit: _current.allWorkersEmit,
+      deleteShiftState: _current.deleteShiftState,
+      updateShiftState: _current.updateShiftState,
+    ));
+  }
+
+  /// Resets updateShiftState to avoid stale success triggers.
+  void resetUpdateShift() {
+    safeEmit(ProfileLoaded(
+      createBranchState: _current.createBranchState,
+      getListBranchesState: _current.getListBranchesState,
+      createShiftState: _current.createShiftState,
+      getListShiftsState: _current.getListShiftsState,
+      createEmployeeState: _current.createEmployeeState,
+      getListEmployeesState: _current.getListEmployeesState,
+      getListHolidaysState: _current.getListHolidaysState,
+      refreshOrInit: _current.refreshOrInit,
+      allWorkersEmit: _current.allWorkersEmit,
+      deleteShiftState: _current.deleteShiftState,
+      updateShiftState: null,
+    ));
+  }
+
+  /// Resets deleteShiftState to avoid stale success triggers.
+  void resetDeleteShift() {
+    safeEmit(ProfileLoaded(
+      createBranchState: _current.createBranchState,
+      getListBranchesState: _current.getListBranchesState,
+      createShiftState: _current.createShiftState,
+      getListShiftsState: _current.getListShiftsState,
+      createEmployeeState: _current.createEmployeeState,
+      getListEmployeesState: _current.getListEmployeesState,
+      getListHolidaysState: _current.getListHolidaysState,
+      refreshOrInit: _current.refreshOrInit,
+      allWorkersEmit: _current.allWorkersEmit,
+      deleteShiftState: null,
+      updateShiftState: _current.updateShiftState,
     ));
   }
 
@@ -250,6 +298,36 @@ class ProfileCubit extends BaseCubit<ProfileState> {
           onLeftCallback: (failure) => safeEmit(
             _current.copyWith(createBranchState: ErrorState(failure)),
           ),
+        ),
+      );
+    });
+  }
+
+  Future<void> deleteShiftFunc(BaseRequestBackType baseRequestBackType,{DeleteShiftReqParam? parameter}) async {
+    await CancelManager.runCancelableFun(deleteShiftKeyCode, (token) async {
+      await _service.deleteShiftServ(
+        RequestCallbackObserver<DeleteShiftRes, DeleteShiftReqParam>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(deleteShiftState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(deleteShiftState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(deleteShiftState: ErrorState(failure))),
+        ),
+      );
+    });
+  }
+
+  Future<void> updateShiftFunc(BaseRequestBackType baseRequestBackType,{AddEditShiftReqParam? parameter}) async {
+    await CancelManager.runCancelableFun(updateShiftKeyCode, (token) async {
+      await _service.updateShiftServ(
+        RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(updateShiftState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(updateShiftState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(updateShiftState: ErrorState(failure))),
         ),
       );
     });

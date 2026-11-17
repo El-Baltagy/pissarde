@@ -10,7 +10,6 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/shifts/widgets/shifts_list_widget.dart';
-
 part 'shifts_base_state.dart';
 
 @RoutePage()
@@ -65,7 +64,10 @@ class _ShiftsPageState extends ShiftsPageBaseState {
           child: BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
             selector: (state) =>
                 state is ProfileLoaded ? state.getListShiftsState : null,
-            builder: (context, emit) => ShiftsListWidget(emit: emit),
+            builder: (context, emit) => ShiftsListWidget(
+              emit: emit,
+              profileCubit: profileCubit,
+            ),
           ),
         ),
       ),

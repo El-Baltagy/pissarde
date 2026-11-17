@@ -10,6 +10,7 @@ import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
 import 'package:newf/core/shared/widgets/text_inputs/name_text_input_data.dart';
 import 'package:newf/core/theming/app_colors.dart';
@@ -85,17 +86,7 @@ class _AddEditShiftPageState extends AddEditShiftPageBaseState {
                           controller: controllerName,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
-                      TitleWithInputField(
-                        'shift_code'.tr(),
-                        NameInputData(
-                          isLabel: false,
-                          widgetPrefix: const SizedBox.shrink(),
-                          field: fieldCode,
-                          labelText: 'shift_code'.tr(),
-                          controller: controllerCode,
-                        ),
-                      ),
+
                       AppSizes.s20.verticalSpace,
                       StartEndTimesWidget(
                         controllerS: controllerStartTime,
@@ -178,7 +169,14 @@ class _AddEditShiftPageState extends AddEditShiftPageBaseState {
                                     style: AppTextStyles.font14Regular,
                                   ),
                                   value: isOvernight,
-                                  onChanged: (val) =>
+                                  activeTrackColor: context.theme.primaryColor,
+                                   thumbColor: WidgetStateProperty.resolveWith((states) {
+                                    if (states.contains(WidgetState.selected)) {
+                                      return  context.theme.scaffoldBackgroundColor;
+                                    }
+                                    return context.theme.primaryColor  ;
+                                  }),
+                                   onChanged: (val) =>
                                       isOvernightNotifier.value = val,
                                 );
                               },
@@ -194,6 +192,12 @@ class _AddEditShiftPageState extends AddEditShiftPageBaseState {
                                     style: AppTextStyles.font14Regular,
                                   ),
                                   value: isActive,
+                                  thumbColor: WidgetStateProperty.resolveWith((states) {
+                                    if (states.contains(WidgetState.selected)) {
+                                      return  context.theme.scaffoldBackgroundColor;
+                                    }
+                                    return context.theme.primaryColor  ;
+                                  }),
                                   onChanged: (val) =>
                                       isActiveNotifier.value = val,
                                 );
@@ -209,7 +213,8 @@ class _AddEditShiftPageState extends AddEditShiftPageBaseState {
                         child: BlocBuilder<ProfileCubit, ProfileState>(
                           builder: (context, state) {
                             final bool isLoading = state is ProfileLoaded &&
-                                state.createShiftState is Loading;
+                                (state.createShiftState is Loading ||
+                                    state.updateShiftState is Loading);
                             return ElevatedButton(
                               onPressed: () => createOrUpdateShift(isLoading),
                               style: ElevatedButton.styleFrom(
@@ -226,7 +231,7 @@ class _AddEditShiftPageState extends AddEditShiftPageBaseState {
                                     )
                                   : Text(
                                       widget.args.shiftItem == null
-                                          ? 'new_shift'.tr()
+                                          ? 'add'.tr()
                                           : 'save'.tr(),
                                       style:
                                           AppTextStyles.font16SemiBold.copyWith(

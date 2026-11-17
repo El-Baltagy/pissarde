@@ -57,7 +57,12 @@ class StartEndTimesWidget extends StatelessWidget {
               field: fieldE,
               labelText: 'HH:MM',
               controller: controllerE,
-              widgetPrefix: const Icon(Icons.access_time, size: AppSizes.s18),
+              widgetPrefix: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.access_time, size: AppSizes.s20),
+                ],
+              ),
               onTap: () async {
                 final time = await showTimePicker(
                   context: context,

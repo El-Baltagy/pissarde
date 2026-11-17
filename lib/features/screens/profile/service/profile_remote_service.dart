@@ -10,7 +10,9 @@ import 'package:newf/features/screens/profile/data/model/employees/create_employ
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
@@ -176,6 +178,30 @@ class ProfileRemoteService implements BaseProfileService {
         requestInfo.parameter,
         cancelToken: token,
       )
+    );
+  }
+
+  @override
+  Future<void> deleteShiftServ(
+    RequestCallbackObserver<DeleteShiftRes, DeleteShiftReqParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.deleteShiftApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+    );
+  }
+
+  @override
+  Future<void> updateShiftServ(
+    RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.updateShiftApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
     );
   }
 }

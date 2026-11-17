@@ -5,6 +5,8 @@ abstract class ProfileState {}
 
 class ProfileLoaded extends ProfileState {
   ProfileLoaded({
+    this.updateShiftState,
+    this.deleteShiftState,
     this.createBranchState,
     this.getListBranchesState,
     this.createShiftState,
@@ -17,10 +19,12 @@ class ProfileLoaded extends ProfileState {
    });
 
   final BaseEmit? allWorkersEmit, getListHolidaysState, getListEmployeesState, createEmployeeState, getListShiftsState,
-      createShiftState, getListBranchesState, createBranchState;
+      createShiftState, getListBranchesState, createBranchState, deleteShiftState, updateShiftState;
   final ProfileState? refreshOrInit;
 
   ProfileLoaded copyWith({
+    BaseEmit? updateShiftState,
+    BaseEmit? deleteShiftState,
     BaseEmit? createBranchState,
     BaseEmit? getListBranchesState,
     BaseEmit? createShiftState,
@@ -32,6 +36,8 @@ class ProfileLoaded extends ProfileState {
     ProfileState? refreshOrInit,
    }) {
     return ProfileLoaded(
+      updateShiftState: updateShiftState ?? this.updateShiftState,
+      deleteShiftState: deleteShiftState ?? this.deleteShiftState,
       createBranchState: createBranchState ?? this.createBranchState,
       getListBranchesState: getListBranchesState ?? this.getListBranchesState,
       createShiftState: createShiftState ?? this.createShiftState,

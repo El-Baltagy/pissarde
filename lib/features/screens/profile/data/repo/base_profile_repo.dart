@@ -7,7 +7,9 @@ import 'package:newf/features/screens/profile/data/model/employees/create_employ
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
@@ -57,6 +59,18 @@ abstract class BaseProfileRepo extends BaseRepo {
   /// Abstract contract — implemented by [ProfileRemoteRepo].
   Future<Either<Failure, BranchesList>> getListBranchesApi(
     NoParameters? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, DeleteShiftRes>> deleteShiftApi(
+    DeleteShiftReqParam? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, ShiftCreatingRes>> updateShiftApi(
+    AddEditShiftReqParam? parameter, {
     CancelToken? cancelToken,
   });
 }

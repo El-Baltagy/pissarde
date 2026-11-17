@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:newf/core/constants/app_constant.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/api_helper/dio_helper.dart';
@@ -10,7 +9,9 @@ import 'package:newf/features/screens/profile/data/model/employees/create_employ
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
@@ -132,6 +133,37 @@ class ProfileRemoteRepo implements BaseProfileRepo {
         caller: callerTag(),
       ),
       asObject: BranchesList.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, DeleteShiftRes>> deleteShiftApi(
+    DeleteShiftReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.deleteData(
+        uri: EndPoints.deleteShift(parameter?.id ?? ''),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: DeleteShiftRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, ShiftCreatingRes>> updateShiftApi(
+    AddEditShiftReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.putData(
+        uri: EndPoints.updateShift(parameter?.id ?? ''),
+        data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: ShiftCreatingRes.fromJson,
     );
   }
 }

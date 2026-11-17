@@ -4,15 +4,17 @@ import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 
 import 'shift_card_widget.dart';
 
 /// Renders the shifts list, handling loading / error / empty / success states.
 class ShiftsListWidget extends StatelessWidget {
-  const ShiftsListWidget({super.key, required this.emit});
+  const ShiftsListWidget({super.key, required this.emit, required this.profileCubit});
 
   final BaseEmit? emit;
+  final ProfileCubit profileCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +44,13 @@ class ShiftsListWidget extends StatelessWidget {
         itemCount: items.length,
         separatorBuilder: (_, __) =>
             const SizedBox(height: AppSizes.s12),
-        itemBuilder: (_, i) => ShiftCardWidget(shift: items[i]),
+        itemBuilder: (_, i) => ShiftCardWidget(
+          shift: items[i],
+          profileCubit: profileCubit,
+        ),
       );
     }
     return const SizedBox.shrink();
   }
 }
+

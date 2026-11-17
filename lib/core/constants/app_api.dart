@@ -12,8 +12,8 @@ abstract class EndPoints {
   static const String transferEmployee = "/api/employees/1/transfer";
 
   ///shifts
-  static   String deleteShift (String id)=> "/api/shifts/$id";
-  static   String updateShift (String id)=> "/api/shifts/$id";
+  static   String deleteShift (dynamic id)=> "/api/shifts/$id";
+  static   String updateShift (dynamic id)=> "/api/shifts/$id";
   static const String showShift = "/api/shifts/1";
   static const String createShift = "/api/shifts";
   static const String listShifts = "/api/shifts";
@@ -54,7 +54,5 @@ abstract class EndPoints {
   static const String login = '/api/auth/login';
 
   static const String baseUrl = "https://team.pissarde.com";
-
-
 
 }

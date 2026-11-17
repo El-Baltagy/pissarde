@@ -120,24 +120,40 @@ official_holidays,official holidays,العطلات الرسمية,resmi tatiller
 company_wide,company wide,الشركة على نطاق واسع,şirket çapında
 recurring,recurring,يتكرر,tekrarlanan
 branches,branches,الفروع,şubeler
-shifts,shifts,الدوام,vardiyalar
+shifts,shifts,الورديات,vardiyalar
 employees,employees,موظفين,çalışanlar
 
-add_shift,add shift,إضافة دوام,vardiya ekle
-shift_name,shift name,اسم الدوام,vardiya adı
+
+add_shift,add shift,إضافة الوردية,vardiya ekle
+shift_name,shift name,اسم الوردية,vardiya adı
 start_time,start time,وقت البدء,başlangıç ​​zamanı
 end_time,end time,وقت النهاية,bitiş zamanı
 grace_period_minutes,grace period minutes,دقائق فترة السماح,ek süre dakikaları
-save,save,يحفظ,kaydetmek
+save,save, حفظ,kaydetmek
 
 shift_code,shift code,رمز التحول,vardiya kodu
-update_shift,update shift,تحول التحديث,güncelleme vardiyası
-new_shift,new shift,تحول جديد,yeni vardiya
+update_shift,update shift,تحديث الوردية,güncelleme vardiyası
+new_shift,new shift,وردية جديده,yeni vardiya
 field_required,field required,الحقل مطلوب,alan gerekli
-shift_created_success,shift created success,التحول خلق النجاح,değişim başarı yarattı
+shift_created_success,shift created success,تم اضافه الوردية بنجاح,değişim başarı yarattı
 working_days,working days,أيام العمل,iş günleri
 break_duration_minutes,break duration minutes,دقائق مدة الاستراحة,mola süresi dakika
-overnight_shift,overnight shift,التحول بين عشية وضحاها,gece vardiyası
+overnight_shift,overnight shift,ورديه اضافيه,gece vardiyası
 active,active,نشط,aktif
 
 inactive,inactive,غير نشط,aktif değil
+
+edit_shift,edit shift,تعديل الوردية,vardiyayı düzenle
+
+delete_shift,delete shift,حذف الوردية,vardiyayı sil
+
+are_you_sure_you_want_to_delete_this_shift,Are you sure you want to delete this shift?,هل أنت متأكد أنك تريد حذف هذه الوردية؟,Bu vardiyayı silmek istediğinizden emin misiniz?
+
+shift_deleted_success,shift deleted success,تم حذف الوردية,vardiya silindi başarılı
+  shift_updated_successfully,Shift updated successfully,تم تحديث الوردية بنجاح,Shift başarıyla güncellendi
+
+vardiya_ba_ar_yla_g_ncellendi,Vardiya başarıyla güncellendi,Vardiya başarıyla güncellendi,Vardiya başarıyla güncellendi
+
+cancel,cancel,الغاء,iptal etmek
+
+add,add,يضيف,eklemek

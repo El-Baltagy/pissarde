@@ -7,7 +7,9 @@ import 'package:newf/features/screens/profile/data/model/employees/create_employ
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
@@ -18,13 +20,6 @@ import '../../../../core/shared/methods/no_parameter.dart';
 /// Abstract contract for the profile service layer.
 /// The cubit depends on this, not on a concrete implementation.
 abstract class BaseProfileService extends BaseService {
-  // Future<Either<Failure, GetAllEmployeesRes>> listEmployeesServ();
-  // Future<Either<Failure, CreateEmployeeRes>> createEmployeeServ(CreateEmployeeReqParam param);
-  // Future<Either<Failure, GetAllShiftsRes>> listShiftsServ();
-  // Future<Either<Failure, ShiftCreatingRes>> createShiftServ(CreateShiftReqParam param);
-  // Future<Either<Failure, BranchesList>> listBranchesServ();
-  // Future<Either<Failure, CreateBranchRes>> createBranchServ(CreateBranchReqParam param);
-
 
   /// Abstract contract — implemented by [ProfileRemoteService].
   Future<void> getListHolidaysServ(
@@ -59,5 +54,15 @@ abstract class BaseProfileService extends BaseService {
   /// Abstract contract — implemented by [ProfileRemoteService].
   Future<void> createBranchServ(
     RequestCallbackObserver<CreateBranchRes, CreateBranchReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> deleteShiftServ(
+    RequestCallbackObserver<DeleteShiftRes, DeleteShiftReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> updateShiftServ(
+    RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
   );
 }

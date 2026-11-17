@@ -73,22 +73,22 @@ class DioHelper {
         caller: caller,
       );
 
-  // Future<T> putData<T>({
-  //   required String uri,
-  //   dynamic data,
-  //   Map<String, dynamic>? query,
-  //   Map<String, dynamic>? headers,
-  //   CancelToken? cancelToken,
-  //   String? caller,
-  // }) => _request<T>(
-  //       method: 'PUT',
-  //       uri: uri,
-  //       data: data,
-  //       query: query,
-  //       headers: headers,
-  //       cancelToken: cancelToken,
-  //       caller: caller,
-  //     );
+  Future<T> putData<T>({
+    required String uri,
+    dynamic data,
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
+    String? caller,
+  }) => _request<T>(
+        method: 'PUT',
+        uri: uri,
+        data: data,
+        query: query,
+        headers: headers,
+        cancelToken: cancelToken,
+        caller: caller,
+      );
 
   Future<T> patchData<T>({
     required String uri,

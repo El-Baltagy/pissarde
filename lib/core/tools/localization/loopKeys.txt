@@ -1,9 +1,1 @@
-shift_code
-update_shift
-new_shift
-field_required
-shift_created_success
-working_days
-break_duration_minutes
-overnight_shift
-active
+add

@@ -51,7 +51,11 @@ class WorkingDaysSelector extends StatelessWidget {
                 if (selected) {
                   current.add(dayId);
                 } else {
-                  current.remove(dayId);
+                  if(current.length > 2) {
+                    current.remove(dayId);
+
+                  }
+
                 }
                 current.sort();
                 selectedDaysNotifier.value = current;

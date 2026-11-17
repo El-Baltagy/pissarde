@@ -1,18 +1,27 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:newf/core/app/route.dart';
+import 'package:newf/core/base/base_cubit.dart';
+import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
+import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
-import 'package:newf/core/extension/context.dart';
 
 import '../../../../../../core/shared/methods/date_helper.dart';
 
-/// Displays summary information for a single shift.
+/// Displays summary information for a single shift with edit and delete actions.
 class ShiftCardWidget extends StatelessWidget {
-  const ShiftCardWidget({super.key, required this.shift});
+  const ShiftCardWidget({
+    super.key,
+    required this.shift,
+    required this.profileCubit,
+  });
 
   final ShiftItem shift;
+  final ProfileCubit profileCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +39,7 @@ class ShiftCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: AppSizes.s10,
           children: [
+            // ── Header row ──────────────────────────────────────────────
             Row(
               children: [
                 Container(
@@ -38,7 +48,7 @@ class ShiftCardWidget extends StatelessWidget {
                     color: AppColors.roleSwitchBg,
                     borderRadius: BorderRadius.circular(AppSizes.r10),
                   ),
-                  child:   Icon(
+                  child: Icon(
                     Icons.access_time_outlined,
                     color: context.theme.primaryColor,
                     size: AppSizes.s20,
@@ -56,6 +66,7 @@ class ShiftCardWidget extends StatelessWidget {
                     ],
                   ),
                 ),
+                // ── Active badge ─────────────────────────────────────────
                 Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: AppPadding.p8,
@@ -77,16 +88,80 @@ class ShiftCardWidget extends StatelessWidget {
                 ),
               ],
             ),
+            // ── Working days ─────────────────────────────────────────────
             _buildWorkingDays(context),
-
+            // ── Time chips ───────────────────────────────────────────────
             Row(
               spacing: AppSizes.s16,
               children: [
-                _timeChip(Icons.login_rounded, DateTimeHelper.toHourMinute(shift.start_time)  ),
-                _timeChip(Icons.logout_rounded, DateTimeHelper.toHourMinute(shift.end_time)),
+                _timeChip(Icons.login_rounded,
+                    DateTimeHelper.toHourMinute(shift.start_time)),
+                _timeChip(Icons.logout_rounded,
+                    DateTimeHelper.toHourMinute(shift.end_time)),
                 if (shift.employees_count != null)
                   _timeChip(Icons.people_outline,
                       '${shift.employees_count}'),
+              ],
+            ),
+            // ── Action buttons ───────────────────────────────────────────
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: AppSizes.s8,
+              children: [
+                // Edit button
+                OutlinedButton.icon(
+                  onPressed: () => _onEdit(context),
+                  icon: Icon(
+                    Icons.edit_outlined,
+                    size: AppSizes.s16,
+                    color: context.theme.primaryColor,
+                  ),
+                  label: Text(
+                    'edit_shift'.tr(),
+                    style: AppTextStyles.font12Regular.copyWith(
+                      color: context.theme.primaryColor,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppPadding.p12,
+                      vertical: AppPadding.p6,
+                    ),
+                    side: BorderSide(
+                        color: context.theme.primaryColor,
+                        width: AppSizes.s1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppSizes.r8),
+                    ),
+                  ),
+                ),
+                // Delete button
+                OutlinedButton.icon(
+                  onPressed: () => _onDelete(context),
+                  icon: const Icon(
+                    Icons.delete_outline_rounded,
+                    size: AppSizes.s16,
+                    color: AppColors.primaryActionRed,
+                  ),
+                  label: Text(
+                    'delete_shift'.tr(),
+                    style: AppTextStyles.font12Regular.copyWith(
+                      color: AppColors.primaryActionRed,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppPadding.p12,
+                      vertical: AppPadding.p6,
+                    ),
+                    side: const BorderSide(
+                        color: AppColors.primaryActionRed,
+                        width: AppSizes.s1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppSizes.r8),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -94,6 +169,62 @@ class ShiftCardWidget extends StatelessWidget {
       ),
     );
   }
+
+  // ── Handlers ───────────────────────────────────────────────────────────────
+
+  Future<void> _onEdit(BuildContext context) async {
+    final res = await context.push(
+      AddEditShiftRoute(
+        args: AddEditShiftRouteArgs(
+          profileCubit: profileCubit,
+          shiftItem: shift,
+        ),
+      ),
+    );
+    // Caller (shifts_screen) will refresh list when res == true
+    // but we also trigger a local refresh if the navigation pops successfully
+    if (res == true) {
+      await profileCubit.getListShiftsFunc(Reload());
+    }
+  }
+
+  void _onDelete(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text('delete_shift'.tr()),
+        content: Text('are_you_sure_you_want_to_delete_this_shift'.tr()),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              'cancel'.tr(),
+              style: AppTextStyles.font14Regular.copyWith(
+                color: context.theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              profileCubit.deleteShiftFunc(
+                Init(),
+                parameter: DeleteShiftReqParam(id: shift.id),
+              );
+            },
+            child: Text(
+              'delete_shift'.tr(),
+              style: AppTextStyles.font14Regular.copyWith(
+                color: AppColors.primaryActionRed,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   Widget _buildWorkingDays(BuildContext context) {
     if (shift.working_days.isEmpty) return const SizedBox.shrink();

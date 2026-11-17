@@ -5,14 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
-import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
-import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/shifts/widgets/shifts_list_widget.dart';
-import 'package:newf/features/screens/profile/ui/shifts/widgets/add_shift_bottom_sheet.dart';
 
 part 'shifts_base_state.dart';
 
@@ -50,8 +47,12 @@ class _ShiftsPageState extends ShiftsPageBaseState {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.headerBackground,
-          onPressed: () => context.push(AddEditShiftRoute(args: .new())),
-           child: const Icon(Icons.add,
+          onPressed: () => context.push(
+            AddEditShiftRoute(
+              args: AddEditShiftRouteArgs(profileCubit: profileCubit),
+            ),
+          ),
+          child: const Icon(Icons.add,
               color: AppColors.roleSwitchSelectedBg),
         ),
         body: Semantics(

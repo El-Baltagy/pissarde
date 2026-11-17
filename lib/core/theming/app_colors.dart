@@ -13,7 +13,7 @@ abstract class AppColors {
    static const Color contractorGreyText = Color(0xFF718096);
 
    // Light Mode Colors
-   static const Color primaryLightColor = Color(0xFF137A7A);
+   static const Color primaryLightColor = Color(0xFF1B3B8B);
    static const Color secondryLightColor = Color(0xFFFF6B6B);
    static const Color lightBackground = Color(0xFFFFFFFF);
    static const Color lightSurface = Color(0xFFF8F9FA);
@@ -33,7 +33,7 @@ abstract class AppColors {
    static const Color darkBorder = Color(0xFF2D3748);
 
    // Attendance Design Colors
-   static const Color headerBackground = Color(0xFF1B3B8B);
+   // static const Color headerBackground = Color(0xFF1B3B8B);
    static const Color headerBadgeBg = Color(0xFF2B4D9D);
    static const Color headerTimeDateBg = Color(0xFF244493);
    static const Color notificationRed = Color(0xFFEF4444);

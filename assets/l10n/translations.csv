@@ -129,3 +129,13 @@ start_time,start time,وقت البدء,başlangıç ​​zamanı
 end_time,end time,وقت النهاية,bitiş zamanı
 grace_period_minutes,grace period minutes,دقائق فترة السماح,ek süre dakikaları
 save,save,يحفظ,kaydetmek
+
+shift_code,shift code,رمز التحول,vardiya kodu
+update_shift,update shift,تحول التحديث,güncelleme vardiyası
+new_shift,new shift,تحول جديد,yeni vardiya
+field_required,field required,الحقل مطلوب,alan gerekli
+shift_created_success,shift created success,التحول خلق النجاح,değişim başarı yarattı
+working_days,working days,أيام العمل,iş günleri
+break_duration_minutes,break duration minutes,دقائق مدة الاستراحة,mola süresi dakika
+overnight_shift,overnight shift,التحول بين عشية وضحاها,gece vardiyası
+active,active,نشيط,aktif

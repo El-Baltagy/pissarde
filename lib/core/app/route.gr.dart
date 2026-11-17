@@ -405,6 +405,8 @@ class AddEditShiftRoute extends PageRouteInfo<AddEditShiftRouteArgs> {
   PageInfo<AddEditShiftRouteArgs>(name);
 }
 class AddEditShiftRouteArgs {
-  const AddEditShiftRouteArgs( );
-   static AddEditShiftRouteArgs noArgs()=>AddEditShiftRouteArgs();
+  const AddEditShiftRouteArgs({this.profileCubit, this.shiftItem});
+  final ProfileCubit? profileCubit;
+  final ShiftItem? shiftItem;
+  static AddEditShiftRouteArgs noArgs() => const AddEditShiftRouteArgs();
 }

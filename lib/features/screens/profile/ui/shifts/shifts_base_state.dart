@@ -7,7 +7,7 @@ abstract class ShiftsPageBaseState extends State<ShiftsPage> {
   void initState() {
     super.initState();
     profileCubit = ProfileCubit.get(context: context);
-    profileCubit.listShiftsFunc();
+    profileCubit.getListShiftsFunc(Init()) ;
   }
 
   @override
@@ -17,8 +17,8 @@ abstract class ShiftsPageBaseState extends State<ShiftsPage> {
 
   void _listener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
-      if (state.createShiftEmit is Success) {
-        profileCubit.listShiftsFunc();
+      if (state.createShiftState is Success) {
+        profileCubit.getListShiftsFunc(Reload());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('shift_created_success'.tr()),
@@ -26,8 +26,8 @@ abstract class ShiftsPageBaseState extends State<ShiftsPage> {
           ),
         );
       }
-      if (state.createShiftEmit is ErrorState) {
-        final err = state.createShiftEmit as ErrorState;
+      if (state.createShiftState is ErrorState) {
+        final err = state.createShiftState as ErrorState;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(err.failure.message),

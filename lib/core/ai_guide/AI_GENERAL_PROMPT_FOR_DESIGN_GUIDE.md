@@ -61,21 +61,50 @@ When building a screen, you must follow the `AutoRouteWrapper` pattern as seen i
 
 ---
 
-## 4. ⚙️ Adding Functions & API Automation (`lib/core/tools/create_auto_functions`)
-When creating new feature functions, endpoints, or data models, you must follow the layered architecture supported by the automation tools in `lib/core/tools/create_auto_functions/`:
-- **Automation Script**:
-  - `dart run lib/core/tools/create_auto_functions/add_function_script.dart <featureName> <functionName> <returnType> <paramType>`
-- **Layers Managed**:
-  1. **Constants & Endpoints**: Registers endpoint in `lib/core/constants/app_api.dart` (`EndPoints`) and keys in `lib/core/constants/app_constant.dart` (`AppConstant`).
+## 4. ⚙️ Mandatory Rule: Adding Functions & API Automation (`lib/core/tools/create_auto_functions`)
+> [!IMPORTANT]
+> **MANDATORY PROTOCOL**: ANY function, API endpoint, or service call added to any feature MUST strictly follow `lib/core/tools/create_auto_functions/add_function_script.dart`.
+> Never implement custom, manual, or incompatible cubit/service patterns. Always run the script or strictly match the 8-layer architecture it generates.
+
+- **Automation Command**:
+  ```sh
+  dart run lib/core/tools/create_auto_functions/add_function_script.dart <featureName> <functionName> <returnType> <paramType>
+  ```
+- **Strict Layers Managed**:
+  1. **Constants & Endpoints**:
+     - Key Code: `AppConstant.<functionName>KeyCode` in `lib/core/constants/app_constant.dart`
+     - Cache Key: `AppConstant.<functionName>KeyCash` in `lib/core/constants/app_constant.dart`
+     - API Endpoint: `EndPoints.<functionName>` in `lib/core/constants/app_api.dart`
   2. **Repo Layer**:
-     - Declares abstract method in `base_<feature>_repo.dart` returning `Future<Either<Failure, ReturnType>>`.
-     - Implements concrete network call in `<feature>_remote_repo.dart` via `dio.getData` / `dio.postData` with `handleResponse(...)`.
+     - Contract in `base_<feature>_repo.dart`: `Future<Either<Failure, ReturnType>> <functionName>Repo({ParamType? parameter, CancelToken? cancelToken});`
+     - Concrete implementation in `<feature>_remote_repo.dart` using `dio.getData` / `dio.postData` wrapped in `handleResponse(...)`.
   3. **Service Layer**:
-     - Declares contract in `base_<feature>_service.dart`.
-     - Implements concrete logic in `<feature>_remote_service.dart` orchestrating repo calls and local caching.
+     - Contract in `base_<feature>_service.dart`: `Future<void> <functionName>Serv(RequestCallbackObserver<ReturnType, ParamType> requestInfo);`
+     - Concrete implementation in `<feature>_remote_service.dart` using `runServicePattern(...)` with `RequestCallbackObserver` handling caching, callbacks, and cancel tokens.
   4. **Controller / Cubit Layer**:
-     - Adds state variable to `<feature>_state.dart` (e.g. `final BaseEmit? <functionName>Emit`).
-     - Adds async method in `<feature>_cubit.dart` that emits `Loading()`, `Success(data)`, or `ErrorState(failure)`.
+     - State (`<feature>_state.dart`): Declares `final BaseEmit? <functionName>State;` wired into constructor and `copyWith`.
+     - KeyCode Getter (`<feature>_cubit.dart`): `int get <functionName>KeyCode => AppConstant.<functionName>KeyCode;`
+     - Cancel on Close (`<feature>_cubit.dart`): `CancelManager.cancel(<functionName>KeyCode);` inside `close()`.
+     - Cubit Function (`<feature>_cubit.dart`):
+       ```dart
+       Future<void> <functionName>Func(
+         BaseRequestBackType baseRequestBackType, {
+         <ParamType>? parameter,
+       }) async {
+         await CancelManager.runCancelableFun(<functionName>KeyCode, (token) async {
+           await _service.<functionName>Serv(
+             RequestCallbackObserver<<ReturnType>, <ParamType>>(
+               baseRequestBackType: baseRequestBackType,
+               parameter: parameter,
+               cancelToken: token,
+               onLoadCallback: () => safeEmit(_current.copyWith(<functionName>State: Loading())),
+               onRightCallback: (data) => safeEmit(_current.copyWith(<functionName>State: Success(data))),
+               onLeftCallback: (failure) => safeEmit(_current.copyWith(<functionName>State: ErrorState(failure))),
+             ),
+           );
+         });
+       }
+       ```
 
 ---
 
@@ -284,33 +313,38 @@ class ProfileHeader extends StatelessWidget {
 
 ## 18. ⚙️ Creating New Functions (`create_auto_functions`)
 
-When adding a new API-backed feature function, use the layered automation script instead of manually editing each layer:
+> [!IMPORTANT]
+> **ANY function added to any feature must follow the architecture and implementation defined by `lib/core/tools/create_auto_functions/add_function_script.dart`.**
+> Never handcraft ad-hoc API functions or deviate from this standard pattern.
 
+Execute the generator script:
 ```sh
 dart run lib/core/tools/create_auto_functions/add_function_script.dart \
   <featureName> <functionName> <returnType> <paramType>
 ```
 
-**Example:**
+**Examples:**
 ```sh
-dart run lib/core/tools/create_auto_functions/add_function_script.dart \
-  profile listEmployees GetAllEmployeesRes void
+dart run lib/core/tools/create_auto_functions/add_function_script.dart profile getListEmployees GetAllEmployeesRes NoParameters
+dart run lib/core/tools/create_auto_functions/add_function_script.dart profile createEmployee CreateEmployeeRes CreateEmployeeReqParam
+dart run lib/core/tools/create_auto_functions/add_function_script.dart profile createShift ShiftCreatingRes CreateShiftReqParam
+dart run lib/core/tools/create_auto_functions/add_function_script.dart profile createBranch CreateBranchRes CreateBranchReqParam
 ```
 
-**What it does for you:**
+**What the script sets up across all layers:**
 | Layer | File | Change |
 |---|---|---|
-| Constants | `app_api.dart` (`EndPoints`) | Adds endpoint constant |
-| Constants | `app_constant.dart` (`AppConstant`) | Adds key constant |
-| Repo (abstract) | `base_<feature>_repo.dart` | Adds `Future<Either<Failure, ReturnType>> functionName(...)` |
-| Repo (concrete) | `<feature>_remote_repo.dart` | Adds `dio.getData`/`dio.postData` with `handleResponse` |
-| Service (abstract) | `base_<feature>_service.dart` | Adds abstract method signature |
-| Service (concrete) | `<feature>_remote_service.dart` | Adds orchestration logic |
-| Cubit | `<feature>_cubit.dart` | Adds async method emitting `Loading → Success/Error` |
-| State | `<feature>_state.dart` | Adds `BaseEmit? <functionName>Emit` field + `copyWith` entry |
+| Constants | `app_api.dart` (`EndPoints`) | Adds endpoint constant: `static const String <functionName> = '/<functionName>';` |
+| Constants | `app_constant.dart` (`AppConstant`) | Adds key code and cache constants: `<functionName>KeyCode`, `<functionName>KeyCash` |
+| Repo (abstract) | `base_<feature>_repo.dart` | Adds `Future<Either<Failure, ReturnType>> <functionName>Repo({ParamType? parameter, CancelToken? cancelToken});` |
+| Repo (concrete) | `<feature>_remote_repo.dart` | Implements network call with `dio.getData`/`dio.postData` wrapped in `handleResponse` |
+| Service (abstract) | `base_<feature>_service.dart` | Adds `Future<void> <functionName>Serv(RequestCallbackObserver<ReturnType, ParamType> requestInfo);` |
+| Service (concrete) | `<feature>_remote_service.dart` | Implements orchestration with `runServicePattern(...)` and cache handling |
+| Cubit | `<feature>_cubit.dart` | Adds `<functionName>KeyCode` getter, `CancelManager.cancel` in `close()`, and `<functionName>Func(BaseRequestBackType, {ParamType? parameter})` wrapping service with `RequestCallbackObserver` |
+| State | `<feature>_state.dart` | Adds `BaseEmit? <functionName>State` field, constructor parameter, and `copyWith` mapping |
 
-> [!IMPORTANT]
-> Always use this script for new functions. Do NOT manually add partial layers — the script ensures all 8 layers are consistent.
+> [!CAUTION]
+> Always use this script or faithfully reproduce its exact 8-layer output when adding new functions. Do NOT manually add partial or alternate layers.
 
 ---
 

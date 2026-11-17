@@ -49,7 +49,7 @@ class _AddShiftBottomSheetState extends State<AddShiftBottomSheet> {
       working_days: [1, 2, 3, 4, 5],
       is_active: '1',
     );
-    context.read<ProfileCubit>().createShiftFunc(param);
+    // context.read<ProfileCubit>().createShiftFunc(param);
     Navigator.pop(context);
   }
 

@@ -7,7 +7,7 @@ abstract class BranchesPageBaseState extends State<BranchesPage> {
   void initState() {
     super.initState();
     profileCubit = ProfileCubit.get(context: context);
-    profileCubit.listBranchesFunc();
+    profileCubit.getListBranchesFunc(Init());
   }
 
   @override
@@ -17,8 +17,8 @@ abstract class BranchesPageBaseState extends State<BranchesPage> {
 
   void _listener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
-      if (state.createBranchEmit is Success) {
-        profileCubit.listBranchesFunc();
+      if (state.createBranchState is Success) {
+        profileCubit.getListBranchesFunc(Reload());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('branch_created_success'.tr()),
@@ -26,8 +26,8 @@ abstract class BranchesPageBaseState extends State<BranchesPage> {
           ),
         );
       }
-      if (state.createBranchEmit is ErrorState) {
-        final err = state.createBranchEmit as ErrorState;
+      if (state.createBranchState is ErrorState) {
+        final err = state.createBranchState as ErrorState;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(err.failure.message),

@@ -14,17 +14,17 @@ class ListOptionsWidget extends StatelessWidget {
       (
         icon: Icons.schedule_outlined,
         title: 'shifts'.tr(),
-        onTap: () => context.router.push(const ShiftsRoute()),
+        onTap: () => context.router.push(  ShiftsRoute(args:ShiftsRouteArgs(profileCubit))),
       ),
       (
         icon: Icons.location_city_outlined,
         title: 'branches'.tr(),
-        onTap: () => context.router.push(const BranchesRoute()),
+        onTap: () => context.router.push(  BranchesRoute(args:BranchesRouteArgs(profileCubit))),
       ),
       (
         icon: Icons.celebration_outlined,
         title: 'official_holidays'.tr(),
-        onTap: () => context.router.push(const OfficialHolidaysRoute()),
+        onTap: () => context.router.push(  OfficialHolidaysRoute(args:OfficialHolidaysRouteArgs(profileCubit))),
       ),
 
     ];

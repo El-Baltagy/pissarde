@@ -99,21 +99,24 @@ abstract class _$AppRouter extends RootStackRouter {
 
     },
     ShiftsRoute.name: (routeData) {
+      final args = routeData.argsAs<ShiftsRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const ShiftsPage()),
+        child: WrappedRoute(child:   ShiftsPage(   args: args ,)),
       );
     },
     BranchesRoute.name: (routeData) {
+      final args = routeData.argsAs<BranchesRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const BranchesPage()),
+        child: WrappedRoute(child:   BranchesPage(   args: args ,)),
       );
     },
     OfficialHolidaysRoute.name: (routeData) {
+      final args = routeData.argsAs<OfficialHolidaysRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const OfficialHolidaysPage()),
+        child: WrappedRoute(child:   OfficialHolidaysPage(   args: args ,)),
       );
     },
 
@@ -304,35 +307,72 @@ class EmployeesRouteArgs {
   final ProfileCubit profileCubit;
 }
 
+
+
 /// generated route for
 /// [ShiftsPage]
-class ShiftsRoute extends PageRouteInfo<void> {
-  const ShiftsRoute({List<PageRouteInfo>? children})
-      : super(ShiftsRoute.name, initialChildren: children);
+class ShiftsRoute extends PageRouteInfo<ShiftsRouteArgs> {
+  ShiftsRoute({
+    required ShiftsRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    ShiftsRoute.name,
+    args: args,
+    initialChildren: children,
+  );
 
   static const String name = 'ShiftsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ShiftsRouteArgs> page =
+  PageInfo<ShiftsRouteArgs>(name);
 }
-
+class ShiftsRouteArgs {
+  const ShiftsRouteArgs( this.profileCubit);
+  final ProfileCubit profileCubit;
+}
 /// generated route for
 /// [BranchesPage]
-class BranchesRoute extends PageRouteInfo<void> {
-  const BranchesRoute({List<PageRouteInfo>? children})
-      : super(BranchesRoute.name, initialChildren: children);
+class BranchesRoute extends PageRouteInfo<BranchesRouteArgs> {
+  BranchesRoute({
+    required BranchesRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    BranchesRoute.name,
+    args: args,
+    initialChildren: children,
+  );
 
   static const String name = 'BranchesRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<BranchesRouteArgs> page =
+  PageInfo<BranchesRouteArgs>(name);
 }
+class BranchesRouteArgs {
+  const BranchesRouteArgs( this.profileCubit);
+  final ProfileCubit profileCubit;
+}
+
 
 /// generated route for
 /// [OfficialHolidaysPage]
-class OfficialHolidaysRoute extends PageRouteInfo<void> {
-  const OfficialHolidaysRoute({List<PageRouteInfo>? children})
-      : super(OfficialHolidaysRoute.name, initialChildren: children);
+class OfficialHolidaysRoute extends PageRouteInfo<OfficialHolidaysRouteArgs> {
+  OfficialHolidaysRoute({
+    required OfficialHolidaysRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    OfficialHolidaysRoute.name,
+    args: args,
+    initialChildren: children,
+  );
 
   static const String name = 'OfficialHolidaysRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<OfficialHolidaysRouteArgs> page =
+  PageInfo<OfficialHolidaysRouteArgs>(name);
 }
+class OfficialHolidaysRouteArgs {
+  const OfficialHolidaysRouteArgs( this.profileCubit);
+  final ProfileCubit profileCubit;
+}
+
+

@@ -50,7 +50,7 @@ class _AddEmployeeBottomSheetState extends State<AddEmployeeBottomSheet> {
       shift_id: '1',
       is_active: '1',
     );
-    context.read<ProfileCubit>().createEmployeeFunc(param);
+    // context.read<ProfileCubit>().createEmployeeFunc(param);
     Navigator.pop(context);
   }
 

@@ -35,39 +35,6 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   ProfileLoaded get _current =>
       state is ProfileLoaded ? state as ProfileLoaded : ProfileLoaded();
 
-  // /// Fetches the full list of employees from the API.
-
-  // /// Creates a new employee via the API.
-  // Future<void> createEmployeeFunc(CreateEmployeeReqParam param) async {
-  //   safeEmit(_current.copyWith(createEmployeeEmit: Loading()));
-  //   final result = await _service.createEmployeeServ(param);
-  //   result.fold(
-  //     (failure) => safeEmit(_current.copyWith(createEmployeeEmit: ErrorState(failure))),
-  //     (data) => safeEmit(_current.copyWith(createEmployeeEmit: Success(data))),
-  //   );
-  // }
-
-  // /// Creates a new shift via the API.
-  // Future<void> createShiftFunc(CreateShiftReqParam param) async {
-  //   safeEmit(_current.copyWith(createShiftEmit: Loading()));
-  //   final result = await _service.createShiftServ(param);
-  //   result.fold(
-  //     (failure) => safeEmit(_current.copyWith(createShiftEmit: ErrorState(failure))),
-  //     (data) => safeEmit(_current.copyWith(createShiftEmit: Success(data))),
-  //   );
-  // }
-
-  //
-  // /// Creates a new branch via the API.
-  // Future<void> createBranchFunc(CreateBranchReqParam param) async {
-  //   safeEmit(_current.copyWith(createBranchEmit: Loading()));
-  //   final result = await _service.createBranchServ(param);
-  //   result.fold(
-  //     (failure) => safeEmit(_current.copyWith(createBranchEmit: ErrorState(failure))),
-  //     (data) => safeEmit(_current.copyWith(createBranchEmit: Success(data))),
-  //   );
-  // }
-
   int get getListHolidaysKeyCode => AppConstant.getListHolidaysKeyCode;
 
 
@@ -198,6 +165,75 @@ class ProfileCubit extends BaseCubit<ProfileState> {
               safeEmit(_current.copyWith(getListHolidaysState: Success(data))),
           onLeftCallback: (failure) => safeEmit(
             _current.copyWith(getListHolidaysState: ErrorState(failure)),
+          ),
+        ),
+      );
+    });
+  }
+
+  /// Creates a new employee via the API.
+  Future<void> createEmployeeFunc(
+    BaseRequestBackType baseRequestBackType, {
+    CreateEmployeeReqParam? parameter,
+  }) async {
+    await CancelManager.runCancelableFun(createEmployeeKeyCode, (token) async {
+      await _service.createEmployeeServ(
+        RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam>(
+          baseRequestBackType: baseRequestBackType,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () =>
+              safeEmit(_current.copyWith(createEmployeeState: Loading())),
+          onRightCallback: (data) =>
+              safeEmit(_current.copyWith(createEmployeeState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(
+            _current.copyWith(createEmployeeState: ErrorState(failure)),
+          ),
+        ),
+      );
+    });
+  }
+
+  /// Creates a new shift via the API.
+  Future<void> createShiftFunc(
+    BaseRequestBackType baseRequestBackType, {
+    CreateShiftReqParam? parameter,
+  }) async {
+    await CancelManager.runCancelableFun(createShiftKeyCode, (token) async {
+      await _service.createShiftServ(
+        RequestCallbackObserver<ShiftCreatingRes, CreateShiftReqParam>(
+          baseRequestBackType: baseRequestBackType,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () =>
+              safeEmit(_current.copyWith(createShiftState: Loading())),
+          onRightCallback: (data) =>
+              safeEmit(_current.copyWith(createShiftState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(
+            _current.copyWith(createShiftState: ErrorState(failure)),
+          ),
+        ),
+      );
+    });
+  }
+
+  /// Creates a new branch via the API.
+  Future<void> createBranchFunc(
+    BaseRequestBackType baseRequestBackType, {
+    CreateBranchReqParam? parameter,
+  }) async {
+    await CancelManager.runCancelableFun(createBranchKeyCode, (token) async {
+      await _service.createBranchServ(
+        RequestCallbackObserver<CreateBranchRes, CreateBranchReqParam>(
+          baseRequestBackType: baseRequestBackType,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () =>
+              safeEmit(_current.copyWith(createBranchState: Loading())),
+          onRightCallback: (data) =>
+              safeEmit(_current.copyWith(createBranchState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(
+            _current.copyWith(createBranchState: ErrorState(failure)),
           ),
         ),
       );

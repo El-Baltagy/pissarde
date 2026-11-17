@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
+import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/theming/app_colors.dart';
@@ -16,14 +17,11 @@ part 'shifts_base_state.dart';
 
 @RoutePage()
 class ShiftsPage extends StatefulWidget implements AutoRouteWrapper {
-  const ShiftsPage({super.key});
-
+  const ShiftsPage({super.key, required this.args});
+  final ShiftsRouteArgs args;
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<ProfileCubit>(
-      create: (context) => AppLocator()()(),
-      child: this,
-    );
+    return BlocProvider.value(value:args .profileCubit, child: this);
   }
 
   @override
@@ -59,7 +57,7 @@ class _ShiftsPageState extends ShiftsPageBaseState {
           label: 'Shifts list',
           child: BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
             selector: (state) =>
-                state is ProfileLoaded ? state.listShiftsEmit : null,
+                state is ProfileLoaded ? state.getListShiftsState : null,
             builder: (context, emit) => ShiftsListWidget(emit: emit),
           ),
         ),

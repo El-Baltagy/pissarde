@@ -8,7 +8,7 @@ abstract class OfficialHolidaysPageBaseState
   void initState() {
     super.initState();
     profileCubit = ProfileCubit.get(context: context);
-    profileCubit.listHolidaysFunc();
+    profileCubit.getListHolidaysFunc(Init());
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
+import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/theming/app_colors.dart';
@@ -22,8 +23,7 @@ class EmployeesPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider.value(value:args .profileCubit, child: this);
-
-  }
+   }
 
   @override
   State<EmployeesPage> createState() => _EmployeesPageState();
@@ -57,7 +57,7 @@ class _EmployeesPageState extends EmployeesPageBaseState {
           label: 'Employees list',
           child: BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
             selector: (state) =>
-                state is ProfileLoaded ? state.listEmployeesEmit : null,
+                state is ProfileLoaded ? state.getListEmployeesState : null,
             builder: (context, emit) => EmployeesListWidget(emit: emit),
           ),
         ),

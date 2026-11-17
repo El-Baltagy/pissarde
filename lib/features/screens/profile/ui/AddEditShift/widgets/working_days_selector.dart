@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -9,19 +11,11 @@ class WorkingDaysSelector extends StatelessWidget {
 
   final ValueNotifier<List<int>> selectedDaysNotifier;
 
-  static const List<({int dayId, String labelAr, String labelEn})> days = [
-    (dayId: 0, labelAr: 'أحد', labelEn: 'Sun'),
-    (dayId: 1, labelAr: 'إثنين', labelEn: 'Mon'),
-    (dayId: 2, labelAr: 'ثلاثاء', labelEn: 'Tue'),
-    (dayId: 3, labelAr: 'أربعاء', labelEn: 'Wed'),
-    (dayId: 4, labelAr: 'خميس', labelEn: 'Thu'),
-    (dayId: 5, labelAr: 'جمعة', labelEn: 'Fri'),
-    (dayId: 6, labelAr: 'سبت', labelEn: 'Sat'),
-  ];
+  static const List<int> dayIds = [0, 1, 2, 3, 4, 5, 6];
 
   @override
   Widget build(BuildContext context) {
-    final isAr = !context.isLTR;
+    final currentLocale = context.locale.languageCode;
 
     return ValueListenableBuilder<List<int>>(
       valueListenable: selectedDaysNotifier,
@@ -29,11 +23,11 @@ class WorkingDaysSelector extends StatelessWidget {
         return Wrap(
           spacing: AppSizes.s8,
           runSpacing: AppSizes.s8,
-          children: days.map((day) {
-            final isSelected = selectedDays.contains(day.dayId);
+          children: dayIds.map((dayId) {
+            final isSelected = selectedDays.contains(dayId);
             return FilterChip(
               label: Text(
-                isAr ? day.labelAr : day.labelEn,
+                DateTimeHelper.getWeekdayName(dayId, locale: currentLocale),
                 style: AppTextStyles.font13Medium.copyWith(
                   color: isSelected
                       ? context.theme.scaffoldBackgroundColor
@@ -55,9 +49,9 @@ class WorkingDaysSelector extends StatelessWidget {
               onSelected: (selected) {
                 final current = List<int>.from(selectedDaysNotifier.value);
                 if (selected) {
-                  current.add(day.dayId);
+                  current.add(dayId);
                 } else {
-                  current.remove(day.dayId);
+                  current.remove(dayId);
                 }
                 current.sort();
                 selectedDaysNotifier.value = current;

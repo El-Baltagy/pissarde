@@ -16,6 +16,20 @@ abstract class DateTimeHelper{
     /// for example convert this string date (“2024-03-15 14:30:00”) into Formatted Date: 2024/03/15 14:30
   }
 
+  /// Returns localized weekday name for a day index (0 = Saturday ... 6 = Friday)
+  /// using [DateFormat] from `intl` without hardcoding days.
+  static String getWeekdayName(
+    int dayIndex, {
+    String? locale,
+    bool isShort = true,
+  }) {
+    final normalizedDay = dayIndex % 7;
+    // 2024-01-06 is a known Saturday (0 = Saturday, 1 = Sunday, ..., 6 = Friday)
+    final referenceDate = DateTime(2024, 1, 6 + normalizedDay);
+    final formatter = isShort ? DateFormat.E(locale) : DateFormat.EEEE(locale);
+    return formatter.format(referenceDate);
+  }
+
   static String? convertDateIntoCustomString(DateTime?  date){
 
      return date==null?null: "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";

@@ -77,7 +77,7 @@ class ShiftCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            /// 1-
+            _buildWorkingDays(context),
 
             Row(
               spacing: AppSizes.s16,
@@ -92,6 +92,40 @@ class ShiftCardWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildWorkingDays(BuildContext context) {
+    if (shift.working_days.isEmpty) return const SizedBox.shrink();
+
+    final currentLocale = context.locale.languageCode;
+    final sortedDays = List<int>.from(shift.working_days)..sort();
+
+    return Wrap(
+      spacing: AppSizes.s6,
+      runSpacing: AppSizes.s4,
+      children: sortedDays.map((day) {
+        return Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppPadding.p8,
+            vertical: AppPadding.p2,
+          ),
+          decoration: BoxDecoration(
+            color: context.theme.primaryColor.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppSizes.r6),
+            border: Border.all(
+              color: context.theme.primaryColor.withValues(alpha: 0.25),
+              width: AppSizes.s1,
+            ),
+          ),
+          child: Text(
+            DateTimeHelper.getWeekdayName(day, locale: currentLocale),
+            style: AppTextStyles.font11Bold.copyWith(
+              color: context.theme.primaryColor,
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 

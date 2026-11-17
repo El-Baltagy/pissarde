@@ -34,7 +34,7 @@ class _AddShiftBottomSheetState extends State<AddShiftBottomSheet> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    final param = CreateShiftReqParam(
+    final param = AddEditShiftReqParam(
       name: _nameCtrl.text.trim(),
       code: _codeCtrl.text.trim(),
       start_time: _startCtrl.text.trim(),

@@ -1,4 +1,4 @@
-class CreateShiftReqParam {
+class AddEditShiftReqParam {
   final String name;
   final String code;
   final String start_time;
@@ -11,7 +11,7 @@ class CreateShiftReqParam {
   final List<dynamic> working_days;
   final String is_active;
 
-  const CreateShiftReqParam({
+  const AddEditShiftReqParam({
     required this.name,
     required this.code,
     required this.start_time,

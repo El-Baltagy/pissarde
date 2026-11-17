@@ -197,11 +197,11 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   /// Creates a new shift via the API.
   Future<void> createShiftFunc(
     BaseRequestBackType baseRequestBackType, {
-    CreateShiftReqParam? parameter,
+    AddEditShiftReqParam? parameter,
   }) async {
     await CancelManager.runCancelableFun(createShiftKeyCode, (token) async {
       await _service.createShiftServ(
-        RequestCallbackObserver<ShiftCreatingRes, CreateShiftReqParam>(
+        RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam>(
           baseRequestBackType: baseRequestBackType,
           parameter: parameter,
           cancelToken: token,

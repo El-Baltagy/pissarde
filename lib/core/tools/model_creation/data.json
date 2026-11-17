@@ -1,29 +1,4 @@
 {
-  "status": "success",
-  "holidays": [
-    {
-      "id": 1,
-      "name": "National Republic Day",
-      "start_date": "2026-10-29",
-      "end_date": "2026-10-29",
-      "type": "national",
-      "is_company_wide": true,
-      "branch_id": null,
-      "branch_name": "All Branches",
-      "is_recurring": true,
-      "description": "Official national holiday commemorating the proclamation of the Republic."
-    },
-    {
-      "id": 2,
-      "name": "Annual Corporate Strategy & Innovation Day",
-      "start_date": "2026-11-15",
-      "end_date": "2026-11-15",
-      "type": "company",
-      "is_company_wide": true,
-      "branch_id": null,
-      "branch_name": "All Branches",
-      "is_recurring": false,
-      "description": "Company-wide day off dedicated to team alignment and strategy."
-    }
-  ]
+  "message": "Shift deleted successfully",
+  "success": true
 }

@@ -125,7 +125,7 @@ class ProfileRemoteService implements BaseProfileService {
 
   @override
   Future<void> createShiftServ(
-    RequestCallbackObserver<ShiftCreatingRes, CreateShiftReqParam> requestInfo,
+    RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
   ) {
 
     return requestInfo.handleRequest(

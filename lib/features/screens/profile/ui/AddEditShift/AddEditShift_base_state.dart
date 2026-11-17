@@ -95,7 +95,7 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
       context,
       listRecorder: [fieldName, fieldCode, fieldStartTime, fieldEndTime],
     )) {
-      final param = CreateShiftReqParam(
+      final param = AddEditShiftReqParam(
         name: controllerName.text.trim(),
         code: controllerCode.text.trim(),
         start_time: controllerStartTime.text.trim(),

@@ -21,7 +21,7 @@ abstract class BaseProfileRepo extends BaseRepo {
 
    /// Abstract contract — implemented by [ProfileRemoteRepo].
    Future<Either<Failure, ShiftCreatingRes>> createShiftApi(
-       CreateShiftReqParam? parameter, {
+       AddEditShiftReqParam? parameter, {
          CancelToken? cancelToken,
        });
    /// Abstract contract — implemented by [ProfileRemoteRepo].

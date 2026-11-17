@@ -44,7 +44,7 @@ class ProfileRemoteRepo implements BaseProfileRepo {
 
   @override
   Future<Either<Failure, ShiftCreatingRes>> createShiftApi(
-      CreateShiftReqParam? parameter, {
+      AddEditShiftReqParam? parameter, {
         CancelToken? cancelToken,
       }) async {
     return handleResponse(

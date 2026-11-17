@@ -48,7 +48,7 @@ abstract class BaseProfileService extends BaseService {
 
   /// Abstract contract — implemented by [ProfileRemoteService].
   Future<void> createShiftServ(
-    RequestCallbackObserver<ShiftCreatingRes, CreateShiftReqParam> requestInfo,
+    RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
   );
 
   /// Abstract contract — implemented by [ProfileRemoteService].

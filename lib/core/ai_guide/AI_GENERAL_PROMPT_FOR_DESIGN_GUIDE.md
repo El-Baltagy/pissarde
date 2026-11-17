@@ -205,9 +205,14 @@ When building a screen, you must follow the `AutoRouteWrapper` pattern generated
 ## 13. 🌍 Localization Extraction & Translation (Arabic ↔ English)
 > **Steps**:
 > 1. Gather all Arabic UI strings from the codebase.
-> 2. Add them to `assets/l10n/translations.csv` with an English key.
-> 3. Run `dart run lib/core/tools/localization/csv_to_json.dart` to generate `app_ar.json` and `app_en.json`.
-> 4. Replace hard‑coded Arabic literals in the UI with `'key'.tr()`.
+> 2. Add them to `assets/l10n/translations.csv` with an English key using:
+>    - Single / comma-separated keys: `dart run lib/core/tools/localization/generate_key.dart <key1,key2>`
+>    - Batch list from file: add keys to `lib/core/tools/localization/loopKeys.txt` and run:
+>      ```sh
+>      dart run lib/core/tools/localization/loop_keys_translator.dart
+>      ```
+> 3. Run `dart run lib/core/tools/localization/csv_to_json.dart` (automatically run by the translation scripts) to compile to `app_ar.json`, `app_en.json`, and `app_tr.json`.
+> 4. Replace hard‑coded literals in the UI with `'key'.tr()`.
 > 5. Hot‑restart the app to load the new translations.
 
 **System Design Language**: `ar` *(will be refined later)*

@@ -115,3 +115,17 @@ activated_via_gps_and_the_app,activated via GPS and the app,تفعيلها عن 
 shift_schedule_and_working_hours,shift schedule and working hours,جدول التحول وساعات العمل,vardiya programı ve çalışma saatleri
 
 language,language,لغة,dil
+
+official_holidays,official holidays,العطلات الرسمية,resmi tatiller
+company_wide,company wide,الشركة على نطاق واسع,şirket çapında
+recurring,recurring,يتكرر,tekrarlanan
+branches,branches,الفروع,şubeler
+shifts,shifts,الدوام,vardiyalar
+employees,employees,موظفين,çalışanlar
+
+add_shift,add shift,إضافة دوام,vardiya ekle
+shift_name,shift name,اسم الدوام,vardiya adı
+start_time,start time,وقت البدء,başlangıç ​​zamanı
+end_time,end time,وقت النهاية,bitiş zamanı
+grace_period_minutes,grace period minutes,دقائق فترة السماح,ek süre dakikaları
+save,save,يحفظ,kaydetmek

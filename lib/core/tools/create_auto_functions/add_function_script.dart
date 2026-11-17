@@ -13,6 +13,14 @@ import 'components/function_controller_added.dart';
 //       [<featureName> <functionName> <returnType> <paramType>]
 //
 // ─────────────────────────────────────────────────────────────────────────────
+// dart run lib/core/tools/create_auto_functions/add_function_script.dart profile getListEmployees GetAllEmployeesRes NoParameters
+// dart run lib/core/tools/create_auto_functions/add_function_script.dart profile createEmployee CreateEmployeeRes CreateEmployeeReqParam
+
+// dart run lib/core/tools/create_auto_functions/add_function_script.dart profile getListShifts GetAllShiftsRes NoParameters
+// dart run lib/core/tools/create_auto_functions/add_function_script.dart profile createShift ShiftCreatingRes CreateShiftReqParam
+
+// dart run lib/core/tools/create_auto_functions/add_function_script.dart profile getListBranches BranchesList NoParameters
+// dart run lib/core/tools/create_auto_functions/add_function_script.dart profile createBranch  CreateBranchRes CreateBranchReqParam
 
 Future<void> main(List<dynamic> args) async {
   String featureName = '';

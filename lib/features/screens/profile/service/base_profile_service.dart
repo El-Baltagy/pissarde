@@ -1,3 +1,4 @@
+import 'package:newf/core/constants/app_typedef.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/base/base_service.dart';
@@ -12,14 +13,51 @@ import 'package:newf/features/screens/profile/data/model/branches/create_branch_
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
+import '../../../../core/shared/methods/no_parameter.dart';
+
 /// Abstract contract for the profile service layer.
 /// The cubit depends on this, not on a concrete implementation.
 abstract class BaseProfileService extends BaseService {
-  Future<Either<Failure, GetAllEmployeesRes>> listEmployeesServ();
-  Future<Either<Failure, CreateEmployeeRes>> createEmployeeServ(CreateEmployeeReqParam param);
-  Future<Either<Failure, GetAllShiftsRes>> listShiftsServ();
-  Future<Either<Failure, ShiftCreatingRes>> createShiftServ(CreateShiftReqParam param);
-  Future<Either<Failure, BranchesList>> listBranchesServ();
-  Future<Either<Failure, CreateBranchRes>> createBranchServ(CreateBranchReqParam param);
-  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysServ();
+  // Future<Either<Failure, GetAllEmployeesRes>> listEmployeesServ();
+  // Future<Either<Failure, CreateEmployeeRes>> createEmployeeServ(CreateEmployeeReqParam param);
+  // Future<Either<Failure, GetAllShiftsRes>> listShiftsServ();
+  // Future<Either<Failure, ShiftCreatingRes>> createShiftServ(CreateShiftReqParam param);
+  // Future<Either<Failure, BranchesList>> listBranchesServ();
+  // Future<Either<Failure, CreateBranchRes>> createBranchServ(CreateBranchReqParam param);
+
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> getListHolidaysServ(
+    RequestCallbackObserver<GetAvilableHolidaysRes, NoParameters> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> getListEmployeesServ(
+    RequestCallbackObserver<GetAllEmployeesRes, NoParameters> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> createEmployeeServ(
+    RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> getListShiftsServ(
+    RequestCallbackObserver<GetAllShiftsRes, NoParameters> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> createShiftServ(
+    RequestCallbackObserver<ShiftCreatingRes, CreateShiftReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> getListBranchesServ(
+    RequestCallbackObserver<BranchesList, NoParameters> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> createBranchServ(
+    RequestCallbackObserver<CreateBranchRes, CreateBranchReqParam> requestInfo,
+  );
 }

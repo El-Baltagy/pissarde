@@ -1,3 +1,5 @@
+import 'package:newf/core/constants/app_typedef.dart';
+import 'package:newf/core/constants/app_constant.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/base/base_local_repo.dart';
@@ -14,6 +16,9 @@ import 'package:newf/features/screens/profile/data/model/branches/create_branch_
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
+import '../../../../core/base/base_service.dart';
+import '../../../../core/shared/methods/no_parameter.dart';
+
 /// Concrete implementation of [BaseProfileService].
 /// Depends on [BaseProfileRepo] (abstraction), not on the remote repo directly.
 class ProfileRemoteService implements BaseProfileService {
@@ -22,34 +27,155 @@ class ProfileRemoteService implements BaseProfileService {
   final BaseProfileRepo _remoteRepo;
   final BaseLocalRepo _localRepo;
 
-  @override
-  Future<Either<Failure, GetAllEmployeesRes>> listEmployeesServ() =>
-      _remoteRepo.listEmployeesApi();
+   @override
+  Future<void> getListHolidaysServ(
+    RequestCallbackObserver<GetAvilableHolidaysRes, NoParameters> requestInfo,
+  ) {
+    const cacheKey = AppConstant.getListHolidaysKeyCash;
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.getListHolidaysApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+      fetchLocal: () async {
+        final tuple = await _localRepo.readData(cacheKey);
+
+        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
+          return GetAvilableHolidaysRes.fromJson(tuple!.$2);
+        }
+        return null;
+      },
+      saveLocal: (old, newData) async {
+        if (newData != null) {
+          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
+        }
+      },
+      clearLocal: () => _localRepo.clearData(cacheKey),
+    );
+  }
 
   @override
-  Future<Either<Failure, CreateEmployeeRes>> createEmployeeServ(
-          CreateEmployeeReqParam param) =>
-      _remoteRepo.createEmployeeApi(param);
+  Future<void> getListEmployeesServ(
+    RequestCallbackObserver<GetAllEmployeesRes, NoParameters> requestInfo,
+  ) {
+    const cacheKey = AppConstant.getListEmployeesKeyCash;
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.getListEmployeesApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+      fetchLocal: () async {
+        final tuple = await _localRepo.readData(cacheKey);
+
+        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
+          return GetAllEmployeesRes.fromJson(tuple!.$2);
+        }
+        return null;
+      },
+      saveLocal: (old, newData) async {
+        if (newData != null) {
+          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
+        }
+      },
+      clearLocal: () => _localRepo.clearData(cacheKey),
+    );
+  }
 
   @override
-  Future<Either<Failure, GetAllShiftsRes>> listShiftsServ() =>
-      _remoteRepo.listShiftsApi();
+  Future<void> createEmployeeServ(
+    RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam> requestInfo,
+  ) {
+
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.createEmployeeApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      )
+    );
+  }
+
+
 
   @override
-  Future<Either<Failure, ShiftCreatingRes>> createShiftServ(
-          CreateShiftReqParam param) =>
-      _remoteRepo.createShiftApi(param);
+  Future<void> getListShiftsServ(
+    RequestCallbackObserver<GetAllShiftsRes, NoParameters> requestInfo,
+  ) {
+    const cacheKey = AppConstant.getListShiftsKeyCash;
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.getListShiftsApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+      fetchLocal: () async {
+        final tuple = await _localRepo.readData(cacheKey);
+
+        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
+          return GetAllShiftsRes.fromJson(tuple!.$2);
+        }
+        return null;
+      },
+      saveLocal: (old, newData) async {
+        if (newData != null) {
+          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
+        }
+      },
+      clearLocal: () => _localRepo.clearData(cacheKey),
+    );
+  }
 
   @override
-  Future<Either<Failure, BranchesList>> listBranchesServ() =>
-      _remoteRepo.listBranchesApi();
+  Future<void> createShiftServ(
+    RequestCallbackObserver<ShiftCreatingRes, CreateShiftReqParam> requestInfo,
+  ) {
+
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.createShiftApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      )
+    );
+  }
+
+
+
 
   @override
-  Future<Either<Failure, CreateBranchRes>> createBranchServ(
-          CreateBranchReqParam param) =>
-      _remoteRepo.createBranchApi(param);
+  Future<void> getListBranchesServ(
+    RequestCallbackObserver<BranchesList, NoParameters> requestInfo,
+  ) {
+    const cacheKey = AppConstant.getListBranchesKeyCash;
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.getListBranchesApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+      fetchLocal: () async {
+        final tuple = await _localRepo.readData(cacheKey);
+
+        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
+          return BranchesList.fromJson(tuple!.$2);
+        }
+        return null;
+      },
+      saveLocal: (old, newData) async {
+        if (newData != null) {
+          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
+        }
+      },
+      clearLocal: () => _localRepo.clearData(cacheKey),
+    );
+  }
 
   @override
-  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysServ() =>
-      _remoteRepo.listHolidaysApi();
+  Future<void> createBranchServ(
+    RequestCallbackObserver<CreateBranchRes, CreateBranchReqParam> requestInfo,
+  ) {
+
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.createBranchApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      )
+    );
+  }
 }

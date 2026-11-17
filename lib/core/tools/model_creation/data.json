@@ -1,45 +1,29 @@
 {
-  "date": "2026-11-16",
-  "has_checked_in": false,
-  "is_open": false,
-  "active_attendance": null,
-  "shift": {
-    "id": 1,
-    "name": "Regular Morning Shift",
-    "code": "SHIFT-DAY-01",
-    "start_time": "09:00:00",
-    "end_time": "17:00:00",
-    "is_overnight": false,
-    "grace_period_minutes": 15,
-    "checkin_window_start_minutes": 60,
-    "checkin_window_end_minutes": 120,
-    "break_duration_minutes": 60,
-    "working_days": [
-      0,
-      1,
-      2,
-      3,
-      4
-    ],
-    "is_active": true,
-    "deleted_at": null,
-    "created_at": "2026-10-25T09:49:38.000000Z",
-    "updated_at": "2026-10-25T09:49:38.000000Z"
-  },
-  "branch": {
-    "id": 1,
-    "name": "Istanbul Headquarters",
-    "code": "IST-HQ",
-    "address": "Levent, Buyukdere Cad. No: 142, Sisli, Istanbul",
-    "latitude": 41.0784000000000020236257114447653293609619140625,
-    "longitude": 29.01180000000000092086338554508984088897705078125,
-    "geofence_radius_meters": 150,
-    "qr_secret": "VDL8h9rgCtwwejNJ6teEm4VmDaRFKce46p8T1ZFBpvdLvswFikdl8kzsGhtP2Wm2",
-    "qr_token": "QR_IST-HQ_mmbx3C0AmT4TJY4TSN4UEpuvGUPlh3P7",
-    "qr_generated_at": "2026-11-15T04:27:25.000000Z",
-    "is_active": true,
-    "deleted_at": null,
-    "created_at": "2026-10-25T09:49:38.000000Z",
-    "updated_at": "2026-11-15T04:27:25.000000Z"
-  }
+  "status": "success",
+  "holidays": [
+    {
+      "id": 1,
+      "name": "National Republic Day",
+      "start_date": "2026-10-29",
+      "end_date": "2026-10-29",
+      "type": "national",
+      "is_company_wide": true,
+      "branch_id": null,
+      "branch_name": "All Branches",
+      "is_recurring": true,
+      "description": "Official national holiday commemorating the proclamation of the Republic."
+    },
+    {
+      "id": 2,
+      "name": "Annual Corporate Strategy & Innovation Day",
+      "start_date": "2026-11-15",
+      "end_date": "2026-11-15",
+      "type": "company",
+      "is_company_wide": true,
+      "branch_id": null,
+      "branch_name": "All Branches",
+      "is_recurring": false,
+      "description": "Company-wide day off dedicated to team alignment and strategy."
+    }
+  ]
 }

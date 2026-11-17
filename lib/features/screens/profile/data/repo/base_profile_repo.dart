@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/base/base_remote_repo.dart';
@@ -12,14 +13,50 @@ import 'package:newf/features/screens/profile/data/model/branches/create_branch_
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
+import '../../../../../core/shared/methods/no_parameter.dart';
+
 /// Abstract contract for the profile data layer.
 /// High-level modules (services) depend on this, not on concrete implementations.
 abstract class BaseProfileRepo extends BaseRepo {
-  Future<Either<Failure, GetAllEmployeesRes>> listEmployeesApi();
-  Future<Either<Failure, CreateEmployeeRes>> createEmployeeApi(CreateEmployeeReqParam param);
-  Future<Either<Failure, GetAllShiftsRes>> listShiftsApi();
-  Future<Either<Failure, ShiftCreatingRes>> createShiftApi(CreateShiftReqParam param);
-  Future<Either<Failure, BranchesList>> listBranchesApi();
-  Future<Either<Failure, CreateBranchRes>> createBranchApi(CreateBranchReqParam param);
-  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysApi();
+
+   /// Abstract contract — implemented by [ProfileRemoteRepo].
+   Future<Either<Failure, ShiftCreatingRes>> createShiftApi(
+       CreateShiftReqParam? parameter, {
+         CancelToken? cancelToken,
+       });
+   /// Abstract contract — implemented by [ProfileRemoteRepo].
+   Future<Either<Failure, CreateEmployeeRes>> createEmployeeApi(
+       CreateEmployeeReqParam? parameter, {
+         CancelToken? cancelToken,
+       });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, CreateBranchRes>> createBranchApi(
+      CreateBranchReqParam? parameter, {
+        CancelToken? cancelToken,
+      });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, GetAvilableHolidaysRes>> getListHolidaysApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, GetAllEmployeesRes>> getListEmployeesApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, GetAllShiftsRes>> getListShiftsApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [ProfileRemoteRepo].
+  Future<Either<Failure, BranchesList>> getListBranchesApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  });
 }

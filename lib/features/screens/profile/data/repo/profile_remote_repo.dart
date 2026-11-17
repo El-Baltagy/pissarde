@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:newf/core/constants/app_constant.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/api_helper/dio_helper.dart';
@@ -14,72 +16,122 @@ import 'package:newf/features/screens/profile/data/model/branches/create_branch_
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
+import '../../../../../core/api_helper/caller_tag.dart';
 import '../../../../../core/api_helper/response_handler.dart';
+import '../../../../../core/shared/methods/no_parameter.dart';
 
 /// Concrete remote implementation of [BaseProfileRepo].
 class ProfileRemoteRepo implements BaseProfileRepo {
   final DioHelper dio;
   ProfileRemoteRepo(this.dio);
 
-  @override
-  Future<Either<Failure, GetAllEmployeesRes>> listEmployeesApi() async {
-    return handleResponse(
-      onCallData: dio.getData(uri: EndPoints.listEmployees),
-      asObject: GetAllEmployeesRes.fromJson,
-    );
-  }
 
   @override
   Future<Either<Failure, CreateEmployeeRes>> createEmployeeApi(
-      CreateEmployeeReqParam param) async {
+      CreateEmployeeReqParam? parameter, {
+        CancelToken? cancelToken,
+      }) async {
     return handleResponse(
       onCallData: dio.postData(
-          uri: EndPoints.createEmployee, data: param.toJson()),
+        uri: EndPoints.createEmployee,
+        data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
       asObject: CreateEmployeeRes.fromJson,
     );
   }
 
   @override
-  Future<Either<Failure, GetAllShiftsRes>> listShiftsApi() async {
-    return handleResponse(
-      onCallData: dio.getData(uri: EndPoints.listShifts),
-      asObject: GetAllShiftsRes.fromJson,
-    );
-  }
-
-  @override
   Future<Either<Failure, ShiftCreatingRes>> createShiftApi(
-      CreateShiftReqParam param) async {
+      CreateShiftReqParam? parameter, {
+        CancelToken? cancelToken,
+      }) async {
     return handleResponse(
-      onCallData:
-          dio.postData(uri: EndPoints.createShift, data: param.toJson()),
+      onCallData: dio.postData(
+        uri: EndPoints.createShift,
+        data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
       asObject: ShiftCreatingRes.fromJson,
     );
   }
 
-  @override
-  Future<Either<Failure, BranchesList>> listBranchesApi() async {
-    return handleResponse(
-      onCallData: dio.getData(uri: EndPoints.listBranches),
-      asObject: BranchesList.fromJson,
-    );
-  }
 
   @override
   Future<Either<Failure, CreateBranchRes>> createBranchApi(
-      CreateBranchReqParam param) async {
+      CreateBranchReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
     return handleResponse(
-      onCallData:
-          dio.postData(uri: EndPoints.createBranch, data: param.toJson()),
+      onCallData: dio.postData(
+        uri: EndPoints.createBranch,
+       data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
       asObject: CreateBranchRes.fromJson,
     );
   }
 
   @override
-  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysApi() async {
+  Future<Either<Failure, GetAvilableHolidaysRes>> getListHolidaysApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  }) async {
     return handleResponse(
-      onCallData: dio.getData(uri: EndPoints.holidays),
+      onCallData: dio.getData(
+        uri: EndPoints.holidays,
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
       asObject: GetAvilableHolidaysRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, GetAllEmployeesRes>> getListEmployeesApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.listEmployees,
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: GetAllEmployeesRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, GetAllShiftsRes>> getListShiftsApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.listShifts,
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: GetAllShiftsRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, BranchesList>> getListBranchesApi(
+    NoParameters? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.listBranches,
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: BranchesList.fromJson,
     );
   }
 }

@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:newf/features/screens/main_navigation/ui/main_navigation/main_navigation_screen.dart';
 import 'package:newf/features/screens/home/ui/home/home_screen.dart';
 import 'package:newf/features/screens/attendance_record/ui/attendance_record/attendance_record_screen.dart';
+import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
 import 'package:newf/features/screens/manager_dashboard/ui/manager_dashboard/manager_dashboard_screen.dart';
 import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/profile/ui/employees/employees_screen.dart';
 import 'package:newf/features/screens/profile/ui/shifts/shifts_screen.dart';
 import 'package:newf/features/screens/profile/ui/branches/branches_screen.dart';
+import 'package:newf/features/screens/profile/ui/official_holidays/official_holidays_screen.dart';
 import 'package:newf/features/screens/login/ui/login/login_screen.dart';
 import 'package:newf/features/screens/splash/ui/splash_screen.dart';
 
@@ -55,6 +57,9 @@ class AppRouter extends _$AppRouter {
       ),
       AutoRoute(
         page: BranchesRoute.page,
+      ),
+      AutoRoute(
+        page: OfficialHolidaysRoute.page,
       ),
   ];
 }

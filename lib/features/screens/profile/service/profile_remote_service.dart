@@ -12,6 +12,7 @@ import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_r
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
 /// Concrete implementation of [BaseProfileService].
 /// Depends on [BaseProfileRepo] (abstraction), not on the remote repo directly.
@@ -47,4 +48,8 @@ class ProfileRemoteService implements BaseProfileService {
   Future<Either<Failure, CreateBranchRes>> createBranchServ(
           CreateBranchReqParam param) =>
       _remoteRepo.createBranchApi(param);
+
+  @override
+  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysServ() =>
+      _remoteRepo.listHolidaysApi();
 }

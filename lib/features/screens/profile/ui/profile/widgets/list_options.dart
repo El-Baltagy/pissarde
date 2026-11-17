@@ -1,15 +1,15 @@
 part of '../profile_screen.dart';
 
 class ListOptionsWidget extends StatelessWidget {
-  const ListOptionsWidget({super.key});
-
+    ListOptionsWidget({super.key, required this.profileCubit});
+  ProfileCubit profileCubit;
   @override
   Widget build(BuildContext context) {
-    final items = [
+    final List<({IconData icon, String title, Future<Object?> Function() onTap})> items = [
       (
         icon: Icons.people_alt_outlined,
         title: 'employees'.tr(),
-        onTap: () => context.router.push(const EmployeesRoute()),
+        onTap: () => context.router.push(  EmployeesRoute(args:EmployeesRouteArgs(profileCubit) )),
       ),
       (
         icon: Icons.schedule_outlined,
@@ -22,10 +22,11 @@ class ListOptionsWidget extends StatelessWidget {
         onTap: () => context.router.push(const BranchesRoute()),
       ),
       (
-        icon: Icons.badge_outlined,
-        title: 'job_data'.tr(),
-        onTap: () {},
+        icon: Icons.celebration_outlined,
+        title: 'official_holidays'.tr(),
+        onTap: () => context.router.push(const OfficialHolidaysRoute()),
       ),
+
     ];
 
     return Container(

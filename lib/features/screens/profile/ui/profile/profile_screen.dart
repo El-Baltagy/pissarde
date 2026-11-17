@@ -75,7 +75,9 @@ class _ProfilePageState extends ProfilePageBaseState {
                 children: [
                   ProfileCardWidget(),
                   LanguageSelectorWidget(),
-                  ListOptionsWidget(),
+                  ListOptionsWidget(
+                    profileCubit: profileCubit
+                  ),
                   LogoutButtonWidget(),
                 ],
               ),

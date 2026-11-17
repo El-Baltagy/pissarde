@@ -13,6 +13,7 @@ class ProfileLoaded extends ProfileState {
     this.createShiftEmit,
     this.listBranchesEmit,
     this.createBranchEmit,
+    this.listHolidaysEmit,
   });
 
   final BaseEmit? allWorkersEmit;
@@ -23,6 +24,7 @@ class ProfileLoaded extends ProfileState {
   final BaseEmit? createShiftEmit;
   final BaseEmit? listBranchesEmit;
   final BaseEmit? createBranchEmit;
+  final BaseEmit? listHolidaysEmit;
 
   ProfileLoaded copyWith({
     BaseEmit? allWorkersEmit,
@@ -33,6 +35,7 @@ class ProfileLoaded extends ProfileState {
     BaseEmit? createShiftEmit,
     BaseEmit? listBranchesEmit,
     BaseEmit? createBranchEmit,
+    BaseEmit? listHolidaysEmit,
   }) {
     return ProfileLoaded(
       refreshOrInit: refreshOrInit ?? this.refreshOrInit,
@@ -43,6 +46,7 @@ class ProfileLoaded extends ProfileState {
       createShiftEmit: createShiftEmit ?? this.createShiftEmit,
       listBranchesEmit: listBranchesEmit ?? this.listBranchesEmit,
       createBranchEmit: createBranchEmit ?? this.createBranchEmit,
+      listHolidaysEmit: listHolidaysEmit ?? this.listHolidaysEmit,
     );
   }
 }

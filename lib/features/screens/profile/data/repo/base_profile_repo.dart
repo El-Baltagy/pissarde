@@ -10,6 +10,7 @@ import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_r
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
 /// Abstract contract for the profile data layer.
 /// High-level modules (services) depend on this, not on concrete implementations.
@@ -20,4 +21,5 @@ abstract class BaseProfileRepo extends BaseRepo {
   Future<Either<Failure, ShiftCreatingRes>> createShiftApi(CreateShiftReqParam param);
   Future<Either<Failure, BranchesList>> listBranchesApi();
   Future<Either<Failure, CreateBranchRes>> createBranchApi(CreateBranchReqParam param);
+  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysApi();
 }

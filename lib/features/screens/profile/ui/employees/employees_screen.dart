@@ -16,14 +16,13 @@ part 'employees_base_state.dart';
 
 @RoutePage()
 class EmployeesPage extends StatefulWidget implements AutoRouteWrapper {
-  const EmployeesPage({super.key});
+  const EmployeesPage({super.key, required this.args});
 
+  final EmployeesRouteArgs args;
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<ProfileCubit>(
-      create: (context) => AppLocator()()(),
-      child: this,
-    );
+    return BlocProvider.value(value:args .profileCubit, child: this);
+
   }
 
   @override

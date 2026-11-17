@@ -6,7 +6,7 @@ abstract class EmployeesPageBaseState extends State<EmployeesPage> {
   @override
   void initState() {
     super.initState();
-    profileCubit = ProfileCubit.get(context: context);
+    profileCubit = widget.args.profileCubit;
     profileCubit.listEmployeesFunc();
   }
 

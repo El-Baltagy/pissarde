@@ -10,6 +10,7 @@ import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_r
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
 /// Abstract contract for the profile service layer.
 /// The cubit depends on this, not on a concrete implementation.
@@ -20,4 +21,5 @@ abstract class BaseProfileService extends BaseService {
   Future<Either<Failure, ShiftCreatingRes>> createShiftServ(CreateShiftReqParam param);
   Future<Either<Failure, BranchesList>> listBranchesServ();
   Future<Either<Failure, CreateBranchRes>> createBranchServ(CreateBranchReqParam param);
+  Future<Either<Failure, GetAvilableHolidaysRes>> listHolidaysServ();
 }

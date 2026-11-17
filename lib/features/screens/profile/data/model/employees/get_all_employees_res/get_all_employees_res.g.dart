@@ -36,8 +36,9 @@ _$DataItemImpl _$$DataItemImplFromJson(Map<String, dynamic> json) =>
           Employeetype.fromJson(json['employee_type'] as Map<String, dynamic>),
       work_type: Worktype.fromJson(json['work_type'] as Map<String, dynamic>),
       branch: Branch.fromJson(json['branch'] as Map<String, dynamic>),
-      supervisor:
-          Supervisor.fromJson(json['supervisor'] as Map<String, dynamic>),
+      supervisor: json['supervisor'] == null
+          ? null
+          : Supervisor.fromJson(json['supervisor'] as Map<String, dynamic>),
       shift: Shift.fromJson(json['shift'] as Map<String, dynamic>),
       duty_authorized_branch_ids: json['duty_authorized_branch_ids'],
       is_active: json['is_active'] as bool,
@@ -55,7 +56,7 @@ Map<String, dynamic> _$$DataItemImplToJson(_$DataItemImpl instance) =>
       'employee_type': instance.employee_type.toJson(),
       'work_type': instance.work_type.toJson(),
       'branch': instance.branch.toJson(),
-      'supervisor': instance.supervisor.toJson(),
+      'supervisor': instance.supervisor?.toJson(),
       'shift': instance.shift.toJson(),
       'duty_authorized_branch_ids': instance.duty_authorized_branch_ids,
       'is_active': instance.is_active,

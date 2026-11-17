@@ -13,6 +13,7 @@ import 'package:newf/features/screens/profile/data/model/shifts/1-create_shift_r
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
 part 'profile_state.dart';
 
@@ -89,6 +90,16 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     result.fold(
       (failure) => safeEmit(_current.copyWith(createBranchEmit: ErrorState(failure))),
       (data) => safeEmit(_current.copyWith(createBranchEmit: Success(data))),
+    );
+  }
+
+  /// Fetches the list of official/available holidays from the API.
+  Future<void> listHolidaysFunc() async {
+    safeEmit(_current.copyWith(listHolidaysEmit: Loading()));
+    final result = await _service.listHolidaysServ();
+    result.fold(
+      (failure) => safeEmit(_current.copyWith(listHolidaysEmit: ErrorState(failure))),
+      (data) => safeEmit(_current.copyWith(listHolidaysEmit: Success(data))),
     );
   }
 }

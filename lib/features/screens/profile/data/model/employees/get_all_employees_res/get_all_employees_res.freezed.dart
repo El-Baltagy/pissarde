@@ -219,7 +219,7 @@ mixin _$DataItem {
   Employeetype get employee_type => throw _privateConstructorUsedError;
   Worktype get work_type => throw _privateConstructorUsedError;
   Branch get branch => throw _privateConstructorUsedError;
-  Supervisor get supervisor => throw _privateConstructorUsedError;
+  Supervisor? get supervisor => throw _privateConstructorUsedError;
   Shift get shift => throw _privateConstructorUsedError;
   dynamic get duty_authorized_branch_ids => throw _privateConstructorUsedError;
   bool get is_active => throw _privateConstructorUsedError;
@@ -246,7 +246,7 @@ abstract class $DataItemCopyWith<$Res> {
       Employeetype employee_type,
       Worktype work_type,
       Branch branch,
-      Supervisor supervisor,
+      Supervisor? supervisor,
       Shift shift,
       dynamic duty_authorized_branch_ids,
       bool is_active,
@@ -256,7 +256,7 @@ abstract class $DataItemCopyWith<$Res> {
   $EmployeetypeCopyWith<$Res> get employee_type;
   $WorktypeCopyWith<$Res> get work_type;
   $BranchCopyWith<$Res> get branch;
-  $SupervisorCopyWith<$Res> get supervisor;
+  $SupervisorCopyWith<$Res>? get supervisor;
   $ShiftCopyWith<$Res> get shift;
 }
 
@@ -282,7 +282,7 @@ class _$DataItemCopyWithImpl<$Res, $Val extends DataItem>
     Object? employee_type = null,
     Object? work_type = null,
     Object? branch = null,
-    Object? supervisor = null,
+    Object? supervisor = freezed,
     Object? shift = null,
     Object? duty_authorized_branch_ids = freezed,
     Object? is_active = null,
@@ -325,10 +325,10 @@ class _$DataItemCopyWithImpl<$Res, $Val extends DataItem>
           ? _value.branch
           : branch // ignore: cast_nullable_to_non_nullable
               as Branch,
-      supervisor: null == supervisor
+      supervisor: freezed == supervisor
           ? _value.supervisor
           : supervisor // ignore: cast_nullable_to_non_nullable
-              as Supervisor,
+              as Supervisor?,
       shift: null == shift
           ? _value.shift
           : shift // ignore: cast_nullable_to_non_nullable
@@ -382,8 +382,12 @@ class _$DataItemCopyWithImpl<$Res, $Val extends DataItem>
 
   @override
   @pragma('vm:prefer-inline')
-  $SupervisorCopyWith<$Res> get supervisor {
-    return $SupervisorCopyWith<$Res>(_value.supervisor, (value) {
+  $SupervisorCopyWith<$Res>? get supervisor {
+    if (_value.supervisor == null) {
+      return null;
+    }
+
+    return $SupervisorCopyWith<$Res>(_value.supervisor!, (value) {
       return _then(_value.copyWith(supervisor: value) as $Val);
     });
   }
@@ -415,7 +419,7 @@ abstract class _$$DataItemImplCopyWith<$Res>
       Employeetype employee_type,
       Worktype work_type,
       Branch branch,
-      Supervisor supervisor,
+      Supervisor? supervisor,
       Shift shift,
       dynamic duty_authorized_branch_ids,
       bool is_active,
@@ -430,7 +434,7 @@ abstract class _$$DataItemImplCopyWith<$Res>
   @override
   $BranchCopyWith<$Res> get branch;
   @override
-  $SupervisorCopyWith<$Res> get supervisor;
+  $SupervisorCopyWith<$Res>? get supervisor;
   @override
   $ShiftCopyWith<$Res> get shift;
 }
@@ -455,7 +459,7 @@ class __$$DataItemImplCopyWithImpl<$Res>
     Object? employee_type = null,
     Object? work_type = null,
     Object? branch = null,
-    Object? supervisor = null,
+    Object? supervisor = freezed,
     Object? shift = null,
     Object? duty_authorized_branch_ids = freezed,
     Object? is_active = null,
@@ -498,10 +502,10 @@ class __$$DataItemImplCopyWithImpl<$Res>
           ? _value.branch
           : branch // ignore: cast_nullable_to_non_nullable
               as Branch,
-      supervisor: null == supervisor
+      supervisor: freezed == supervisor
           ? _value.supervisor
           : supervisor // ignore: cast_nullable_to_non_nullable
-              as Supervisor,
+              as Supervisor?,
       shift: null == shift
           ? _value.shift
           : shift // ignore: cast_nullable_to_non_nullable
@@ -565,7 +569,7 @@ class _$DataItemImpl extends _DataItem {
   @override
   final Branch branch;
   @override
-  final Supervisor supervisor;
+  final Supervisor? supervisor;
   @override
   final Shift shift;
   @override
@@ -600,7 +604,7 @@ abstract class _DataItem extends DataItem {
       required final Employeetype employee_type,
       required final Worktype work_type,
       required final Branch branch,
-      required final Supervisor supervisor,
+      required final Supervisor? supervisor,
       required final Shift shift,
       required final dynamic duty_authorized_branch_ids,
       required final bool is_active,
@@ -629,7 +633,7 @@ abstract class _DataItem extends DataItem {
   @override
   Branch get branch;
   @override
-  Supervisor get supervisor;
+  Supervisor? get supervisor;
   @override
   Shift get shift;
   @override

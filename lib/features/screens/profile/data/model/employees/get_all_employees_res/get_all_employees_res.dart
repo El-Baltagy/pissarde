@@ -40,7 +40,7 @@ class DataItem with _$DataItem, EquatableMixin {
     required Employeetype employee_type,
     required Worktype work_type,
     required Branch branch,
-    required Supervisor supervisor,
+    required Supervisor? supervisor,
     required Shift shift,
     required dynamic duty_authorized_branch_ids,
     required bool is_active,

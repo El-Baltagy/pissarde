@@ -46,7 +46,7 @@ class LoginRemoteService implements BaseLoginService {
   Future<void> logoutServ(
     RequestCallbackObserver<bool, NoParameters> requestInfo,
   ) {
-    const cacheKey = AppConstant.logoutKeyCash;
+    const cacheKey = AppConstant.userKeyCash;
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.logoutApi(
         requestInfo.parameter,

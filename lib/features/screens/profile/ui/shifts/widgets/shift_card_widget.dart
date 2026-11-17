@@ -1,9 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/core/extension/context.dart';
+
+import '../../../../../../core/shared/methods/date_helper.dart';
 
 /// Displays summary information for a single shift.
 class ShiftCardWidget extends StatelessWidget {
@@ -64,7 +67,7 @@ class ShiftCardWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppSizes.r8),
                   ),
                   child: Text(
-                    shift.is_active ? 'active' : 'inactive',
+                    shift.is_active ? 'active'.tr() : 'inactive'.tr(),
                     style: AppTextStyles.font11Bold.copyWith(
                       color: shift.is_active
                           ? AppColors.statusPresentText
@@ -74,11 +77,13 @@ class ShiftCardWidget extends StatelessWidget {
                 ),
               ],
             ),
+            /// 1-
+
             Row(
               spacing: AppSizes.s16,
               children: [
-                _timeChip(Icons.login_rounded, shift.start_time),
-                _timeChip(Icons.logout_rounded, shift.end_time),
+                _timeChip(Icons.login_rounded, DateTimeHelper.toHourMinute(shift.start_time)  ),
+                _timeChip(Icons.logout_rounded, DateTimeHelper.toHourMinute(shift.end_time)),
                 if (shift.employees_count != null)
                   _timeChip(Icons.people_outline,
                       '${shift.employees_count}'),

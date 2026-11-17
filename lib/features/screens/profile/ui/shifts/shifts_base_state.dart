@@ -17,17 +17,8 @@ abstract class ShiftsPageBaseState extends State<ShiftsPage> {
 
   void _listener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
-      if (state.createShiftState is Success) {
-        profileCubit.getListShiftsFunc(Reload());
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('shift_created_success'.tr()),
-            backgroundColor: AppColors.contractorGreen,
-          ),
-        );
-      }
-      if (state.createShiftState is ErrorState) {
-        final err = state.createShiftState as ErrorState;
+      if (state.getListShiftsState is ErrorState) {
+        final err = state.getListShiftsState as ErrorState;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(err.failure.message),

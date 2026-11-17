@@ -28,11 +28,14 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
   final ValueNotifier<bool> isActiveNotifier = .new(true);
   late final ValueNotifier<bool> isLoadingNotifier;
 
+  bool _isSuccessHandled = false;
+
   @override
   void initState() {
     super.initState();
     isLoadingNotifier = .new(false);
     profileCubit = ProfileCubit.get(context: context);
+    profileCubit.resetCreateShift();
 
     final shift = widget.args.shiftItem;
     if (shift != null) {
@@ -123,13 +126,14 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
 
   void createShiftListener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
-      if (state.createShiftState is Success) {
+      if (state.createShiftState is Success && !_isSuccessHandled) {
+        _isSuccessHandled = true;
         final res = (state.createShiftState as Success).data;
         final message = res is ShiftCreatingRes
             ? res.message
             : 'shift_created_success'.tr();
         context.showToast(message);
-        profileCubit.getListShiftsFunc(Reload());
+        profileCubit.resetCreateShift();
         context.pop(true);
       } else if (state.createShiftState is ErrorState) {
         final err = state.createShiftState as ErrorState;

@@ -4,23 +4,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 extension AppRouterExtension on BuildContext {
   /// Access the [StackRouter] from any [BuildContext].
-  StackRouter get router => AutoRouter.of(this);
+
 
   /// Push a new [route] onto the stack.
-  Future<T?> push<T extends Object?>(PageRouteInfo route) => router.push<T>(route);
+  Future<T?> push<T extends Object?>(PageRouteInfo route) => AutoRouter.of(this).push<T>(route);
 
   /// Replace the current route with a new [route].
-  Future<void> replace(PageRouteInfo route) => router.replace(route);
+  Future<void> replace(PageRouteInfo route) => AutoRouter.of(this).replace(route);
 
   /// Push a new [route] and remove all previous routes until the [predicate] is met.
   Future<void> pushAndPopUntil(PageRouteInfo route, {required RoutePredicate predicate}) =>
-      router.pushAndPopUntil(route, predicate: predicate);
+      AutoRouter.of(this).pushAndPopUntil(route, predicate: predicate);
 
   /// Pop the current route from the stack.
-  Future<bool> pop<T extends Object?>([T? result]) => router.maybePop<T>(result);
+  Future<bool> pop<T extends Object?>([T? result]) => AutoRouter.of(this).maybePop<T>(result);
 
   /// Pop all routes until the root route.
-  void popUntilRoot() => router.popUntilRoot();
+  void popUntilRoot() => AutoRouter.of(this).popUntilRoot();
 
    Future<dynamic>  pushNavigation(Widget widget,{
     Curve curve = Curves.easeInOutCubicEmphasized,
@@ -33,7 +33,7 @@ extension AppRouterExtension on BuildContext {
         curve: curve));
   }
   /// Check if the router can pop.
-  bool get canPop => router.canPop();
+  bool get canPop => AutoRouter.of(this).canPop();
 
   void unfocus()=> FocusScope.of(this).unfocus();
   // EdgeInsets get padding=> MediaQuery.of(this).padding;

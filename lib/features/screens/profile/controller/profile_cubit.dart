@@ -217,6 +217,21 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     });
   }
 
+  /// Resets createShiftState to avoid stale success triggers.
+  void resetCreateShift() {
+    safeEmit(ProfileLoaded(
+      createBranchState: _current.createBranchState,
+      getListBranchesState: _current.getListBranchesState,
+      createShiftState: null,
+      getListShiftsState: _current.getListShiftsState,
+      createEmployeeState: _current.createEmployeeState,
+      getListEmployeesState: _current.getListEmployeesState,
+      getListHolidaysState: _current.getListHolidaysState,
+      refreshOrInit: _current.refreshOrInit,
+      allWorkersEmit: _current.allWorkersEmit,
+    ));
+  }
+
   /// Creates a new branch via the API.
   Future<void> createBranchFunc(
     BaseRequestBackType baseRequestBackType, {

@@ -3,32 +3,32 @@
 part of '../profile_screen.dart';
 
 class ListOptionsWidget extends StatelessWidget {
-    ListOptionsWidget({super.key, required this.profileCubit});
-  ProfileCubit profileCubit;
+  const ListOptionsWidget({super.key, required this.profileCubit});
+  final ProfileCubit profileCubit;
+
   @override
   Widget build(BuildContext context) {
-    final List<({IconData icon, String title, Future<Object?> Function() onTap})> items = [
+    final List<({IconData icon, String title, VoidCallback onTap})> items = [
       (
         icon: Icons.people_alt_outlined,
         title: 'employees'.tr(),
-        onTap: () => context.router.push(  EmployeesRoute(args:EmployeesRouteArgs(profileCubit) )),
+        onTap: () => context.router.push(EmployeesRoute(args: EmployeesRouteArgs(profileCubit))),
       ),
       (
         icon: Icons.schedule_outlined,
         title: 'shifts'.tr(),
-        onTap: () => context.router.push(  ShiftsRoute(args:ShiftsRouteArgs(profileCubit))),
+        onTap: () => context.router.push(ShiftsRoute(args: ShiftsRouteArgs(profileCubit))),
       ),
       (
         icon: Icons.location_city_outlined,
         title: 'branches'.tr(),
-        onTap: () => context.router.push(  BranchesRoute(args:BranchesRouteArgs(profileCubit))),
+        onTap: () => context.router.push(BranchesRoute(args: BranchesRouteArgs(profileCubit))),
       ),
       (
         icon: Icons.celebration_outlined,
         title: 'official_holidays'.tr(),
-        onTap: () => context.router.push(  OfficialHolidaysRoute(args:OfficialHolidaysRouteArgs(profileCubit))),
+        onTap: () => context.router.push(OfficialHolidaysRoute(args: OfficialHolidaysRouteArgs(profileCubit))),
       ),
-
     ];
 
     return Container(
@@ -47,6 +47,7 @@ class ListOptionsWidget extends StatelessWidget {
           return Column(
             children: [
               _buildSettingItem(
+                context,
                 icon: item.icon,
                 title: item.title,
                 onTap: item.onTap,
@@ -66,7 +67,8 @@ class ListOptionsWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingItem({
+  Widget _buildSettingItem(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required VoidCallback onTap,

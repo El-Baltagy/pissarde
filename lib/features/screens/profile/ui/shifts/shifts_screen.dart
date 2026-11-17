@@ -47,11 +47,16 @@ class _ShiftsPageState extends ShiftsPageBaseState {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.theme.primaryColor,
-          onPressed: () => context.push(
-            AddEditShiftRoute(
-              args: AddEditShiftRouteArgs(profileCubit: profileCubit),
-            ),
-          ),
+          onPressed: () async {
+            final res = await context.push(
+              AddEditShiftRoute(
+                args: AddEditShiftRouteArgs(profileCubit: profileCubit),
+              ),
+            );
+            if (res == true) {
+              await profileCubit.getListShiftsFunc(Reload());
+            }
+          },
           child: const Icon(Icons.add,
               color: AppColors.roleSwitchSelectedBg),
         ),

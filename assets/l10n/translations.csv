@@ -138,4 +138,6 @@ shift_created_success,shift created success,التحول خلق النجاح,de�
 working_days,working days,أيام العمل,iş günleri
 break_duration_minutes,break duration minutes,دقائق مدة الاستراحة,mola süresi dakika
 overnight_shift,overnight shift,التحول بين عشية وضحاها,gece vardiyası
-active,active,نشيط,aktif
+active,active,نشط,aktif
+
+inactive,inactive,غير نشط,aktif değil

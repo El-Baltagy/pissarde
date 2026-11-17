@@ -2,7 +2,7 @@
 import 'package:intl/intl.dart';
 
 abstract class DateTimeHelper{
-
+  static  String toHourMinute(String date) => date.length >= 5 ? date.substring(0, 5) : date;
   static String get formatDateOnly=>'dd/MM/yyyy';
  static String get formatTimeOnly=>'hh:mm';
 

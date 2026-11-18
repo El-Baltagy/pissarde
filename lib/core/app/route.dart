@@ -19,6 +19,7 @@ import 'package:newf/features/screens/profile/ui/AddEditShift/AddEditShift_scree
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/ui/AddEditBranch/AddEditBranch_screen.dart';
+import 'package:newf/features/screens/profile/ui/AddEditEmloyee/AddEditEmloyee_screen.dart';
 part  'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -27,6 +28,10 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
+      AutoRoute(
+        page: AddEditEmloyeeRoute.page,
+        // initial: true,
+      ),
       AutoRoute(
         page: AddEditBranchRoute.page,
         // initial: true,

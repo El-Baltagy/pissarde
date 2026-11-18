@@ -50,7 +50,17 @@ class _EmployeesPageState extends EmployeesPageBaseState {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.theme.primaryColor,
-          onPressed: () => _showAddEmployeeSheet(context),
+          onPressed:  () async {
+            final res = await context.push(
+              AddEditEmloyeeRoute(
+                args: AddEditEmloyeeRouteArgs(  profileCubit),
+              ),
+            );
+            if (res == true) {
+              await profileCubit.getListBranchesFunc(Reload());
+            }
+          },
+          // onPressed: () => _showAddEmployeeSheet(context),
           child:
               const Icon(Icons.add, color: AppColors.roleSwitchSelectedBg),
         ),

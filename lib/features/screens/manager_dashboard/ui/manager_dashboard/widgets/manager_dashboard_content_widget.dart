@@ -7,20 +7,22 @@ import 'package:newf/core/extension/context.dart';
 class ManagerDashboardContentWidget extends StatelessWidget {
   const ManagerDashboardContentWidget({super.key});
 
-  static   _quickStats (BuildContext context)=> [
+  static List<(  String, String,IconData,Color, Color )> _quickStats(
+    BuildContext context,
+  ) => [
     (
-      title: 'طلبات معلقة',
-      value: '3',
-      icon: Icons.pending_actions_rounded,
-      color: AppColors.statusLateText,
-      bgColor: AppColors.statusLateBg,
+        'طلبات معلقة',
+      '3',
+  Icons.pending_actions_rounded,
+       AppColors.statusLateText,
+       AppColors.statusLateBg,
     ),
     (
-      title: 'إجمالي الموظفين',
-      value: '48',
-      icon: Icons.people_outline_rounded,
-      color: context.theme.primaryColor,
-      bgColor: AppColors.policyCardBg,
+      'إجمالي الموظفين',
+        '48',
+        Icons.people_outline_rounded,
+     context.theme.primaryColor,
+        AppColors.policyCardBg,
     ),
   ];
 
@@ -50,8 +52,8 @@ class ManagerDashboardContentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSizes.s16,
         children: [
-          _buildBranchHeaderCard(  context),
-          _buildQuickStatsGrid(  context),
+          _buildBranchHeaderCard(context),
+          _buildQuickStatsGrid(context),
           _buildDepartmentList(),
         ],
       ),
@@ -109,14 +111,16 @@ class ManagerDashboardContentWidget extends StatelessWidget {
     /// RTL-first: pending requests (right) → total employees (left)
     return Row(
       spacing: AppSizes.s10,
-      children: _quickStats(  context)
-          .map((stat) => _buildStatCard(
-                title: stat.title,
-                value: stat.value,
-                icon: stat.icon,
-                color: stat.color,
-                bgColor: stat.bgColor,
-              ))
+      children: _quickStats(context)
+          .map(
+            (stat) => _buildStatCard(
+              title: stat.$1,
+              value: stat.$2,
+              icon: stat.$3,
+              color: stat.$4,
+              bgColor: stat.$5,
+            ),
+          )
           .toList(),
     );
   }
@@ -140,10 +144,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
           spacing: AppSizes.s4,
           children: [
             Icon(icon, color: color, size: AppSizes.s24),
-            Text(
-              value,
-              style: AppTextStyles.font20Bold.copyWith(color: color),
-            ),
+            Text(value, style: AppTextStyles.font20Bold.copyWith(color: color)),
             Text(
               title,
               style: AppTextStyles.font11Regular.copyWith(color: color),
@@ -160,19 +161,13 @@ class ManagerDashboardContentWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(
-          color: AppColors.cardBorder,
-          width: AppSizes.s1,
-        ),
+        border: Border.all(color: AppColors.cardBorder, width: AppSizes.s1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: AppSizes.s10,
         children: [
-          Text(
-            'حضور الأقسام اليوم',
-            style: AppTextStyles.font14Bold,
-          ),
+          Text('حضور الأقسام اليوم', style: AppTextStyles.font14Bold),
           ..._departments.map(
             (dept) => _buildDeptRow(dept.name, dept.status, dept.statusColor),
           ),
@@ -193,10 +188,7 @@ class ManagerDashboardContentWidget extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          dept,
-          style: AppTextStyles.font12Medium,
-        ),
+        Text(dept, style: AppTextStyles.font12Medium),
       ],
     );
   }

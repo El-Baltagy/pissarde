@@ -170,7 +170,7 @@ class ProfileRemoteRepo implements BaseProfileRepo {
   }
 
   @override
-  Future<Either<Failure, CreateBranchRes>> deleteBranchApi(
+  Future<Either<Failure, DeleteShiftRes>> deleteBranchApi(
     DeleteBranchReqParam? parameter, {
     CancelToken? cancelToken,
   }) async {
@@ -180,7 +180,7 @@ class ProfileRemoteRepo implements BaseProfileRepo {
         cancelToken: cancelToken,
         caller: callerTag(),
       ),
-      asObject: CreateBranchRes.fromJson,
+      asObject: DeleteShiftRes.fromJson,
     );
   }
 

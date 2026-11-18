@@ -70,7 +70,7 @@ abstract class BaseProfileService extends BaseService {
 
   /// Abstract contract — implemented by [ProfileRemoteService].
   Future<void> deleteBranchServ(
-    RequestCallbackObserver<CreateBranchRes, DeleteBranchReqParam> requestInfo,
+    RequestCallbackObserver<DeleteShiftRes, DeleteBranchReqParam> requestInfo,
   );
 
   /// Abstract contract — implemented by [ProfileRemoteService].

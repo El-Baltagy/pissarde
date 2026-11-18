@@ -77,7 +77,7 @@ abstract class BaseProfileRepo extends BaseRepo {
   });
 
   /// Abstract contract — implemented by [ProfileRemoteRepo].
-  Future<Either<Failure, CreateBranchRes>> deleteBranchApi(
+  Future<Either<Failure, DeleteShiftRes>> deleteBranchApi(
     DeleteBranchReqParam? parameter, {
     CancelToken? cancelToken,
   });

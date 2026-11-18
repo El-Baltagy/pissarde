@@ -327,7 +327,7 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   Future<void> deleteBranchFunc(BaseRequestBackType baseRequestBackType,{DeleteBranchReqParam? parameter}) async {
     await CancelManager.runCancelableFun(deleteBranchKeyCode, (token) async {
       await _service.deleteBranchServ(
-        RequestCallbackObserver<CreateBranchRes, DeleteBranchReqParam>(
+        RequestCallbackObserver<DeleteShiftRes, DeleteBranchReqParam>(
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
           cancelToken: token,

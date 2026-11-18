@@ -209,7 +209,7 @@ class ProfileRemoteService implements BaseProfileService {
 
   @override
   Future<void> deleteBranchServ(
-    RequestCallbackObserver<CreateBranchRes, DeleteBranchReqParam> requestInfo,
+    RequestCallbackObserver<DeleteShiftRes, DeleteBranchReqParam> requestInfo,
   ) {
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.deleteBranchApi(

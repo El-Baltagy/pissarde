@@ -191,3 +191,11 @@ employee_deleted_success,employee deleted success,نجاح حذف الموظف,�
 confirm_delete_employee,confirm delete employee,تأكيد حذف الموظف,çalışanı silmeyi onayla
 are_you_sure_you_want_to_delete_this_employee,are you sure you want to delete this employee,هل أنت متأكد أنك تريد حذف هذا الموظف,bu çalışanı silmek istediğinizden emin misiniz?
 no_employees,no employees,لا موظفين,çalışan yok
+
+pick_location_on_map,pick location on map,اختيار الموقع على الخريطة,haritada konum seç
+select_location,select location,حدد الموقع,konum seç
+open_map,open map,خريطة مفتوحة,haritayı aç
+confirm_location,confirm location,تأكيد الموقع,konumu onayla
+current_location,current location,الموقع الحالي,mevcut konum
+location_picked_successfully,location picked successfully,تم اختيار الموقع بنجاح,konum başarıyla seçildi
+drag_map_to_pick_location,drag map to pick location,اسحب الخريطة لاختيار الموقع,konumu seçmek için haritayı sürükleyin

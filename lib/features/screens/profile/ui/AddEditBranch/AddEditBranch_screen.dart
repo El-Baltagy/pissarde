@@ -107,6 +107,7 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                         ),
                       ),
                       AppSizes.s20.verticalSpace,
+                      /// this next widget
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: AppSizes.s10,

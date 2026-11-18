@@ -44,8 +44,8 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
     final shift = widget.args.shiftItem;
     if (shift != null) {
       controllerName.text = shift.name;
-      controllerStartTime.text = shift.start_time;
-      controllerEndTime.text = shift.end_time;
+      controllerStartTime.text =  DateTimeHelper.toHourMinute(shift.start_time);
+      controllerEndTime.text = DateTimeHelper.toHourMinute(shift.end_time);
       controllerGracePeriod.text = shift.grace_period_minutes.toString();
       controllerBreakDuration.text = shift.break_duration_minutes.toString();
       controllerWindowStart.text = shift.checkin_window_start_minutes.toString();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:newf/core/shared/widgets/text_inputs/name_text_input_data.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/ui/AddEditShift/widgets/title_with_input.dart';
@@ -33,7 +34,7 @@ class StartEndTimesWidget extends StatelessWidget {
               field: fieldS,
               labelText: 'HH:MM',
               controller: controllerS,
-              widgetPrefix: const Icon(Icons.access_time, size: AppSizes.s18),
+              widgetPrefix: SizedBox.shrink(),
               onTap: () async {
                 final time = await showTimePicker(
                   context: context,
@@ -41,8 +42,7 @@ class StartEndTimesWidget extends StatelessWidget {
                       const TimeOfDay(hour: 8, minute: 0),
                 );
                 if (time != null) {
-                  controllerS.text =
-                      '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+                  controllerS.text =DateTimeHelper.toHourMinute('${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}');
                 }
               },
             ),
@@ -57,12 +57,7 @@ class StartEndTimesWidget extends StatelessWidget {
               field: fieldE,
               labelText: 'HH:MM',
               controller: controllerE,
-              widgetPrefix: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.access_time, size: AppSizes.s20),
-                ],
-              ),
+              widgetPrefix: SizedBox.shrink(),
               onTap: () async {
                 final time = await showTimePicker(
                   context: context,
@@ -71,7 +66,7 @@ class StartEndTimesWidget extends StatelessWidget {
                 );
                 if (time != null) {
                   controllerE.text =
-                      '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+                  DateTimeHelper.toHourMinute('${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}');
                 }
               },
             ),

@@ -1,4 +1,5 @@
 class UpdateBranchReqParam {
+  final dynamic id;
   final String name;
   final String code;
   final String address;
@@ -8,6 +9,7 @@ class UpdateBranchReqParam {
   final String is_active;
 
   const UpdateBranchReqParam({
+    this.id,
     required this.name,
     required this.code,
     required this.address,

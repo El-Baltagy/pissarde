@@ -17,6 +17,7 @@ import '../../features/screens/login/controller/login_cubit.dart';
 import '../storage/storage_helper.dart';
 import 'package:newf/features/screens/profile/ui/AddEditShift/AddEditShift_screen.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
+import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/ui/AddEditBranch/AddEditBranch_screen.dart';
 part  'route.gr.dart';
 

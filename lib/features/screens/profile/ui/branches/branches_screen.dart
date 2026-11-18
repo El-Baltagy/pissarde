@@ -5,13 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
-import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
-import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/branches/widgets/branches_list_widget.dart';
-import 'package:newf/features/screens/profile/ui/branches/widgets/add_branch_bottom_sheet.dart';
 import 'package:newf/core/extension/context.dart';
 
 part 'branches_base_state.dart';
@@ -22,7 +19,7 @@ class BranchesPage extends StatefulWidget implements AutoRouteWrapper {
   final BranchesRouteArgs args;
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(value:args .profileCubit, child: this);
+    return BlocProvider.value(value: args.profileCubit, child: this);
   }
 
   @override
@@ -52,15 +49,14 @@ class _BranchesPageState extends BranchesPageBaseState {
           backgroundColor: context.theme.primaryColor,
           onPressed: () async {
             final res = await context.push(
-              AddEditShiftRoute(
-                args: AddEditShiftRouteArgs(profileCubit: profileCubit),
+              AddEditBranchRoute(
+                args: AddEditBranchRouteArgs(profileCubit: profileCubit),
               ),
             );
             if (res == true) {
-
+              await profileCubit.getListBranchesFunc(Reload());
             }
           },
-
           child: const Icon(Icons.add,
               color: AppColors.roleSwitchSelectedBg),
         ),
@@ -69,7 +65,10 @@ class _BranchesPageState extends BranchesPageBaseState {
           child: BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
             selector: (state) =>
                 state is ProfileLoaded ? state.getListBranchesState : null,
-            builder: (context, emit) => BranchesListWidget(emit: emit),
+            builder: (context, emit) => BranchesListWidget(
+              emit: emit,
+              profileCubit: profileCubit,
+            ),
           ),
         ),
       ),

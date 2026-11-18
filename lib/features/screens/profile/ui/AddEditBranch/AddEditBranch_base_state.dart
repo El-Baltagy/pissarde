@@ -3,16 +3,154 @@ part of 'AddEditBranch_screen.dart';
 abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
   late final ProfileCubit profileCubit;
 
+  final formKey = GlobalKey<FormState>();
+
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldName = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldCode = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldAddress = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldLat = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldLng = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldRadius = (.new(), .new());
+
+  final TextEditingController controllerName = .new();
+  final TextEditingController controllerCode = .new();
+  final TextEditingController controllerAddress = .new();
+  final TextEditingController controllerLat = .new();
+  final TextEditingController controllerLng = .new();
+  final TextEditingController controllerRadius = .new();
+
+  final ValueNotifier<bool> isActiveNotifier = .new(true);
+  late final ValueNotifier<bool> isLoadingNotifier;
+
+  bool _isSuccessHandled = false;
+
+  /// Whether we're editing an existing branch (true) or creating new (false).
+  bool get _isEditMode => widget.args.branchItem != null;
+
   @override
   void initState() {
-    profileCubit = ProfileCubit.get(context: context);
-    // TODO: implement initState
     super.initState();
+    isLoadingNotifier = .new(false);
+    profileCubit = ProfileCubit.get(context: context);
+    profileCubit.resetCreateBranch();
+    profileCubit.resetUpdateBranch();
+
+    final branch = widget.args.branchItem;
+    if (branch != null) {
+      controllerName.text = branch.name;
+      controllerCode.text = branch.code;
+      controllerAddress.text = branch.address;
+      controllerLat.text = branch.latitude.toString();
+      controllerLng.text = branch.longitude.toString();
+      controllerRadius.text = branch.geofence_radius_meters.toString();
+      isActiveNotifier.value = branch.is_active;
+    } else {
+      controllerRadius.text = '100';
+    }
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    fieldName.$2?.dispose();
+    fieldCode.$2?.dispose();
+    fieldAddress.$2?.dispose();
+    fieldLat.$2?.dispose();
+    fieldLng.$2?.dispose();
+    fieldRadius.$2?.dispose();
+
+    controllerName.dispose();
+    controllerCode.dispose();
+    controllerAddress.dispose();
+    controllerLat.dispose();
+    controllerLng.dispose();
+    controllerRadius.dispose();
+
+    isActiveNotifier.dispose();
+    isLoadingNotifier.dispose();
+
     super.dispose();
+  }
+
+  Future<void> createOrUpdateBranch(bool isLoading) async {
+    if (isLoading) return;
+
+    if (await formKey.validateAndScroll(
+      context,
+      listRecorder: [
+        fieldName,
+        fieldCode,
+        fieldAddress,
+        fieldLat,
+        fieldLng,
+        fieldRadius,
+      ],
+    )) {
+      if (_isEditMode) {
+        final param = UpdateBranchReqParam(
+          id: widget.args.branchItem?.id,
+          name: controllerName.text.trim(),
+          code: controllerCode.text.trim(),
+          address: controllerAddress.text.trim(),
+          latitude: controllerLat.text.trim(),
+          longitude: controllerLng.text.trim(),
+          geofence_radius_meters: controllerRadius.text.trim().isEmpty
+              ? '100'
+              : controllerRadius.text.trim(),
+          is_active: isActiveNotifier.value ? '1' : '0',
+        );
+        await profileCubit.updateBranchFunc(Init(), parameter: param);
+      } else {
+        final param = CreateBranchReqParam(
+          name: controllerName.text.trim(),
+          code: controllerCode.text.trim(),
+          address: controllerAddress.text.trim(),
+          latitude: controllerLat.text.trim(),
+          longitude: controllerLng.text.trim(),
+          geofence_radius_meters: controllerRadius.text.trim().isEmpty
+              ? '100'
+              : controllerRadius.text.trim(),
+          is_active: isActiveNotifier.value ? '1' : '0',
+        );
+        await profileCubit.createBranchFunc(Init(), parameter: param);
+      }
+    }
+  }
+
+  void createBranchListener(BuildContext context, ProfileState state) {
+    if (state is ProfileLoaded) {
+      // ── Create success ───────────────────────────────────────────────
+      if (!_isEditMode &&
+          state.createBranchState is Success &&
+          !_isSuccessHandled) {
+        _isSuccessHandled = true;
+        final res = (state.createBranchState as Success).data;
+        final message = res is CreateBranchRes
+            ? res.message
+            : 'branch_created_success'.tr();
+        context.showToast(message);
+        profileCubit.resetCreateBranch();
+        context.pop(true);
+      } else if (!_isEditMode && state.createBranchState is ErrorState) {
+        final err = state.createBranchState as ErrorState;
+        context.showToast(err.failure.message, isSuccess: false);
+      }
+
+      // ── Update success ───────────────────────────────────────────────
+      if (_isEditMode &&
+          state.updateBranchState is Success &&
+          !_isSuccessHandled) {
+        _isSuccessHandled = true;
+        final res = (state.updateBranchState as Success).data;
+        final message = res is CreateBranchRes
+            ? res.message
+            : 'branch_updated_success'.tr();
+        context.showToast(message);
+        profileCubit.resetUpdateBranch();
+        context.pop(true);
+      } else if (_isEditMode && state.updateBranchState is ErrorState) {
+        final err = state.updateBranchState as ErrorState;
+        context.showToast(err.failure.message, isSuccess: false);
+      }
+    }
   }
 }

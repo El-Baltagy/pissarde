@@ -61,5 +61,13 @@ abstract class AppConstant {
   static const String updateShiftKeyCash = 'profile_updateShift_cache';
 
   static const int updateShiftKeyCode = 8897;
+
+  static const String deleteBranchKeyCash = 'profile_deleteBranch_cache';
+
+  static const int deleteBranchKeyCode = 2652;
+
+  static const String updateBranchKeyCash = 'profile_updateBranch_cache';
+
+  static const int updateBranchKeyCode = 5651;
 }
 

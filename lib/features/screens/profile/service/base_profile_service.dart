@@ -13,6 +13,8 @@ import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_r
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/branches/2-delete_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/branches/2-update_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
 import '../../../../core/shared/methods/no_parameter.dart';
@@ -64,5 +66,15 @@ abstract class BaseProfileService extends BaseService {
   /// Abstract contract — implemented by [ProfileRemoteService].
   Future<void> updateShiftServ(
     RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> deleteBranchServ(
+    RequestCallbackObserver<CreateBranchRes, DeleteBranchReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [ProfileRemoteService].
+  Future<void> updateBranchServ(
+    RequestCallbackObserver<CreateBranchRes, UpdateBranchReqParam> requestInfo,
   );
 }

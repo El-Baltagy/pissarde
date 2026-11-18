@@ -15,6 +15,8 @@ import 'package:newf/features/screens/profile/data/model/shifts/2-delete_shift_r
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/branches/2-delete_branch_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/branches/2-update_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/get_avilable_holidays_res/get_avilable_holidays_res.dart';
 
 import '../../../../../core/api_helper/caller_tag.dart';
@@ -164,6 +166,37 @@ class ProfileRemoteRepo implements BaseProfileRepo {
         caller: callerTag(),
       ),
       asObject: ShiftCreatingRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, CreateBranchRes>> deleteBranchApi(
+    DeleteBranchReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.deleteData(
+        uri: EndPoints.deleteBranch(parameter?.id ?? ''),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: CreateBranchRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, CreateBranchRes>> updateBranchApi(
+    UpdateBranchReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.putData(
+        uri: EndPoints.updateBranch(parameter?.id ?? ''),
+        data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: CreateBranchRes.fromJson,
     );
   }
 }

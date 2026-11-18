@@ -157,3 +157,22 @@ vardiya_ba_ar_yla_g_ncellendi,Vardiya başarıyla güncellendi,Vardiya başarıy
 cancel,cancel,الغاء,iptal etmek
 
 add,add,يضيف,eklemek
+
+add_branch,add branch,إضافة فرع,şube ekle
+
+branch_name,branch name,اسم الفرع,şube adı
+branch_code,branch code,رمز الفرع,şube kodu
+address,address,عنوان,adres
+latitude,latitude,خط العرض,enlem
+longitude,longitude,خط الطول,boylam
+geofence_radius,geofence radius,نصف قطر السياج الجغرافي,coğrafi sınır yarıçapı
+update_branch,update branch,فرع التحديث,şubeyi güncelle
+edit_branch,edit branch,تحرير فرع,şubeyi düzenle
+delete_branch,delete branch,حذف الفرع,şubeyi sil
+new_branch,new branch,فرع جديد,yeni şube
+confirm_delete_branch,confirm delete branch,تأكيد حذف الفرع,şubeyi silmeyi onayla
+are_you_sure_you_want_to_delete_this_branch,are you sure you want to delete this branch,هل أنت متأكد أنك تريد حذف هذا الفرع,bu şubeyi silmek istediğinizden emin misiniz?
+branch_created_success,branch created success,فرع خلق النجاح,şube başarı yarattı
+branch_updated_success,branch updated success,تم تحديث الفرع بنجاح,şube güncellendi başarı
+branch_deleted_success,branch deleted success,فرع حذف النجاح,şube silme başarısı
+no_branches,no branches,لا فروع,şube yok

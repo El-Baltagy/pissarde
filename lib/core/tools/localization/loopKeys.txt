@@ -1,1 +1,16 @@
-add
+branch_name
+branch_code
+address
+latitude
+longitude
+geofence_radius
+update_branch
+edit_branch
+delete_branch
+new_branch
+confirm_delete_branch
+are_you_sure_you_want_to_delete_this_branch
+branch_created_success
+branch_updated_success
+branch_deleted_success
+no_branches

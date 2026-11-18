@@ -19,8 +19,8 @@ abstract class EndPoints {
   static const String listShifts = "/api/shifts";
 
   ///branches
-  static   String deleteBranch (String id)=> "/api/branches/$id";
-  static   String updateBranch (String id)=> "/api/branches/$id";
+  static   String deleteBranch (dynamic id)=> "/api/branches/$id";
+  static   String updateBranch (dynamic id)=> "/api/branches/$id";
   static const String showBranch = "/api/branches/1";
   static const String createBranch = "/api/branches";
   static const String listBranches = "/api/branches";

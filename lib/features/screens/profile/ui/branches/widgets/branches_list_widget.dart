@@ -4,15 +4,21 @@ import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart';
 
 import 'branch_card_widget.dart';
 
 /// Renders the branches list, handling loading / error / empty / success states.
 class BranchesListWidget extends StatelessWidget {
-  const BranchesListWidget({super.key, required this.emit});
+  const BranchesListWidget({
+    super.key,
+    required this.emit,
+    required this.profileCubit,
+  });
 
   final BaseEmit? emit;
+  final ProfileCubit profileCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +40,19 @@ class BranchesListWidget extends StatelessWidget {
       final items = (emit as Success<BranchesList>).data?.data ?? [];
       if (items.isEmpty) {
         return Center(
-            child: Text('no_branches'.tr(),
-                style: AppTextStyles.font14Regular));
+          child: Text('no_branches'.tr(),
+              style: AppTextStyles.font14Regular),
+        );
       }
       return ListView.separated(
         padding: const EdgeInsets.all(AppPadding.p16),
         itemCount: items.length,
         separatorBuilder: (_, __) =>
             const SizedBox(height: AppSizes.s12),
-        itemBuilder: (_, i) => BranchCardWidget(branch: items[i]),
+        itemBuilder: (_, i) => BranchCardWidget(
+          branch: items[i],
+          profileCubit: profileCubit,
+        ),
       );
     }
     return const SizedBox.shrink();

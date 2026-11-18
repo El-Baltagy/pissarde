@@ -16,7 +16,7 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     AddEditBranchRoute.name: (routeData) {
-      final args = routeData.argsAs<AddEditBranchRouteArgs>( );
+      final args = routeData.argsAs<AddEditBranchRouteArgs>(orElse: () => AddEditBranchRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -439,6 +439,8 @@ class AddEditBranchRoute extends PageRouteInfo<AddEditBranchRouteArgs> {
   PageInfo<AddEditBranchRouteArgs>(name);
 }
 class AddEditBranchRouteArgs {
-  const AddEditBranchRouteArgs( );
-   static AddEditBranchRouteArgs noArgs()=>AddEditBranchRouteArgs();
+  const AddEditBranchRouteArgs({this.profileCubit, this.branchItem});
+  final ProfileCubit? profileCubit;
+  final DataItem? branchItem;
+  static AddEditBranchRouteArgs noArgs() => const AddEditBranchRouteArgs();
 }

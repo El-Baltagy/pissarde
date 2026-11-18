@@ -25,24 +25,42 @@ abstract class EndPoints {
   static const String createBranch = "/api/branches";
   static const String listBranches = "/api/branches";
 
-  static const String rotateBranchQrSecret = "/api/branches/1/rotate-secret";
+  // التحقق المسبق من صحة رمز QR مسحوح بالهاتف
   static const String verifyBranchQr = "/api/branches/1/verify-qr";
+
+  // جلب رمز الـ QR الثابت الحالي لشاشة الفرع
   static const String branchLiveQr = "/api/branches/1/live-qr";
 
 
 
-  static const String holidays = "/api/holidays";
+  /// leaves
+ // إلغاء طلب إجازة معلق للموظف واستعادة الرصيد المحجوز
   static const String cancelLeaveRequest = "/api/leaves/1/cancel";
+
+  // اعتماد أو رفض طلب إجازة مرؤوس مع تدوين الملاحظات
   static const String reviewLeaveRequest = "/api/leaves/1/review";
+
+  // طلبات الإجازة المعلقة بانتظار موافقة (المشرف / HR / الإدارة)
   static const String leaveApprovals = "/api/leaves/approvals";
+
+  /// استعراض طلبات الإجازة السابقة الخاصة بالموظف
   static const String myLeaveRequests = "/api/leaves/my-requests";
+
+// تقديم طلب إجازة جديد (مع إمكانية إرفاق تقرير
   static const String createLeaveRequest = "/api/leaves";
+
+  // استعلام رصيد الإجازات المتبقي والمستهلك للسنة
   static const String leaveBalances = "/api/leaves/balances";
+  // قائمة أنواع الإجازات  (سنوية، مرضية،
   static const String leaveTypes = "/api/leaves/types";
-  static const String listAttendanceCorrections = "/api/attendance/corrections";
-  static const String createAttendanceCorrection = "/api/attendance/corrections";
 
   ///attendance
+
+  // قائمة طلبات التصحيح الخاصة بالموظف
+  static const String listAttendanceCorrections = "/api/attendance/corrections";
+
+  // تقديم طلب تصحيح بصمة منسية أو خاطئة مع السبب
+  static const String createAttendanceCorrection = "/api/attendance/corrections";
   static const String attendanceHistory = "/api/attendance/history";
   static const String attendanceToday = "/api/attendance/today";
   static const String checkOut = "/api/attendance/check-out";
@@ -52,6 +70,7 @@ abstract class EndPoints {
   static const String logout = "/api/auth/logout";
   static const String getProfile = "/api/auth/me";
   static const String login = '/api/auth/login';
+  static const String holidays = "/api/holidays";
 
   static const String baseUrl = "https://team.pissarde.com";
 

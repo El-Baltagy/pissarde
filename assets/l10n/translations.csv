@@ -199,3 +199,5 @@ confirm_location,confirm location,تأكيد الموقع,konumu onayla
 current_location,current location,الموقع الحالي,mevcut konum
 location_picked_successfully,location picked successfully,تم اختيار الموقع بنجاح,konum başarıyla seçildi
 drag_map_to_pick_location,drag map to pick location,اسحب الخريطة لاختيار الموقع,konumu seçmek için haritayı sürükleyin
+
+notificications,notificications,الإخطارات,bildirimler

@@ -39,7 +39,7 @@
 //   /// [disconnectedBackgroundColor] - Background color for the disconnected toast.
 //   /// [toastGravity] - Position of the toast on the screen.
 //   /// [toastFontSize] - Font size for the toast message.
-//   /// [showToasts] - Whether to show toast notifications (default: `true`).
+//   /// [showToasts] - Whether to show toast notification (default: `true`).
 //   /// [debounceDuration] - Debounce duration for network change events.
 //   static void startConnectionNotifier({
 //     // String connectedToastMessage = "You are now connected to the Internet.",

@@ -100,8 +100,8 @@ class _OpenMapLocationPickerScreenState
                 initialCenter: _centerPoint,
                 initialZoom: 15,
                 onPositionChanged: (position, hasGesture) {
-                  if (hasGesture && position.center != null) {
-                    _centerPoint = position.center!;
+                  if (hasGesture) {
+                    _centerPoint = position.center;
                   }
                 },
                 onMapEvent: (event) {

@@ -8,13 +8,13 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldName = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldCode = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldAddress = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldLat = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldLng = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldLocation = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldRadius = (.new(), .new());
 
   final TextEditingController controllerName = .new();
   final TextEditingController controllerCode = .new();
   final TextEditingController controllerAddress = .new();
+  final TextEditingController controllerLocation = .new();
   final TextEditingController controllerLat = .new();
   final TextEditingController controllerLng = .new();
   final TextEditingController controllerRadius = .new();
@@ -42,6 +42,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
       controllerAddress.text = branch.address;
       controllerLat.text = branch.latitude.toString();
       controllerLng.text = branch.longitude.toString();
+      controllerLocation.text = '${branch.latitude}, ${branch.longitude}';
       controllerRadius.text = branch.geofence_radius_meters.toString();
       isActiveNotifier.value = branch.is_active;
     } else {
@@ -54,13 +55,13 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
     fieldName.$2?.dispose();
     fieldCode.$2?.dispose();
     fieldAddress.$2?.dispose();
-    fieldLat.$2?.dispose();
-    fieldLng.$2?.dispose();
+    fieldLocation.$2?.dispose();
     fieldRadius.$2?.dispose();
 
     controllerName.dispose();
     controllerCode.dispose();
     controllerAddress.dispose();
+    controllerLocation.dispose();
     controllerLat.dispose();
     controllerLng.dispose();
     controllerRadius.dispose();
@@ -69,6 +70,31 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
     isLoadingNotifier.dispose();
 
     super.dispose();
+  }
+
+  Future<void> onPickLocationOnMap() async {
+    final double? currentLat = double.tryParse(controllerLat.text.trim());
+    final double? currentLng = double.tryParse(controllerLng.text.trim());
+
+    final LocationPickResult? result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => OpenMapLocationPickerScreen(
+          initialLatitude: currentLat,
+          initialLongitude: currentLng,
+        ),
+      ),
+    );
+
+    if (result != null) {
+      controllerLat.text = result.latitude.toString();
+      controllerLng.text = result.longitude.toString();
+      controllerLocation.text =
+          '${result.latitude.toStringAsFixed(6)}, ${result.longitude.toStringAsFixed(6)}';
+
+      if (result.address != null && result.address!.trim().isNotEmpty) {
+        controllerAddress.text = result.address!;
+      }
+    }
   }
 
   Future<void> createOrUpdateBranch(bool isLoading) async {
@@ -80,8 +106,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
         fieldName,
         fieldCode,
         fieldAddress,
-        fieldLat,
-        fieldLng,
+        fieldLocation,
         fieldRadius,
       ],
     )) {

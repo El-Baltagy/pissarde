@@ -1,4 +1,52 @@
 {
-  "message": "Shift deleted successfully",
-  "success": true
+  "leave_types": [
+    {
+      "id": 1,
+      "name": "Annual Vacation Leave",
+      "code": "annual",
+      "default_days_per_year": 14,
+      "requires_attachment": false,
+      "is_paid": true,
+      "is_active": true,
+      "description": "Standard paid annual vacation leave allocation.",
+      "created_at": "2026-10-25T09:49:38.000000Z",
+      "updated_at": "2026-10-25T09:49:38.000000Z"
+    },
+    {
+      "id": 2,
+      "name": "Certified Medical Sick Leave",
+      "code": "sick",
+      "default_days_per_year": 10,
+      "requires_attachment": true,
+      "is_paid": true,
+      "is_active": true,
+      "description": "Medical sick leave requiring an official medical certificate.",
+      "created_at": "2026-10-25T09:49:38.000000Z",
+      "updated_at": "2026-10-25T09:49:38.000000Z"
+    },
+    {
+      "id": 3,
+      "name": "Casual & Emergency Leave",
+      "code": "casual",
+      "default_days_per_year": 5,
+      "requires_attachment": false,
+      "is_paid": true,
+      "is_active": true,
+      "description": "Short-notice casual leave for urgent personal or family emergencies.",
+      "created_at": "2026-10-25T09:49:38.000000Z",
+      "updated_at": "2026-10-25T09:49:38.000000Z"
+    },
+    {
+      "id": 4,
+      "name": "Unpaid Leave of Absence",
+      "code": "unpaid",
+      "default_days_per_year": 0,
+      "requires_attachment": false,
+      "is_paid": false,
+      "is_active": true,
+      "description": "Unpaid time off subject to management approval.",
+      "created_at": "2026-10-25T09:49:38.000000Z",
+      "updated_at": "2026-10-25T09:49:38.000000Z"
+    }
+  ]
 }

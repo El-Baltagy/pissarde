@@ -11,6 +11,7 @@ import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
+import 'package:newf/core/shared/widgets/text_inputs/drop_down_select.dart';
 import 'package:newf/core/shared/widgets/text_inputs/name_text_input_data.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
@@ -19,6 +20,7 @@ import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/data/model/branches/1-create_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/2-update_branch_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/branches/create_branch_res/create_branch_res.dart';
+import 'package:newf/features/screens/profile/ui/AddEditBranch/widgets/open_map_location_picker_screen.dart';
 import 'package:newf/features/screens/profile/ui/AddEditShift/widgets/title_with_input.dart';
 
 part 'AddEditBranch_base_state.dart';
@@ -107,44 +109,17 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                         ),
                       ),
                       AppSizes.s20.verticalSpace,
-                      /// this next widget
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: AppSizes.s10,
-                        children: [
-                          Expanded(
-                            child: TitleWithInputField(
-                              'latitude'.tr(),
-                              NameInputData(
-                                isLabel: false,
-                                widgetPrefix: const SizedBox.shrink(),
-                                field: fieldLat,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                  decimal: true,
-                                ),
-                                labelText: '24.7136',
-                                controller: controllerLat,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: TitleWithInputField(
-                              'longitude'.tr(),
-                              NameInputData(
-                                isLabel: false,
-                                widgetPrefix: const SizedBox.shrink(),
-                                field: fieldLng,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                  decimal: true,
-                                ),
-                                labelText: '46.6753',
-                                controller: controllerLng,
-                              ),
-                            ),
-                          ),
-                        ],
+                      TitleWithInputField(
+                        'select_location'.tr(),
+                        DropDownSingleSelectData(
+                          isLabel: false,
+                          widgetPrefix: const SizedBox.shrink(),
+                          icon: Icons.map_outlined,
+                          field: fieldLocation,
+                          labelText: 'pick_location_on_map'.tr(),
+                          controller: controllerLocation,
+                          onTap: onPickLocationOnMap,
+                        ),
                       ),
                       AppSizes.s20.verticalSpace,
                       TitleWithInputField(

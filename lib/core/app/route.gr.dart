@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    NotificationsRoute.name: (routeData) {
+      final args = routeData.argsAs<NotificationsRouteArgs>(orElse: () =>   NotificationsRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: NotificationsPage(
+           args: args ,
+        )),
+      );
+    },
     AddEditEmloyeeRoute.name: (routeData) {
       final args = routeData.argsAs<AddEditEmloyeeRouteArgs>(orElse: () => AddEditEmloyeeRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
@@ -55,32 +65,13 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
-    ManagerDashboardRoute.name: (routeData) {
-      final args = routeData.argsAs<ManagerDashboardRouteArgs>(orElse: () =>   ManagerDashboardRouteArgs.noArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(
-            child: ManagerDashboardPage(
-           args: args ,
-        )),
-      );
-    },
+
     RequestsRoute.name: (routeData) {
       final args = routeData.argsAs<RequestsRouteArgs>(orElse: () =>   RequestsRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
             child: RequestsPage(
-           args: args ,
-        )),
-      );
-    },
-    AttendanceRecordRoute.name: (routeData) {
-      final args = routeData.argsAs<AttendanceRecordRouteArgs>(orElse: () =>   AttendanceRecordRouteArgs.noArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(
-            child: AttendanceRecordPage(
            args: args ,
         )),
       );
@@ -226,27 +217,7 @@ class HomeRouteArgs {
    static HomeRouteArgs noArgs()=>HomeRouteArgs();
 }
 
-/// generated route for
-/// [AttendanceRecordPage]
-class AttendanceRecordRoute extends PageRouteInfo<AttendanceRecordRouteArgs> {
-  AttendanceRecordRoute({
-   required AttendanceRecordRouteArgs args  ,
-    List<PageRouteInfo>? children,
-  }) : super(
-    AttendanceRecordRoute.name,
-    args: args,
-    initialChildren: children,
-  );
 
-  static const String name = 'AttendanceRecordRoute';
-
-  static const PageInfo<AttendanceRecordRouteArgs> page =
-  PageInfo<AttendanceRecordRouteArgs>(name);
-}
-class AttendanceRecordRouteArgs {
-  const AttendanceRecordRouteArgs( );
-   static AttendanceRecordRouteArgs noArgs()=>AttendanceRecordRouteArgs();
-}
 
 /// generated route for
 /// [RequestsPage]
@@ -270,27 +241,7 @@ class RequestsRouteArgs {
    static RequestsRouteArgs noArgs()=>RequestsRouteArgs();
 }
 
-/// generated route for
-/// [ManagerDashboardPage]
-class ManagerDashboardRoute extends PageRouteInfo<ManagerDashboardRouteArgs> {
-  ManagerDashboardRoute({
-   required ManagerDashboardRouteArgs args  ,
-    List<PageRouteInfo>? children,
-  }) : super(
-    ManagerDashboardRoute.name,
-    args: args,
-    initialChildren: children,
-  );
 
-  static const String name = 'ManagerDashboardRoute';
-
-  static const PageInfo<ManagerDashboardRouteArgs> page =
-  PageInfo<ManagerDashboardRouteArgs>(name);
-}
-class ManagerDashboardRouteArgs {
-  const ManagerDashboardRouteArgs( );
-   static ManagerDashboardRouteArgs noArgs()=>ManagerDashboardRouteArgs();
-}
 
 /// generated route for
 /// [ProfilePage]
@@ -477,4 +428,26 @@ class AddEditEmloyeeRouteArgs {
   final ProfileCubit? profileCubit;
   final emp.DataItem? employeeItem;
   static AddEditEmloyeeRouteArgs noArgs() => const AddEditEmloyeeRouteArgs();
+}
+
+/// generated route for
+/// [NotificationsPage]
+class NotificationsRoute extends PageRouteInfo<NotificationsRouteArgs> {
+  NotificationsRoute({
+   required NotificationsRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    NotificationsRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'NotificationsRoute';
+
+  static const PageInfo<NotificationsRouteArgs> page =
+  PageInfo<NotificationsRouteArgs>(name);
+}
+class NotificationsRouteArgs {
+  const NotificationsRouteArgs( );
+   static NotificationsRouteArgs noArgs()=>NotificationsRouteArgs();
 }

@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:newf/features/screens/main_navigation/ui/main_navigation/main_navigation_screen.dart';
 import 'package:newf/features/screens/home/ui/home/home_screen.dart';
-import 'package:newf/features/screens/attendance_record/ui/attendance_record/attendance_record_screen.dart';
-import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
+ import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
-import 'package:newf/features/screens/manager_dashboard/ui/manager_dashboard/manager_dashboard_screen.dart';
-import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
+ import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/profile/ui/employees/employees_screen.dart';
 import 'package:newf/features/screens/profile/ui/shifts/shifts_screen.dart';
 import 'package:newf/features/screens/profile/ui/branches/branches_screen.dart';
@@ -21,6 +19,7 @@ import 'package:newf/features/screens/profile/data/model/branches/get_branches_l
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart' as emp;
 import 'package:newf/features/screens/profile/ui/AddEditBranch/AddEditBranch_screen.dart';
 import 'package:newf/features/screens/profile/ui/AddEditEmloyee/AddEditEmloyee_screen.dart';
+import 'package:newf/features/screens/notifications/ui/notifications/notifications_screen.dart';
 part  'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -29,6 +28,10 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
+      AutoRoute(
+        page: NotificationsRoute.page,
+        // initial: true,
+      ),
       AutoRoute(
         page: AddEditEmloyeeRoute.page,
         // initial: true,
@@ -56,13 +59,7 @@ class AppRouter extends _$AppRouter {
         page: HomeRoute.page,
       ),
       AutoRoute(
-        page: AttendanceRecordRoute.page,
-      ),
-      AutoRoute(
         page: RequestsRoute.page,
-      ),
-      AutoRoute(
-        page: ManagerDashboardRoute.page,
       ),
       AutoRoute(
         page: ProfileRoute.page,

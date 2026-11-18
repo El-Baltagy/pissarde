@@ -6,11 +6,17 @@ library;
 
 // ── main_navigation ──────────────────────────────────────────────────────
 // ── home ──────────────────────────────────────────────────────
-// ── attendance_record ──────────────────────────────────────────────────────
+// ── notification ──────────────────────────────────────────────────────
 // ── requests ──────────────────────────────────────────────────────
 // ── manager_dashboard ──────────────────────────────────────────────────────
 // ── profile ──────────────────────────────────────────────────────
 // ── login ──────────────────────────────────────────────────────
+// ── notifications ──────────────────────────────────────────────────────
+import 'package:newf/features/screens/notifications/data/repo/base_notifications_repo.dart';
+import 'package:newf/features/screens/notifications/data/repo/notifications_remote_repo.dart';
+import 'package:newf/features/screens/notifications/service/base_notifications_service.dart';
+import 'package:newf/features/screens/notifications/service/notifications_remote_service.dart';
+import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
 import 'package:newf/features/screens/login/data/repo/base_login_repo.dart';
 import 'package:newf/features/screens/login/data/repo/login_remote_repo.dart';
 import 'package:newf/features/screens/login/service/base_login_service.dart';
@@ -21,21 +27,11 @@ import 'package:newf/features/screens/profile/data/repo/profile_remote_repo.dart
 import 'package:newf/features/screens/profile/service/base_profile_service.dart';
 import 'package:newf/features/screens/profile/service/profile_remote_service.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
-import 'package:newf/features/screens/manager_dashboard/data/repo/base_manager_dashboard_repo.dart';
-import 'package:newf/features/screens/manager_dashboard/data/repo/manager_dashboard_remote_repo.dart';
-import 'package:newf/features/screens/manager_dashboard/service/base_manager_dashboard_service.dart';
-import 'package:newf/features/screens/manager_dashboard/service/manager_dashboard_remote_service.dart';
-import 'package:newf/features/screens/manager_dashboard/controller/manager_dashboard_cubit.dart';
 import 'package:newf/features/screens/requests/data/repo/base_requests_repo.dart';
 import 'package:newf/features/screens/requests/data/repo/requests_remote_repo.dart';
 import 'package:newf/features/screens/requests/service/base_requests_service.dart';
 import 'package:newf/features/screens/requests/service/requests_remote_service.dart';
 import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
-import 'package:newf/features/screens/attendance_record/data/repo/base_attendance_record_repo.dart';
-import 'package:newf/features/screens/attendance_record/data/repo/attendance_record_remote_repo.dart';
-import 'package:newf/features/screens/attendance_record/service/base_attendance_record_service.dart';
-import 'package:newf/features/screens/attendance_record/service/attendance_record_remote_service.dart';
-import 'package:newf/features/screens/attendance_record/controller/attendance_record_cubit.dart';
 import 'package:newf/features/screens/home/data/repo/base_home_repo.dart';
 import 'package:newf/features/screens/home/data/repo/home_remote_repo.dart';
 import 'package:newf/features/screens/home/service/base_home_service.dart';
@@ -64,6 +60,14 @@ class AppLocator {
   GetIt call()=>_sl;
   
   void init(){
+    ///..................notifications.................///
+    // Repo layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseNotificationsRepo>(() => NotificationsRemoteRepo(_sl()));
+    // Service layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseNotificationsService>(() => NotificationsRemoteService(_sl<BaseNotificationsRepo>(), _sl()));
+    // Controller layer: factory so a fresh cubit is created per BlocProvider
+    _sl.registerFactory(() => NotificationsCubit(_sl<BaseNotificationsService>()));
+
     ///..................login.................///
     // Repo layer: register the concrete impl under the abstract type
     _sl.registerLazySingleton<BaseLoginRepo>(() => LoginRemoteRepo(_sl()));
@@ -80,13 +84,6 @@ class AppLocator {
     // Controller layer: factory so a fresh cubit is created per BlocProvider
     _sl.registerFactory(() => ProfileCubit(_sl<BaseProfileService>()));
 
-    ///..................manager_dashboard.................///
-    // Repo layer: register the concrete impl under the abstract type
-    _sl.registerLazySingleton<BaseManagerDashboardRepo>(() => ManagerDashboardRemoteRepo(_sl()));
-    // Service layer: register the concrete impl under the abstract type
-    _sl.registerLazySingleton<BaseManagerDashboardService>(() => ManagerDashboardRemoteService(_sl<BaseManagerDashboardRepo>(), _sl()));
-    // Controller layer: factory so a fresh cubit is created per BlocProvider
-    _sl.registerFactory(() => ManagerDashboardCubit(_sl<BaseManagerDashboardService>()));
 
     ///..................requests.................///
     // Repo layer: register the concrete impl under the abstract type
@@ -96,13 +93,7 @@ class AppLocator {
     // Controller layer: factory so a fresh cubit is created per BlocProvider
     _sl.registerFactory(() => RequestsCubit(_sl<BaseRequestsService>()));
 
-    ///..................attendance_record.................///
-    // Repo layer: register the concrete impl under the abstract type
-    _sl.registerLazySingleton<BaseAttendanceRecordRepo>(() => AttendanceRecordRemoteRepo(_sl()));
-    // Service layer: register the concrete impl under the abstract type
-    _sl.registerLazySingleton<BaseAttendanceRecordService>(() => AttendanceRecordRemoteService(_sl<BaseAttendanceRecordRepo>(), _sl()));
-    // Controller layer: factory so a fresh cubit is created per BlocProvider
-    _sl.registerFactory(() => AttendanceRecordCubit(_sl<BaseAttendanceRecordService>()));
+
 
     ///..................home.................///
     // Repo layer: register the concrete impl under the abstract type

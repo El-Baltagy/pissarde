@@ -16,7 +16,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   static const _leftTabs = [
     (index: 0, icon: Icons.home_rounded, labelKey: 'nav_home'),
-    (index: 1, icon: Icons.calendar_month_outlined, labelKey: 'attendance'),
+    (index: 1, icon: Icons.notifications, labelKey: 'notificications'),
   ];
 
   static const _rightTabs = [
@@ -27,40 +27,34 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      notchMargin: AppSizes.s8,
-      color: AppColors.bottomNavBg,
+      height: AppSizes.s70,
+      // shape: const CircularNotchedRectangle(),
+       color: AppColors.bottomNavBg,
       elevation: AppSizes.s8,
       clipBehavior: Clip.antiAlias,
       padding: EdgeInsets.zero,
-      child: SafeArea(
-        top: false,
-        child: SizedBox(
-          height: AppSizes.s60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ..._leftTabs.map(
-                (tab) => _buildNavItem(
-                  index: tab.index,
-                  icon: tab.icon,
-                  labelKey: tab.labelKey,
-                ),
-              ),
-              // Center gap for the notched floating action button
-              const Expanded(
-                child: SizedBox.shrink(),
-              ),
-              ..._rightTabs.map(
-                (tab) => _buildNavItem(
-                  index: tab.index,
-                  icon: tab.icon,
-                  labelKey: tab.labelKey,
-                ),
-              ),
-            ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ..._leftTabs.map(
+            (tab) => _buildNavItem(
+              index: tab.index,
+              icon: tab.icon,
+              labelKey: tab.labelKey,
+            ),
           ),
-        ),
+          // Center gap for the notched floating action button
+          // const Expanded(
+          //   child: SizedBox.shrink(),
+          // ),
+          ..._rightTabs.map(
+            (tab) => _buildNavItem(
+              index: tab.index,
+              icon: tab.icon,
+              labelKey: tab.labelKey,
+            ),
+          ),
+        ],
       ),
     );
   }

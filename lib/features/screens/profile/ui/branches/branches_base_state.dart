@@ -38,15 +38,5 @@ abstract class BranchesPageBaseState extends State<BranchesPage> {
     }
   }
 
-  void _showAddBranchSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => BlocProvider.value(
-        value: profileCubit,
-        child: const AddBranchBottomSheet(),
-      ),
-    );
-  }
+
 }

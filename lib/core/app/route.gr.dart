@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AddEditBranchRoute.name: (routeData) {
+      final args = routeData.argsAs<AddEditBranchRouteArgs>( );
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AddEditBranchPage(
+           args: args ,
+        )),
+      );
+    },
     AddEditShiftRoute.name: (routeData) {
       final args = routeData.argsAs<AddEditShiftRouteArgs>(orElse: () =>   AddEditShiftRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
@@ -409,4 +419,26 @@ class AddEditShiftRouteArgs {
   final ProfileCubit? profileCubit;
   final ShiftItem? shiftItem;
   static AddEditShiftRouteArgs noArgs() => const AddEditShiftRouteArgs();
+}
+
+/// generated route for
+/// [AddEditBranchPage]
+class AddEditBranchRoute extends PageRouteInfo<AddEditBranchRouteArgs> {
+  AddEditBranchRoute({
+   required AddEditBranchRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    AddEditBranchRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'AddEditBranchRoute';
+
+  static const PageInfo<AddEditBranchRouteArgs> page =
+  PageInfo<AddEditBranchRouteArgs>(name);
+}
+class AddEditBranchRouteArgs {
+  const AddEditBranchRouteArgs( );
+   static AddEditBranchRouteArgs noArgs()=>AddEditBranchRouteArgs();
 }

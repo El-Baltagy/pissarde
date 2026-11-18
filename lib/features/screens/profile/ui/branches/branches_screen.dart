@@ -50,7 +50,17 @@ class _BranchesPageState extends BranchesPageBaseState {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.theme.primaryColor,
-          onPressed: () => _showAddBranchSheet(context),
+          onPressed: () async {
+            final res = await context.push(
+              AddEditShiftRoute(
+                args: AddEditShiftRouteArgs(profileCubit: profileCubit),
+              ),
+            );
+            if (res == true) {
+
+            }
+          },
+
           child: const Icon(Icons.add,
               color: AppColors.roleSwitchSelectedBg),
         ),

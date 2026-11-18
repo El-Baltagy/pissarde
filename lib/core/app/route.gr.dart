@@ -16,7 +16,7 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     AddEditEmloyeeRoute.name: (routeData) {
-      final args = routeData.argsAs<AddEditEmloyeeRouteArgs>( );
+      final args = routeData.argsAs<AddEditEmloyeeRouteArgs>(orElse: () => AddEditEmloyeeRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -473,6 +473,8 @@ class AddEditEmloyeeRoute extends PageRouteInfo<AddEditEmloyeeRouteArgs> {
   PageInfo<AddEditEmloyeeRouteArgs>(name);
 }
 class AddEditEmloyeeRouteArgs {
-  const AddEditEmloyeeRouteArgs( this.profileCubit);
-  final ProfileCubit profileCubit;
+  const AddEditEmloyeeRouteArgs({this.profileCubit, this.employeeItem});
+  final ProfileCubit? profileCubit;
+  final emp.DataItem? employeeItem;
+  static AddEditEmloyeeRouteArgs noArgs() => const AddEditEmloyeeRouteArgs();
 }

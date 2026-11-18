@@ -17,26 +17,38 @@ abstract class EmployeesPageBaseState extends State<EmployeesPage> {
 
   void _listener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
+      // ── Create Employee listener ──
       if (state.createEmployeeState is Success) {
+        profileCubit.resetCreateEmployee();
         profileCubit.getListEmployeesFunc(Reload());
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('employee_created_success'.tr()),
-            backgroundColor: AppColors.contractorGreen,
-          ),
-        );
+        context.showToast('employee_created_success'.tr());
       }
       if (state.createEmployeeState is ErrorState) {
         final err = state.createEmployeeState as ErrorState;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(err.failure.message),
-            backgroundColor: AppColors.primaryActionRed,
-          ),
-        );
+        context.showToast(err.failure.message, isSuccess: false);
+      }
+
+      // ── Update Employee listener ──
+      if (state.updateEmployeeState is Success) {
+        profileCubit.resetUpdateEmployee();
+        profileCubit.getListEmployeesFunc(Reload());
+        context.showToast('employee_updated_success'.tr());
+      }
+      if (state.updateEmployeeState is ErrorState) {
+        final err = state.updateEmployeeState as ErrorState;
+        context.showToast(err.failure.message, isSuccess: false);
+      }
+
+      // ── Delete Employee listener ──
+      if (state.deleteEmployeeState is Success) {
+        profileCubit.resetDeleteEmployee();
+        profileCubit.getListEmployeesFunc(Reload());
+        context.showToast('employee_deleted_success'.tr());
+      }
+      if (state.deleteEmployeeState is ErrorState) {
+        final err = state.deleteEmployeeState as ErrorState;
+        context.showToast(err.failure.message, isSuccess: false);
       }
     }
   }
-
-
 }

@@ -8,6 +8,8 @@ import 'package:newf/features/screens/profile/service/base_profile_service.dart'
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
@@ -64,11 +66,21 @@ class ProfileCubit extends BaseCubit<ProfileState> {
 
     int get updateBranchKeyCode => AppConstant.updateBranchKeyCode;
 
+    int get deleteEmployeeKeyCode => AppConstant.deleteEmployeeKeyCode;
+
+    int get updateEmployeeKeyCode => AppConstant.updateEmployeeKeyCode;
+
   @override
   Future<void> init() async {}
 
   @override
   Future<void> close() {
+    // add every key in file
+    CancelManager.cancel(updateEmployeeKeyCode);
+
+    // add every key in file
+    CancelManager.cancel(deleteEmployeeKeyCode);
+
     // add every key in file
     CancelManager.cancel(updateBranchKeyCode);
 
@@ -271,6 +283,21 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     safeEmit(_current.copyWith(clearDeleteBranch: true));
   }
 
+  /// Resets createEmployeeState to avoid stale success triggers.
+  void resetCreateEmployee() {
+    safeEmit(_current.copyWith(clearCreateEmployee: true));
+  }
+
+  /// Resets updateEmployeeState to avoid stale success triggers.
+  void resetUpdateEmployee() {
+    safeEmit(_current.copyWith(clearUpdateEmployee: true));
+  }
+
+  /// Resets deleteEmployeeState to avoid stale success triggers.
+  void resetDeleteEmployee() {
+    safeEmit(_current.copyWith(clearDeleteEmployee: true));
+  }
+
   /// Creates a new branch via the API.
   Future<void> createBranchFunc(
     BaseRequestBackType baseRequestBackType, {
@@ -349,6 +376,36 @@ class ProfileCubit extends BaseCubit<ProfileState> {
           onLoadCallback: () => safeEmit(_current.copyWith(updateBranchState: Loading())),
           onRightCallback: (data) => safeEmit(_current.copyWith(updateBranchState: Success(data))),
           onLeftCallback: (failure) => safeEmit(_current.copyWith(updateBranchState: ErrorState(failure))),
+        ),
+      );
+    });
+  }
+
+  Future<void> deleteEmployeeFunc(BaseRequestBackType baseRequestBackType,{DeleteEmployeeReqParam? parameter}) async {
+    await CancelManager.runCancelableFun(deleteEmployeeKeyCode, (token) async {
+      await _service.deleteEmployeeServ(
+        RequestCallbackObserver<CreateEmployeeRes, DeleteEmployeeReqParam>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(deleteEmployeeState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(deleteEmployeeState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(deleteEmployeeState: ErrorState(failure))),
+        ),
+      );
+    });
+  }
+
+  Future<void> updateEmployeeFunc(BaseRequestBackType baseRequestBackType,{UpdateEmployeeReqParam? parameter}) async {
+    await CancelManager.runCancelableFun(updateEmployeeKeyCode, (token) async {
+      await _service.updateEmployeeServ(
+        RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(updateEmployeeState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(updateEmployeeState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(updateEmployeeState: ErrorState(failure))),
         ),
       );
     });

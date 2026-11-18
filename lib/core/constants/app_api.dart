@@ -2,8 +2,8 @@ abstract class EndPoints {
 
 
 ///emplyees
-  static   String deleteEmployee (String id)=> "/api/employees/$id";
-  static   String updateEmployee (String id)=> "/api/employees/$id";
+  static   String deleteEmployee (dynamic id)=> "/api/employees/$id";
+  static   String updateEmployee (dynamic id)=> "/api/employees/$id";
   static   String showEmployee (String id)=> "/api/employees/$id";
   static const String createEmployee = "/api/employees";
   static const String listEmployees = "/api/employees";
@@ -54,5 +54,7 @@ abstract class EndPoints {
   static const String login = '/api/auth/login';
 
   static const String baseUrl = "https://team.pissarde.com";
+
+
 
 }

@@ -5,6 +5,8 @@ abstract class ProfileState {}
 
 class ProfileLoaded extends ProfileState {
   ProfileLoaded({
+    this.updateEmployeeState,
+    this.deleteEmployeeState,
     this.updateBranchState,
     this.deleteBranchState,
     this.updateShiftState,
@@ -21,10 +23,12 @@ class ProfileLoaded extends ProfileState {
    });
 
   final BaseEmit? allWorkersEmit, getListHolidaysState, getListEmployeesState, createEmployeeState, getListShiftsState,
-      createShiftState, getListBranchesState, createBranchState, deleteShiftState, updateShiftState, deleteBranchState, updateBranchState;
+      createShiftState, getListBranchesState, createBranchState, deleteShiftState, updateShiftState, deleteBranchState, updateBranchState, deleteEmployeeState, updateEmployeeState;
   final ProfileState? refreshOrInit;
 
   ProfileLoaded copyWith({
+    BaseEmit? updateEmployeeState,
+    BaseEmit? deleteEmployeeState,
     BaseEmit? updateBranchState,
     BaseEmit? deleteBranchState,
     BaseEmit? updateShiftState,
@@ -44,8 +48,13 @@ class ProfileLoaded extends ProfileState {
     bool clearCreateBranch = false,
     bool clearUpdateBranch = false,
     bool clearDeleteBranch = false,
+    bool clearCreateEmployee = false,
+    bool clearUpdateEmployee = false,
+    bool clearDeleteEmployee = false,
    }) {
     return ProfileLoaded(
+      updateEmployeeState: clearUpdateEmployee ? null : (updateEmployeeState ?? this.updateEmployeeState),
+      deleteEmployeeState: clearDeleteEmployee ? null : (deleteEmployeeState ?? this.deleteEmployeeState),
       updateBranchState: clearUpdateBranch ? null : (updateBranchState ?? this.updateBranchState),
       deleteBranchState: clearDeleteBranch ? null : (deleteBranchState ?? this.deleteBranchState),
       updateShiftState: clearUpdateShift ? null : (updateShiftState ?? this.updateShiftState),
@@ -54,7 +63,7 @@ class ProfileLoaded extends ProfileState {
       getListBranchesState: getListBranchesState ?? this.getListBranchesState,
       createShiftState: clearCreateShift ? null : (createShiftState ?? this.createShiftState),
       getListShiftsState: getListShiftsState ?? this.getListShiftsState,
-      createEmployeeState: createEmployeeState ?? this.createEmployeeState,
+      createEmployeeState: clearCreateEmployee ? null : (createEmployeeState ?? this.createEmployeeState),
       getListEmployeesState: getListEmployeesState ?? this.getListEmployeesState,
       getListHolidaysState: getListHolidaysState ?? this.getListHolidaysState,
       refreshOrInit: refreshOrInit ?? this.refreshOrInit,

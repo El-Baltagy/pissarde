@@ -1,9 +1,11 @@
 class UpdateEmployeeReqParam {
+  final dynamic id;
   final String name;
   final String phone;
   final String is_active;
 
   const UpdateEmployeeReqParam({
+    this.id,
     required this.name,
     required this.phone,
     required this.is_active,

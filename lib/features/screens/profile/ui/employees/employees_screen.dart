@@ -5,13 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
-import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
-import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/ui/employees/widgets/employees_list_widget.dart';
-import 'package:newf/features/screens/profile/ui/employees/widgets/add_employee_bottom_sheet.dart';
 import 'package:newf/core/extension/context.dart';
 
 part 'employees_base_state.dart';
@@ -23,8 +20,8 @@ class EmployeesPage extends StatefulWidget implements AutoRouteWrapper {
   final EmployeesRouteArgs args;
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(value:args .profileCubit, child: this);
-   }
+    return BlocProvider.value(value: args.profileCubit, child: this);
+  }
 
   @override
   State<EmployeesPage> createState() => _EmployeesPageState();
@@ -50,17 +47,18 @@ class _EmployeesPageState extends EmployeesPageBaseState {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.theme.primaryColor,
-          onPressed:  () async {
+          onPressed: () async {
             final res = await context.push(
               AddEditEmloyeeRoute(
-                args: AddEditEmloyeeRouteArgs(  profileCubit),
+                args: AddEditEmloyeeRouteArgs(
+                  profileCubit: profileCubit,
+                ),
               ),
             );
             if (res == true) {
-              await profileCubit.getListBranchesFunc(Reload());
+              await profileCubit.getListEmployeesFunc(Reload());
             }
           },
-          // onPressed: () => _showAddEmployeeSheet(context),
           child:
               const Icon(Icons.add, color: AppColors.roleSwitchSelectedBg),
         ),
@@ -69,7 +67,10 @@ class _EmployeesPageState extends EmployeesPageBaseState {
           child: BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
             selector: (state) =>
                 state is ProfileLoaded ? state.getListEmployeesState : null,
-            builder: (context, emit) => EmployeesListWidget(emit: emit),
+            builder: (context, emit) => EmployeesListWidget(
+              emit: emit,
+              profileCubit: profileCubit,
+            ),
           ),
         ),
       ),

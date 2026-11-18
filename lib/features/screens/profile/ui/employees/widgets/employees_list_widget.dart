@@ -4,15 +4,21 @@ import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 
 import 'employee_card_widget.dart';
 
 /// Renders the employees list, handling loading / error / empty / success states.
 class EmployeesListWidget extends StatelessWidget {
-  const EmployeesListWidget({super.key, required this.emit});
+  const EmployeesListWidget({
+    super.key,
+    required this.emit,
+    required this.profileCubit,
+  });
 
   final BaseEmit? emit;
+  final ProfileCubit profileCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,10 @@ class EmployeesListWidget extends StatelessWidget {
         itemCount: items.length,
         separatorBuilder: (_, __) =>
             const SizedBox(height: AppSizes.s12),
-        itemBuilder: (_, i) => EmployeeCardWidget(employee: items[i]),
+        itemBuilder: (_, i) => EmployeeCardWidget(
+          employee: items[i],
+          profileCubit: profileCubit,
+        ),
       );
     }
     return const SizedBox.shrink();

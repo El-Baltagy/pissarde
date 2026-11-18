@@ -9,6 +9,8 @@ class NameInputData extends BaseTextInputData {
     super.widgetPrefix,
     super.keyboardType,
     super.readOnly,
+    super.enabled,
+    super.isObscureText,
     super.onTap,
     String? labelText,
     IconData? icon,

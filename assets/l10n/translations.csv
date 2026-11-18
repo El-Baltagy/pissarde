@@ -176,3 +176,18 @@ branch_created_success,branch created success,فرع خلق النجاح,şube b
 branch_updated_success,branch updated success,تم تحديث الفرع بنجاح,şube güncellendi başarı
 branch_deleted_success,branch deleted success,فرع حذف النجاح,şube silme başarısı
 no_branches,no branches,لا فروع,şube yok
+
+employee_name,employee name,اسم الموظف,çalışan adı
+employee_code,employee code,كود الموظف,çalışan kodu
+phone,phone,هاتف,telefon
+add_employee,add employee,إضافة موظف,çalışan ekle
+new_employee,new employee,موظف جديد,yeni çalışan
+update_employee,update employee,تحديث الموظف,çalışanı güncelle
+edit_employee,edit employee,تحرير الموظف,çalışanı düzenle
+delete_employee,delete employee,حذف الموظف,çalışanı sil
+employee_created_success,employee created success,الموظف خلق النجاح,Çalışan başarıyı yarattı
+employee_updated_success,employee updated success,نجاح الموظف المحدث,çalışan güncellenen başarı
+employee_deleted_success,employee deleted success,نجاح حذف الموظف,çalışanın başarısı silindi
+confirm_delete_employee,confirm delete employee,تأكيد حذف الموظف,çalışanı silmeyi onayla
+are_you_sure_you_want_to_delete_this_employee,are you sure you want to delete this employee,هل أنت متأكد أنك تريد حذف هذا الموظف,bu çalışanı silmek istediğinizden emin misiniz?
+no_employees,no employees,لا موظفين,çalışan yok

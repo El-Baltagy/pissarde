@@ -8,6 +8,8 @@ import 'package:newf/features/screens/profile/service/base_profile_service.dart'
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
+import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
@@ -225,6 +227,30 @@ class ProfileRemoteService implements BaseProfileService {
   ) {
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.updateBranchApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+    );
+  }
+
+  @override
+  Future<void> deleteEmployeeServ(
+    RequestCallbackObserver<CreateEmployeeRes, DeleteEmployeeReqParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.deleteEmployeeApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+    );
+  }
+
+  @override
+  Future<void> updateEmployeeServ(
+    RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.updateEmployeeApi(
         requestInfo.parameter,
         cancelToken: token,
       ),

@@ -7,6 +7,9 @@ class ProfileCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(StorageHelper.userData==null){
+      return SizedBox.shrink();
+    }
     return Container(
       padding: const EdgeInsets.all(AppPadding.p16),
       decoration: BoxDecoration(
@@ -39,17 +42,11 @@ class ProfileCardWidget extends StatelessWidget {
             spacing: AppSizes.s4,
             children: [
               Text(
-                'user_name'.tr(),
+                StorageHelper.userData!.name  ,
                 style: AppTextStyles.font16Bold.copyWith(
                   color: AppColors.roleSwitchSelectedBg,
                 ),
-              ),
-              Text(
-                'job_title'.tr(),
-                style: AppTextStyles.font12Medium.copyWith(
-                  color: AppColors.darkTextSecondary,
-                ),
-              ),
+              )
             ],
           ),
         ],

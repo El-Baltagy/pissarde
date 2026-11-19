@@ -2,6 +2,8 @@ import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/storage/hive_storage.dart';
  import 'package:token_saver/secure_token_manager.dart';
 
+import '../../features/screens/home/data/model/chech_in_res/chech_in_res.dart';
+
 abstract class StorageHelper{
   static Future<void>   deleteUserData   ()async{
   try{
@@ -12,6 +14,13 @@ abstract class StorageHelper{
 
   static Future<String?> get getToken async =>await HWSecureSaver.get(AppConstant.tokenKeyCash ) ;
   static  bool  get isLogined   =>HiveStorage().readData(AppConstant.userKeyCash)!=null;
+  static User? get userData   {
+    final data=HiveStorage().readData(AppConstant.userKeyCash);
+    if(data!=null){
+      return User.fromJson(data);
+    }
+    return null;
+  }
   static  bool  get hasViewedOnboarding =>HiveStorage().readData(AppConstant.onboardingKeyCash)!=null;
 
 }

@@ -31,8 +31,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     super.initState();
     isLoadingNotifier = .new(false);
     profileCubit = widget.args.profileCubit ?? ProfileCubit.get(context: context);
-    profileCubit.resetCreateEmployee();
-    profileCubit.resetUpdateEmployee();
+    profileCubit.resetStateAfterSuccess(ScreenTypeAction.employee);
 
     final employee = widget.args.employeeItem;
     if (employee != null) {
@@ -107,38 +106,37 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   void createEmployeeListener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
       // ── Create success ───────────────────────────────────────────────
-      if (!_isEditMode &&
-          state.createEmployeeState is Success &&
+      if (   state.addEditEmployeeState is Success &&
           !_isSuccessHandled) {
         _isSuccessHandled = true;
-        final res = (state.createEmployeeState as Success).data;
+        final res = (state.addEditEmployeeState as Success).data;
         final message = res is CreateEmployeeRes
             ? res.message
-            : 'employee_created_success'.tr();
+            : (!_isEditMode?'employee_created_success'.tr():'employee_updated_success'.tr());
         context.showToast(message);
-        profileCubit.resetCreateEmployee();
+        profileCubit.resetStateAfterSuccess( .employee);
         context.pop(true);
-      } else if (!_isEditMode && state.createEmployeeState is ErrorState) {
-        final err = state.createEmployeeState as ErrorState;
+      } else if (  state.addEditEmployeeState is ErrorState) {
+        final err = state.addEditEmployeeState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);
       }
 
-      // ── Update success ───────────────────────────────────────────────
-      if (_isEditMode &&
-          state.updateEmployeeState is Success &&
-          !_isSuccessHandled) {
-        _isSuccessHandled = true;
-        final res = (state.updateEmployeeState as Success).data;
-        final message = res is CreateEmployeeRes
-            ? res.message
-            : 'employee_updated_success'.tr();
-        context.showToast(message);
-        profileCubit.resetUpdateEmployee();
-        context.pop(true);
-      } else if (_isEditMode && state.updateEmployeeState is ErrorState) {
-        final err = state.updateEmployeeState as ErrorState;
-        context.showToast(err.failure.message, isSuccess: false);
-      }
+      // // ── Update success ───────────────────────────────────────────────
+      // if (_isEditMode &&
+      //     state.addEditEmployeeState is Success &&
+      //     !_isSuccessHandled) {
+      //   _isSuccessHandled = true;
+      //   final res = (state.addEditEmployeeState as Success).data;
+      //   final message = res is CreateEmployeeRes
+      //       ? res.message
+      //       : 'employee_updated_success'.tr();
+      //   context.showToast(message);
+      //   profileCubit.resetStateAfterSuccess(ScreenTypeAction.employee);
+      //   context.pop(true);
+      // } else if (_isEditMode && state.addEditEmployeeState is ErrorState) {
+      //   final err = state.addEditEmployeeState as ErrorState;
+      //   context.showToast(err.failure.message, isSuccess: false);
+      // }
     }
   }
 }

@@ -38,8 +38,7 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
     super.initState();
     isLoadingNotifier = .new(false);
     profileCubit = ProfileCubit.get(context: context);
-    profileCubit.resetCreateShift();
-    profileCubit.resetUpdateShift();
+    profileCubit.resetStateAfterSuccess(ScreenTypeAction.shift);
 
     final shift = widget.args.shiftItem;
     if (shift != null) {
@@ -131,38 +130,37 @@ abstract class AddEditShiftPageBaseState extends State<AddEditShiftPage> {
   void createShiftListener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
       // ── Create success ───────────────────────────────────────────────
-      if (!_isEditMode &&
-          state.createShiftState is Success &&
+      if ( state.addEditShiftState is Success &&
           !_isSuccessHandled) {
         _isSuccessHandled = true;
-        final res = (state.createShiftState as Success).data;
+        final res = (state.addEditShiftState as Success).data;
         final message = res is ShiftCreatingRes
             ? res.message
-            : 'shift_created_success'.tr();
+            : (!_isEditMode?'shift_created_success'.tr():'shift_created_success'.tr());
         context.showToast(message);
-        profileCubit.resetCreateShift();
+        profileCubit.resetStateAfterSuccess(ScreenTypeAction.shift);
         context.pop(true);
-      } else if (!_isEditMode && state.createShiftState is ErrorState) {
-        final err = state.createShiftState as ErrorState;
+      } else if (  state.addEditShiftState is ErrorState) {
+        final err = state.addEditShiftState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);
       }
 
-      // ── Update success ───────────────────────────────────────────────
-      if (_isEditMode &&
-          state.updateShiftState is Success &&
-          !_isSuccessHandled) {
-        _isSuccessHandled = true;
-        final res = (state.updateShiftState as Success).data;
-        final message = res is ShiftCreatingRes
-            ? res.message
-            : 'shift_updated_success'.tr();
-        context.showToast(message);
-        profileCubit.resetUpdateShift();
-        context.pop(true);
-      } else if (_isEditMode && state.updateShiftState is ErrorState) {
-        final err = state.updateShiftState as ErrorState;
-        context.showToast(err.failure.message, isSuccess: false);
-      }
+      // // ── Update success ───────────────────────────────────────────────
+      // if (_isEditMode &&
+      //     state.updateShiftState is Success &&
+      //     !_isSuccessHandled) {
+      //   _isSuccessHandled = true;
+      //   final res = (state.updateShiftState as Success).data;
+      //   final message = res is ShiftCreatingRes
+      //       ? res.message
+      //       : 'shift_updated_success'.tr();
+      //   context.showToast(message);
+      //   profileCubit.resetStateAfterSuccess(ScreenTypeAction.shift);
+      //   context.pop(true);
+      // } else if (_isEditMode && state.updateShiftState is ErrorState) {
+      //   final err = state.updateShiftState as ErrorState;
+      //   context.showToast(err.failure.message, isSuccess: false);
+      // }
     }
   }
 }

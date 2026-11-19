@@ -213,8 +213,8 @@ class _AddEditShiftPageState extends AddEditShiftPageBaseState {
                         child: BlocBuilder<ProfileCubit, ProfileState>(
                           builder: (context, state) {
                             final bool isLoading = state is ProfileLoaded &&
-                                (state.createShiftState is Loading ||
-                                    state.updateShiftState is Loading);
+                                (state.addEditShiftState is Loading ||
+                                    state.addEditShiftState is Loading);
                             return ElevatedButton(
                               onPressed: () => createOrUpdateShift(isLoading),
                               style: ElevatedButton.styleFrom(

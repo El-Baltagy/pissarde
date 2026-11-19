@@ -21,7 +21,7 @@ abstract class BranchesPageBaseState extends State<BranchesPage> {
 
       // ── Delete Branch listener ──
       if (state.deleteBranchState is Success) {
-        profileCubit.resetDeleteBranch();
+        profileCubit.resetStateAfterSuccess(ScreenTypeAction.branch);
         profileCubit.getListBranchesFunc(Reload());
         context.showToast('branch_deleted_success'.tr());
       }

@@ -28,12 +28,12 @@ abstract class ShiftsPageBaseState extends State<ShiftsPage> {
       }
       // Handle delete success
       if (state.deleteShiftState is Success) {
-        profileCubit.resetDeleteShift();
+        profileCubit.resetStateAfterSuccess(ScreenTypeAction.shift);
         profileCubit.getListShiftsFunc(Reload());
         context.showToast('shift_deleted_success'.tr());
       } else if (state.deleteShiftState is ErrorState) {
         final err = state.deleteShiftState as ErrorState;
-        profileCubit.resetDeleteShift();
+        profileCubit.resetStateAfterSuccess(ScreenTypeAction.shift);
         context.showToast(err.failure.message, isSuccess: false);
       }
     }

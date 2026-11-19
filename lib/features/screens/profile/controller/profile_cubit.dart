@@ -219,11 +219,11 @@ class ProfileCubit extends BaseCubit<ProfileState> {
           parameter: parameter,
           cancelToken: token,
           onLoadCallback: () =>
-              safeEmit(_current.copyWith(createEmployeeState: Loading())),
+              safeEmit(_current.copyWith(addEditEmployeeState: Loading())),
           onRightCallback: (data) =>
-              safeEmit(_current.copyWith(createEmployeeState: Success(data))),
+              safeEmit(_current.copyWith(addEditEmployeeState: Success(data))),
           onLeftCallback: (failure) => safeEmit(
-            _current.copyWith(createEmployeeState: ErrorState(failure)),
+            _current.copyWith(addEditEmployeeState: ErrorState(failure)),
           ),
         ),
       );
@@ -242,64 +242,22 @@ class ProfileCubit extends BaseCubit<ProfileState> {
           parameter: parameter,
           cancelToken: token,
           onLoadCallback: () =>
-              safeEmit(_current.copyWith(createShiftState: Loading())),
+              safeEmit(_current.copyWith(addEditShiftState: Loading())),
           onRightCallback: (data) =>
-              safeEmit(_current.copyWith(createShiftState: Success(data))),
+              safeEmit(_current.copyWith(addEditShiftState: Success(data))),
           onLeftCallback: (failure) => safeEmit(
-            _current.copyWith(createShiftState: ErrorState(failure)),
+            _current.copyWith(addEditShiftState: ErrorState(failure)),
           ),
         ),
       );
     });
   }
 
-  void resetStateAfterSuccess(ScreenTypeAction screenTypeAction){
-    safeEmit(_current.copyWith(screenTypeAction: screenTypeAction) );
+  /// Clears the create / update / delete emit states of [screenTypeAction]
+  /// so stale `Success` / `ErrorState` results don't trigger listeners again.
+  void resetStateAfterSuccess(ScreenTypeAction screenTypeAction) {
+    safeEmit(_current.copyWith(screenTypeAction: screenTypeAction));
   }
-  // /// Resets createShiftState to avoid stale success triggers.
-  // void resetCreateShift() {
-  //   safeEmit(_current.copyWith(clearCreateShift: true));
-  // }
-  //
-  // /// Resets updateShiftState to avoid stale success triggers.
-  // void resetUpdateShift() {
-  //   safeEmit(_current.copyWith(clearUpdateShift: true));
-  // }
-  //
-  // /// Resets deleteShiftState to avoid stale success triggers.
-  // void resetDeleteShift() {
-  //   safeEmit(_current.copyWith(clearDeleteShift: true));
-  // }
-  //
-  // /// Resets createBranchState to avoid stale success triggers.
-  // void resetCreateBranch() {
-  //   safeEmit(_current.copyWith(clearCreateBranch: true));
-  // }
-  //
-  // /// Resets updateBranchState to avoid stale success triggers.
-  // void resetUpdateBranch() {
-  //   safeEmit(_current.copyWith(clearUpdateBranch: true));
-  // }
-  //
-  // /// Resets deleteBranchState to avoid stale success triggers.
-  // void resetDeleteBranch() {
-  //   safeEmit(_current.copyWith(clearDeleteBranch: true));
-  // }
-  //
-  // /// Resets createEmployeeState to avoid stale success triggers.
-  // void resetCreateEmployee() {
-  //   safeEmit(_current.copyWith(clearCreateEmployee: true));
-  // }
-  //
-  // /// Resets updateEmployeeState to avoid stale success triggers.
-  // void resetUpdateEmployee() {
-  //   safeEmit(_current.copyWith(clearUpdateEmployee: true));
-  // }
-  //
-  // /// Resets deleteEmployeeState to avoid stale success triggers.
-  // void resetDeleteEmployee() {
-  //   safeEmit(_current.copyWith(clearDeleteEmployee: true));
-  // }
 
   /// Creates a new branch via the API.
   Future<void> createBranchFunc(
@@ -346,9 +304,9 @@ class ProfileCubit extends BaseCubit<ProfileState> {
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
           cancelToken: token,
-          onLoadCallback: () => safeEmit(_current.copyWith(updateShiftState: Loading())),
-          onRightCallback: (data) => safeEmit(_current.copyWith(updateShiftState: Success(data))),
-          onLeftCallback: (failure) => safeEmit(_current.copyWith(updateShiftState: ErrorState(failure))),
+          onLoadCallback: () => safeEmit(_current.copyWith(addEditShiftState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(addEditShiftState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(addEditShiftState: ErrorState(failure))),
         ),
       );
     });
@@ -406,9 +364,9 @@ class ProfileCubit extends BaseCubit<ProfileState> {
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
           cancelToken: token,
-          onLoadCallback: () => safeEmit(_current.copyWith(updateEmployeeState: Loading())),
-          onRightCallback: (data) => safeEmit(_current.copyWith(updateEmployeeState: Success(data))),
-          onLeftCallback: (failure) => safeEmit(_current.copyWith(updateEmployeeState: ErrorState(failure))),
+          onLoadCallback: () => safeEmit(_current.copyWith(addEditEmployeeState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(addEditEmployeeState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(addEditEmployeeState: ErrorState(failure))),
         ),
       );
     });

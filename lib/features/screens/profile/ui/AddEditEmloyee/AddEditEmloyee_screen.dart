@@ -201,8 +201,8 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         child: BlocBuilder<ProfileCubit, ProfileState>(
                           builder: (context, state) {
                             final bool isLoading = state is ProfileLoaded &&
-                                (state.createEmployeeState is Loading ||
-                                    state.updateEmployeeState is Loading);
+                                (state.addEditEmployeeState is Loading ||
+                                    state.addEditEmployeeState is Loading);
                             return ElevatedButton(
                               onPressed: () => createOrUpdateEmployee(isLoading),
                               style: ElevatedButton.styleFrom(

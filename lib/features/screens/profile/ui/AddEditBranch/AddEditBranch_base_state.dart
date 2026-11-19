@@ -32,8 +32,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
     super.initState();
     isLoadingNotifier = .new(false);
     profileCubit = ProfileCubit.get(context: context);
-    profileCubit.resetCreateBranch();
-    profileCubit.resetUpdateBranch();
+    profileCubit.resetStateAfterSuccess(ScreenTypeAction.branch);
 
     final branch = widget.args.branchItem;
     if (branch != null) {
@@ -152,9 +151,9 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
         final res = (state.addEditBranchState as Success).data;
         final message = res is CreateBranchRes
             ? res.message
-            : (_isEditMode?'branch_created_success'.tr():'branch_updated_success'.tr());
+            : (!_isEditMode?'branch_created_success'.tr():'branch_updated_success'.tr());
         context.showToast(message);
-        profileCubit.resetCreateBranch();
+        profileCubit.resetStateAfterSuccess(ScreenTypeAction.branch);
         context.pop(true);
       } else if (  state.addEditBranchState is ErrorState) {
         final err = state.addEditBranchState as ErrorState;

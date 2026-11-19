@@ -245,3 +245,19 @@ pending,pending,قيد الانتظار,askıda olması
 approved,approved,موافقة,onaylı
 rejected,rejected,مرفوض,Reddedilmiş
 cancelled,cancelled,تم الإلغاء,iptal edildi
+
+privacy_policy,privacy policy,سياسة الخصوصية,gizlilik politikası
+last_updated,last updated,آخر تحديث,son güncelleme
+january_1_2026,january 1 2026,1 يناير 2026,1 Ocak 2026
+about_this_policy,about this policy,حول هذه السياسة,bu politika hakkında
+this_policy_explains_how_we_collect_use_and_protect_your_personal_data_when_you_use_the_attendance_app,this policy explains how we collect use and protect your personal data when you use the attendance app,تشرح هذه السياسة كيف نجمع بياناتك الشخصية ونحميها عند استخدام تطبيق الحضور,Bu politika, katılım uygulamasını kullandığınızda kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır.
+information_we_collect,information we collect,المعلومات التي نجمعها,topladığımız bilgiler
+we_collect_your_name_employee_code_phone_number_attendance_records_and_branch_location,we collect your name employee code phone number attendance records and branch location,نقوم بجمع اسمك ورمز الموظف ورقم الهاتف وسجلات الحضور وموقع الفرع,adınızı, çalışan kodunuzu, telefon numaranızı, devam kayıtlarınızı ve şube konumunuzu topluyoruz
+how_we_use_information,how we use information,كيف نستخدم المعلومات,bilgiyi nasıl kullanıyoruz
+your_data_is_used_to_manage_shifts_record_check_in_and_check_out_times_and_generate_attendance_reports,your data is used to manage shifts record check in and check out times and generate attendance reports,يتم استخدام بياناتك لإدارة الورديات وتسجيل أوقات تسجيل الوصول والمغادرة وإنشاء تقارير الحضور,Verileriniz vardiya kaydı giriş ve çıkış zamanlarını yönetmek ve katılım raporları oluşturmak için kullanılır
+data_security,data security,أمن البيانات,veri güvenliği
+your_data_is_stored_securely_encrypted_in_transit_and_accessible_only_to_authorized_personnel,your data is stored securely encrypted in transit and accessible only to authorized personnel,يتم تخزين بياناتك بشكل آمن ومشفرة أثناء النقل ولا يمكن الوصول إليها إلا للموظفين المصرح لهم بذلك,verileriniz aktarım sırasında güvenli bir şekilde şifrelenerek saklanır ve yalnızca yetkili personel tarafından erişilebilir
+your_rights,your rights,حقوقك,haklarınız
+you_may_request_access_correction_or_deletion_of_your_personal_data_by_contacting_your_administrator,you may request access correction or deletion of your personal data by contacting your administrator,يمكنك طلب تصحيح الوصول أو حذف بياناتك الشخصية عن طريق الاتصال بالمسؤول لديك,Yöneticinizle iletişime geçerek kişisel verilerinizin erişiminin düzeltilmesini veya silinmesini talep edebilirsiniz.
+contact_us,contact us,اتصل بنا,bize Ulaşın
+for_questions_about_this_policy_please_contact_your_branch_manager_or_system_administrator,for questions about this policy please contact your branch manager or system administrator,للأسئلة حول هذه السياسة، يرجى الاتصال بمدير فرعك أو مسؤول النظام,Bu politikayla ilgili sorularınız için lütfen şube yöneticiniz veya sistem yöneticiniz ile iletişime geçin.

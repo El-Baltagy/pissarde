@@ -29,6 +29,11 @@ class ListOptionsWidget extends StatelessWidget {
         title: 'official_holidays'.tr(),
         onTap: () => context.router.push(OfficialHolidaysRoute(args: OfficialHolidaysRouteArgs(profileCubit))),
       ),
+      (
+        icon: Icons.privacy_tip_outlined,
+        title: 'privacy_policy'.tr(),
+        onTap: () => context.router.push(PrivacyPolicyRoute(args: PrivacyPolicyRouteArgs())),
+      ),
     ];
 
     return Container(

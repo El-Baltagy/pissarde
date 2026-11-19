@@ -75,6 +75,7 @@ class _ProfilePageState extends ProfilePageBaseState {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 spacing: AppSizes.s16,
                 children: [
+
                   ProfileCardWidget(),
                   LanguageSelectorWidget(),
                   ListOptionsWidget(

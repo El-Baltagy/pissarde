@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    PrivacyPolicyRoute.name: (routeData) {
+      final args = routeData.argsAs<PrivacyPolicyRouteArgs>(orElse: () =>   PrivacyPolicyRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: PrivacyPolicyPage(
+           args: args ,
+        )),
+      );
+    },
     NotificationsRoute.name: (routeData) {
       final args = routeData.argsAs<NotificationsRouteArgs>(orElse: () =>   NotificationsRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
@@ -516,4 +526,26 @@ class PendingApprovalsRoute extends PageRouteInfo<PendingApprovalsRouteArgs> {
 class PendingApprovalsRouteArgs {
   const PendingApprovalsRouteArgs({required this.requestsCubit});
   final RequestsCubit requestsCubit;
+}
+
+/// generated route for
+/// [PrivacyPolicyPage]
+class PrivacyPolicyRoute extends PageRouteInfo<PrivacyPolicyRouteArgs> {
+  PrivacyPolicyRoute({
+   required PrivacyPolicyRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    PrivacyPolicyRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'PrivacyPolicyRoute';
+
+  static const PageInfo<PrivacyPolicyRouteArgs> page =
+  PageInfo<PrivacyPolicyRouteArgs>(name);
+}
+class PrivacyPolicyRouteArgs {
+  const PrivacyPolicyRouteArgs( );
+   static PrivacyPolicyRouteArgs noArgs()=>PrivacyPolicyRouteArgs();
 }

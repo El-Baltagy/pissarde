@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/storage/hive_storage.dart';
  import 'package:token_saver/secure_token_manager.dart';
@@ -14,12 +16,24 @@ abstract class StorageHelper{
 
   static Future<String?> get getToken async =>await HWSecureSaver.get(AppConstant.tokenKeyCash ) ;
   static  bool  get isLogined   =>HiveStorage().readData(AppConstant.userKeyCash)!=null;
-  static User? get userData   {
-    final data=HiveStorage().readData(AppConstant.userKeyCash);
-    if(data!=null){
-      return User.fromJson(data);
+  static User? get userData {
+    final data = HiveStorage().readData(AppConstant.userKeyCash);
+    if (data == null) return null;
+
+    try {
+      // Hive returns maps with `dynamic` keys (`_Map<dynamic, dynamic>`).
+      // Normalize through JSON so we get a real `Map<String, dynamic>`,
+      // exactly like BaseLocalRepo.readData does.
+      final decoded = jsonDecode(jsonEncode(data)) as Map<String, dynamic>;
+
+      final userJson = decoded['data'] is Map
+          ? Map<String, dynamic>.from(decoded['data'] as Map)
+          : decoded;
+
+      return User.fromJson(userJson);
+    } catch (_) {
+      return null;
     }
-    return null;
   }
   static  bool  get hasViewedOnboarding =>HiveStorage().readData(AppConstant.onboardingKeyCash)!=null;
 

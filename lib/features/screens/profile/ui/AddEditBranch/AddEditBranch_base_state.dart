@@ -105,9 +105,9 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
       listRecorder: [
         fieldName,
         fieldCode,
-        fieldAddress,
         fieldLocation,
-        fieldRadius,
+        fieldAddress,
+         fieldRadius,
       ],
     )) {
       if (_isEditMode) {
@@ -123,7 +123,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
               : controllerRadius.text.trim(),
           is_active: isActiveNotifier.value ? '1' : '0',
         );
-        await profileCubit.updateBranchFunc(Init(), parameter: param);
+        await profileCubit.updateBranchFunc(  parameter: param);
       } else {
         final param = CreateBranchReqParam(
           name: controllerName.text.trim(),
@@ -136,7 +136,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
               : controllerRadius.text.trim(),
           is_active: isActiveNotifier.value ? '1' : '0',
         );
-        await profileCubit.createBranchFunc(Init(), parameter: param);
+        await profileCubit.createBranchFunc(  parameter: param);
       }
     }
   }
@@ -144,38 +144,23 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
   void createBranchListener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
       // ── Create success ───────────────────────────────────────────────
-      if (!_isEditMode &&
-          state.createBranchState is Success &&
+      if (
+          state.addEditBranchState is Success &&
           !_isSuccessHandled) {
         _isSuccessHandled = true;
-        final res = (state.createBranchState as Success).data;
+
+        final res = (state.addEditBranchState as Success).data;
         final message = res is CreateBranchRes
             ? res.message
-            : 'branch_created_success'.tr();
+            : (_isEditMode?'branch_created_success'.tr():'branch_updated_success'.tr());
         context.showToast(message);
         profileCubit.resetCreateBranch();
         context.pop(true);
-      } else if (!_isEditMode && state.createBranchState is ErrorState) {
-        final err = state.createBranchState as ErrorState;
+      } else if (  state.addEditBranchState is ErrorState) {
+        final err = state.addEditBranchState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);
       }
 
-      // ── Update success ───────────────────────────────────────────────
-      if (_isEditMode &&
-          state.updateBranchState is Success &&
-          !_isSuccessHandled) {
-        _isSuccessHandled = true;
-        final res = (state.updateBranchState as Success).data;
-        final message = res is CreateBranchRes
-            ? res.message
-            : 'branch_updated_success'.tr();
-        context.showToast(message);
-        profileCubit.resetUpdateBranch();
-        context.pop(true);
-      } else if (_isEditMode && state.updateBranchState is ErrorState) {
-        final err = state.updateBranchState as ErrorState;
-        context.showToast(err.failure.message, isSuccess: false);
-      }
     }
   }
 }

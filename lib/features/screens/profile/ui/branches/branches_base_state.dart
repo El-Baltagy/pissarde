@@ -17,27 +17,7 @@ abstract class BranchesPageBaseState extends State<BranchesPage> {
 
   void _listener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
-      // ── Create Branch listener ──
-      if (state.createBranchState is Success) {
-        profileCubit.resetCreateBranch();
-        profileCubit.getListBranchesFunc(Reload());
-        context.showToast('branch_created_success'.tr());
-      }
-      if (state.createBranchState is ErrorState) {
-        final err = state.createBranchState as ErrorState;
-        context.showToast(err.failure.message, isSuccess: false);
-      }
 
-      // ── Update Branch listener ──
-      if (state.updateBranchState is Success) {
-        profileCubit.resetUpdateBranch();
-        profileCubit.getListBranchesFunc(Reload());
-        context.showToast('branch_updated_success'.tr());
-      }
-      if (state.updateBranchState is ErrorState) {
-        final err = state.updateBranchState as ErrorState;
-        context.showToast(err.failure.message, isSuccess: false);
-      }
 
       // ── Delete Branch listener ──
       if (state.deleteBranchState is Success) {

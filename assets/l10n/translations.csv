@@ -1,16 +1,15 @@
 key,en,ar,tr
 app_name,Attendance,الحضور والانصراف,Katılım
-user_name,Ahmed Mohammed Al-Otaibi,أحمد محمد العتيبي,Ahmed Muhammed El-Otaibi
+
 job_title,Senior Systems Developer,مطور نظم أول,Kıdemli Sistem Geliştiricisi
 user_branch_dept,Main Riyadh Branch • Information Technology Department,فرع الرياض الرئيسي • إدارة تقنية المعلومات,Ana Riyad Şubesi • Bilgi Teknolojileri Departmanı
-current_date,"Wednesday, 15 May 2024","الأربعاء، 15 مايو 2024"
-current_time,08:42:15 AM,08:42:15 ص,08:42:15
+
 role_employee_view,Employee View,عرض الموظف,Çalışan Görünümü
 role_branch_manager,Branch Manager,مدير الفرع,Şube Müdürü
 role_hr,Human Resources,الموارد البشرية,İnsan kaynakları
 branch_status_title,Today's Branch Status (Branch Manager),حالة الفرع اليوم (مدير الفرع),Bugünkü Şube Durumu (Şube Müdürü)
 branch_total_employees,Total 48 employees in Riyadh branch,إجمالي 48 موظفاً بفرع الرياض,Riyad şubesinde toplam 48 çalışan
-commitment_rate,Commitment rate 92%,نسبة الالتزام 92%,Taahhüt oranı %92
+
 status_present,Present,حاضر,Sunmak
 status_late,Late,متأخر,Geç
 status_absent,Absent,غائب,Mevcut olmayan
@@ -20,16 +19,16 @@ review_requests,Review Requests,مراجعة الطلبات,İstekleri İnceleme
 current_shift_label,Current Shift,الشيفت الحالي,Mevcut Değişim
 current_shift_name,Official Morning Shift,شفت الصباح الرسمي,Resmi Sabah Vardiyası
 shift_hours_label,Work Hours,مواعيد الدوام,Çalışma Saatleri
-shift_hours_time,08:00 AM - 04:00 PM,08:00 ص - 04:00 م,08:00 - 16:00
+
 shift_status_late_desc,Present (Delayed),حاضر (بتأخير عن الموعد),Mevcut (Gecikmeli)
 badge_delay,Delay,تأخير,Gecikme
 delay_explanation,14 minutes delay recorded (grace period 10 minutes),تم تسجيل 14 دقيقة تأخير (فترة السماح 10 دقائق),14 dakikalık gecikme kaydedildi (ek süre 10 dakika)
 check_in_time_label,Check-in Time,وقت الحضور,Giriş Zamanı
-check_in_time_val,08:14 AM,08:14 ص,08:14
+
 expected_departure_label,Expected Departure,الانصراف المتوقع,Beklenen Kalkış
-expected_departure_val,04:00 PM,04:00 م,16:00
+
 work_hours_today_label,Work Hours Today,ساعات العمل اليوم,Bugünkü Çalışma Saatleri
-work_hours_today_val,5.2 / 8 hrs,5.2 / 8 س,5
+
 daily_hours_completion,Today's hours completion rate,نسبة إنجاز ساعات اليوم,Bugünkü saatlerin tamamlanma oranı
 gps_verification_title,Geographic Verification (GPS),التحقق الجغرافي (GPS),Coğrafi Doğrulama (GPS)
 gps_branch_location,Riyadh Branch - Headquarters,فرع الرياض - المقر الرئيسي,Riyad Şubesi - Genel Merkez
@@ -156,7 +155,7 @@ vardiya_ba_ar_yla_g_ncellendi,Vardiya başarıyla güncellendi,Vardiya başarıy
 
 cancel,cancel,الغاء,iptal etmek
 
-add,add,يضيف,eklemek
+add,add,إضافة,eklemek
 
 add_branch,add branch,إضافة فرع,şube ekle
 
@@ -166,7 +165,7 @@ address,address,عنوان,adres
 latitude,latitude,خط العرض,enlem
 longitude,longitude,خط الطول,boylam
 geofence_radius,geofence radius,نصف قطر السياج الجغرافي,coğrafi sınır yarıçapı
-update_branch,update branch,فرع التحديث,şubeyi güncelle
+update_branch,update branch,تحديث الفرع,şubeyi güncelle
 edit_branch,edit branch,تحرير فرع,şubeyi düzenle
 delete_branch,delete branch,حذف الفرع,şubeyi sil
 new_branch,new branch,فرع جديد,yeni şube
@@ -200,4 +199,49 @@ current_location,current location,الموقع الحالي,mevcut konum
 location_picked_successfully,location picked successfully,تم اختيار الموقع بنجاح,konum başarıyla seçildi
 drag_map_to_pick_location,drag map to pick location,اسحب الخريطة لاختيار الموقع,konumu seçmek için haritayı sürükleyin
 
-notificications,notificications,الإخطارات,bildirimler
+notificications,notificications,الإشعارات,bildirimler
+
+my_leave_requests,my leave requests,طلبات إجازتي,izin taleplerim
+leave_balance,leave balance,ترك الرصيد,bakiyeyi bırak
+new_leave_request,new leave request,طلب إجازة جديدة,yeni izin talebi
+leave_type,leave type,نوع الإجازة,izin türü
+start_date,start date,تاريخ البدء,başlangıç ​​tarihi
+end_date,end date,تاريخ الانتهاء,bitiş tarihi
+total_days,total days,مجموع الأيام,toplam gün
+reason,reason,سبب,sebep
+emergency_phone,emergency phone,هاتف الطوارئ,acil durum telefonu
+pending_approvals,pending approvals,في انتظار الموافقات,onaylar bekleniyor
+approve,approve,يعتمد,onaylamak
+reject,reject,يرفض,reddetmek
+cancel_request,cancel request,إلغاء الطلب,isteği iptal et
+allocated_days,allocated days,الأيام المخصصة,tahsis edilen günler
+used_days,used days,أيام مستعملة,kullanılan günler
+pending_days,pending days,أيام معلقة,bekleyen günler
+remaining_days,remaining days,الأيام المتبقية,kalan günler
+no_leave_requests,no leave requests,لا طلبات الإجازة,izin talebi yok
+no_leave_balances,no leave balances,لا أرصدة الإجازة,izin bakiyesi yok
+no_pending_approvals,no pending approvals,لا توجد موافقات معلقة,bekleyen onay yok
+leave_created_success,leave created success,الإجازة خلقت النجاح,yaratılan başarıyı bırakmak
+leave_cancelled_success,leave cancelled success,ترك إلغاء النجاح,iptal edilen başarı
+leave_reviewed_success,leave reviewed success,ترك مراجعة النجاح,başarının gözden geçirilmesini bırakın
+days_remaining,days remaining,الأيام المتبقية,kalan gün sayısı
+days_allocated,days allocated,الأيام المخصصة,tahsis edilen günler
+days_used,days used,الأيام المستخدمة,kullanılan günler
+leave_request_details,leave request details,تفاصيل طلب الإجازة,istek ayrıntılarını bırakın
+review_notes,review notes,ملاحظات المراجعة,notları gözden geçir
+confirm_cancel,confirm cancel,تأكيد الإلغاء,onayla iptal et
+confirm_cancel_message,confirm cancel message,تأكيد رسالة الإلغاء,iptal mesajını onayla
+confirm_approve,confirm approve,تأكيد الموافقة,onayla onayla
+confirm_reject,confirm reject,تأكيد الرفض,reddetmeyi onayla
+approve_success,approve success,الموافقة على النجاح,başarıyı onaylamak
+reject_success,reject success,رفض النجاح,başarıyı reddetmek
+leave_type_required,leave type required,نوع الإجازة مطلوب,izin türü gerekli
+start_date_required,start date required,تاريخ البدء مطلوب,başlangıç ​​tarihi gerekli
+end_date_required,end date required,تاريخ الانتهاء مطلوب,bitiş tarihi gerekli
+reason_required,reason required,السبب المطلوب,sebep gerekli
+emergency_phone_required,emergency phone required,مطلوب هاتف الطوارئ,acil telefon gerekli
+invalid_date_range,invalid date range,نطاق زمني غير صالح,geçersiz tarih aralığı
+pending,pending,قيد الانتظار,askıda olması
+approved,approved,موافقة,onaylı
+rejected,rejected,مرفوض,Reddedilmiş
+cancelled,cancelled,تم الإلغاء,iptal edildi

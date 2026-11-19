@@ -52,7 +52,7 @@ class LeavesRequest with _$LeavesRequest, EquatableMixin {
     required String created_at,
     required String updated_at,
     required LeaveTypeItem leave_type,
-    required String? reviewed_by,
+
   }) = _LeavesRequest;
 
   factory LeavesRequest.fromJson(Map<String, dynamic> json) => _$LeavesRequestFromJson(json);
@@ -73,8 +73,7 @@ class LeavesRequest with _$LeavesRequest, EquatableMixin {
     review_notes,
     created_at,
     updated_at,
-    leave_type,
-    reviewed_by,
+    leave_type
   ];
 
 }

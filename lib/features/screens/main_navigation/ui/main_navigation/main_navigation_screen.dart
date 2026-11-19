@@ -110,7 +110,7 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
         return BlocBuilder<MainNavigationCubit, MainNavigationState>(
           builder: (context, state) {
             final selectedIndex = state is MainNavigationLoaded ? state.selectedIndex : 0;
-            final isManagerTabSelected = selectedIndex == 3;
+            // final isManagerTabSelected = selectedIndex == 3;
 
             return Scaffold(
               extendBody: true,

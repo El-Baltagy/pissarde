@@ -250,7 +250,6 @@ mixin _$LeavesRequest {
   String get created_at => throw _privateConstructorUsedError;
   String get updated_at => throw _privateConstructorUsedError;
   LeaveTypeItem get leave_type => throw _privateConstructorUsedError;
-  String? get reviewed_by => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -279,8 +278,7 @@ abstract class $LeavesRequestCopyWith<$Res> {
       String? review_notes,
       String created_at,
       String updated_at,
-      LeaveTypeItem leave_type,
-      String? reviewed_by});
+      LeaveTypeItem leave_type });
 
   $LeaveTypeItemCopyWith<$Res> get leave_type;
 }
@@ -312,8 +310,7 @@ class _$LeavesRequestCopyWithImpl<$Res, $Val extends LeavesRequest>
     Object? review_notes = freezed,
     Object? created_at = null,
     Object? updated_at = null,
-    Object? leave_type = null,
-    Object? reviewed_by = freezed,
+    Object? leave_type = null
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -375,11 +372,7 @@ class _$LeavesRequestCopyWithImpl<$Res, $Val extends LeavesRequest>
       leave_type: null == leave_type
           ? _value.leave_type
           : leave_type // ignore: cast_nullable_to_non_nullable
-              as LeaveTypeItem,
-      reviewed_by: freezed == reviewed_by
-          ? _value.reviewed_by
-          : reviewed_by // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as LeaveTypeItem
     ) as $Val);
   }
 
@@ -415,8 +408,7 @@ abstract class _$$LeavesRequestImplCopyWith<$Res>
       String? review_notes,
       String created_at,
       String updated_at,
-      LeaveTypeItem leave_type,
-      String? reviewed_by});
+      LeaveTypeItem leave_type });
 
   @override
   $LeaveTypeItemCopyWith<$Res> get leave_type;
@@ -510,11 +502,7 @@ class __$$LeavesRequestImplCopyWithImpl<$Res>
       leave_type: null == leave_type
           ? _value.leave_type
           : leave_type // ignore: cast_nullable_to_non_nullable
-              as LeaveTypeItem,
-      reviewed_by: freezed == reviewed_by
-          ? _value.reviewed_by
-          : reviewed_by // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as LeaveTypeItem
     ));
   }
 }
@@ -538,8 +526,7 @@ class _$LeavesRequestImpl extends _LeavesRequest {
       required this.review_notes,
       required this.created_at,
       required this.updated_at,
-      required this.leave_type,
-      required this.reviewed_by})
+      required this.leave_type })
       : super._();
 
   factory _$LeavesRequestImpl.fromJson(Map<String, dynamic> json) =>
@@ -575,8 +562,6 @@ class _$LeavesRequestImpl extends _LeavesRequest {
   final String updated_at;
   @override
   final LeaveTypeItem leave_type;
-  @override
-  final String? reviewed_by;
 
   @JsonKey(ignore: true)
   @override
@@ -608,8 +593,7 @@ abstract class _LeavesRequest extends LeavesRequest {
       required final String? review_notes,
       required final String created_at,
       required final String updated_at,
-      required final LeaveTypeItem leave_type,
-      required final String? reviewed_by}) = _$LeavesRequestImpl;
+      required final LeaveTypeItem leave_type }) = _$LeavesRequestImpl;
   const _LeavesRequest._() : super._();
 
   factory _LeavesRequest.fromJson(Map<String, dynamic> json) =
@@ -645,8 +629,6 @@ abstract class _LeavesRequest extends LeavesRequest {
   String get updated_at;
   @override
   LeaveTypeItem get leave_type;
-  @override
-  String? get reviewed_by;
   @override
   @JsonKey(ignore: true)
   _$$LeavesRequestImplCopyWith<_$LeavesRequestImpl> get copyWith =>

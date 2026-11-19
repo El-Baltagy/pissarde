@@ -253,68 +253,71 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     });
   }
 
-  /// Resets createShiftState to avoid stale success triggers.
-  void resetCreateShift() {
-    safeEmit(_current.copyWith(clearCreateShift: true));
+  void resetStateAfterSuccess(ScreenTypeAction screenTypeAction){
+    safeEmit(_current.copyWith(screenTypeAction: screenTypeAction) );
   }
-
-  /// Resets updateShiftState to avoid stale success triggers.
-  void resetUpdateShift() {
-    safeEmit(_current.copyWith(clearUpdateShift: true));
-  }
-
-  /// Resets deleteShiftState to avoid stale success triggers.
-  void resetDeleteShift() {
-    safeEmit(_current.copyWith(clearDeleteShift: true));
-  }
-
-  /// Resets createBranchState to avoid stale success triggers.
-  void resetCreateBranch() {
-    safeEmit(_current.copyWith(clearCreateBranch: true));
-  }
-
-  /// Resets updateBranchState to avoid stale success triggers.
-  void resetUpdateBranch() {
-    safeEmit(_current.copyWith(clearUpdateBranch: true));
-  }
-
-  /// Resets deleteBranchState to avoid stale success triggers.
-  void resetDeleteBranch() {
-    safeEmit(_current.copyWith(clearDeleteBranch: true));
-  }
-
-  /// Resets createEmployeeState to avoid stale success triggers.
-  void resetCreateEmployee() {
-    safeEmit(_current.copyWith(clearCreateEmployee: true));
-  }
-
-  /// Resets updateEmployeeState to avoid stale success triggers.
-  void resetUpdateEmployee() {
-    safeEmit(_current.copyWith(clearUpdateEmployee: true));
-  }
-
-  /// Resets deleteEmployeeState to avoid stale success triggers.
-  void resetDeleteEmployee() {
-    safeEmit(_current.copyWith(clearDeleteEmployee: true));
-  }
+  // /// Resets createShiftState to avoid stale success triggers.
+  // void resetCreateShift() {
+  //   safeEmit(_current.copyWith(clearCreateShift: true));
+  // }
+  //
+  // /// Resets updateShiftState to avoid stale success triggers.
+  // void resetUpdateShift() {
+  //   safeEmit(_current.copyWith(clearUpdateShift: true));
+  // }
+  //
+  // /// Resets deleteShiftState to avoid stale success triggers.
+  // void resetDeleteShift() {
+  //   safeEmit(_current.copyWith(clearDeleteShift: true));
+  // }
+  //
+  // /// Resets createBranchState to avoid stale success triggers.
+  // void resetCreateBranch() {
+  //   safeEmit(_current.copyWith(clearCreateBranch: true));
+  // }
+  //
+  // /// Resets updateBranchState to avoid stale success triggers.
+  // void resetUpdateBranch() {
+  //   safeEmit(_current.copyWith(clearUpdateBranch: true));
+  // }
+  //
+  // /// Resets deleteBranchState to avoid stale success triggers.
+  // void resetDeleteBranch() {
+  //   safeEmit(_current.copyWith(clearDeleteBranch: true));
+  // }
+  //
+  // /// Resets createEmployeeState to avoid stale success triggers.
+  // void resetCreateEmployee() {
+  //   safeEmit(_current.copyWith(clearCreateEmployee: true));
+  // }
+  //
+  // /// Resets updateEmployeeState to avoid stale success triggers.
+  // void resetUpdateEmployee() {
+  //   safeEmit(_current.copyWith(clearUpdateEmployee: true));
+  // }
+  //
+  // /// Resets deleteEmployeeState to avoid stale success triggers.
+  // void resetDeleteEmployee() {
+  //   safeEmit(_current.copyWith(clearDeleteEmployee: true));
+  // }
 
   /// Creates a new branch via the API.
   Future<void> createBranchFunc(
-    BaseRequestBackType baseRequestBackType, {
+   {
     CreateBranchReqParam? parameter,
   }) async {
     await CancelManager.runCancelableFun(createBranchKeyCode, (token) async {
       await _service.createBranchServ(
         RequestCallbackObserver<CreateBranchRes, CreateBranchReqParam>(
-          baseRequestBackType: baseRequestBackType,
+
           parameter: parameter,
           cancelToken: token,
           onLoadCallback: () =>
-              safeEmit(_current.copyWith(createBranchState: Loading())),
+              safeEmit(_current.copyWith(addEditBranchState: Loading())),
           onRightCallback: (data) =>
-              safeEmit(_current.copyWith(createBranchState: Success(data))),
+              safeEmit(_current.copyWith(addEditBranchState: Success(data))),
           onLeftCallback: (failure) => safeEmit(
-            _current.copyWith(createBranchState: ErrorState(failure)),
+            _current.copyWith(addEditBranchState: ErrorState(failure)),
           ),
         ),
       );
@@ -366,16 +369,16 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     });
   }
 
-  Future<void> updateBranchFunc(BaseRequestBackType baseRequestBackType,{UpdateBranchReqParam? parameter}) async {
+  Future<void> updateBranchFunc( {UpdateBranchReqParam? parameter}) async {
     await CancelManager.runCancelableFun(updateBranchKeyCode, (token) async {
       await _service.updateBranchServ(
         RequestCallbackObserver<CreateBranchRes, UpdateBranchReqParam>(
-          baseRequestBackType: baseRequestBackType ,
+
           parameter: parameter,
           cancelToken: token,
-          onLoadCallback: () => safeEmit(_current.copyWith(updateBranchState: Loading())),
-          onRightCallback: (data) => safeEmit(_current.copyWith(updateBranchState: Success(data))),
-          onLeftCallback: (failure) => safeEmit(_current.copyWith(updateBranchState: ErrorState(failure))),
+          onLoadCallback: () => safeEmit(_current.copyWith(addEditBranchState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(addEditBranchState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(addEditBranchState: ErrorState(failure))),
         ),
       );
     });
@@ -410,4 +413,9 @@ class ProfileCubit extends BaseCubit<ProfileState> {
       );
     });
   }
+}
+enum ScreenTypeAction{
+  shift,
+  branch,
+  employee
 }

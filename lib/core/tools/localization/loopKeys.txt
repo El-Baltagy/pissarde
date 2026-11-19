@@ -1,7 +1,0 @@
-pick_location_on_map
-select_location
-open_map
-confirm_location
-current_location
-location_picked_successfully
-drag_map_to_pick_location

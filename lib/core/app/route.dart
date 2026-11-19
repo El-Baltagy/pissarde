@@ -20,6 +20,10 @@ import 'package:newf/features/screens/profile/data/model/employees/get_all_emplo
 import 'package:newf/features/screens/profile/ui/AddEditBranch/AddEditBranch_screen.dart';
 import 'package:newf/features/screens/profile/ui/AddEditEmloyee/AddEditEmloyee_screen.dart';
 import 'package:newf/features/screens/notifications/ui/notifications/notifications_screen.dart';
+import 'package:newf/features/screens/requests/ui/AddLeaveRequest/AddLeaveRequest_screen.dart';
+import 'package:newf/features/screens/requests/ui/PendingApprovals/pending_approvals_screen.dart';
+import 'package:newf/features/screens/requests/data/model/get_leaves_types_res/get_leaves_types_res.dart';
+import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
 part  'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -75,6 +79,12 @@ class AppRouter extends _$AppRouter {
       ),
       AutoRoute(
         page: OfficialHolidaysRoute.page,
+      ),
+      AutoRoute(
+        page: AddLeaveRequestRoute.page,
+      ),
+      AutoRoute(
+        page: PendingApprovalsRoute.page,
       ),
   ];
 }

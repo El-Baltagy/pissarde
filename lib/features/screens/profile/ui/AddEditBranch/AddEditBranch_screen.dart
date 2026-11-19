@@ -75,6 +75,7 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                   padding: const EdgeInsets.all(AppPadding.p16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: AppSizes.s20,
                     children: [
                       TitleWithInputField(
                         'branch_name'.tr(),
@@ -86,7 +87,6 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           controller: controllerName,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
                       TitleWithInputField(
                         'branch_code'.tr(),
                         NameInputData(
@@ -97,18 +97,6 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           controller: controllerCode,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
-                      TitleWithInputField(
-                        'address'.tr(),
-                        NameInputData(
-                          isLabel: false,
-                          widgetPrefix: const SizedBox.shrink(),
-                          field: fieldAddress,
-                          labelText: 'address'.tr(),
-                          controller: controllerAddress,
-                        ),
-                      ),
-                      AppSizes.s20.verticalSpace,
                       TitleWithInputField(
                         'select_location'.tr(),
                         DropDownSingleSelectData(
@@ -121,7 +109,17 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           onTap: onPickLocationOnMap,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
+                      TitleWithInputField(
+                        'address'.tr(),
+                        NameInputData(
+                          isLabel: false,
+                          widgetPrefix: const SizedBox.shrink(),
+                          field: fieldAddress,
+                          labelText: 'address'.tr(),
+                          controller: controllerAddress,
+                        ),
+                      ),
+
                       TitleWithInputField(
                         'geofence_radius'.tr(),
                         NameInputData(
@@ -137,7 +135,6 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           controller: controllerRadius,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppPadding.p12,
@@ -171,15 +168,14 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           },
                         ),
                       ),
-                      AppSizes.s32.verticalSpace,
+                      SizedBox.shrink(),
                       SizedBox(
                         width: double.infinity,
                         height: AppSizes.s48,
                         child: BlocBuilder<ProfileCubit, ProfileState>(
                           builder: (context, state) {
                             final bool isLoading = state is ProfileLoaded &&
-                                (state.createBranchState is Loading ||
-                                    state.updateBranchState is Loading);
+                              state.addEditBranchState is Loading   ;
                             return ElevatedButton(
                               onPressed: () => createOrUpdateBranch(isLoading),
                               style: ElevatedButton.styleFrom(
@@ -208,7 +204,7 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           },
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
+                      SizedBox.shrink(),
                     ],
                   ),
                 ),

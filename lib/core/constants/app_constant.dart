@@ -77,5 +77,33 @@ abstract class AppConstant {
   static const String updateEmployeeKeyCash = 'profile_updateEmployee_cache';
 
   static const int updateEmployeeKeyCode = 475;
+
+  static const String getMyLeaveRequestsKeyCash = 'requests_getMyLeaveRequests_cache';
+
+  static const int getMyLeaveRequestsKeyCode = 3285;
+
+  static const String getLeaveTypesKeyCash = 'requests_getLeaveTypes_cache';
+
+  static const int getLeaveTypesKeyCode = 6939;
+
+  static const String getLeaveBalancesKeyCash = 'requests_getLeaveBalances_cache';
+
+  static const int getLeaveBalancesKeyCode = 1648;
+
+  static const String createLeaveRequestKeyCash = 'requests_createLeaveRequest_cache';
+
+  static const int createLeaveRequestKeyCode = 9361;
+
+  static const String cancelLeaveRequestKeyCash = 'requests_cancelLeaveRequest_cache';
+
+  static const int cancelLeaveRequestKeyCode = 7094;
+
+  static const String reviewLeaveRequestKeyCash = 'requests_reviewLeaveRequest_cache';
+
+  static const int reviewLeaveRequestKeyCode = 8590;
+
+  static const String getPendingApprovalLeavesKeyCash = 'requests_getPendingApprovalLeaves_cache';
+
+  static const int getPendingApprovalLeavesKeyCode = 4950;
 }
 

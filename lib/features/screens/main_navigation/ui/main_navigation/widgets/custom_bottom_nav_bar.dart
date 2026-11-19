@@ -21,7 +21,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   static const _rightTabs = [
     (index: 2, icon: Icons.description_outlined, labelKey: 'nav_requests'),
-    (index: 4, icon: Icons.person_outline_rounded, labelKey: 'nav_my_account'),
+    (index: 3, icon: Icons.person_outline_rounded, labelKey: 'nav_my_account'),
   ];
 
   @override

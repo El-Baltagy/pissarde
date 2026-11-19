@@ -45,8 +45,7 @@ _$LeavesRequestImpl _$$LeavesRequestImplFromJson(Map<String, dynamic> json) =>
       created_at: json['created_at'] as String,
       updated_at: json['updated_at'] as String,
       leave_type:
-          LeaveTypeItem.fromJson(json['leave_type'] as Map<String, dynamic>),
-      reviewed_by: json['reviewed_by'] as String?,
+          LeaveTypeItem.fromJson(json['leave_type'] as Map<String, dynamic>)
     );
 
 Map<String, dynamic> _$$LeavesRequestImplToJson(_$LeavesRequestImpl instance) =>
@@ -65,6 +64,5 @@ Map<String, dynamic> _$$LeavesRequestImplToJson(_$LeavesRequestImpl instance) =>
       'review_notes': instance.review_notes,
       'created_at': instance.created_at,
       'updated_at': instance.updated_at,
-      'leave_type': instance.leave_type.toJson(),
-      'reviewed_by': instance.reviewed_by,
+      'leave_type': instance.leave_type.toJson()
     };

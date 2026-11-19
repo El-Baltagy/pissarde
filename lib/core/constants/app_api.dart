@@ -35,10 +35,10 @@ abstract class EndPoints {
 
   /// leaves
  // إلغاء طلب إجازة معلق للموظف واستعادة الرصيد المحجوز
-  static const String cancelLeaveRequest = "/api/leaves/1/cancel";
+  static String cancelLeaveRequest(dynamic id) => "/api/leaves/$id/cancel";
 
   // اعتماد أو رفض طلب إجازة مرؤوس مع تدوين الملاحظات
-  static const String reviewLeaveRequest = "/api/leaves/1/review";
+  static String reviewLeaveRequest(dynamic id) => "/api/leaves/$id/review";
 
   // طلبات الإجازة المعلقة بانتظار موافقة (المشرف / HR / الإدارة)
   static const String leaveApprovals = "/api/leaves/approvals";
@@ -76,4 +76,12 @@ abstract class EndPoints {
 
 
 
+
+  static const String getMyLeaveRequests = '/api/leaves/my-requests';
+
+  static const String getLeaveTypes = '/api/leaves/types';
+
+  static const String getLeaveBalances = '/api/leaves/balances';
+
+  static const String getPendingApprovalLeaves = '/api/leaves/approvals';
 }

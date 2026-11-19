@@ -133,6 +133,26 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child:   BranchesPage(   args: args ,)),
       );
     },
+    AddLeaveRequestRoute.name: (routeData) {
+      final args = routeData.argsAs<AddLeaveRequestRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AddLeaveRequestPage(
+           args: args ,
+        )),
+      );
+    },
+    PendingApprovalsRoute.name: (routeData) {
+      final args = routeData.argsAs<PendingApprovalsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: PendingApprovalsPage(
+           args: args ,
+        )),
+      );
+    },
     OfficialHolidaysRoute.name: (routeData) {
       final args = routeData.argsAs<OfficialHolidaysRouteArgs>( );
       return AutoRoutePage<dynamic>(
@@ -450,4 +470,50 @@ class NotificationsRoute extends PageRouteInfo<NotificationsRouteArgs> {
 class NotificationsRouteArgs {
   const NotificationsRouteArgs( );
    static NotificationsRouteArgs noArgs()=>NotificationsRouteArgs();
+}
+
+
+/// generated route for
+/// [AddLeaveRequestPage]
+class AddLeaveRequestRoute extends PageRouteInfo<AddLeaveRequestRouteArgs> {
+  AddLeaveRequestRoute({
+    required AddLeaveRequestRouteArgs args,
+    List<PageRouteInfo>? children,
+  }) : super(
+    AddLeaveRequestRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'AddLeaveRequestRoute';
+
+  static const PageInfo<AddLeaveRequestRouteArgs> page =
+  PageInfo<AddLeaveRequestRouteArgs>(name);
+}
+class AddLeaveRequestRouteArgs {
+  const AddLeaveRequestRouteArgs({required this.requestsCubit, required this.leaveTypes});
+  final RequestsCubit requestsCubit;
+  final List<LeaveTypeItem> leaveTypes;
+}
+
+/// generated route for
+/// [PendingApprovalsPage]
+class PendingApprovalsRoute extends PageRouteInfo<PendingApprovalsRouteArgs> {
+  PendingApprovalsRoute({
+    required PendingApprovalsRouteArgs args,
+    List<PageRouteInfo>? children,
+  }) : super(
+    PendingApprovalsRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'PendingApprovalsRoute';
+
+  static const PageInfo<PendingApprovalsRouteArgs> page =
+  PageInfo<PendingApprovalsRouteArgs>(name);
+}
+class PendingApprovalsRouteArgs {
+  const PendingApprovalsRouteArgs({required this.requestsCubit});
+  final RequestsCubit requestsCubit;
 }

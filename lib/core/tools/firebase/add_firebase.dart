@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import '../utils_spinner.dart';
 
@@ -6,7 +7,7 @@ const String kFirebaseCustomPath = r'D:\programmes\firebase.exe';
 
 void main() async {
   print('\x1B[2J\x1B[0;0H'); // Clear console
-  print('🔥 \x1B[31mFirebase CLI Setup for Tahseen Project\x1B[0m');
+  print('🔥 \x1B[31mFirebase CLI Setup for Current Project\x1B[0m');
   print('===========================================');
 
   // 1. Check for Firebase CLI
@@ -42,6 +43,9 @@ void main() async {
   } else {
     print('✅ \x1B[32mAlready logged into Firebase.\x1B[0m');
   }
+
+  // 1.6. Pick an existing project so flutterfire won't create a new one
+  final String? selectedProjectId = await _selectFirebaseProject();
 
   // 2. Check/Install FlutterFire CLI
   final flutterFireSpinner = Spinner('Checking FlutterFire CLI');
@@ -96,10 +100,10 @@ void main() async {
   if (flavors.isEmpty) {
     print('\nℹ️ \x1B[34mNo multi-flavor setup detected (flavorizr.gradle.kts missing or empty).\x1B[0m');
     print('Proceeding with standard configuration.');
-    await _configureStandard();
+    await _configureStandard(projectId: selectedProjectId);
   } else {
     print('2) Multi-Flavor (${flavors.map((f) => f.name).join(', ')})');
-    await _configureFlavors(flavors);
+    await _configureFlavors(flavors, projectId: selectedProjectId);
     // print('\n\x1B[33mConfiguration Mode:\x1B[0m');
     // print('1) Standard (Single project, default paths)');
     // print('2) Multi-Flavor (${flavors.map((f) => f.name).join(', ')})');
@@ -147,13 +151,86 @@ void main() async {
 
 
 Future<String> _getFirebaseCommand() async {
-  if (await _checkCommand('firebase')) return 'firebase';
-  
+  // Only accept a CLI that is really on PATH here — _checkCommand() also
+  // succeeds for the custom Windows path, which would make every later
+  // `firebase ...` call fail with "command not found".
+  try {
+    final result = await Process.run('firebase', ['--version'], runInShell: true);
+    if (result.exitCode == 0) return 'firebase';
+  } catch (_) {}
+
   if (Platform.isWindows && File(kFirebaseCustomPath).existsSync()) {
     return kFirebaseCustomPath;
   }
-  
+
   return 'firebase'; // Fallback
+}
+
+/// Lists the projects of the logged-in account and lets the user pick one.
+/// The chosen id is passed to flutterfire so it never creates a new project.
+Future<String?> _selectFirebaseProject() async {
+  final command = await _getFirebaseCommand();
+  try {
+    final result = await Process.run(
+      command,
+      ['projects:list', '--json'],
+      runInShell: true,
+    );
+    if (result.exitCode != 0) {
+      print('⚠️ Could not list Firebase projects (is the CLI logged in?).');
+      return null;
+    }
+
+    // The CLI may print extra lines around the JSON array.
+    final raw = result.stdout.toString().trim();
+    final start = raw.indexOf('[');
+    final end = raw.lastIndexOf(']');
+    if (start == -1 || end <= start) {
+      print('⚠️ Could not parse the Firebase projects list.');
+      return null;
+    }
+
+    final decoded = jsonDecode(raw.substring(start, end + 1));
+    if (decoded is! List) return null;
+
+    final projects = decoded
+        .whereType<Map>()
+        .map((p) => (
+              id: (p['projectId'] ?? '').toString(),
+              name: (p['displayName'] ?? p['projectId'] ?? '').toString(),
+            ))
+        .where((p) => p.id.isNotEmpty)
+        .toList();
+
+    if (projects.isEmpty) {
+      print('ℹ️ No Firebase projects found for this account.');
+      return null;
+    }
+
+    print('\n📁 \x1B[34mYour Firebase projects:\x1B[0m');
+    for (var i = 0; i < projects.length; i++) {
+      print('  ${i + 1}) ${projects[i].name} (${projects[i].id})');
+    }
+    stdout.write('Select a project number to use (Enter to skip): ');
+    final input = stdin.readLineSync()?.trim() ?? '';
+    if (input.isEmpty) {
+      print('⏩ No project selected — flutterfire may offer to create one.');
+      return null;
+    }
+
+    final index = int.tryParse(input);
+    if (index == null || index < 1 || index > projects.length) {
+      print('⚠️ Invalid selection. Continuing without a fixed project.');
+      return null;
+    }
+
+    final selected = projects[index - 1];
+    print('✅ \x1B[32mUsing existing project: ${selected.name} (${selected.id})\x1B[0m');
+    return selected.id;
+  } catch (e) {
+    print('⚠️ Could not read Firebase projects: $e');
+    return null;
+  }
 }
 
 List<FlavorData> _getFlavorsFromGradle() {
@@ -210,13 +287,17 @@ Future<bool> _checkCommand(String command) async {
   }
 }
 
-Future<void> _configureStandard() async {
+Future<void> _configureStandard({String? projectId}) async {
   print('\n📝 \x1B[34mConfiguring Firebase...\x1B[0m');
   print('The FlutterFire CLI will now open. Please follow the prompts.');
   
   final command = await _getFlutterFireCommand();
   final executable = command.split(' ').first;
-  final args = [...command.split(' ').skip(1), 'configure'];
+  final args = [
+    ...command.split(' ').skip(1),
+    'configure',
+    if (projectId != null) '--project=$projectId',
+  ];
 
   final process = await Process.start(
     executable,
@@ -227,7 +308,7 @@ Future<void> _configureStandard() async {
   await process.exitCode;
 }
 
-Future<void> _configureFlavors(List<FlavorData> flavors) async {
+Future<void> _configureFlavors(List<FlavorData> flavors, {String? projectId}) async {
   for (final flavor in flavors) {
     print('\n📝 \x1B[34mConfiguring ${flavor.name.toUpperCase()} flavor...\x1B[0m');
     await _runFlutterFireConfig(
@@ -235,6 +316,7 @@ Future<void> _configureFlavors(List<FlavorData> flavors) async {
       output: 'lib/firebase_options_${flavor.name}.dart',
       bundleId: flavor.applicationId,
       packageName: flavor.applicationId,
+      projectId: projectId,
     );
   }
 }
@@ -244,6 +326,7 @@ Future<void> _runFlutterFireConfig({
   required String output,
   required String bundleId,
   required String packageName,
+  String? projectId,
 }) async {
   print('--- Configuring for $flavor ---');
   final command = await _getFlutterFireCommand();
@@ -258,6 +341,7 @@ Future<void> _runFlutterFireConfig({
       '--out=$output',
       '--ios-bundle-id=$bundleId',
       '--android-package-name=$packageName',
+      if (projectId != null) '--project=$projectId',
     ],
     runInShell: true,
     mode: ProcessStartMode.inheritStdio,

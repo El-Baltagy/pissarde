@@ -2,12 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 import '../utils_spinner.dart';
 
-
 const String kFirebaseCustomPath = r'D:\programmes\firebase.exe';
+
+class FirebaseAccountInfo {
+  final List<String> accounts;
+  final String? activeAccount;
+  FirebaseAccountInfo({required this.accounts, this.activeAccount});
+}
 
 void main() async {
   print('\x1B[2J\x1B[0;0H'); // Clear console
-  print('🔥 \x1B[31mFirebase CLI Setup for Current Project\x1B[0m');
+  print('🔥 \x1B[31mFirebase Setup for Flutter Project\x1B[0m');
   print('===========================================');
 
   // 1. Check for Firebase CLI
@@ -15,14 +20,13 @@ void main() async {
     print('❌ \x1B[31mFirebase CLI not found.\x1B[0m');
     stdout.write('Would you like to attempt automatic installation? [y/N]: ');
     final installChoice = stdin.readLineSync()?.trim().toLowerCase() ?? '';
-    
+
     if (installChoice == 'y') {
       await _installFirebaseCLI();
-      // Re-check after installation
       if (!await _checkCommand('firebase')) {
-         print('❌ \x1B[31mInstallation failed or firebase is still not in PATH.\x1B[0m');
-         print('Please restart your terminal or install manually: https://firebase.google.com/docs/cli');
-         return;
+        print('❌ \x1B[31mInstallation failed or firebase is still not in PATH.\x1B[0m');
+        print('Please restart your terminal or install manually: https://firebase.google.com/docs/cli');
+        return;
       }
     } else {
       print('👉 Install it manually: https://firebase.google.com/docs/cli#install_the_firebase_cli');
@@ -30,24 +34,21 @@ void main() async {
     }
   }
 
-  // 1.5. Check for Login
-  if (!await _checkFirebaseLogin()) {
-    print('\n👤 \x1B[33mYou are not logged into Firebase.\x1B[0m');
-    stdout.write('Would you like to log in now? [Y/n]: ');
-    final loginChoice = stdin.readLineSync()?.trim().toLowerCase() ?? 'y';
-    if (loginChoice == '' || loginChoice == 'y') {
-      await _triggerFirebaseLogin();
-    } else {
-       print('⚠️ Warning: Many Firebase commands require login.');
-    }
-  } else {
-    print('✅ \x1B[32mAlready logged into Firebase.\x1B[0m');
+  // 2. Account Login & Account Selection
+  final String? activeEmail = await _handleFirebaseAccountSelection();
+  if (activeEmail == null) {
+    print('❌ No active Firebase account selected. Aborting.');
+    return;
   }
 
-  // 1.6. Pick an existing project so flutterfire won't create a new one
-  final String? selectedProjectId = await _selectFirebaseProject();
+  // 3. Project Selection (Enforces picking an existing project)
+  final String? selectedProjectId = await _selectFirebaseProject(activeEmail: activeEmail);
+  if (selectedProjectId == null) {
+    print('❌ No Firebase project selected. Aborting.');
+    return;
+  }
 
-  // 2. Check/Install FlutterFire CLI
+  // 4. Check/Install FlutterFire CLI
   final flutterFireSpinner = Spinner('Checking FlutterFire CLI');
   flutterFireSpinner.start();
   if (!await _checkCommand('flutterfire')) {
@@ -60,10 +61,10 @@ void main() async {
     flutterFireSpinner.stop('✅ FlutterFire CLI is ready.');
   }
 
-  // 3. Add Firebase Core and others
+  // 5. Add Firebase Core and optional plugins
   final pubspecFile = File('pubspec.yaml');
   final pubContent = pubspecFile.readAsStringSync();
-  
+
   if (!pubContent.contains('firebase_core:')) {
     final pubspecSpinner = Spinner('Adding firebase_core');
     pubspecSpinner.start();
@@ -94,66 +95,68 @@ void main() async {
     }
   }
 
-  // 4. Configuration Mode
+  // 6. Configuration Mode (Flavor vs Standard)
   final flavors = _getFlavorsFromGradle();
-  
-  if (flavors.isEmpty) {
-    print('\nℹ️ \x1B[34mNo multi-flavor setup detected (flavorizr.gradle.kts missing or empty).\x1B[0m');
-    print('Proceeding with standard configuration.');
-    await _configureStandard(projectId: selectedProjectId);
-  } else {
-    print('2) Multi-Flavor (${flavors.map((f) => f.name).join(', ')})');
-    await _configureFlavors(flavors, projectId: selectedProjectId);
-    // print('\n\x1B[33mConfiguration Mode:\x1B[0m');
-    // print('1) Standard (Single project, default paths)');
-    // print('2) Multi-Flavor (${flavors.map((f) => f.name).join(', ')})');
-    // stdout.write('Select an option (1-2) [Default: 1]: ');
-    // final choice = stdin.readLineSync()?.trim() ?? '1';
 
-    // if (choice == '2') {
-    //   await _configureFlavors(flavors);
-    // } else {
-    //   await _configureStandard();
-    // }
+  if (flavors.isEmpty) {
+    print('\nℹ️ \x1B[34mNo multi-flavor setup detected. Configuring standard project...\x1B[0m');
+    await _configureStandard(projectId: selectedProjectId, account: activeEmail);
+  } else {
+    print('\n🎯 \x1B[34mMulti-Flavor setup detected: (${flavors.map((f) => f.name).join(', ')})\x1B[0m');
+    await _configureFlavors(flavors, projectId: selectedProjectId, account: activeEmail);
   }
 
-  print('\n\x1B[32m🚀 Firebase setup steps completed!\x1B[0m');
-  print('-------------------------------------------');
+  // 7. Flavor Migration (Only run if flavors exist!)
+  if (flavors.isNotEmpty) {
+    print('\n📦 \x1B[34mMoving Firebase configuration into flavor_config.dart...\x1B[0m');
+    final migrationFile = File('lib/core/tools/firebase/move_firebase_config_into_flavor.dart');
+    if (migrationFile.existsSync()) {
+      final migrationProcess = await Process.start(
+        'dart',
+        ['run', migrationFile.path],
+        runInShell: true,
+        mode: ProcessStartMode.inheritStdio,
+      );
+      await migrationProcess.exitCode;
+    }
 
-  // 5. Automatic Migration
-  print('\n📦 \x1B[34mMoving Firebase configuration into flavor_config.dart...\x1B[0m');
-  final migrationProcess = await Process.start(
-    'dart',
-    ['run', 'lib/core/tools/firebase/move_firebase_config_into_flavor.dart'],
-    runInShell: true,
-    mode: ProcessStartMode.inheritStdio,
-  );
-  await migrationProcess.exitCode;
-/// 5 switch into dev
-  final autoSwitch = await Process.start(
-    'dart',
-    ['run', 'lib/core/tools/flavors/switch_default_flavor.dart','dev'],
-    runInShell: true,
-    mode: ProcessStartMode.inheritStdio,
-  );
-  await autoSwitch.exitCode;
-  print('\nNext Steps:');
-  print('1. Ensure you have initialized Firebase in main.dart:');
-  print('   await Firebase.initializeApp(options: AppFlavorConfig.instance.firebaseOptions);');
-  print('2. For Crashlytics/Messaging, additional native setup may be required.');
+    final switchFlavorFile = File('lib/core/tools/flavors/switch_default_flavor.dart');
+    if (switchFlavorFile.existsSync()) {
+      final autoSwitch = await Process.start(
+        'dart',
+        ['run', switchFlavorFile.path, 'dev'],
+        runInShell: true,
+        mode: ProcessStartMode.inheritStdio,
+      );
+      await autoSwitch.exitCode;
+    }
+  }
 
-  // 6. Update Native Files
+  // 8. Update Native Files
   print('\n🛠️  Updating native build files...');
   _updateProjectBuildGradle();
   _updateAppBuildGradle();
   _updateIosAppDelegate();
+
+  print('\n\x1B[32m🚀 Firebase setup successfully assigned to project "$selectedProjectId"!\x1B[0m');
+  print('===========================================');
+  if (flavors.isEmpty) {
+    print('Next Steps:');
+    print('1. Ensure you initialize Firebase in main.dart:');
+    print("   import 'firebase_options.dart';");
+    print('   ...');
+    print('   WidgetsFlutterBinding.ensureInitialized();');
+    print('   await Firebase.initializeApp(');
+    print('     options: DefaultFirebaseOptions.currentPlatform,');
+    print('   );');
+  } else {
+    print('Next Steps:');
+    print('1. Ensure you initialize Firebase in main.dart:');
+    print('   await Firebase.initializeApp(options: AppFlavorConfig.instance.firebaseOptions);');
+  }
 }
 
-
 Future<String> _getFirebaseCommand() async {
-  // Only accept a CLI that is really on PATH here — _checkCommand() also
-  // succeeds for the custom Windows path, which would make every later
-  // `firebase ...` call fail with "command not found".
   try {
     final result = await Process.run('firebase', ['--version'], runInShell: true);
     if (result.exitCode == 0) return 'firebase';
@@ -163,25 +166,127 @@ Future<String> _getFirebaseCommand() async {
     return kFirebaseCustomPath;
   }
 
-  return 'firebase'; // Fallback
+  return 'firebase';
 }
 
-/// Lists the projects of the logged-in account and lets the user pick one.
-/// The chosen id is passed to flutterfire so it never creates a new project.
-Future<String?> _selectFirebaseProject() async {
+Future<FirebaseAccountInfo> _getFirebaseAccounts() async {
   final command = await _getFirebaseCommand();
   try {
+    final result = await Process.run(command, ['login:list'], runInShell: true);
+    final output = result.stdout.toString();
+    final lines = output.split('\n').map((l) => l.trim()).toList();
+    final accounts = <String>[];
+    String? active;
+
+    final emailRegex = RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
+
+    for (final line in lines) {
+      final match = emailRegex.firstMatch(line);
+      if (match != null) {
+        final email = match.group(0)!;
+        if (!accounts.contains(email)) {
+          accounts.add(email);
+        }
+        if (line.contains('(current)') ||
+            line.toLowerCase().contains('logged in as $email'.toLowerCase())) {
+          active = email;
+        }
+      }
+    }
+
+    if (active == null && accounts.isNotEmpty) {
+      active = accounts.first;
+    }
+
+    return FirebaseAccountInfo(accounts: accounts, activeAccount: active);
+  } catch (_) {
+    return FirebaseAccountInfo(accounts: [], activeAccount: null);
+  }
+}
+
+Future<String?> _handleFirebaseAccountSelection() async {
+  final command = await _getFirebaseCommand();
+  while (true) {
+    final info = await _getFirebaseAccounts();
+
+    if (info.accounts.isEmpty) {
+      print('\n👤 \x1B[33mYou are not logged into Firebase.\x1B[0m');
+      stdout.write('Would you like to log in now? [Y/n]: ');
+      final choice = stdin.readLineSync()?.trim().toLowerCase() ?? 'y';
+      if (choice == '' || choice == 'y') {
+        final proc = await Process.start(command, ['login'], runInShell: true, mode: ProcessStartMode.inheritStdio);
+        await proc.exitCode;
+        continue;
+      } else {
+        print('⚠️ Warning: Firebase operations require login.');
+        return null;
+      }
+    }
+
+    print('\n👤 \x1B[34mLogged-in Firebase Accounts:\x1B[0m');
+    for (var i = 0; i < info.accounts.length; i++) {
+      final email = info.accounts[i];
+      final isCurrent = email == info.activeAccount;
+      print('  ${i + 1}) $email ${isCurrent ? "\x1B[32m(Active)\x1B[0m" : ""}');
+    }
+    final addOptionIndex = info.accounts.length + 1;
+    print('  $addOptionIndex) [+] Log in with another account');
+
+    stdout.write('Select an account to use (1-${info.accounts.length}) [Default: 1]: ');
+    final input = stdin.readLineSync()?.trim() ?? '';
+
+    if (input.isEmpty || input == '1') {
+      final selectedEmail = info.accounts[0];
+      if (selectedEmail != info.activeAccount) {
+        print('🔄 Switching active account to $selectedEmail...');
+        await Process.run(command, ['login:use', selectedEmail], runInShell: true);
+      }
+      print('✅ Using account: $selectedEmail');
+      return selectedEmail;
+    }
+
+    final choiceIndex = int.tryParse(input);
+    if (choiceIndex == addOptionIndex) {
+      print('🔑 Authorizing additional Firebase account...');
+      final addProc = await Process.start(command, ['login:add'], runInShell: true, mode: ProcessStartMode.inheritStdio);
+      await addProc.exitCode;
+      continue;
+    }
+
+    if (choiceIndex != null && choiceIndex >= 1 && choiceIndex <= info.accounts.length) {
+      final selectedEmail = info.accounts[choiceIndex - 1];
+      if (selectedEmail != info.activeAccount) {
+        print('🔄 Switching active account to $selectedEmail...');
+        final switchRes = await Process.run(command, ['login:use', selectedEmail], runInShell: true);
+        if (switchRes.exitCode != 0) {
+          print('⚠️ Could not switch account: ${switchRes.stderr}');
+        }
+      }
+      print('✅ Using account: $selectedEmail');
+      return selectedEmail;
+    }
+
+    print('⚠️ Invalid selection. Please try again.');
+  }
+}
+
+Future<String?> _selectFirebaseProject({required String activeEmail}) async {
+  final command = await _getFirebaseCommand();
+  try {
+    final spinner = Spinner('Fetching Firebase projects');
+    spinner.start();
     final result = await Process.run(
       command,
       ['projects:list', '--json'],
       runInShell: true,
     );
+    spinner.stop('✅ Fetched Firebase projects.');
+
     if (result.exitCode != 0) {
-      print('⚠️ Could not list Firebase projects (is the CLI logged in?).');
+      print('⚠️ Could not list Firebase projects: ${result.stderr}');
       return null;
     }
 
-    // The CLI may print extra lines around the JSON array.
     final raw = result.stdout.toString().trim();
     final start = raw.indexOf('[');
     final end = raw.lastIndexOf(']');
@@ -203,30 +308,26 @@ Future<String?> _selectFirebaseProject() async {
         .toList();
 
     if (projects.isEmpty) {
-      print('ℹ️ No Firebase projects found for this account.');
+      print('ℹ️ No Firebase projects found for account $activeEmail.');
       return null;
     }
 
-    print('\n📁 \x1B[34mYour Firebase projects:\x1B[0m');
+    print('\n📁 \x1B[34mExisting Firebase projects for $activeEmail:\x1B[0m');
     for (var i = 0; i < projects.length; i++) {
       print('  ${i + 1}) ${projects[i].name} (${projects[i].id})');
     }
-    stdout.write('Select a project number to use (Enter to skip): ');
-    final input = stdin.readLineSync()?.trim() ?? '';
-    if (input.isEmpty) {
-      print('⏩ No project selected — flutterfire may offer to create one.');
-      return null;
-    }
 
-    final index = int.tryParse(input);
-    if (index == null || index < 1 || index > projects.length) {
-      print('⚠️ Invalid selection. Continuing without a fixed project.');
-      return null;
+    while (true) {
+      stdout.write('\x1B[33mSelect project number to assign (1-${projects.length}): \x1B[0m');
+      final input = stdin.readLineSync()?.trim() ?? '';
+      final index = int.tryParse(input);
+      if (index != null && index >= 1 && index <= projects.length) {
+        final selected = projects[index - 1];
+        print('✅ \x1B[32mAssigned existing project: ${selected.name} (${selected.id})\x1B[0m');
+        return selected.id;
+      }
+      print('⚠️ Please select an existing project from the list (do not create new).');
     }
-
-    final selected = projects[index - 1];
-    print('✅ \x1B[32mUsing existing project: ${selected.name} (${selected.id})\x1B[0m');
-    return selected.id;
   } catch (e) {
     print('⚠️ Could not read Firebase projects: $e');
     return null;
@@ -239,8 +340,7 @@ List<FlavorData> _getFlavorsFromGradle() {
 
   final content = file.readAsStringSync();
   final flavors = <FlavorData>[];
-  
-  // Regex to find create("flavorName") and its applicationId
+
   final regExp = RegExp(r'create\("(.+?)"\)\s*\{[\s\S]*?applicationId\s*=\s*"(.+?)"', multiLine: true);
   final matches = regExp.allMatches(content);
 
@@ -263,8 +363,7 @@ Future<bool> _checkCommand(String command) async {
   try {
     final result = await Process.run(command, ['--version'], runInShell: true);
     if (result.exitCode == 0) return true;
-    
-    // Check for constant path on Windows
+
     if (command == 'firebase' && Platform.isWindows) {
       if (File(kFirebaseCustomPath).existsSync()) {
         final pResult = await Process.run(kFirebaseCustomPath, ['--version'], runInShell: true);
@@ -274,29 +373,33 @@ Future<bool> _checkCommand(String command) async {
     return false;
   } catch (_) {
     if (command == 'firebase' && Platform.isWindows) {
-       try {
-         if (File(kFirebaseCustomPath).existsSync()) {
-           final pResult = await Process.run(kFirebaseCustomPath, ['--version'], runInShell: true);
-           if (pResult.exitCode == 0) return true;
-         }
-       } catch (__) {
-         return false;
-       }
+      try {
+        if (File(kFirebaseCustomPath).existsSync()) {
+          final pResult = await Process.run(kFirebaseCustomPath, ['--version'], runInShell: true);
+          if (pResult.exitCode == 0) return true;
+        }
+      } catch (__) {
+        return false;
+      }
     }
     return false;
   }
 }
 
-Future<void> _configureStandard({String? projectId}) async {
-  print('\n📝 \x1B[34mConfiguring Firebase...\x1B[0m');
-  print('The FlutterFire CLI will now open. Please follow the prompts.');
-  
+Future<void> _configureStandard({required String projectId, String? account}) async {
+  print('\n📝 \x1B[34mAssigning Firebase project "$projectId"...\x1B[0m');
+
   final command = await _getFlutterFireCommand();
   final executable = command.split(' ').first;
+  final baseArgs = command.split(' ').skip(1).toList();
+
   final args = [
-    ...command.split(' ').skip(1),
+    ...baseArgs,
     'configure',
-    if (projectId != null) '--project=$projectId',
+    '--project=$projectId',
+    if (account != null && account.isNotEmpty) '--account=$account',
+    '--platforms=android,ios',
+    '--yes',
   ];
 
   final process = await Process.start(
@@ -308,15 +411,16 @@ Future<void> _configureStandard({String? projectId}) async {
   await process.exitCode;
 }
 
-Future<void> _configureFlavors(List<FlavorData> flavors, {String? projectId}) async {
+Future<void> _configureFlavors(List<FlavorData> flavors, {required String projectId, String? account}) async {
   for (final flavor in flavors) {
-    print('\n📝 \x1B[34mConfiguring ${flavor.name.toUpperCase()} flavor...\x1B[0m');
+    print('\n📝 \x1B[34mConfiguring ${flavor.name.toUpperCase()} flavor for project "$projectId"...\x1B[0m');
     await _runFlutterFireConfig(
       flavor: flavor.name,
       output: 'lib/firebase_options_${flavor.name}.dart',
       bundleId: flavor.applicationId,
       packageName: flavor.applicationId,
       projectId: projectId,
+      account: account,
     );
   }
 }
@@ -326,7 +430,8 @@ Future<void> _runFlutterFireConfig({
   required String output,
   required String bundleId,
   required String packageName,
-  String? projectId,
+  required String projectId,
+  String? account,
 }) async {
   print('--- Configuring for $flavor ---');
   final command = await _getFlutterFireCommand();
@@ -338,10 +443,13 @@ Future<void> _runFlutterFireConfig({
     [
       ...baseArgs,
       'configure',
+      '--project=$projectId',
+      if (account != null && account.isNotEmpty) '--account=$account',
       '--out=$output',
       '--ios-bundle-id=$bundleId',
       '--android-package-name=$packageName',
-      if (projectId != null) '--project=$projectId',
+      '--platforms=android,ios',
+      '--yes',
     ],
     runInShell: true,
     mode: ProcessStartMode.inheritStdio,
@@ -351,7 +459,6 @@ Future<void> _runFlutterFireConfig({
   // Move Native Files to Flavor Folders
   print('📦 Moving native config files for $flavor...');
 
-  // 1. Android: google-services.json
   final androidSource = File('android/app/google-services.json');
   if (androidSource.existsSync()) {
     final androidTargetDir = Directory('android/app/src/$flavor');
@@ -360,7 +467,6 @@ Future<void> _runFlutterFireConfig({
     print('✅ Moved google-services.json to android/app/src/$flavor/');
   }
 
-  // 2. iOS: GoogleService-Info.plist
   final iosSource = File('ios/Runner/GoogleService-Info.plist');
   if (iosSource.existsSync()) {
     final iosTargetDir = Directory('ios/Runner/Firebase/$flavor');
@@ -375,31 +481,9 @@ Future<String> _getFlutterFireCommand() async {
   return 'dart pub global run flutterfire_cli:flutterfire';
 }
 
-Future<bool> _checkFirebaseLogin() async {
-  final command = await _getFirebaseCommand();
-  try {
-    final result = await Process.run(command, ['projects:list'], runInShell: true);
-    return result.exitCode == 0;
-  } catch (_) {
-    return false;
-  }
-}
-
-Future<void> _triggerFirebaseLogin() async {
-  final command = await _getFirebaseCommand();
-  print('\n🔑 \x1B[34mOpening Firebase login...\x1B[0m');
-  final process = await Process.start(
-    command,
-    ['login'],
-    runInShell: true,
-    mode: ProcessStartMode.inheritStdio,
-  );
-  await process.exitCode;
-}
-
 Future<void> _installFirebaseCLI() async {
   print('Attempting to install Firebase CLI automatically...');
-  
+
   if (await _checkCommand('npm')) {
     final spinner = Spinner('Installing via npm');
     spinner.start();
@@ -409,19 +493,17 @@ Future<void> _installFirebaseCLI() async {
   }
 
   if (Platform.isWindows) {
-    print('NPM not found. Attempting to download standalone binary for Windows...');
     final spinner = Spinner('Downloading firebase.exe');
     spinner.start();
-    
+
     final targetDir = Directory(kFirebaseCustomPath).parent;
     if (!targetDir.existsSync()) targetDir.createSync(recursive: true);
-    
+
     await Process.run('powershell', [
       '-Command',
       'Invoke-WebRequest -Uri "https://firebase.tools/bin/win/latest" -OutFile "$kFirebaseCustomPath"'
     ], runInShell: true);
     spinner.stop('✅ Downloaded firebase.exe to $kFirebaseCustomPath');
-    print('\x1B[33m⚠️ Note: Firebase is now available at: $kFirebaseCustomPath\x1B[0m');
     return;
   }
 
@@ -430,15 +512,34 @@ Future<void> _installFirebaseCLI() async {
 }
 
 void _updateProjectBuildGradle() {
+  final settingsKtsFile = File('android/settings.gradle.kts');
   final ktsFile = File('android/build.gradle.kts');
   final groovyFile = File('android/build.gradle');
+
+  if (settingsKtsFile.existsSync()) {
+    var content = settingsKtsFile.readAsStringSync();
+    if (!content.contains('com.google.gms.google-services')) {
+      if (content.contains('plugins {')) {
+        content = content.replaceFirst(
+          'plugins {',
+          'plugins {\n    id("com.google.gms.google-services") version "4.4.2" apply false',
+        );
+        settingsKtsFile.writeAsStringSync(content);
+        print('✅ Added google-services plugin to android/settings.gradle.kts');
+        return;
+      }
+    } else {
+      print('ℹ️ google-services plugin already present in android/settings.gradle.kts');
+      return;
+    }
+  }
 
   if (ktsFile.existsSync()) {
     var content = ktsFile.readAsStringSync();
     if (!content.contains('com.google.gms.google-services')) {
-      final pluginBlock = 'plugins {\n    id("com.google.gms.google-services") version "4.4.4" apply false\n}\n\n';
+      final pluginBlock = 'plugins {\n    id("com.google.gms.google-services") version "4.4.2" apply false\n}\n\n';
       if (content.contains('plugins {')) {
-        content = content.replaceFirst('plugins {', 'plugins {\n    id("com.google.gms.google-services") version "4.4.4" apply false');
+        content = content.replaceFirst('plugins {', 'plugins {\n    id("com.google.gms.google-services") version "4.4.2" apply false');
       } else {
         content = pluginBlock + content;
       }
@@ -448,9 +549,9 @@ void _updateProjectBuildGradle() {
   } else if (groovyFile.existsSync()) {
     var content = groovyFile.readAsStringSync();
     if (!content.contains('com.google.gms.google-services')) {
-      final pluginBlock = 'plugins {\n    id \'com.google.gms.google-services\' version \'4.4.4\' apply false\n}\n\n';
+      final pluginBlock = 'plugins {\n    id \'com.google.gms.google-services\' version \'4.4.2\' apply false\n}\n\n';
       if (content.contains('plugins {')) {
-        content = content.replaceFirst('plugins {', 'plugins {\n    id \'com.google.gms.google-services\' version \'4.4.4\' apply false');
+        content = content.replaceFirst('plugins {', 'plugins {\n    id \'com.google.gms.google-services\' version \'4.4.2\' apply false');
       } else {
         content = pluginBlock + content;
       }
@@ -468,17 +569,15 @@ void _updateAppBuildGradle() {
     var content = ktsFile.readAsStringSync();
     bool updated = false;
 
-    // Add plugin
     if (!content.contains('id("com.google.gms.google-services")')) {
       content = content.replaceFirst('plugins {', 'plugins {\n    id("com.google.gms.google-services")');
       updated = true;
     }
 
-    // Add dependencies
     if (!content.contains('com.google.firebase:firebase-bom')) {
-      final depBlock = '\ndependencies {\n    implementation(platform("com.google.firebase:firebase-bom:34.13.0"))\n    implementation("com.google.firebase:firebase-analytics")\n}\n';
+      final depBlock = '\ndependencies {\n    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))\n    implementation("com.google.firebase:firebase-analytics")\n}\n';
       if (content.contains('dependencies {')) {
-        content = content.replaceFirst('dependencies {', 'dependencies {\n    implementation(platform("com.google.firebase:firebase-bom:34.13.0"))\n    implementation("com.google.firebase:firebase-analytics")');
+        content = content.replaceFirst('dependencies {', 'dependencies {\n    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))\n    implementation("com.google.firebase:firebase-analytics")');
       } else {
         content += depBlock;
       }
@@ -493,17 +592,15 @@ void _updateAppBuildGradle() {
     var content = groovyFile.readAsStringSync();
     bool updated = false;
 
-    // Add plugin
     if (!content.contains('com.google.gms.google-services')) {
       content = content.replaceFirst('plugins {', 'plugins {\n    id \'com.google.gms.google-services\'');
       updated = true;
     }
 
-    // Add dependencies
     if (!content.contains('com.google.firebase:firebase-bom')) {
-      final depBlock = '\ndependencies {\n    implementation platform(\'com.google.firebase:firebase-bom:34.13.0\')\n    implementation \'com.google.firebase:firebase-analytics\'\n}\n';
+      final depBlock = '\ndependencies {\n    implementation platform(\'com.google.firebase:firebase-bom:33.7.0\')\n    implementation \'com.google.firebase:firebase-analytics\'\n}\n';
       if (content.contains('dependencies {')) {
-        content = content.replaceFirst('dependencies {', 'dependencies {\n    implementation platform(\'com.google.firebase:firebase-bom:34.13.0\')\n    implementation \'com.google.firebase:firebase-analytics\'');
+        content = content.replaceFirst('dependencies {', 'dependencies {\n    implementation platform(\'com.google.firebase:firebase-bom:33.7.0\')\n    implementation \'com.google.firebase:firebase-analytics\'');
       } else {
         content += depBlock;
       }

@@ -77,7 +77,7 @@ class Data with _$Data, EquatableMixin {
   const factory Data({
     required String title,
     required String body,
-    required Data data,
+    required dynamic data,
   }) = _Data;
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);

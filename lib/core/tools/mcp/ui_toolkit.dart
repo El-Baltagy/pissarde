@@ -226,7 +226,7 @@ void _runAnalyzer(String featureName, {required bool autoFix}) {
     }
 
     // ── Rule 3: Hardcoded colors ──────────────────────────────────────────────
-    final colorsRx = RegExp(r'(Colors\.[a-zA-Z]+|Color\(0x[0-9a-fA-F]+\))');
+    final colorsRx = RegExp(r'(?<!App)Colors\.[a-zA-Z]+|(?<!\w)Color\(0x[0-9a-fA-F]+\)');
     if (colorsRx.hasMatch(content)) {
       final n = colorsRx.allMatches(content).length;
       reports.add('⚠️  $n hardcoded Color value(s). Use AppColors instead.');

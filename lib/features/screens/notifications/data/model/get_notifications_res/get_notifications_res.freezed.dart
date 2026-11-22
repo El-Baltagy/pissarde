@@ -564,7 +564,7 @@ Data _$DataFromJson(Map<String, dynamic> json) {
 mixin _$Data {
   String get title => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
-  Data get data => throw _privateConstructorUsedError;
+  dynamic get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -576,9 +576,7 @@ abstract class $DataCopyWith<$Res> {
   factory $DataCopyWith(Data value, $Res Function(Data) then) =
       _$DataCopyWithImpl<$Res, Data>;
   @useResult
-  $Res call({String title, String body, Data data});
-
-  $DataCopyWith<$Res> get data;
+  $Res call({String title, String body, dynamic data});
 }
 
 /// @nodoc
@@ -596,7 +594,7 @@ class _$DataCopyWithImpl<$Res, $Val extends Data>
   $Res call({
     Object? title = null,
     Object? body = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -607,19 +605,11 @@ class _$DataCopyWithImpl<$Res, $Val extends Data>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as Data,
+              as dynamic,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $DataCopyWith<$Res> get data {
-    return $DataCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
   }
 }
 
@@ -630,10 +620,7 @@ abstract class _$$DataImplCopyWith<$Res> implements $DataCopyWith<$Res> {
       __$$DataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String body, Data data});
-
-  @override
-  $DataCopyWith<$Res> get data;
+  $Res call({String title, String body, dynamic data});
 }
 
 /// @nodoc
@@ -648,7 +635,7 @@ class __$$DataImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? body = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_$DataImpl(
       title: null == title
@@ -659,10 +646,10 @@ class __$$DataImplCopyWithImpl<$Res>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as Data,
+              as dynamic,
     ));
   }
 }
@@ -683,7 +670,7 @@ class _$DataImpl extends _Data {
   @override
   final String body;
   @override
-  final Data data;
+  final dynamic data;
 
   @JsonKey(ignore: true)
   @override
@@ -703,7 +690,7 @@ abstract class _Data extends Data {
   const factory _Data(
       {required final String title,
       required final String body,
-      required final Data data}) = _$DataImpl;
+      required final dynamic data}) = _$DataImpl;
   const _Data._() : super._();
 
   factory _Data.fromJson(Map<String, dynamic> json) = _$DataImpl.fromJson;
@@ -713,7 +700,7 @@ abstract class _Data extends Data {
   @override
   String get body;
   @override
-  Data get data;
+  dynamic get data;
   @override
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>

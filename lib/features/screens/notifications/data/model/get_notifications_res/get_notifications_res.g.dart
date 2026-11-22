@@ -60,12 +60,12 @@ Map<String, dynamic> _$$NotificationItemImplToJson(
 _$DataImpl _$$DataImplFromJson(Map<String, dynamic> json) => _$DataImpl(
       title: json['title'] as String,
       body: json['body'] as String,
-      data: Data.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'],
     );
 
 Map<String, dynamic> _$$DataImplToJson(_$DataImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'body': instance.body,
-      'data': instance.data.toJson(),
+      'data': instance.data,
     };

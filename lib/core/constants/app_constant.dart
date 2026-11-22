@@ -105,5 +105,9 @@ abstract class AppConstant {
   static const String getPendingApprovalLeavesKeyCash = 'requests_getPendingApprovalLeaves_cache';
 
   static const int getPendingApprovalLeavesKeyCode = 4950;
+
+  static const String getNotificationKeyCash = 'notifications_getNotification_cache';
+
+  static const int getNotificationKeyCode = 3282;
 }
 

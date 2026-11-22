@@ -3,6 +3,7 @@ import 'package:newf/core/shared/methods/hex_color.dart';
 
 abstract class AppColors {
 
+   static const Color transparent = Colors.transparent;
    static const Color green = Colors.green;
    static const Color blue = Colors.blue;
    static const Color gold = Color(0xFFE2BE7F);
@@ -33,7 +34,7 @@ abstract class AppColors {
    static const Color darkBorder = Color(0xFF2D3748);
 
    // Attendance Design Colors
-   // static const Color headerBackground = Color(0xFF1B3B8B);
+   static const Color headerBackground = Color(0xFF1B3B8B);
    static const Color headerBadgeBg = Color(0xFF2B4D9D);
    static const Color headerTimeDateBg = Color(0xFF244493);
    static const Color notificationRed = Color(0xFFEF4444);

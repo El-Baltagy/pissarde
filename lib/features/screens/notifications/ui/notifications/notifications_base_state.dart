@@ -6,7 +6,7 @@ abstract class NotificationsPageBaseState extends State<NotificationsPage> {
   @override
   void initState() {
     notificationsCubit = NotificationsCubit.get(context: context);
-    // TODO: implement initState
+    notificationsCubit.init();
     super.initState();
   }
 

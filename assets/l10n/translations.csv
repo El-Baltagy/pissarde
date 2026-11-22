@@ -261,3 +261,20 @@ your_rights,your rights,حقوقك,haklarınız
 you_may_request_access_correction_or_deletion_of_your_personal_data_by_contacting_your_administrator,you may request access correction or deletion of your personal data by contacting your administrator,يمكنك طلب تصحيح الوصول أو حذف بياناتك الشخصية عن طريق الاتصال بالمسؤول لديك,Yöneticinizle iletişime geçerek kişisel verilerinizin erişiminin düzeltilmesini veya silinmesini talep edebilirsiniz.
 contact_us,contact us,اتصل بنا,bize Ulaşın
 for_questions_about_this_policy_please_contact_your_branch_manager_or_system_administrator,for questions about this policy please contact your branch manager or system administrator,للأسئلة حول هذه السياسة، يرجى الاتصال بمدير فرعك أو مسؤول النظام,Bu politikayla ilgili sorularınız için lütfen şube yöneticiniz veya sistem yöneticiniz ile iletişime geçin.
+
+notifications_title,Notifications,الإشعارات,Bildirimler
+notifications_empty_title,No notifications yet,لا توجد إشعارات حالياً,Henüz bildirim yok
+notifications_empty_desc,All your updates and alerts will appear here,ستظهر جميع التحديثات والتنبيهات الخاصة بك هنا فور وصولها,Tüm güncellemeleriniz ve uyarılarınız burada görünecektir
+notifications_filter_all,All,الكل,Tümü
+notifications_filter_leaves,Leaves,الإجازات,İzinler
+notifications_filter_attendance,Attendance,الحضور,Katılım
+notifications_filter_reminders,Reminders,التذكيرات,Hatırlatıcılar
+notifications_total_count,Total notifications: {},إجمالي الإشعارات: {},Toplam bildirim: {}
+notifications_error_title,Failed to load notifications,حدث خطأ أثناء تحميل الإشعارات,Bildirimler yüklenirken hata oluştu
+notifications_retry,Retry,إعادة المحاولة,Tekrar Dene
+notifications_mark_all_read,Mark all as read,تحديد الكل كمقروء,Tümünü okundu olarak işaretle
+notifications_new_badge,New,جديد,Yeni
+notification_type_leave_request,Leave Request,طلب إجازة,İzin Talebi
+notification_type_leave_review,Leave Review,مراجعة الإجازة,İzin İncelemesi
+notification_type_reminder,Reminder,تذكير,Hatırlatıcı
+notification_type_general,General,عام,Genel

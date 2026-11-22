@@ -1,10 +1,15 @@
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:newf/core/app/app.dart';
+import 'package:newf/core/app/route.dart';
+import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/notification_helper/service/notification_types/attendance_notification.dart';
 import 'package:newf/core/notification_helper/service/notification_types/default_notification.dart';
 import 'package:newf/core/notification_helper/service/notification_types/leave_notification.dart';
 import 'package:newf/core/notification_helper/service/notification_types/shift_notification.dart';
+import 'package:newf/features/screens/main_navigation/controller/main_navigation_cubit.dart';
+import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
 import 'package:newf/main.dart';
 
 abstract class NotificationBase {
@@ -22,6 +27,46 @@ abstract class NotificationBase {
       });
     } else {
       dev.log('Failed to navigate: navigatorKey.currentContext remained null after 20 attempts.');
+    }
+  }
+
+  /// Navigates to main home, sets index to 1 (Notifications tab), and reloads notifications.
+  static void navigateToNotificationsTab() {
+    navigateWhenMounted(() {
+      MainNavigationCubit.pendingTabIndex = 1;
+
+      // Navigate to main home
+      appRouter.navigate(MainNavigationRoute(args: MainNavigationRouteArgs.noArgs()));
+      appRouter.popUntil((route) => route.settings.name == MainNavigationRoute.name);
+
+      _switchToTabAndReload(1);
+    });
+  }
+
+  static void _switchToTabAndReload(int targetIndex, [int attempts = 0]) {
+    if (MainNavigationCubit.instance != null) {
+      MainNavigationCubit.instance!.changeTab(targetIndex);
+      if (NotificationsCubit.instance != null) {
+        NotificationsCubit.instance!.getNotificationFunc(Reload());
+      }
+      return;
+    }
+
+    final context = navigatorKey.currentContext;
+    if (context != null) {
+      try {
+        MainNavigationCubit.get(context: context).changeTab(targetIndex);
+        try {
+          NotificationsCubit.get(context: context).getNotificationFunc(Reload());
+        } catch (_) {}
+        return;
+      } catch (_) {}
+    }
+
+    if (attempts < 20) {
+      Future.delayed(const Duration(milliseconds: 150), () {
+        _switchToTabAndReload(targetIndex, attempts + 1);
+      });
     }
   }
 
@@ -53,7 +98,7 @@ abstract class NotificationBase {
   /// Handles navigation when a notification response with a payload is received.
   static void handleNavigationFromPayload(String? payload) {
     if (payload == null || payload.isEmpty) {
-      DefaultNotification.instance.handleNotificationNavigate({});
+      navigateToNotificationsTab();
       return;
     }
 
@@ -66,7 +111,7 @@ abstract class NotificationBase {
       handler.handleNotificationNavigate(data);
     } catch (e, stack) {
       dev.log('Error parsing notification payload: $e', error: e, stackTrace: stack);
-      DefaultNotification.instance.handleNotificationNavigate({});
+      navigateToNotificationsTab();
     }
   }
 }

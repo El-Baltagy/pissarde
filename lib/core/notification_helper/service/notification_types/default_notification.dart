@@ -1,6 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:newf/core/app/app.dart';
-import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/notification_helper/service/alert_notification_mixin.dart';
 import 'package:newf/core/notification_helper/service/base_notification_type.dart';
@@ -31,8 +29,6 @@ class DefaultNotification extends NotificationBase with NotificationAlertMixin {
 
   @override
   void handleNotificationNavigate(Map<String, dynamic> data) {
-    NotificationBase.navigateWhenMounted(() {
-      appRouter.push(NotificationsRoute(args: NotificationsRouteArgs.noArgs()));
-    });
+    NotificationBase.navigateToNotificationsTab();
   }
 }

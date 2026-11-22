@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/localization/localization.dart';
+import 'package:newf/core/notification_helper/fcm_handler.dart';
 import 'package:newf/core/storage/hive_storage.dart';
 import 'package:newf/core/theming/theme_cubit.dart';
 import 'firebase_options.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FcmHandler.initFCM();
   await HiveStorage().init();
   await EasyLocalization.ensureInitialized();
   await CodegenLoader.init();

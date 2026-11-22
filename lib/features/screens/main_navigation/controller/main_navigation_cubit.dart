@@ -8,14 +8,19 @@ import 'package:newf/main.dart';
 part 'main_navigation_state.dart';
 
 class MainNavigationCubit extends BaseCubit<MainNavigationState> {
-  MainNavigationCubit(this._service) : super(MainNavigationLoaded());
+  MainNavigationCubit(this._service) : super(MainNavigationLoaded()) {
+    instance = this;
+  }
+
+  static MainNavigationCubit? instance;
+  static int? pendingTabIndex;
 
   /// Depends on the abstraction [BaseMainNavigationService], not on a concrete implementation.
   // ignore: unused_field
   final BaseMainNavigationService _service;
 
   static MainNavigationCubit get({BuildContext? context, bool listen = false}) =>
-      BlocProvider.of(context ?? navigatorKey.currentContext!, listen: listen);
+      instance ?? BlocProvider.of(context ?? navigatorKey.currentContext!, listen: listen);
 
   // Always holds the latest combined state — used by copyWith
   MainNavigationLoaded get _current => state is MainNavigationLoaded
@@ -29,5 +34,13 @@ class MainNavigationCubit extends BaseCubit<MainNavigationState> {
   void changeTab(int index) {
     if (_current.selectedIndex == index) return;
     emit(_current.copyWith(selectedIndex: index));
+  }
+
+  @override
+  Future<void> close() {
+    if (instance == this) {
+      instance = null;
+    }
+    return super.close();
   }
 }

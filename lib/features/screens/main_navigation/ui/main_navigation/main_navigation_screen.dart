@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
@@ -14,10 +13,10 @@ import 'package:newf/features/screens/login/controller/login_state.dart';
 import 'package:newf/features/screens/main_navigation/controller/main_navigation_cubit.dart';
 import 'package:newf/features/screens/main_navigation/ui/main_navigation/widgets/custom_bottom_nav_bar.dart';
 import 'package:newf/features/screens/notifications/ui/notifications/notifications_screen.dart';
+import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
  import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
  import '../../../login/controller/login_cubit.dart';
-import 'package:newf/core/extension/context.dart';
 
 part 'main_navigation_base_state.dart';
 

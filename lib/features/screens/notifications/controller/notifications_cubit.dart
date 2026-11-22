@@ -12,32 +12,35 @@ import 'package:newf/features/screens/notifications/service/base_notifications_s
 part 'notifications_state.dart';
 
 class NotificationsCubit extends BaseCubit<NotificationsState> {
-   NotificationsCubit(this._service) : super(NotificationsLoaded()) ;
+  NotificationsCubit(this._service) : super(NotificationsLoaded()) {
+    instance = this;
+  }
+
+  static NotificationsCubit? instance;
 
   /// Depends on the abstraction [BaseNotificationsService], not on a concrete implementation.
   final BaseNotificationsService _service;
   
-     static NotificationsCubit get({BuildContext? context,bool listen=false}) =>
-      BlocProvider.of(context??navigatorKey.currentContext!,listen: listen);
+  static NotificationsCubit get({BuildContext? context, bool listen = false}) =>
+      instance ?? BlocProvider.of(context ?? navigatorKey.currentContext!, listen: listen);
   
-    // Always holds the latest combined state — used by copyWith
-   NotificationsLoaded get _current => state is NotificationsLoaded
-       ? state as NotificationsLoaded
-       : NotificationsLoaded();
-       
-      int get getNotificationKeyCode => AppConstant.getNotificationKeyCode;
+  // Always holds the latest combined state — used by copyWith
+  NotificationsLoaded get _current => state is NotificationsLoaded
+      ? state as NotificationsLoaded
+      : NotificationsLoaded();
+      
+  int get getNotificationKeyCode => AppConstant.getNotificationKeyCode;
 
   @override
   Future<void> init() async {
     await getNotificationFunc(Init());
   }
-  
 
-  Future<void> getNotificationFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
+  Future<void> getNotificationFunc(BaseRequestBackType baseRequestBackType, {NoParameters? parameter}) async {
     await CancelManager.runCancelableFun(getNotificationKeyCode, (token) async {
       await _service.getNotificationServ(
         RequestCallbackObserver<GetNotificationsRes, NoParameters>(
-          baseRequestBackType: baseRequestBackType ,
+          baseRequestBackType: baseRequestBackType,
           parameter: parameter,
           cancelToken: token,
           onLoadCallback: () => safeEmit(_current.copyWith(getNotificationState: Loading())),
@@ -47,9 +50,12 @@ class NotificationsCubit extends BaseCubit<NotificationsState> {
       );
     });
   }
+
   @override
   Future<void> close() {
-    // add every key in file
+    if (instance == this) {
+      instance = null;
+    }
     CancelManager.cancel(getNotificationKeyCode);
     return super.close();
   }

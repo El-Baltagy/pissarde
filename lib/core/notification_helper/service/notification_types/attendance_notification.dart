@@ -1,6 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:newf/core/app/app.dart';
-import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/notification_helper/service/alert_notification_mixin.dart';
 import 'package:newf/core/notification_helper/service/base_notification_type.dart';
@@ -29,8 +27,6 @@ class AttendanceNotification extends NotificationBase with NotificationAlertMixi
 
   @override
   void handleNotificationNavigate(Map<String, dynamic> data) {
-    NotificationBase.navigateWhenMounted(() {
-      appRouter.push(HomeRoute(args: HomeRouteArgs.noArgs()));
-    });
+    NotificationBase.navigateToNotificationsTab();
   }
 }

@@ -41,18 +41,18 @@ abstract class EndPoints {
   static String reviewLeaveRequest(dynamic id) => "/api/leaves/$id/review";
 
   // طلبات الإجازة المعلقة بانتظار موافقة (المشرف / HR / الإدارة)
-  static const String leaveApprovals = "/api/leaves/approvals";
+  static const String getPendingApprovalLeaves = "/api/leaves/approvals";
 
   /// استعراض طلبات الإجازة السابقة الخاصة بالموظف
-  static const String myLeaveRequests = "/api/leaves/my-requests";
+   static const String getMyLeaveRequests = '/api/leaves/my-requests';
 
 // تقديم طلب إجازة جديد (مع إمكانية إرفاق تقرير
   static const String createLeaveRequest = "/api/leaves";
 
   // استعلام رصيد الإجازات المتبقي والمستهلك للسنة
-  static const String leaveBalances = "/api/leaves/balances";
+  static const String getLeaveBalances = "/api/leaves/balances";
   // قائمة أنواع الإجازات  (سنوية، مرضية،
-  static const String leaveTypes = "/api/leaves/types";
+  static const String getLeaveTypes = "/api/leaves/types";
 
   ///attendance
 
@@ -71,17 +71,10 @@ abstract class EndPoints {
   static const String getProfile = "/api/auth/me";
   static const String login = '/api/auth/login';
   static const String holidays = "/api/holidays";
+  static const String getNotification  = "api/notifications";
 
   static const String baseUrl = "https://team.pissarde.com";
 
 
 
-
-  static const String getMyLeaveRequests = '/api/leaves/my-requests';
-
-  static const String getLeaveTypes = '/api/leaves/types';
-
-  static const String getLeaveBalances = '/api/leaves/balances';
-
-  static const String getPendingApprovalLeaves = '/api/leaves/approvals';
 }

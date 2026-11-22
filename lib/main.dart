@@ -1,6 +1,7 @@
 
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,13 +9,16 @@ import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/localization/localization.dart';
 import 'package:newf/core/storage/hive_storage.dart';
 import 'package:newf/core/theming/theme_cubit.dart';
-
+import 'firebase_options.dart';
 import 'core/app/app.dart';
 
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'Main Navigator');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await HiveStorage().init();
   await EasyLocalization.ensureInitialized();
   await CodegenLoader.init();

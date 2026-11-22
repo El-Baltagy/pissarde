@@ -1,52 +1,58 @@
 {
-  "leave_types": [
-    {
-      "id": 1,
-      "name": "Annual Vacation Leave",
-      "code": "annual",
-      "default_days_per_year": 14,
-      "requires_attachment": false,
-      "is_paid": true,
-      "is_active": true,
-      "description": "Standard paid annual vacation leave allocation.",
-      "created_at": "2026-10-25T09:49:38.000000Z",
-      "updated_at": "2026-10-25T09:49:38.000000Z"
-    },
-    {
-      "id": 2,
-      "name": "Certified Medical Sick Leave",
-      "code": "sick",
-      "default_days_per_year": 10,
-      "requires_attachment": true,
-      "is_paid": true,
-      "is_active": true,
-      "description": "Medical sick leave requiring an official medical certificate.",
-      "created_at": "2026-10-25T09:49:38.000000Z",
-      "updated_at": "2026-10-25T09:49:38.000000Z"
-    },
-    {
-      "id": 3,
-      "name": "Casual & Emergency Leave",
-      "code": "casual",
-      "default_days_per_year": 5,
-      "requires_attachment": false,
-      "is_paid": true,
-      "is_active": true,
-      "description": "Short-notice casual leave for urgent personal or family emergencies.",
-      "created_at": "2026-10-25T09:49:38.000000Z",
-      "updated_at": "2026-10-25T09:49:38.000000Z"
-    },
-    {
-      "id": 4,
-      "name": "Unpaid Leave of Absence",
-      "code": "unpaid",
-      "default_days_per_year": 0,
-      "requires_attachment": false,
-      "is_paid": false,
-      "is_active": true,
-      "description": "Unpaid time off subject to management approval.",
-      "created_at": "2026-10-25T09:49:38.000000Z",
-      "updated_at": "2026-10-25T09:49:38.000000Z"
-    }
-  ]
+  "notifications": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": "1",
+        "notifiable_id": 1,
+        "data": {
+          "title": "طلب إجازة جديد",
+          "body": "قدّم أحمد طلب إجازة.",
+          "data": {
+            "type": "leave_request",
+            "leave_id": 101,
+            "status": "pending"
+          }
+        },
+        "read_at": null,
+        "created_at": "2026-11-21T00:52:42.000000Z",
+        "updated_at": "2026-11-21T00:52:42.000000Z"
+      },
+      {
+        "id": "2",
+        "notifiable_id": 1,
+        "data": {
+          "title": "تمت الموافقة على الإجازة",
+          "body": "تمت الموافقة على طلب الإجازة رقم 98.",
+          "data": {
+            "type": "leave_review",
+            "leave_id": 98,
+            "status": "approved"
+          }
+        },
+        "read_at": null,
+        "created_at": "2026-11-21T00:52:42.000000Z",
+        "updated_at": "2026-11-21T00:52:42.000000Z"
+      },
+      {
+        "id": "3",
+        "type": "App\\Notifications\\PushNotification",
+        "notifiable_type": "App\\Models\\User",
+        "notifiable_id": 1,
+        "data": {
+          "title": "تذكير",
+          "body": "لا تنسَ تسجيل الحضور اليوم.",
+          "data": {
+            "type": "reminder"
+          }
+        },
+        "read_at": null,
+        "created_at": "2026-11-21T00:52:42.000000Z",
+        "updated_at": "2026-11-21T00:52:42.000000Z"
+      }
+    ],
+
+    "last_page": 1,
+     "total": 3
+  }
 }

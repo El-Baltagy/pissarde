@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    OnBoardingRoute.name: (routeData) {
+      final args = routeData.argsAs<OnBoardingRouteArgs>(orElse: () =>   OnBoardingRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: OnBoardingPage(
+           args: args ,
+        )),
+      );
+    },
     PrivacyPolicyRoute.name: (routeData) {
       final args = routeData.argsAs<PrivacyPolicyRouteArgs>(orElse: () =>   PrivacyPolicyRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
@@ -26,7 +36,7 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     NotificationsRoute.name: (routeData) {
-      final args = routeData.argsAs<NotificationsRouteArgs>(orElse: () =>   NotificationsRouteArgs.noArgs());
+      final args = routeData.argsAs<NotificationsRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -478,8 +488,8 @@ class NotificationsRoute extends PageRouteInfo<NotificationsRouteArgs> {
   PageInfo<NotificationsRouteArgs>(name);
 }
 class NotificationsRouteArgs {
-  const NotificationsRouteArgs( );
-   static NotificationsRouteArgs noArgs()=>NotificationsRouteArgs();
+  const NotificationsRouteArgs(this.notificationsCubit );
+  final NotificationsCubit notificationsCubit;
 }
 
 
@@ -548,4 +558,26 @@ class PrivacyPolicyRoute extends PageRouteInfo<PrivacyPolicyRouteArgs> {
 class PrivacyPolicyRouteArgs {
   const PrivacyPolicyRouteArgs( );
    static PrivacyPolicyRouteArgs noArgs()=>PrivacyPolicyRouteArgs();
+}
+
+/// generated route for
+/// [OnBoardingPage]
+class OnBoardingRoute extends PageRouteInfo<OnBoardingRouteArgs> {
+  OnBoardingRoute({
+   required OnBoardingRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    OnBoardingRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'OnBoardingRoute';
+
+  static const PageInfo<OnBoardingRouteArgs> page =
+  PageInfo<OnBoardingRouteArgs>(name);
+}
+class OnBoardingRouteArgs {
+  const OnBoardingRouteArgs( );
+   static OnBoardingRouteArgs noArgs()=>OnBoardingRouteArgs();
 }

@@ -69,7 +69,7 @@ dependencies:
   geolocator: ^14.1.2
   flutter_map: ^8.3.2
   latlong2: ^0.10.1
-  flutter_local_notifications: ^22.3.3
+  flutter_local_notifications:
 
 dev_dependencies:
   flutter_test:
@@ -105,4 +105,4 @@ flutter:
   assets:
     - assets/l10n/
     - assets/images/
-    - assets/icons/
+    - assets/images/on_boaring/

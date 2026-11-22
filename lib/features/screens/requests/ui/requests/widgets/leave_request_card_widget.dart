@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -53,7 +54,10 @@ class LeaveRequestCardWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(request.leave_type.name, style: AppTextStyles.font14Bold),
+                      Text(
+                        request.leave_type.name,
+                        style: AppTextStyles.font14Bold,
+                      ),
                       const SizedBox(height: AppSizes.s2),
                       Text(
                         '${request.total_days} ${'total_days'.tr()}',
@@ -71,18 +75,39 @@ class LeaveRequestCardWidget extends StatelessWidget {
             // Dates row
             Row(
               children: [
-                _infoChip(Icons.calendar_today_outlined, request.start_date),
+                _infoChip(Icons.calendar_today_outlined, DateTimeHelper.formatDateTimeFromString(
+                  request.start_date,
+                  DateFormat(
+                    (DateTimeHelper.formatDateOnly ),
+                  ),
+                ),),
                 const SizedBox(width: AppSizes.s8),
-                const Icon(Icons.arrow_forward, size: AppSizes.s14, color: AppColors.contractorGreyText),
+                const Icon(
+                  Icons.arrow_forward,
+                  size: AppSizes.s14,
+                  color: AppColors.contractorGreyText,
+                ),
                 const SizedBox(width: AppSizes.s8),
-                _infoChip(Icons.calendar_today_outlined, request.end_date),
+                _infoChip(
+                  Icons.calendar_today_outlined,
+                  DateTimeHelper.formatDateTimeFromString(
+                    request.end_date,
+                    DateFormat(
+                      (DateTimeHelper.formatDateOnly ),
+                    ),
+                  ),
+                ),
               ],
             ),
+
+            const SizedBox(width: AppSizes.s8),
             if (request.reason != null && request.reason!.isNotEmpty) ...[
               const SizedBox(height: AppSizes.s8),
               Text(
                 request.reason!,
-                style: AppTextStyles.font12Regular.copyWith(color: AppColors.contractorGreyText),
+                style: AppTextStyles.font12Regular.copyWith(
+                  color: AppColors.contractorGreyText,
+                ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -94,15 +119,29 @@ class LeaveRequestCardWidget extends StatelessWidget {
                 alignment: AlignmentDirectional.centerEnd,
                 child: OutlinedButton.icon(
                   onPressed: () => _onCancel(context),
-                  icon: const Icon(Icons.cancel_outlined, size: AppSizes.s16, color: AppColors.primaryActionRed),
+                  icon: const Icon(
+                    Icons.cancel_outlined,
+                    size: AppSizes.s16,
+                    color: AppColors.primaryActionRed,
+                  ),
                   label: Text(
                     'cancel_request'.tr(),
-                    style: AppTextStyles.font12Regular.copyWith(color: AppColors.primaryActionRed),
+                    style: AppTextStyles.font12Regular.copyWith(
+                      color: AppColors.primaryActionRed,
+                    ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: AppPadding.p12, vertical: AppPadding.p6),
-                    side: const BorderSide(color: AppColors.primaryActionRed, width: AppSizes.s1),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.r8)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppPadding.p12,
+                      vertical: AppPadding.p6,
+                    ),
+                    side: const BorderSide(
+                      color: AppColors.primaryActionRed,
+                      width: AppSizes.s1,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppSizes.r8),
+                    ),
                   ),
                 ),
               ),
@@ -134,8 +173,14 @@ class LeaveRequestCardWidget extends StatelessWidget {
         text = AppColors.tagReviewText;
     }
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8, vertical: AppPadding.p4),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(AppSizes.r8)),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppPadding.p8,
+        vertical: AppPadding.p4,
+      ),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(AppSizes.r8),
+      ),
       child: Text(
         request.status.tr(),
         style: AppTextStyles.font11Bold.copyWith(color: text),

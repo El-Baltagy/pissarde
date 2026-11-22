@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
+import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -16,7 +18,9 @@ import 'package:newf/features/screens/notifications/ui/notifications/notificatio
 import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
  import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
- import '../../../login/controller/login_cubit.dart';
+ import '../../../../../core/notification_helper/fcm_handler.dart';
+import '../../../login/controller/login_cubit.dart';
+import '../../../notifications/data/model/send_fcm_parameter.dart';
 
 part 'main_navigation_base_state.dart';
 
@@ -33,6 +37,9 @@ class MainNavigationPage extends StatefulWidget implements AutoRouteWrapper {
           create: (context) => AppLocator()()(),
         ),
         BlocProvider<LoginCubit>(
+          create: (context) => AppLocator()()(),
+        ),
+        BlocProvider<NotificationsCubit>(
           create: (context) => AppLocator()()(),
         ),
       ],
@@ -52,7 +59,9 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
     super.initState();
     _pages = [
       const HomePage(args: HomeRouteArgs()).wrappedRoute(context),
-      const NotificationsPage(args: NotificationsRouteArgs()).wrappedRoute(context),
+        NotificationsPage(args: NotificationsRouteArgs(
+          notificationsCubit
+      )).wrappedRoute(context),
       const RequestsPage(args: RequestsRouteArgs()).wrappedRoute(context),
        ProfilePage(args: ProfileRouteArgs(
         LoginCubit.get(context: context),
@@ -77,6 +86,7 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
           if (loginState.baseEmit is ErrorState) {
             final failure = (loginState.baseEmit as ErrorState).failure;
             return Scaffold(
+
               body: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(AppPadding.p24),
@@ -113,6 +123,18 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
 
             return Scaffold(
               extendBody: true,
+              floatingActionButton: kDebugMode?
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: FloatingActionButton(onPressed:() async {
+                  notificationsCubit.setFcmTokenIntoDBFunc(
+                      SendFcmParameter(userId: StorageHelper.userData!.id.toString(),
+                          fcmToken:await FcmHandler.fcmToken()??''));
+                },
+                  child: Icon(Icons.add),
+                ),
+              ):null
+              ,
               body: IndexedStack(
                 index: selectedIndex,
                 children: _pages,
@@ -121,6 +143,9 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
                 currentIndex: selectedIndex,
                 onTap: (index) {
                   mainNavigationCubit.changeTab(index);
+                  if(index==1){
+                    notificationsCubit.getNotificationFunc(Reload());
+                  }
                 },
               ),
             );

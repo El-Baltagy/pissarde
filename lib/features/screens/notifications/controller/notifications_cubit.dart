@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/features/screens/notifications/data/model/get_notifications_res/get_notifications_res.dart';
 import 'package:newf/main.dart';
 import 'package:newf/features/screens/notifications/service/base_notifications_service.dart';
+
+import '../data/model/send_fcm_parameter.dart';
 part 'notifications_state.dart';
 
 class NotificationsCubit extends BaseCubit<NotificationsState> {
@@ -31,9 +33,11 @@ class NotificationsCubit extends BaseCubit<NotificationsState> {
       
   int get getNotificationKeyCode => AppConstant.getNotificationKeyCode;
 
+    int get setFcmTokenIntoDBKeyCode => AppConstant.setFcmTokenIntoDBKeyCode;
+
   @override
   Future<void> init() async {
-    await getNotificationFunc(Init());
+    await getNotificationFunc(Reload());
   }
 
   Future<void> getNotificationFunc(BaseRequestBackType baseRequestBackType, {NoParameters? parameter}) async {
@@ -53,10 +57,27 @@ class NotificationsCubit extends BaseCubit<NotificationsState> {
 
   @override
   Future<void> close() {
+    // add every key in file
+    CancelManager.cancel(setFcmTokenIntoDBKeyCode);
+
     if (instance == this) {
       instance = null;
     }
     CancelManager.cancel(getNotificationKeyCode);
     return super.close();
+  }
+
+  Future<void> setFcmTokenIntoDBFunc( SendFcmParameter  parameter ) async {
+    await CancelManager.runCancelableFun(setFcmTokenIntoDBKeyCode, (token) async {
+      await _service.setFcmTokenIntoDBServ(
+        RequestCallbackObserver<bool, SendFcmParameter>(
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(setFcmTokenIntoDBState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(setFcmTokenIntoDBState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(setFcmTokenIntoDBState: ErrorState(failure))),
+        ),
+      );
+    });
   }
 }

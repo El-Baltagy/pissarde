@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/constants/app_assets.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -39,10 +40,16 @@ class _SplashPageState extends State<SplashPage>
 
     _controller.forward();
 
-    // Navigate to LoginRoute after 4 seconds
+    // Navigate based on onboarding and auth status
     _navigationTimer = Timer(const Duration(seconds: 4), () {
       if (mounted) {
-        context.replace(  MainNavigationRoute(args: MainNavigationRouteArgs()));
+        if (!StorageHelper.hasViewedOnboarding) {
+          context.replace(OnBoardingRoute(args: OnBoardingRouteArgs.noArgs()));
+        } else if (StorageHelper.isLogined) {
+          context.replace(MainNavigationRoute(args: MainNavigationRouteArgs.noArgs()));
+        } else {
+          context.replace(const LoginRoute());
+        }
       }
     });
   }

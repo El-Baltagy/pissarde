@@ -21,9 +21,8 @@ class NotificationsPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<NotificationsCubit>(
-      create: (context) => AppLocator()()(),
-      child: this,
+    return BlocProvider<NotificationsCubit>.value(value: args.notificationsCubit,
+    child: this,
     );
   }
 

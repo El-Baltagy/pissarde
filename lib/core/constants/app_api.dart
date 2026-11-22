@@ -72,7 +72,7 @@ abstract class EndPoints {
   static const String login = '/api/auth/login';
   static const String holidays = "/api/holidays";
   static const String getNotification = "/api/notifications";
-  static const String sendFcmNotification = "/api/device-tokens";
+  static const String setFcmTokenIntoDB = "/api/device-tokens";
 
   static const String baseUrl = "https://team.pissarde.com";
 

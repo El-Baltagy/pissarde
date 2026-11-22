@@ -55,9 +55,9 @@ abstract class NotificationBase {
     final context = navigatorKey.currentContext;
     if (context != null) {
       try {
-        MainNavigationCubit.get(context: context).changeTab(targetIndex);
+        MainNavigationCubit.instance?.changeTab(targetIndex);
         try {
-          NotificationsCubit.get(context: context).getNotificationFunc(Reload());
+          NotificationsCubit.instance?.getNotificationFunc(Reload());
         } catch (_) {}
         return;
       } catch (_) {}

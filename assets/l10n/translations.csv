@@ -202,7 +202,7 @@ drag_map_to_pick_location,drag map to pick location,اسحب الخريطة لا
 notificications,notificications,الإشعارات,bildirimler
 
 my_leave_requests,my leave requests,طلبات إجازتي,izin taleplerim
-leave_balance,leave balance,ترك الرصيد,bakiyeyi bırak
+leave_balance,leave balance, الرصيد المتبقي,bakiyeyi bırak
 new_leave_request,new leave request,طلب إجازة جديدة,yeni izin talebi
 leave_type,leave type,نوع الإجازة,izin türü
 start_date,start date,تاريخ البدء,başlangıç ​​tarihi
@@ -222,8 +222,8 @@ no_leave_requests,no leave requests,لا طلبات الإجازة,izin talebi y
 no_leave_balances,no leave balances,لا أرصدة الإجازة,izin bakiyesi yok
 no_pending_approvals,no pending approvals,لا توجد موافقات معلقة,bekleyen onay yok
 leave_created_success,leave created success,الإجازة خلقت النجاح,yaratılan başarıyı bırakmak
-leave_cancelled_success,leave cancelled success,ترك إلغاء النجاح,iptal edilen başarı
-leave_reviewed_success,leave reviewed success,ترك مراجعة النجاح,başarının gözden geçirilmesini bırakın
+leave_cancelled_success,leave cancelled success,تم إلغاء طلب النجاح,iptal edilen başarı
+leave_reviewed_success,leave reviewed success,تم مراجعة طلب الاجازه النجاح,başarının gözden geçirilmesini bırakın
 days_remaining,days remaining,الأيام المتبقية,kalan gün sayısı
 days_allocated,days allocated,الأيام المخصصة,tahsis edilen günler
 days_used,days used,الأيام المستخدمة,kullanılan günler
@@ -278,3 +278,17 @@ notification_type_leave_request,Leave Request,طلب إجازة,İzin Talebi
 notification_type_leave_review,Leave Review,مراجعة الإجازة,İzin İncelemesi
 notification_type_reminder,Reminder,تذكير,Hatırlatıcı
 notification_type_general,General,عام,Genel
+
+onboarding_splash_title,Welcome to Pissarde,مرحباً بك في بيسارد,Pissarde'a Hoş Geldiniz
+onboarding_splash_desc,Intelligent enterprise HR platform for smart attendance and workforce operations,منظومة الموارد البشرية الذكية لإدارة الحضور وفِرق العمل المتكاملة,Akıllı katılım ve iş gücü operasyonları için kurumsal İK platformu
+onboarding_lets_begin,Let's Begin,ابدأ الآن,Başlayalım
+onboarding_skip,Skip,تخطي,Atla
+onboarding_slide1_title,Smart Attendance & GPS,الحضور الذكي والتحقق الجغرافي,Akıllı Katılım ve GPS
+onboarding_slide1_desc,Precise geofenced check-in and check-out with instant biometric verification,تسجيل حضور وانصراف دقيق مع التحقق الجغرافي الذكي المباشر لجميع الفروع,Anlık biyometrik doğrulama ile hassas coğrafi sınırlı giriş ve çıkış
+onboarding_slide2_title,Leaves & Approvals,إدارة الإجازات والموافقات,İzinler ve Onaylar
+onboarding_slide2_desc,Submit time-off requests easily with real-time manager approvals and balance tracking,تقديم ومتابعة طلبات الإجازات والأذونات بكل سهولة مع اعتماد فوري ومباشر,Gerçek zamanlı yönetici onayları ve bakiye takibi ile izin talepleri
+onboarding_slide3_title,Flexible Shift Rostering,جدولة مرنة للورديات,Esnek Vardiya Planlaması
+onboarding_slide3_desc,Organize work shifts, break windows, and branch schedules dynamically,تنظيم مواعيد العمل، الورديات، وفترات الراحة بكل مرونة ووضوح لكافة الفروع,Çalışma vardiyalarını, mola aralıklarını ve şube programlarını dinamik olarak düzenleyin
+onboarding_slide4_title,Instant Alerts & Hub,إشعارات وتواصل فوري,Anlık Bildirimler ve Merkez
+onboarding_slide4_desc,Stay informed with live notifications, corporate updates, and administrative decisions,ابقَ على اطلاع دائم بجميع التحديثات ومستجدات العمل والقرارات الإدارية,Canlı bildirimler, kurumsal güncellemeler ve idari kararlarla bilgi sahibi olun
+onboarding_get_started,Login / Get Started,تسجيل الدخول,Giriş Yap / Başla

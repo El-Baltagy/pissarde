@@ -12,6 +12,12 @@ library;
 // ── profile ──────────────────────────────────────────────────────
 // ── login ──────────────────────────────────────────────────────
 // ── notifications ──────────────────────────────────────────────────────
+// ── on_boarding ──────────────────────────────────────────────────────
+import 'package:newf/features/screens/on_boarding/data/repo/base_on_boarding_repo.dart';
+import 'package:newf/features/screens/on_boarding/data/repo/on_boarding_remote_repo.dart';
+import 'package:newf/features/screens/on_boarding/service/base_on_boarding_service.dart';
+import 'package:newf/features/screens/on_boarding/service/on_boarding_remote_service.dart';
+import 'package:newf/features/screens/on_boarding/controller/on_boarding_cubit.dart';
 import 'package:newf/features/screens/notifications/data/repo/base_notifications_repo.dart';
 import 'package:newf/features/screens/notifications/data/repo/notifications_remote_repo.dart';
 import 'package:newf/features/screens/notifications/service/base_notifications_service.dart';
@@ -60,6 +66,14 @@ class AppLocator {
   GetIt call()=>_sl;
   
   void init(){
+    ///..................on_boarding.................///
+    // Repo layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseOnBoardingRepo>(() => OnBoardingRemoteRepo(_sl()));
+    // Service layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseOnBoardingService>(() => OnBoardingRemoteService(_sl<BaseOnBoardingRepo>(), _sl()));
+    // Controller layer: factory so a fresh cubit is created per BlocProvider
+    _sl.registerFactory(() => OnBoardingCubit(_sl<BaseOnBoardingService>()));
+
     ///..................notifications.................///
     // Repo layer: register the concrete impl under the abstract type
     _sl.registerLazySingleton<BaseNotificationsRepo>(() => NotificationsRemoteRepo(_sl()));

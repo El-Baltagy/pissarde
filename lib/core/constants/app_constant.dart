@@ -109,5 +109,9 @@ abstract class AppConstant {
   static const String getNotificationKeyCash = 'notifications_getNotification_cache';
 
   static const int getNotificationKeyCode = 3282;
+
+  static const String setFcmTokenIntoDBKeyCash = 'notifications_setFcmTokenIntoDB_cache';
+
+  static const int setFcmTokenIntoDBKeyCode = 6278;
 }
 

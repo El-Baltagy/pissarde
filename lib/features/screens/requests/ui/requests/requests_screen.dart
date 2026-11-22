@@ -75,33 +75,36 @@ class _RequestsPageState extends RequestsPageBaseState {
           selector: (state) =>
               state is RequestsLoaded ? state.getLeaveTypesState : null,
           builder: (context, typeState) {
-            return FloatingActionButton(
-              backgroundColor: context.theme.primaryColor,
-              onPressed: () async {
-                final types = typeState is Success
-                    ? (typeState.data as GetLeavesTypesRes).leave_types
-                    : <LeaveTypeItem>[];
-                final res = await context.push(
-                  AddLeaveRequestRoute(
-                    args: AddLeaveRequestRouteArgs(
-                      requestsCubit: requestsCubit,
-                      leaveTypes: types,
-                    ),
-                  ),
-                );
-                if (res == true) {
-                  requestsCubit.getMyLeaveRequestsFunc(Reload());
-                  requestsCubit.getLeaveBalancesFunc(
-                    Reload(),
-                    parameter: LeaveBalancesReqParam(
-                      year: DateTime.now().year.toString(),
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: FloatingActionButton(
+                backgroundColor: context.theme.primaryColor,
+                onPressed: () async {
+                  final types = typeState is Success
+                      ? (typeState.data as GetLeavesTypesRes).leave_types
+                      : <LeaveTypeItem>[];
+                  final res = await context.push(
+                    AddLeaveRequestRoute(
+                      args: AddLeaveRequestRouteArgs(
+                        requestsCubit: requestsCubit,
+                        leaveTypes: types,
+                      ),
                     ),
                   );
-                }
-              },
-              child: const Icon(
-                Icons.add,
-                color: AppColors.roleSwitchSelectedBg,
+                  if (res == true) {
+                    requestsCubit.getMyLeaveRequestsFunc(Reload());
+                    requestsCubit.getLeaveBalancesFunc(
+                      Reload(),
+                      parameter: LeaveBalancesReqParam(
+                        year: DateTime.now().year.toString(),
+                      ),
+                    );
+                  }
+                },
+                child: const Icon(
+                  Icons.add,
+                  color: AppColors.roleSwitchSelectedBg,
+                ),
               ),
             );
           },

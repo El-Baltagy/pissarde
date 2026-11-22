@@ -5,6 +5,7 @@
 class AppAssets {
   AppAssets._();
 
+  static const String imagesCircleSvg = 'assets/images/circle.svg';
   static const String imagesDotSvg = 'assets/images/dot.svg';
   static const String imagesLogoPng = 'assets/images/logo.png';
   static const String imagesOnBoaring1Png = 'assets/images/on_boaring/1.png';

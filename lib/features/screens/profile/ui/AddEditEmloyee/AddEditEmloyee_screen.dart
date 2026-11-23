@@ -36,6 +36,7 @@ part 'widgets/active_switch_widget.dart';
 part 'widgets/supervisor_selector_widget.dart';
 
 part 'widgets/shift_selector_widget.dart';
+part 'widgets/branch_selector.dart';
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -160,7 +161,10 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                       ),
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
-                      /// extract -- BranchSelector
+                      const BranchSelector(),
+                      /// extract --ShiftSelectorWidget
+                      SizedBox.shrink(),
+                      /// extract --SupervisorSelectorWidget
                       SizedBox.shrink(),
                       buildBranchSelector(),
 

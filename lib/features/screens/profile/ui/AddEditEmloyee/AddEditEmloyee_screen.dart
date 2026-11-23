@@ -20,7 +20,17 @@ import 'package:newf/features/screens/profile/data/model/employees/2-update_empl
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/ui/AddEditShift/widgets/title_with_input.dart';
 
+import '../../../../../core/shared/widgets/text_inputs/drop_down_select.dart';
+
 part 'AddEditEmloyee_base_state.dart';
+
+part 'widgets/active_switch_widget.dart';
+
+part 'widgets/supervisor_selector_widget.dart';
+
+part 'widgets/shift_selector_widget.dart';
+
+part 'widgets/branch_selector_widget.dart';
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -143,40 +153,16 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           controller: controllerPhone,
                         ),
                       ),
-                      /// extract --ActiveSwitchWidget
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppPadding.p12,
-                          vertical: AppPadding.p8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.cardBackground,
-                          borderRadius: BorderRadius.circular(AppSizes.r10),
-                          border: Border.all(color: AppColors.cardBorder),
-                        ),
-                        child: ValueListenableBuilder<bool>(
-                          valueListenable: isActiveNotifier,
-                          builder: (context, isActive, _) {
-                            return SwitchListTile.adaptive(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'active'.tr(),
-                                style: AppTextStyles.font14Regular,
-                              ),
-                              value: isActive,
-                              thumbColor: WidgetStateProperty.resolveWith((
-                                states,
-                              ) {
-                                if (states.contains(WidgetState.selected)) {
-                                  return context.theme.scaffoldBackgroundColor;
-                                }
-                                return context.theme.primaryColor;
-                              }),
-                              onChanged: (val) => isActiveNotifier.value = val,
-                            );
-                          },
-                        ),
+                      ActiveSwitchWidget(
+                        isActiveNotifier: isActiveNotifier,
                       ),
+
+
+                      BranchSelectorWidget(),
+
+                      const ShiftSelectorWidget(),
+
+                      const SupervisorSelectorWidget(),
 
                       Container(
                         margin: EdgeInsets.only(top: AppSizes.s16),

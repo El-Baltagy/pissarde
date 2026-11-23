@@ -7,8 +7,7 @@ import 'package:newf/features/screens/profile/data/repo/base_profile_repo.dart';
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
+ import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
@@ -219,12 +218,12 @@ class ProfileRemoteRepo implements BaseProfileRepo {
 
   @override
   Future<Either<Failure, CreateEmployeeRes>> updateEmployeeApi(
-    UpdateEmployeeReqParam? parameter, {
+      CreateEmployeeReqParam? parameter, {
     CancelToken? cancelToken,
   }) async {
     return handleResponse(
       onCallData: dio.putData(
-        uri: EndPoints.updateEmployee(parameter?.id ?? ''),
+        uri: EndPoints.updateEmployee(parameter?.employee_id ?? ''),
         data: parameter?.toJson(),
         cancelToken: cancelToken,
         caller: callerTag(),

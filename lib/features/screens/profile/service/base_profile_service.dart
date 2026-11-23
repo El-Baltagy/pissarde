@@ -5,8 +5,7 @@ import 'package:newf/core/base/base_service.dart';
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
+ import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
@@ -36,7 +35,7 @@ abstract class BaseProfileService extends BaseService {
   );
 
   /// Abstract contract — implemented by [ProfileRemoteService].
-  Future<void> createEmployeeServ(
+  Future<void> addEditEmployeeServ(
     RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam> requestInfo,
   );
 
@@ -85,8 +84,8 @@ abstract class BaseProfileService extends BaseService {
     RequestCallbackObserver<CreateEmployeeRes, DeleteEmployeeReqParam> requestInfo,
   );
 
-  /// Abstract contract — implemented by [ProfileRemoteService].
-  Future<void> updateEmployeeServ(
-    RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam> requestInfo,
-  );
+  // /// Abstract contract — implemented by [ProfileRemoteService].
+  // Future<void> updateEmployeeServ(
+  //   RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam> requestInfo,
+  // );
 }

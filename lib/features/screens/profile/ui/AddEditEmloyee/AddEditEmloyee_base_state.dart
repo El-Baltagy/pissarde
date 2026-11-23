@@ -26,8 +26,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   final TextEditingController controllerPhone = .new();
 
   final ValueNotifier<bool> isActiveNotifier = .new(true);
-  // final ValueNotifier<bool> isPasswordVisibleNotifier = .new(false);
-  late final ValueNotifier<bool> isLoadingNotifier;
+   late final ValueNotifier<bool> isLoadingNotifier;
 
   /// Holds the selected branch index (single-select → list of one index).
   final ValueNotifier<List<int>> selectedBranchNotifier = .new([]);
@@ -156,16 +155,9 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
       context,
       listRecorder: fieldsToValidate,
     )) {
-      if (_isEditMode) {
-        final param = UpdateEmployeeReqParam(
-          id: widget.args.employeeItem?.id,
-          name: controllerName.text.trim(),
-          phone: controllerPhone.text.trim(),
-          is_active: isActiveNotifier.value ? '1' : '0',
-        );
-        await profileCubit.updateEmployeeFunc(Init(), parameter: param);
-      } else {
+
         final param = CreateEmployeeReqParam(
+          employee_id:widget.args.employeeItem?.id?.toString() ,
           name: controllerName.text.trim(),
           email: controllerEmail.text.trim(),
           password: controllerPassword.text.trim(),
@@ -179,8 +171,8 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
           shift_id: _selectedShiftId(),
           is_active: isActiveNotifier.value ? '1' : '0',
         );
-        await profileCubit.createEmployeeFunc(Init(), parameter: param);
-      }
+        await profileCubit.addEditEmployeeFunc(Init(), parameter: param);
+
     }
   }
   /// Pre-selects the branch that matches the employee's current branch.

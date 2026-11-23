@@ -8,8 +8,7 @@ import 'package:newf/features/screens/profile/service/base_profile_service.dart'
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
+ import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/delete_shift_res/delete_shift_res.dart';
@@ -208,12 +207,12 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   }
 
   /// Creates a new employee via the API.
-  Future<void> createEmployeeFunc(
+  Future<void> addEditEmployeeFunc(
     BaseRequestBackType baseRequestBackType, {
     CreateEmployeeReqParam? parameter,
   }) async {
     await CancelManager.runCancelableFun(createEmployeeKeyCode, (token) async {
-      await _service.createEmployeeServ(
+      await _service.addEditEmployeeServ(
         RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam>(
           baseRequestBackType: baseRequestBackType,
           parameter: parameter,
@@ -357,20 +356,20 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     });
   }
 
-  Future<void> updateEmployeeFunc(BaseRequestBackType baseRequestBackType,{UpdateEmployeeReqParam? parameter}) async {
-    await CancelManager.runCancelableFun(updateEmployeeKeyCode, (token) async {
-      await _service.updateEmployeeServ(
-        RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam>(
-          baseRequestBackType: baseRequestBackType ,
-          parameter: parameter,
-          cancelToken: token,
-          onLoadCallback: () => safeEmit(_current.copyWith(addEditEmployeeState: Loading())),
-          onRightCallback: (data) => safeEmit(_current.copyWith(addEditEmployeeState: Success(data))),
-          onLeftCallback: (failure) => safeEmit(_current.copyWith(addEditEmployeeState: ErrorState(failure))),
-        ),
-      );
-    });
-  }
+  // Future<void> updateEmployeeFunc(BaseRequestBackType baseRequestBackType,{UpdateEmployeeReqParam? parameter}) async {
+  //   await CancelManager.runCancelableFun(updateEmployeeKeyCode, (token) async {
+  //     await _service.updateEmployeeServ(
+  //       RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam>(
+  //         baseRequestBackType: baseRequestBackType ,
+  //         parameter: parameter,
+  //         cancelToken: token,
+  //         onLoadCallback: () => safeEmit(_current.copyWith(addEditEmployeeState: Loading())),
+  //         onRightCallback: (data) => safeEmit(_current.copyWith(addEditEmployeeState: Success(data))),
+  //         onLeftCallback: (failure) => safeEmit(_current.copyWith(addEditEmployeeState: ErrorState(failure))),
+  //       ),
+  //     );
+  //   });
+  // }
 }
 enum ScreenTypeAction{
   shift,

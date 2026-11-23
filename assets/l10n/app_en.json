@@ -216,6 +216,7 @@
   "save": "save",
   "select_location": "select location",
   "send": "Send",
+  "shift": "shift",
   "shift_code": "shift code",
   "shift_created_success": "shift created success",
   "shift_deleted_success": "shift deleted success",

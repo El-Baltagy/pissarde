@@ -1,5 +1,6 @@
 class CreateEmployeeReqParam {
   final String name;
+  final String? employee_id;
   final String email;
   final String password;
   final String employee_code;
@@ -19,6 +20,7 @@ class CreateEmployeeReqParam {
     required this.employee_code,
     required this.phone,
     required this.role,
+    required this.employee_id,
     required this.employee_type,
     required this.work_type,
     required this.branch_id,

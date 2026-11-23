@@ -1,14 +1,10 @@
-import 'package:newf/core/constants/app_typedef.dart';
 import 'package:newf/core/constants/app_constant.dart';
-import 'package:dartz/dartz.dart';
-import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/base/base_local_repo.dart';
 import 'package:newf/features/screens/profile/data/repo/base_profile_repo.dart';
 import 'package:newf/features/screens/profile/service/base_profile_service.dart';
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/employees/3-delete_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/profile/data/model/shifts/creating_shift_res/shift_creating_res.dart';
@@ -33,7 +29,7 @@ class ProfileRemoteService implements BaseProfileService {
   final BaseProfileRepo _remoteRepo;
   final BaseLocalRepo _localRepo;
 
-   @override
+  @override
   Future<void> getListHolidaysServ(
     RequestCallbackObserver<GetAvilableHolidaysRes, NoParameters> requestInfo,
   ) {
@@ -88,19 +84,22 @@ class ProfileRemoteService implements BaseProfileService {
   }
 
   @override
-  Future<void> createEmployeeServ(
-    RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam> requestInfo,
+  Future<void> addEditEmployeeServ(
+    RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam>
+    requestInfo,
   ) {
-
     return requestInfo.handleRequest(
-      fetchFromClient: (token) => _remoteRepo.createEmployeeApi(
-        requestInfo.parameter,
-        cancelToken: token,
-      )
+      fetchFromClient: (token) => requestInfo.parameter?.employee_id == null
+          ? _remoteRepo.createEmployeeApi(
+              requestInfo.parameter,
+              cancelToken: token,
+            )
+          : _remoteRepo.updateEmployeeApi(
+              requestInfo.parameter,
+              cancelToken: token,
+            ),
     );
   }
-
-
 
   @override
   Future<void> getListShiftsServ(
@@ -133,17 +132,11 @@ class ProfileRemoteService implements BaseProfileService {
   Future<void> createShiftServ(
     RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
   ) {
-
     return requestInfo.handleRequest(
-      fetchFromClient: (token) => _remoteRepo.createShiftApi(
-        requestInfo.parameter,
-        cancelToken: token,
-      )
+      fetchFromClient: (token) =>
+          _remoteRepo.createShiftApi(requestInfo.parameter, cancelToken: token),
     );
   }
-
-
-
 
   @override
   Future<void> getListBranchesServ(
@@ -176,12 +169,11 @@ class ProfileRemoteService implements BaseProfileService {
   Future<void> createBranchServ(
     RequestCallbackObserver<CreateBranchRes, CreateBranchReqParam> requestInfo,
   ) {
-
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.createBranchApi(
         requestInfo.parameter,
         cancelToken: token,
-      )
+      ),
     );
   }
 
@@ -190,10 +182,8 @@ class ProfileRemoteService implements BaseProfileService {
     RequestCallbackObserver<DeleteShiftRes, DeleteShiftReqParam> requestInfo,
   ) {
     return requestInfo.handleRequest(
-      fetchFromClient: (token) => _remoteRepo.deleteShiftApi(
-        requestInfo.parameter,
-        cancelToken: token,
-      ),
+      fetchFromClient: (token) =>
+          _remoteRepo.deleteShiftApi(requestInfo.parameter, cancelToken: token),
     );
   }
 
@@ -202,10 +192,8 @@ class ProfileRemoteService implements BaseProfileService {
     RequestCallbackObserver<ShiftCreatingRes, AddEditShiftReqParam> requestInfo,
   ) {
     return requestInfo.handleRequest(
-      fetchFromClient: (token) => _remoteRepo.updateShiftApi(
-        requestInfo.parameter,
-        cancelToken: token,
-      ),
+      fetchFromClient: (token) =>
+          _remoteRepo.updateShiftApi(requestInfo.parameter, cancelToken: token),
     );
   }
 
@@ -235,7 +223,8 @@ class ProfileRemoteService implements BaseProfileService {
 
   @override
   Future<void> deleteEmployeeServ(
-    RequestCallbackObserver<CreateEmployeeRes, DeleteEmployeeReqParam> requestInfo,
+    RequestCallbackObserver<CreateEmployeeRes, DeleteEmployeeReqParam>
+    requestInfo,
   ) {
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.deleteEmployeeApi(
@@ -245,15 +234,15 @@ class ProfileRemoteService implements BaseProfileService {
     );
   }
 
-  @override
-  Future<void> updateEmployeeServ(
-    RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam> requestInfo,
-  ) {
-    return requestInfo.handleRequest(
-      fetchFromClient: (token) => _remoteRepo.updateEmployeeApi(
-        requestInfo.parameter,
-        cancelToken: token,
-      ),
-    );
-  }
+  // @override
+  // Future<void> updateEmployeeServ(
+  //   RequestCallbackObserver<CreateEmployeeRes, UpdateEmployeeReqParam> requestInfo,
+  // ) {
+  //   return requestInfo.handleRequest(
+  //     fetchFromClient: (token) => _remoteRepo.updateEmployeeApi(
+  //       requestInfo.parameter,
+  //       cancelToken: token,
+  //     ),
+  //   );
+  // }
 }

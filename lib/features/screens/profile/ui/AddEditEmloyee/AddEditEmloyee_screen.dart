@@ -19,8 +19,7 @@ import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
 import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart'
     as branches_model;
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
-import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
+ import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart'
     as employees_model;
 import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
@@ -40,6 +39,7 @@ part 'widgets/supervisor_selector_widget.dart';
 part 'widgets/shift_selector_widget.dart';
 
 part 'widgets/branch_selector.dart';
+part 'widgets/submit_button.dart';
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -105,9 +105,6 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         EmailInputData(
                           isLabel: false,
                            field: fieldEmail,
-                          // readOnly: _isEditMode,
-                          // enabled: !_isEditMode,
-                          // keyboardType: TextInputType.emailAddress,
                           labelText: 'email'.tr(),
                           controller: controllerEmail,
                         ),
@@ -149,50 +146,11 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         field: fieldSupervisor,
                       ),
 
-                      /// extract --SubmitButton
-                      SizedBox.shrink(),
+                      /// extract -- SubmitButton
+                        SubmitButton(
+                          onPress: (bool isLoading) =>createOrUpdateEmployee(isLoading), isAdd: widget.args.employeeItem == null,
 
-                      Container(
-                        margin: EdgeInsets.only(top: AppSizes.s16),
-                        width: double.infinity,
-                        height: AppSizes.s48,
-                        child: BlocBuilder<ProfileCubit, ProfileState>(
-                          builder: (context, state) {
-                            final bool isLoading =
-                                state is ProfileLoaded &&
-                                (state.addEditEmployeeState is Loading ||
-                                    state.addEditEmployeeState is Loading);
-                            return ElevatedButton(
-                              onPressed: () =>
-                                  createOrUpdateEmployee(isLoading),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: context.theme.primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    AppSizes.s8,
-                                  ),
-                                ),
-                              ),
-                              child: isLoading
-                                  ? CircularProgressIndicator(
-                                      color:
-                                          context.theme.scaffoldBackgroundColor,
-                                    )
-                                  : Text(
-                                      widget.args.employeeItem == null
-                                          ? 'add'.tr()
-                                          : 'save'.tr(),
-                                      style: AppTextStyles.font16SemiBold
-                                          .copyWith(
-                                            color: context
-                                                .theme
-                                                .scaffoldBackgroundColor,
-                                          ),
-                                    ),
-                            );
-                          },
                         ),
-                      ),
                       SizedBox.shrink(),
                     ],
                   ),

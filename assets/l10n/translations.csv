@@ -292,3 +292,5 @@ onboarding_slide3_desc,Organize work shifts, break windows, and branch schedules
 onboarding_slide4_title,Instant Alerts & Hub,إشعارات وتواصل فوري,Anlık Bildirimler ve Merkez
 onboarding_slide4_desc,Stay informed with live notifications, corporate updates, and administrative decisions,ابقَ على اطلاع دائم بجميع التحديثات ومستجدات العمل والقرارات الإدارية,Canlı bildirimler, kurumsal güncellemeler ve idari kararlarla bilgi sahibi olun
 onboarding_get_started,Login / Get Started,تسجيل الدخول,Giriş Yap / Başla
+leave_request_header_desc,Submit your leave or permission request for administrative approval,تقديم طلب إجازة أو إذن للاعتماد الإداري,İdari onay için izin talebinizi gönderin
+leave_duration_days,Duration: {} days,المدة: {} أيام,Süre: {} gün

@@ -6,12 +6,16 @@ import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/extension/context.dart';
-import 'package:newf/core/extension/double.dart';
-import 'package:newf/core/shared/widgets/app_bar.dart';
+import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
 import 'package:newf/features/screens/requests/data/model/create_leave_request_req_param.dart';
+import 'package:newf/features/screens/requests/ui/AddLeaveRequest/widgets/add_leave_header_card_widget.dart';
+import 'package:newf/features/screens/requests/ui/AddLeaveRequest/widgets/add_leave_submit_button_widget.dart';
+import 'package:newf/features/screens/requests/ui/AddLeaveRequest/widgets/leave_date_picker_widget.dart';
+import 'package:newf/features/screens/requests/ui/AddLeaveRequest/widgets/leave_details_input_widget.dart';
+import 'package:newf/features/screens/requests/ui/AddLeaveRequest/widgets/leave_type_dropdown_widget.dart';
 
 part 'AddLeaveRequest_base_state.dart';
 
@@ -34,189 +38,55 @@ class _AddLeaveRequestPageState extends AddLeaveRequestPageBaseState {
   Widget build(BuildContext context) {
     return BlocListener<RequestsCubit, RequestsState>(
       listener: _listener,
-      child: Semantics(
-        label: 'Add Leave Request Screen',
-        child: Scaffold(
-          backgroundColor: context.theme.scaffoldBackgroundColor,
-          appBar: CustomAppBar(title: 'new_leave_request'.tr()),
-          body: Form(
+      child: Scaffold(
+        backgroundColor: AppColors.lightSurface,
+        appBar: AppBar(
+          backgroundColor: context.theme.primaryColor,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: AppColors.roleSwitchSelectedBg),
+          title: Text(
+            'new_leave_request'.tr(),
+            style: AppTextStyles.font18Bold
+                .copyWith(color: AppColors.roleSwitchSelectedBg),
+          ),
+        ),
+        body: Semantics(
+          label: 'Add leave request form',
+          child: Form(
             key: formKey,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppPadding.p16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: AppSizes.s16,
                 children: [
-                  // Leave type dropdown
-                  Text(
-                    'leave_type'.tr(),
-                    style: AppTextStyles.font14Regular.copyWith(
-                      color: context.theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  AppSizes.s10.verticalSpace,
-                  DropdownButtonFormField<int>(
-                    initialValue: selectedLeaveTypeId,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppSizes.r10),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: AppPadding.p16,
-                        vertical: AppPadding.p12,
-                      ),
-                    ),
-                    hint: Text('leave_type'.tr()),
-                    items: widget.args.leaveTypes
-                        .map(
-                          (t) => DropdownMenuItem(
-                            value: t.id,
-                            child: Text(t.name),
-                          ),
-                        )
-                        .toList(),
+                  const AddLeaveHeaderCardWidget(),
+                  LeaveTypeDropdownWidget(
+                    leaveTypes: widget.args.leaveTypes,
+                    selectedLeaveTypeId: selectedLeaveTypeId,
                     onChanged: (val) => setState(() => selectedLeaveTypeId = val),
-                    validator: (val) =>
-                        val == null ? 'leave_type_required'.tr() : null,
                   ),
-                  AppSizes.s20.verticalSpace,
-                  // Start date
-                  _buildDateField(
-                    title: 'start_date'.tr(),
-                    controller: controllerStartDate,
-                    onTap: () => _pickDate(context, controllerStartDate),
-                    validator: (val) =>
-                        (val == null || val.isEmpty) ? 'start_date_required'.tr() : null,
+                  LeaveDatePickerWidget(
+                    controllerStartDate: controllerStartDate,
+                    controllerEndDate: controllerEndDate,
+                    onPickStartDate: () => _pickDate(context, controllerStartDate),
+                    onPickEndDate: () =>
+                        _pickDate(context, controllerEndDate, isEnd: true),
                   ),
-                  AppSizes.s20.verticalSpace,
-                  // End date
-                  _buildDateField(
-                    title: 'end_date'.tr(),
-                    controller: controllerEndDate,
-                    onTap: () => _pickDate(context, controllerEndDate, isEnd: true),
-                    validator: (val) =>
-                        (val == null || val.isEmpty) ? 'end_date_required'.tr() : null,
+                  LeaveDetailsInputWidget(
+                    controllerReason: controllerReason,
+                    controllerEmergencyPhone: controllerEmergencyPhone,
                   ),
-                  AppSizes.s20.verticalSpace,
-                  // Reason
-                  Text(
-                    'reason'.tr(),
-                    style: AppTextStyles.font14Regular.copyWith(
-                      color: context.theme.colorScheme.onSurface,
-                    ),
+                  AddLeaveSubmitButtonWidget(
+                    onSubmit: _submit,
                   ),
-                  AppSizes.s10.verticalSpace,
-                  TextFormField(
-                    controller: controllerReason,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      hintText: 'reason'.tr(),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppSizes.r10),
-                      ),
-                      contentPadding: const EdgeInsets.all(AppPadding.p12),
-                    ),
-                    validator: (val) =>
-                        (val == null || val.isEmpty) ? 'reason_required'.tr() : null,
-                  ),
-                  AppSizes.s20.verticalSpace,
-                  // Emergency phone
-                  Text(
-                    'emergency_phone'.tr(),
-                    style: AppTextStyles.font14Regular.copyWith(
-                      color: context.theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  AppSizes.s10.verticalSpace,
-                  TextFormField(
-                    controller: controllerEmergencyPhone,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      hintText: 'emergency_phone'.tr(),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppSizes.r10),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: AppPadding.p16,
-                        vertical: AppPadding.p12,
-                      ),
-                    ),
-                    validator: (val) =>
-                        (val == null || val.isEmpty) ? 'emergency_phone_required'.tr() : null,
-                  ),
-                  AppSizes.s32.verticalSpace,
-                  SizedBox(
-                    width: double.infinity,
-                    height: AppSizes.s48,
-                    child: BlocBuilder<RequestsCubit, RequestsState>(
-                      builder: (context, state) {
-                        final isLoading = state is RequestsLoaded &&
-                            state.createLeaveRequestState is Loading;
-                        return ElevatedButton(
-                          onPressed: () => _submit(isLoading),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: context.theme.primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppSizes.s8),
-                            ),
-                          ),
-                          child: isLoading
-                              ? CircularProgressIndicator(
-                                  color: context.theme.scaffoldBackgroundColor,
-                                )
-                              : Text(
-                                  'add'.tr(),
-                                  style: AppTextStyles.font16SemiBold.copyWith(
-                                    color: context.theme.scaffoldBackgroundColor,
-                                  ),
-                                ),
-                        );
-                      },
-                    ),
-                  ),
-                  AppSizes.s20.verticalSpace,
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildDateField({
-    required String title,
-    required TextEditingController controller,
-    required VoidCallback onTap,
-    required String? Function(String?) validator,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: AppTextStyles.font14Regular.copyWith(
-            color: context.theme.colorScheme.onSurface,
-          ),
-        ),
-        AppSizes.s10.verticalSpace,
-        TextFormField(
-          controller: controller,
-          readOnly: true,
-          onTap: onTap,
-          decoration: InputDecoration(
-            hintText: 'YYYY-MM-DD',
-            suffixIcon: const Icon(Icons.calendar_month_outlined),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.r10),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppPadding.p16,
-              vertical: AppPadding.p12,
-            ),
-          ),
-          validator: validator,
-        ),
-      ],
     );
   }
 }

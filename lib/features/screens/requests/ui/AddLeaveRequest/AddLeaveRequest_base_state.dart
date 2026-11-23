@@ -54,18 +54,23 @@ abstract class AddLeaveRequestPageBaseState extends State<AddLeaveRequestPage> {
       final formatted =
           '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
       controller.text = formatted;
+      setState(() {});
     }
   }
 
-  Future<void> _submit(bool isLoading) async {
-    if (isLoading) return;
+  Future<void> _submit() async {
+    final state = requestsCubit.state;
+    if (state is RequestsLoaded && state.createLeaveRequestState is Loading) {
+      return;
+    }
+
     if (formKey.currentState?.validate() != true) return;
     if (selectedLeaveTypeId == null) {
       context.showToast('leave_type_required'.tr(), isSuccess: false);
       return;
     }
 
-    // Check date logic
+    // Check date range
     final start = DateTime.tryParse(controllerStartDate.text);
     final end = DateTime.tryParse(controllerEndDate.text);
     if (start != null && end != null && end.isBefore(start)) {

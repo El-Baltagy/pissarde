@@ -7,7 +7,7 @@ import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
-import 'package:newf/core/extension/double.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
 import 'package:newf/core/shared/widgets/one_item_drop_down_sheet.dart';
@@ -36,10 +36,6 @@ part 'widgets/active_switch_widget.dart';
 part 'widgets/supervisor_selector_widget.dart';
 
 part 'widgets/shift_selector_widget.dart';
-
-part 'widgets/branch_selector_widget.dart';
-
-
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -162,40 +158,15 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           controller: controllerPhone,
                         ),
                       ),
-                      ActiveSwitchWidget(
-                        isActiveNotifier: isActiveNotifier,
-                      ),
+                      ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
                       /// extract -- BranchSelector
-                      BottomSheetSelector(
-                        listChoices: [],
-                        selectedNotifier: selectedBranchNotifier,
-                        isMultiSelect: false,
-                        title:  'branch'.tr(),
-                        field: fieldShift,
-                      ),
+                      SizedBox.shrink(),
+                      buildBranchSelector(),
 
-                      /// extract -- ShiftSelector
-                      BottomSheetSelector(
-                        listChoices: [],
-                        selectedNotifier: selectedShiftNotifier,
-                        isMultiSelect: false,
-                        title: 'supervisor'.tr(),
-                        field: fieldShift,
-                      ),
+                      buildShiftSelector(),
 
-                      /// extract -- SupervisorSelector
-                      BottomSheetSelector(
-                        listChoices: [],
-                        selectedNotifier: selectedSupervisorNotifier,
-                        isMultiSelect: false,
-                        title: 'supervisor'.tr(),
-                        field: fieldSupervisor,
-
-                      ),
-
-
-
+                      buildSupervisorSelector(),
 
                       Container(
                         margin: EdgeInsets.only(top: AppSizes.s16),
@@ -247,6 +218,54 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
           ),
         ),
       ),
+    );
+  }
+
+  BottomSheetSelector buildSupervisorSelector() {
+    return BottomSheetSelector(
+      listChoices: [],
+      selectedNotifier: selectedSupervisorNotifier,
+      isMultiSelect: false,
+      title: 'supervisor'.tr(),
+      field: fieldSupervisor,
+    );
+  }
+
+  BottomSheetSelector buildShiftSelector() {
+    return BottomSheetSelector(
+      listChoices: [],
+      selectedNotifier: selectedShiftNotifier,
+      isMultiSelect: false,
+      title: 'supervisor'.tr(),
+      field: fieldShift,
+    );
+  }
+
+  Widget buildBranchSelector() {
+    return BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
+      selector: (state) =>
+          state is ProfileLoaded ? state.getListBranchesState : null,
+      builder: (context, branchState) {
+        final isLoading = branchState is! Success<BranchesList>;
+        final branches = branchState is Success<BranchesList>
+            ? branchState.data?.data ?? []
+            : <DataItemBranch>[];
+        List<UIApiKeys<String>> list = .generate(
+          branches.length,
+          (i) => UIApiKeys(branches[i].name, branches[i].id.toString()),
+        );
+        return Skeletonizer(
+          enabled: isLoading,
+          child: BottomSheetSelector(
+            listChoices: list,
+            selectedNotifier: selectedBranchNotifier,
+            isMultiSelect: false,
+
+            title: 'branch'.tr(),
+            field: fieldBranch,
+          ),
+        );
+      },
     );
   }
 }

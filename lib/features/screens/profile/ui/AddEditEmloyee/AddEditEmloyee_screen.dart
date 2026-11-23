@@ -28,6 +28,8 @@ import 'package:newf/features/screens/profile/ui/AddEditEmloyee/widgets/BottomSh
 import 'package:newf/features/screens/profile/ui/AddEditShift/widgets/title_with_input.dart';
 
 import '../../../../../core/shared/widgets/text_inputs/drop_down_select.dart';
+import '../../../../../core/shared/widgets/text_inputs/email_text_input_data.dart';
+import '../../../../../core/shared/widgets/text_inputs/password_text_input_data.dart';
 
 part 'AddEditEmloyee_base_state.dart';
 
@@ -36,6 +38,7 @@ part 'widgets/active_switch_widget.dart';
 part 'widgets/supervisor_selector_widget.dart';
 
 part 'widgets/shift_selector_widget.dart';
+
 part 'widgets/branch_selector.dart';
 
 @RoutePage()
@@ -99,55 +102,26 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                       ),
                       TitleWithInputField(
                         'email'.tr(),
-                        NameInputData(
+                        EmailInputData(
                           isLabel: false,
-                          widgetPrefix: const SizedBox.shrink(),
-                          field: fieldEmail,
-                          readOnly: _isEditMode,
-                          enabled: !_isEditMode,
-                          keyboardType: TextInputType.emailAddress,
+                           field: fieldEmail,
+                          // readOnly: _isEditMode,
+                          // enabled: !_isEditMode,
+                          // keyboardType: TextInputType.emailAddress,
                           labelText: 'email'.tr(),
                           controller: controllerEmail,
-                          validator: (value) {
-                            if (_isEditMode) return null;
-                            if (value == null || value.trim().isEmpty) {
-                              return "can't_be_empty".tr();
-                            }
-                            if (!value.contains('@')) {
-                              return 'please_enter_valid_email'.tr();
-                            }
-                            return null;
-                          },
                         ),
                       ),
-                      if (!_isEditMode) ...[
-                        ValueListenableBuilder<bool>(
-                          valueListenable: isPasswordVisibleNotifier,
-                          builder: (context, isVisible, _) {
-                            return TitleWithInputField(
-                              'password'.tr(),
-                              NameInputData(
-                                isLabel: false,
-                                widgetPrefix: const SizedBox.shrink(),
-                                field: fieldPassword,
-                                isObscureText: !isVisible,
-                                labelText: 'password'.tr(),
-                                controller: controllerPassword,
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return "can't_be_empty".tr();
-                                  }
-                                  if (value.trim().length < 6) {
-                                    return 'the_password_must_be_at_least_6_characters'
-                                        .tr();
-                                  }
-                                  return null;
-                                },
-                              ),
-                            );
-                          },
+                      if (!_isEditMode)
+                        TitleWithInputField(
+                          'password'.tr(),
+                          PasswordInputData(
+                            isLabel: false,
+                            field: fieldPassword,
+                            labelText: 'password'.tr(),
+                            controller: controllerPassword,
+                          ),
                         ),
-                      ],
                       TitleWithInputField(
                         'phone'.tr(),
                         NameInputData(
@@ -159,18 +133,24 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           controller: controllerPhone,
                         ),
                       ),
+
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
-                      const BranchSelector(),
-                      /// extract --ShiftSelectorWidget
-                      SizedBox.shrink(),
-                      /// extract --SupervisorSelectorWidget
-                      SizedBox.shrink(),
-                      buildBranchSelector(),
+                      BranchSelector(
+                        selectedNotifier: selectedBranchNotifier,
+                        field: fieldBranch,
+                      ),
+                      ShiftSelectorWidget(
+                        selectedNotifier: selectedShiftNotifier,
+                        field: fieldShift,
+                      ),
+                      SupervisorSelectorWidget(
+                        selectedNotifier: selectedSupervisorNotifier,
+                        field: fieldSupervisor,
+                      ),
 
-                      buildShiftSelector(),
-
-                      buildSupervisorSelector(),
+                      /// extract --SubmitButton
+                      SizedBox.shrink(),
 
                       Container(
                         margin: EdgeInsets.only(top: AppSizes.s16),
@@ -222,54 +202,6 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
           ),
         ),
       ),
-    );
-  }
-
-  BottomSheetSelector buildSupervisorSelector() {
-    return BottomSheetSelector(
-      listChoices: [],
-      selectedNotifier: selectedSupervisorNotifier,
-      isMultiSelect: false,
-      title: 'supervisor'.tr(),
-      field: fieldSupervisor,
-    );
-  }
-
-  BottomSheetSelector buildShiftSelector() {
-    return BottomSheetSelector(
-      listChoices: [],
-      selectedNotifier: selectedShiftNotifier,
-      isMultiSelect: false,
-      title: 'supervisor'.tr(),
-      field: fieldShift,
-    );
-  }
-
-  Widget buildBranchSelector() {
-    return BlocSelector<ProfileCubit, ProfileState, BaseEmit?>(
-      selector: (state) =>
-          state is ProfileLoaded ? state.getListBranchesState : null,
-      builder: (context, branchState) {
-        final isLoading = branchState is! Success<BranchesList>;
-        final branches = branchState is Success<BranchesList>
-            ? branchState.data?.data ?? []
-            : <DataItemBranch>[];
-        List<UIApiKeys<String>> list = .generate(
-          branches.length,
-          (i) => UIApiKeys(branches[i].name, branches[i].id.toString()),
-        );
-        return Skeletonizer(
-          enabled: isLoading,
-          child: BottomSheetSelector(
-            listChoices: list,
-            selectedNotifier: selectedBranchNotifier,
-            isMultiSelect: false,
-
-            title: 'branch'.tr(),
-            field: fieldBranch,
-          ),
-        );
-      },
     );
   }
 }

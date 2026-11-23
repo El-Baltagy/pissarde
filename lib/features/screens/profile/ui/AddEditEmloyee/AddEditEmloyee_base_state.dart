@@ -26,7 +26,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   final TextEditingController controllerPhone = .new();
 
   final ValueNotifier<bool> isActiveNotifier = .new(true);
-  final ValueNotifier<bool> isPasswordVisibleNotifier = .new(false);
+  // final ValueNotifier<bool> isPasswordVisibleNotifier = .new(false);
   late final ValueNotifier<bool> isLoadingNotifier;
 
   /// Holds the selected branch index (single-select → list of one index).
@@ -42,7 +42,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
 
   /// Whether we're editing an existing employee (true) or creating new (false).
   bool get _isEditMode => widget.args.employeeItem != null;
-
+      var employee  ;
   @override
   void initState() {
     super.initState();
@@ -58,51 +58,15 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
       controllerCode.text = employee.employee_code;
       controllerPhone.text = employee.phone;
       isActiveNotifier.value = employee.is_active;
-
-      // Pre-select branch, shift, supervisor when editing
-      Future.delayed(const Duration(milliseconds: 300), () {
-        _preselectBranch(employee);
-        _preselectShift(employee);
-        _preselectSupervisor(employee);
-      });
-    }
+     }
+    Future.wait([
+      profileCubit.getListBranchesFunc(Init()),
+      profileCubit.getListShiftsFunc(Init()),
+      profileCubit.getListEmployeesFunc(Init()),
+    ]);
   }
 
-  /// Pre-selects the branch that matches the employee's current branch.
-  void _preselectBranch(DataItemEmployee employee) {
-    final state = profileCubit.state;
-    if (state is! ProfileLoaded) return;
-    if (state.getListBranchesState is! Success<BranchesList>) return;
-    final branches =
-        (state.getListBranchesState as Success<BranchesList>).data?.data ?? [];
-    final idx = branches.indexWhere((b) => b.id == employee.branch.id);
-    if (idx != -1) selectedBranchNotifier.value = [idx];
-  }
 
-  /// Pre-selects the shift that matches the employee's current shift.
-  void _preselectShift(DataItemEmployee employee) {
-    final state = profileCubit.state;
-    if (state is! ProfileLoaded) return;
-    if (state.getListShiftsState is! Success<GetAllShiftsRes>) return;
-    final shifts =
-        (state.getListShiftsState as Success<GetAllShiftsRes>).data?.data ?? [];
-    final idx = shifts.indexWhere((s) => s.id == employee.shift.id);
-    if (idx != -1) selectedShiftNotifier.value = [idx];
-  }
-
-  /// Pre-selects the supervisor that matches the employee's current supervisor.
-  void _preselectSupervisor(DataItemEmployee employee) {
-    final supervisorId = employee.supervisor?.id;
-    if (supervisorId == null) return;
-    final state = profileCubit.state;
-    if (state is! ProfileLoaded) return;
-    if (state.getListEmployeesState is! Success<GetAllEmployeesRes>) return;
-    final employees =
-        (state.getListEmployeesState as Success<GetAllEmployeesRes>).data?.data ??
-            [];
-    final idx = employees.indexWhere((e) => e.id == supervisorId);
-    if (idx != -1) selectedSupervisorNotifier.value = [idx];
-  }
 
   @override
   void dispose() {
@@ -122,7 +86,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     controllerPhone.dispose();
 
     isActiveNotifier.dispose();
-    isPasswordVisibleNotifier.dispose();
+    // isPasswordVisibleNotifier.dispose();
     isLoadingNotifier.dispose();
 
     selectedBranchNotifier.dispose();
@@ -219,7 +183,41 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
       }
     }
   }
+  /// Pre-selects the branch that matches the employee's current branch.
+  void _preselectBranch(DataItemEmployee employee) {
+    final state = profileCubit.state;
+    if (state is! ProfileLoaded) return;
+    if (state.getListBranchesState is! Success<BranchesList>) return;
+    final branches =
+        (state.getListBranchesState as Success<BranchesList>).data?.data ?? [];
+    final idx = branches.indexWhere((b) => b.id == employee.branch.id);
+    if (idx != -1) selectedBranchNotifier.value = [idx];
+  }
 
+  /// Pre-selects the shift that matches the employee's current shift.
+  void _preselectShift(DataItemEmployee employee) {
+    final state = profileCubit.state;
+    if (state is! ProfileLoaded) return;
+    if (state.getListShiftsState is! Success<GetAllShiftsRes>) return;
+    final shifts =
+        (state.getListShiftsState as Success<GetAllShiftsRes>).data?.data ?? [];
+    final idx = shifts.indexWhere((s) => s.id == employee.shift.id);
+    if (idx != -1) selectedShiftNotifier.value = [idx];
+  }
+
+  /// Pre-selects the supervisor that matches the employee's current supervisor.
+  void _preselectSupervisor(DataItemEmployee employee) {
+    final supervisorId = employee.supervisor?.id;
+    if (supervisorId == null) return;
+    final state = profileCubit.state;
+    if (state is! ProfileLoaded) return;
+    if (state.getListEmployeesState is! Success<GetAllEmployeesRes>) return;
+    final employees =
+        (state.getListEmployeesState as Success<GetAllEmployeesRes>).data?.data ??
+            [];
+    final idx = employees.indexWhere((e) => e.id == supervisorId);
+    if (idx != -1) selectedSupervisorNotifier.value = [idx];
+  }
   void createEmployeeListener(BuildContext context, ProfileState state) {
     if (state is ProfileLoaded) {
       // ── Create / Update success ──────────────────────────────────────
@@ -238,6 +236,19 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
         final err = state.addEditEmployeeState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);
       }
+
+      if(employee!=null){
+        if(  state.getListBranchesState is Success){
+          _preselectBranch(employee);
+        }
+        if(  state.getListShiftsState is Success){
+          _preselectShift(employee);
+        }
+        if(  state.getListEmployeesState is Success){
+          _preselectSupervisor(employee);
+        }
+      }
+
     }
   }
 }

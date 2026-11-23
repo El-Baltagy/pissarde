@@ -324,8 +324,7 @@ class EmployeesRoute extends PageRouteInfo<EmployeesRouteArgs> {
   PageInfo<EmployeesRouteArgs>(name);
 }
 class EmployeesRouteArgs {
-  const EmployeesRouteArgs( this.profileCubit);
-  final ProfileCubit profileCubit;
+  const EmployeesRouteArgs( );
 }
 
 
@@ -348,8 +347,7 @@ class ShiftsRoute extends PageRouteInfo<ShiftsRouteArgs> {
   PageInfo<ShiftsRouteArgs>(name);
 }
 class ShiftsRouteArgs {
-  const ShiftsRouteArgs( this.profileCubit);
-  final ProfileCubit profileCubit;
+  const ShiftsRouteArgs( );
 }
 /// generated route for
 /// [BranchesPage]
@@ -369,8 +367,7 @@ class BranchesRoute extends PageRouteInfo<BranchesRouteArgs> {
   PageInfo<BranchesRouteArgs>(name);
 }
 class BranchesRouteArgs {
-  const BranchesRouteArgs( this.profileCubit);
-  final ProfileCubit profileCubit;
+  const BranchesRouteArgs( );
 }
 
 
@@ -416,8 +413,8 @@ class AddEditShiftRoute extends PageRouteInfo<AddEditShiftRouteArgs> {
   PageInfo<AddEditShiftRouteArgs>(name);
 }
 class AddEditShiftRouteArgs {
-  const AddEditShiftRouteArgs({this.profileCubit, this.shiftItem});
-  final ProfileCubit? profileCubit;
+  const AddEditShiftRouteArgs({this.shiftsCubit, this.shiftItem});
+  final ShiftsCubit? shiftsCubit;
   final ShiftItem? shiftItem;
   static AddEditShiftRouteArgs noArgs() => const AddEditShiftRouteArgs();
 }
@@ -440,8 +437,8 @@ class AddEditBranchRoute extends PageRouteInfo<AddEditBranchRouteArgs> {
   PageInfo<AddEditBranchRouteArgs>(name);
 }
 class AddEditBranchRouteArgs {
-  const AddEditBranchRouteArgs({this.profileCubit, this.branchItem});
-  final ProfileCubit? profileCubit;
+  const AddEditBranchRouteArgs({this.branchesCubit, this.branchItem});
+  final BranchesCubit? branchesCubit;
   final DataItem? branchItem;
   static AddEditBranchRouteArgs noArgs() => const AddEditBranchRouteArgs();
 }
@@ -464,8 +461,8 @@ class AddEditEmloyeeRoute extends PageRouteInfo<AddEditEmloyeeRouteArgs> {
   PageInfo<AddEditEmloyeeRouteArgs>(name);
 }
 class AddEditEmloyeeRouteArgs {
-  const AddEditEmloyeeRouteArgs({this.profileCubit, this.employeeItem});
-  final ProfileCubit? profileCubit;
+  const AddEditEmloyeeRouteArgs({this.employeesCubit, this.employeeItem});
+  final EmployeesCubit? employeesCubit;
   final emp.DataItem? employeeItem;
   static AddEditEmloyeeRouteArgs noArgs() => const AddEditEmloyeeRouteArgs();
 }

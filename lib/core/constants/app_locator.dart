@@ -13,6 +13,24 @@ library;
 // ── login ──────────────────────────────────────────────────────
 // ── notifications ──────────────────────────────────────────────────────
 // ── on_boarding ──────────────────────────────────────────────────────
+// ── employees ──────────────────────────────────────────────────────
+// ── branches ──────────────────────────────────────────────────────
+// ── shifts ──────────────────────────────────────────────────────
+import 'package:newf/features/screens/shifts/data/repo/base_shifts_repo.dart';
+import 'package:newf/features/screens/shifts/data/repo/shifts_remote_repo.dart';
+import 'package:newf/features/screens/shifts/service/base_shifts_service.dart';
+import 'package:newf/features/screens/shifts/service/shifts_remote_service.dart';
+import 'package:newf/features/screens/shifts/controller/shifts_cubit.dart';
+import 'package:newf/features/screens/branches/data/repo/base_branches_repo.dart';
+import 'package:newf/features/screens/branches/data/repo/branches_remote_repo.dart';
+import 'package:newf/features/screens/branches/service/base_branches_service.dart';
+import 'package:newf/features/screens/branches/service/branches_remote_service.dart';
+import 'package:newf/features/screens/branches/controller/branches_cubit.dart';
+import 'package:newf/features/screens/employees/data/repo/base_employees_repo.dart';
+import 'package:newf/features/screens/employees/data/repo/employees_remote_repo.dart';
+import 'package:newf/features/screens/employees/service/base_employees_service.dart';
+import 'package:newf/features/screens/employees/service/employees_remote_service.dart';
+import 'package:newf/features/screens/employees/controller/employees_cubit.dart';
 import 'package:newf/features/screens/on_boarding/data/repo/base_on_boarding_repo.dart';
 import 'package:newf/features/screens/on_boarding/data/repo/on_boarding_remote_repo.dart';
 import 'package:newf/features/screens/on_boarding/service/base_on_boarding_service.dart';
@@ -66,6 +84,30 @@ class AppLocator {
   GetIt call()=>_sl;
   
   void init(){
+    ///..................shifts.................///
+    // Repo layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseShiftsRepo>(() => ShiftsRemoteRepo(_sl()));
+    // Service layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseShiftsService>(() => ShiftsRemoteService(_sl<BaseShiftsRepo>(), _sl()));
+    // Controller layer: factory so a fresh cubit is created per BlocProvider
+    _sl.registerFactory(() => ShiftsCubit(_sl<BaseShiftsService>()));
+
+    ///..................branches.................///
+    // Repo layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseBranchesRepo>(() => BranchesRemoteRepo(_sl()));
+    // Service layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseBranchesService>(() => BranchesRemoteService(_sl<BaseBranchesRepo>(), _sl()));
+    // Controller layer: factory so a fresh cubit is created per BlocProvider
+    _sl.registerFactory(() => BranchesCubit(_sl<BaseBranchesService>()));
+
+    ///..................employees.................///
+    // Repo layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseEmployeesRepo>(() => EmployeesRemoteRepo(_sl()));
+    // Service layer: register the concrete impl under the abstract type
+    _sl.registerLazySingleton<BaseEmployeesService>(() => EmployeesRemoteService(_sl<BaseEmployeesRepo>(), _sl()));
+    // Controller layer: factory so a fresh cubit is created per BlocProvider
+    _sl.registerFactory(() => EmployeesCubit(_sl<BaseEmployeesService>()));
+
     ///..................on_boarding.................///
     // Repo layer: register the concrete impl under the abstract type
     _sl.registerLazySingleton<BaseOnBoardingRepo>(() => OnBoardingRemoteRepo(_sl()));

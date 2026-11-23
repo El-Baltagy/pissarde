@@ -64,7 +64,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     Future.wait([
       branchesCubit.getListBranchesFunc(Init()),
       shiftsCubit.getListShiftsFunc(Init()),
-      employeesCubit.getListEmployeesFunc(Init()),
+      employeesCubit.getSupervisorsFunc(Reload()),
     ]);
   }
 

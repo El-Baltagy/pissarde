@@ -13,6 +13,8 @@ import 'package:newf/features/screens/employees/data/model/employees/3-delete_em
 import '../../../../core/base/base_service.dart';
 import '../../../../core/constants/app_constant.dart';
 import '../../../../core/shared/methods/no_parameter.dart';
+import '../../../../core/shared/methods/print.dart';
+import '../data/model/get_supervisors_list/get_supervisors_list.dart';
 
 part 'employees_state.dart';
 
@@ -31,11 +33,16 @@ class EmployeesCubit extends BaseCubit<EmployeesState> {
   int get addEditEmployeeKeyCode => AppConstant.createEmployeeKeyCode;
   int get deleteEmployeeKeyCode => AppConstant.deleteEmployeeKeyCode;
 
+    int get getSupervisorsKeyCode => AppConstant.getSupervisorsKeyCode;
+
   @override
   Future<void> init() async {}
 
   @override
   Future<void> close() {
+    // add every key in file
+    CancelManager.cancel(getSupervisorsKeyCode);
+
     CancelManager.cancel(deleteEmployeeKeyCode);
     CancelManager.cancel(addEditEmployeeKeyCode);
     CancelManager.cancel(getListEmployeesKeyCode);
@@ -110,5 +117,19 @@ class EmployeesCubit extends BaseCubit<EmployeesState> {
 
   void resetStateAfterSuccess() {
     safeEmit(_current.copyWith(resetMutationStates: true));
+  }
+
+  Future<void> getSupervisorsFunc(BaseRequestBackType baseRequestBackType ) async {
+    await CancelManager.runCancelableFun(getSupervisorsKeyCode, (token) async {
+      await _service.getSupervisorsServ(
+        RequestCallbackObserver<GetSupervisorsList, NoParameter>(
+          baseRequestBackType: baseRequestBackType ,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(getSupervisorsState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(getSupervisorsState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(getSupervisorsState: ErrorState(failure))),
+        ),
+      );
+    });
   }
 }

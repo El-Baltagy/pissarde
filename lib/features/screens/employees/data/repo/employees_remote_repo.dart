@@ -1,3 +1,4 @@
+import 'package:newf/core/constants/app_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
@@ -12,6 +13,8 @@ import 'package:newf/features/screens/employees/data/model/employees/3-delete_em
 import '../../../../../core/api_helper/caller_tag.dart';
 import '../../../../../core/api_helper/response_handler.dart';
 import '../../../../../core/shared/methods/no_parameter.dart';
+import '../../../../../core/shared/methods/print.dart';
+import '../model/get_supervisors_list/get_supervisors_list.dart';
 
 class EmployeesRemoteRepo implements BaseEmployeesRepo {
   final DioHelper dio;
@@ -76,6 +79,21 @@ class EmployeesRemoteRepo implements BaseEmployeesRepo {
         caller: callerTag(),
       ),
       asObject: CreateEmployeeRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, GetSupervisorsList>> getSupervisorsApi(
+    NoParameter? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.getSupervisors,
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: GetSupervisorsList.fromJson,
     );
   }
 }

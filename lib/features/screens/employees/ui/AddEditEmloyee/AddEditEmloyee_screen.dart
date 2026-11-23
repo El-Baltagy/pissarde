@@ -31,6 +31,7 @@ import 'package:newf/features/screens/shifts/ui/AddEditShift/widgets/title_with_
 import '../../../../../core/shared/widgets/text_inputs/drop_down_select.dart';
 import '../../../../../core/shared/widgets/text_inputs/email_text_input_data.dart';
 import '../../../../../core/shared/widgets/text_inputs/password_text_input_data.dart';
+import '../../data/model/get_supervisors_list/get_supervisors_list.dart';
 
 part 'AddEditEmloyee_base_state.dart';
 
@@ -142,15 +143,17 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
 
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
-                      BranchSelector(
-                        selectedNotifier: selectedBranchNotifier,
-                        field: fieldBranch,
-                      ),
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,
                         field: fieldShift,
                       ),
+
+                      BranchSelector(
+                        selectedNotifier: selectedBranchNotifier,
+                        field: fieldBranch,
+                      ),
                       SupervisorSelectorWidget(
+                        selectedBranchNotifier: selectedBranchNotifier,
                         selectedNotifier: selectedSupervisorNotifier,
                         field: fieldSupervisor,
                       ),

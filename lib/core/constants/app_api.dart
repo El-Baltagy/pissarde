@@ -7,6 +7,7 @@ abstract class EndPoints {
   static   String showEmployee (String id)=> "/api/employees/$id";
   static const String createEmployee = "/api/employees";
   static const String listEmployees = "/api/employees";
+  static const String getSupervisors = '/api/supervisors';
 
   static const String assignEmployeeShift = "/api/employees/1/assign-shift";
   static const String transferEmployee = "/api/employees/1/transfer";

@@ -31,10 +31,7 @@ class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     if (args.profileCubit != null) {
-      return BlocProvider.value(
-        value: args.profileCubit!,
-        child: this,
-      );
+      return BlocProvider.value(value: args.profileCubit!, child: this);
     }
     return BlocProvider<ProfileCubit>(
       create: (context) => AppLocator()()(),
@@ -71,6 +68,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(AppPadding.p16),
                   child: Column(
+                    spacing: AppSizes.s20,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitleWithInputField(
@@ -83,7 +81,6 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           controller: controllerName,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
                       TitleWithInputField(
                         'email'.tr(),
                         NameInputData(
@@ -108,7 +105,6 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         ),
                       ),
                       if (!_isEditMode) ...[
-                        AppSizes.s20.verticalSpace,
                         ValueListenableBuilder<bool>(
                           valueListenable: isPasswordVisibleNotifier,
                           builder: (context, isVisible, _) {
@@ -126,7 +122,8 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                                     return "can't_be_empty".tr();
                                   }
                                   if (value.trim().length < 6) {
-                                    return 'the_password_must_be_at_least_6_characters'.tr();
+                                    return 'the_password_must_be_at_least_6_characters'
+                                        .tr();
                                   }
                                   return null;
                                 },
@@ -135,20 +132,6 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           },
                         ),
                       ],
-                      AppSizes.s20.verticalSpace,
-                      TitleWithInputField(
-                        'employee_code'.tr(),
-                        NameInputData(
-                          isLabel: false,
-                          widgetPrefix: const SizedBox.shrink(),
-                          field: fieldCode,
-                          readOnly: _isEditMode,
-                          enabled: !_isEditMode,
-                          labelText: 'employee_code'.tr(),
-                          controller: controllerCode,
-                        ),
-                      ),
-                      AppSizes.s20.verticalSpace,
                       TitleWithInputField(
                         'phone'.tr(),
                         NameInputData(
@@ -160,7 +143,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           controller: controllerPhone,
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
+                      /// extract --ActiveSwitchWidget
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppPadding.p12,
@@ -181,41 +164,45 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                                 style: AppTextStyles.font14Regular,
                               ),
                               value: isActive,
-                              thumbColor:
-                                  WidgetStateProperty.resolveWith((states) {
+                              thumbColor: WidgetStateProperty.resolveWith((
+                                states,
+                              ) {
                                 if (states.contains(WidgetState.selected)) {
                                   return context.theme.scaffoldBackgroundColor;
                                 }
                                 return context.theme.primaryColor;
                               }),
-                              onChanged: (val) =>
-                                  isActiveNotifier.value = val,
+                              onChanged: (val) => isActiveNotifier.value = val,
                             );
                           },
                         ),
                       ),
-                      AppSizes.s32.verticalSpace,
-                      SizedBox(
+
+                      Container(
+                        margin: EdgeInsets.only(top: AppSizes.s16),
                         width: double.infinity,
                         height: AppSizes.s48,
                         child: BlocBuilder<ProfileCubit, ProfileState>(
                           builder: (context, state) {
-                            final bool isLoading = state is ProfileLoaded &&
+                            final bool isLoading =
+                                state is ProfileLoaded &&
                                 (state.addEditEmployeeState is Loading ||
                                     state.addEditEmployeeState is Loading);
                             return ElevatedButton(
-                              onPressed: () => createOrUpdateEmployee(isLoading),
+                              onPressed: () =>
+                                  createOrUpdateEmployee(isLoading),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: context.theme.primaryColor,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(AppSizes.s8),
+                                  borderRadius: BorderRadius.circular(
+                                    AppSizes.s8,
+                                  ),
                                 ),
                               ),
                               child: isLoading
                                   ? CircularProgressIndicator(
-                                      color: context
-                                          .theme.scaffoldBackgroundColor,
+                                      color:
+                                          context.theme.scaffoldBackgroundColor,
                                     )
                                   : Text(
                                       widget.args.employeeItem == null
@@ -223,15 +210,16 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                                           : 'save'.tr(),
                                       style: AppTextStyles.font16SemiBold
                                           .copyWith(
-                                        color: context
-                                            .theme.scaffoldBackgroundColor,
-                                      ),
+                                            color: context
+                                                .theme
+                                                .scaffoldBackgroundColor,
+                                          ),
                                     ),
                             );
                           },
                         ),
                       ),
-                      AppSizes.s20.verticalSpace,
+                      SizedBox.shrink(),
                     ],
                   ),
                 ),

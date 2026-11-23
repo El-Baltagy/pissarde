@@ -95,7 +95,7 @@ class OnBoardingShiftsWidget extends StatelessWidget {
                     height: 260,
                     padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
                     child: Image.asset(
-                      AppAssets.imagesOnBoaring3Png,
+                      AppAssets.imagesOnBoaringOnboarding3ShiftsTransparentPng,
                       fit: BoxFit.contain,
                     ),
                   ),

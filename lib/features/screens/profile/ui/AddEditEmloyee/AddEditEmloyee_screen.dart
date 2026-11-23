@@ -10,14 +10,21 @@ import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
+import 'package:newf/core/shared/widgets/one_item_drop_down_sheet.dart';
 import 'package:newf/core/shared/widgets/text_inputs/name_text_input_data.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
+import 'package:newf/features/screens/profile/data/model/branches/get_branches_list/branches_list.dart'
+    as branches_model;
 import 'package:newf/features/screens/profile/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/employees/2-update_employee_req_param.dart';
 import 'package:newf/features/screens/profile/data/model/employees/create_employee_res/create_employee_res.dart';
+import 'package:newf/features/screens/profile/data/model/employees/get_all_employees_res/get_all_employees_res.dart'
+    as employees_model;
+import 'package:newf/features/screens/profile/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
+import 'package:newf/features/screens/profile/ui/AddEditEmloyee/widgets/BottomSheetSelector.dart';
 import 'package:newf/features/screens/profile/ui/AddEditShift/widgets/title_with_input.dart';
 
 import '../../../../../core/shared/widgets/text_inputs/drop_down_select.dart';
@@ -31,6 +38,8 @@ part 'widgets/supervisor_selector_widget.dart';
 part 'widgets/shift_selector_widget.dart';
 
 part 'widgets/branch_selector_widget.dart';
+
+
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -157,12 +166,36 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         isActiveNotifier: isActiveNotifier,
                       ),
 
+                      /// extract -- BranchSelector
+                      BottomSheetSelector(
+                        listChoices: [],
+                        selectedNotifier: selectedBranchNotifier,
+                        isMultiSelect: false,
+                        title:  'branch'.tr(),
+                        field: fieldShift,
+                      ),
 
-                      BranchSelectorWidget(),
+                      /// extract -- ShiftSelector
+                      BottomSheetSelector(
+                        listChoices: [],
+                        selectedNotifier: selectedShiftNotifier,
+                        isMultiSelect: false,
+                        title: 'supervisor'.tr(),
+                        field: fieldShift,
+                      ),
 
-                      const ShiftSelectorWidget(),
+                      /// extract -- SupervisorSelector
+                      BottomSheetSelector(
+                        listChoices: [],
+                        selectedNotifier: selectedSupervisorNotifier,
+                        isMultiSelect: false,
+                        title: 'supervisor'.tr(),
+                        field: fieldSupervisor,
 
-                      const SupervisorSelectorWidget(),
+                      ),
+
+
+
 
                       Container(
                         margin: EdgeInsets.only(top: AppSizes.s16),

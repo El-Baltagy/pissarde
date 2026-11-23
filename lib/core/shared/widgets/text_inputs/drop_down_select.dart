@@ -8,6 +8,7 @@ class DropDownSingleSelectData extends BaseTextInputData {
     super.widgetPrefix,
     super.onTap,
     String? labelText,
+    bool isRequired = true,
     super.icon,
     String? Function(String?)? validator,
     super.field
@@ -16,6 +17,7 @@ class DropDownSingleSelectData extends BaseTextInputData {
       isSingleOrMultiSelect:true ,
       labelText:labelText?? 'tap_to_select'.tr(),
     validator: validator??(value) {
+      if (!isRequired) return null;
       if (value?.isEmpty == true) {
         return "can't_be_empty".tr();
       }

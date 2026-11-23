@@ -82,7 +82,7 @@ class OnBoardingAttendanceWidget extends StatelessWidget {
                   height: 260,
                   padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
                   child: Image.asset(
-                    AppAssets.imagesOnBoaring1Png,
+                    AppAssets.imagesOnBoaringOnboarding1AttendanceTransparentPng,
                     fit: BoxFit.contain,
                   ),
                 ),

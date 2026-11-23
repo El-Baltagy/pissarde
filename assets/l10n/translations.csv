@@ -250,9 +250,9 @@ privacy_policy,privacy policy,سياسة الخصوصية,gizlilik politikası
 last_updated,last updated,آخر تحديث,son güncelleme
 january_1_2026,january 1 2026,1 يناير 2026,1 Ocak 2026
 about_this_policy,about this policy,حول هذه السياسة,bu politika hakkında
-this_policy_explains_how_we_collect_use_and_protect_your_personal_data_when_you_use_the_attendance_app,this policy explains how we collect use and protect your personal data when you use the attendance app,تشرح هذه السياسة كيف نجمع بياناتك الشخصية ونحميها عند استخدام تطبيق الحضور,Bu politika, katılım uygulamasını kullandığınızda kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır.
+this_policy_explains_how_we_collect_use_and_protect_your_personal_data_when_you_use_the_attendance_app,this policy explains how we collect use and protect your personal data when you use the attendance app,تشرح هذه السياسة كيف نجمع بياناتك الشخصية ونحميها عند استخدام تطبيق الحضور,Bu politika
 information_we_collect,information we collect,المعلومات التي نجمعها,topladığımız bilgiler
-we_collect_your_name_employee_code_phone_number_attendance_records_and_branch_location,we collect your name employee code phone number attendance records and branch location,نقوم بجمع اسمك ورمز الموظف ورقم الهاتف وسجلات الحضور وموقع الفرع,adınızı, çalışan kodunuzu, telefon numaranızı, devam kayıtlarınızı ve şube konumunuzu topluyoruz
+we_collect_your_name_employee_code_phone_number_attendance_records_and_branch_location,we collect your name employee code phone number attendance records and branch location,نقوم بجمع اسمك ورمز الموظف ورقم الهاتف وسجلات الحضور وموقع الفرع,adınızı
 how_we_use_information,how we use information,كيف نستخدم المعلومات,bilgiyi nasıl kullanıyoruz
 your_data_is_used_to_manage_shifts_record_check_in_and_check_out_times_and_generate_attendance_reports,your data is used to manage shifts record check in and check out times and generate attendance reports,يتم استخدام بياناتك لإدارة الورديات وتسجيل أوقات تسجيل الوصول والمغادرة وإنشاء تقارير الحضور,Verileriniz vardiya kaydı giriş ve çıkış zamanlarını yönetmek ve katılım raporları oluşturmak için kullanılır
 data_security,data security,أمن البيانات,veri güvenliği
@@ -288,9 +288,14 @@ onboarding_slide1_desc,Precise geofenced check-in and check-out with instant bio
 onboarding_slide2_title,Leaves & Approvals,إدارة الإجازات والموافقات,İzinler ve Onaylar
 onboarding_slide2_desc,Submit time-off requests easily with real-time manager approvals and balance tracking,تقديم ومتابعة طلبات الإجازات والأذونات بكل سهولة مع اعتماد فوري ومباشر,Gerçek zamanlı yönetici onayları ve bakiye takibi ile izin talepleri
 onboarding_slide3_title,Flexible Shift Rostering,جدولة مرنة للورديات,Esnek Vardiya Planlaması
-onboarding_slide3_desc,Organize work shifts, break windows, and branch schedules dynamically,تنظيم مواعيد العمل، الورديات، وفترات الراحة بكل مرونة ووضوح لكافة الفروع,Çalışma vardiyalarını, mola aralıklarını ve şube programlarını dinamik olarak düzenleyin
+onboarding_slide3_desc,Organize work shifts, break windows, and branch schedules dynamically
 onboarding_slide4_title,Instant Alerts & Hub,إشعارات وتواصل فوري,Anlık Bildirimler ve Merkez
-onboarding_slide4_desc,Stay informed with live notifications, corporate updates, and administrative decisions,ابقَ على اطلاع دائم بجميع التحديثات ومستجدات العمل والقرارات الإدارية,Canlı bildirimler, kurumsal güncellemeler ve idari kararlarla bilgi sahibi olun
+onboarding_slide4_desc,Stay informed with live notifications, corporate updates, and administrative decisions
 onboarding_get_started,Login / Get Started,تسجيل الدخول,Giriş Yap / Başla
 leave_request_header_desc,Submit your leave or permission request for administrative approval,تقديم طلب إجازة أو إذن للاعتماد الإداري,İdari onay için izin talebinizi gönderin
 leave_duration_days,Duration: {} days,المدة: {} أيام,Süre: {} gün
+
+choose_from_one,choose from one,اختر من واحد,birinden birini seç
+tap_to_select,tap to select,انقر لتحديد,seçmek için dokunun
+supervisor,supervisor,مشرف,gözetmen
+branch,branch,فرع,dal

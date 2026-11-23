@@ -95,7 +95,7 @@ class OnBoardingLeavesWidget extends StatelessWidget {
                     height: 260,
                     padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
                     child: Image.asset(
-                      AppAssets.imagesOnBoaring2Png,
+                      AppAssets.imagesOnBoaringOnboarding2LeavesTransparentPng,
                       fit: BoxFit.contain,
                     ),
                   ),

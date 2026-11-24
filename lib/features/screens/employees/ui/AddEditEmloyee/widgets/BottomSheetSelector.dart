@@ -144,7 +144,7 @@ class _BottomSheetSelectorState extends State<BottomSheetSelector> {
                             bool isSelected = value.contains(index);
                             return OneItemDropBottomSheetItem(
                               isRadio: !widget.isMultiSelect,
-                              showOptionBesideRadioSelect: false,
+
                               style: .new(
                                 fontSize: 15,
                                 color: isSelected
@@ -169,6 +169,7 @@ class _BottomSheetSelectorState extends State<BottomSheetSelector> {
                                 }
                               },
                               title: widget.listChoices[index].uiTxt,
+                              subtitle: widget.listChoices[index].secUiTxt,
                               isLastItem:
                                   index == widget.listChoices.length - 1,
                               isSelected: isSelected,

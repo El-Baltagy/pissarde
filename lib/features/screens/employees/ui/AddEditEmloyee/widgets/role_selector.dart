@@ -8,22 +8,37 @@ class RoleSelector extends StatelessWidget {
     this.field,
     this.preselectValue,
   });
+
   final ValueNotifier<List<int>> selectedNotifier;
   final (GlobalKey<FormFieldState<dynamic>>, FocusNode?)? field;
   final String? preselectValue;
-  static      List<UIApiKeys<String>> list = [
-    UIApiKeys('admin'.tr(), 'admin',secUiTxt: 'admin_hint'.tr()),
-    UIApiKeys('hr'.tr(), 'hr',secUiTxt: 'hr_hint'.tr()),
-    UIApiKeys('supervisor'.tr(), 'supervisor',secUiTxt: 'supervisor_hint'.tr()),
-    UIApiKeys('sales_employee'.tr(), 'sales_employee',secUiTxt: 'sales_employee_hint'.tr()),
-    UIApiKeys('admin_employee'.tr(), 'admin_employee',secUiTxt: 'admin_employee_hint'.tr()),
-    UIApiKeys('duty_employee'.tr(), 'duty_employee',secUiTxt: 'duty_employee_hint'.tr()),
-
+  static List<UIApiKeys<String>> list = [
+    UIApiKeys('admin'.tr(), 'admin', secUiTxt: 'admin_hint'.tr()),
+    UIApiKeys('hr'.tr(), 'hr', secUiTxt: 'hr_hint'.tr()),
+    UIApiKeys(
+      'supervisor'.tr(),
+      'supervisor',
+      secUiTxt: 'supervisor_hint'.tr(),
+    ),
+    UIApiKeys(
+      'sales_employee'.tr(),
+      'sales_employee',
+      secUiTxt: 'sales_employee_hint'.tr(),
+    ),
+    UIApiKeys(
+      'admin_employee'.tr(),
+      'admin_employee',
+      secUiTxt: 'admin_employee_hint'.tr(),
+    ),
+    UIApiKeys(
+      'duty_employee'.tr(),
+      'duty_employee',
+      secUiTxt: 'duty_employee_hint'.tr(),
+    ),
   ];
+
   @override
   Widget build(BuildContext context) {
-
-
     if (preselectValue != null &&
         selectedNotifier.value.isEmpty &&
         list.isNotEmpty) {
@@ -43,4 +58,3 @@ class RoleSelector extends StatelessWidget {
     );
   }
 }
-

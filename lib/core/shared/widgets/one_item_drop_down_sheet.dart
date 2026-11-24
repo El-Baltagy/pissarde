@@ -2,6 +2,7 @@ import 'package:flutter/Material.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/shared/widgets/circle_radio.dart';
+import 'package:newf/core/shared/widgets/ticker_text.dart';
 import 'package:newf/core/theming/app_colors.dart';
 
 class OneItemDropBottomSheetItem extends StatelessWidget {
@@ -11,15 +12,21 @@ class OneItemDropBottomSheetItem extends StatelessWidget {
     required this.title,
     required this.isLastItem,
     required this.isSelected,
-      this.style,
-    this.showOptionBesideRadioSelect = true,
+    this.subtitle,
+    this.style,
+    this.subtitleStyle,
+
     this.isRadio = true,
   });
 
   final void Function()? onTap;
   final String title;
-  final bool isLastItem, isRadio,isSelected, showOptionBesideRadioSelect;
+  final String? subtitle;
+  final bool isLastItem, isRadio, isSelected;
+
   final TextStyle? style;
+  final TextStyle? subtitleStyle;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -39,18 +46,35 @@ class OneItemDropBottomSheetItem extends StatelessWidget {
               Row(
                 crossAxisAlignment: .start,
                 children: [
-                  15.horizontalSpace,
-
-                  CustomSelectedCircleAndSquare(isSelected: isSelected,
-                  isRadio: isRadio,
+                  Text(title, style: style),
+                  Spacer(),
+                  CustomSelectedCircleAndSquare(
+                    isSelected: isSelected,
+                    isRadio: isRadio,
                   ),
-                  if (showOptionBesideRadioSelect)
-                    15.horizontalSpace
-                  else
-                    Spacer(),
-                  Text(title,style:style),
                 ],
               ),
+              if (subtitle != null && subtitle!.isNotEmpty) ...[
+                4.verticalSpace,
+                Row(
+                  mainAxisAlignment: .end,
+                  children: [
+                    Expanded(
+                      child: TickerText(
+                        child: Text(
+                          subtitle!,
+                          style:
+                              subtitleStyle ??
+                              const TextStyle(
+                                fontSize: 12,
+                                color: AppColors.lightTextSecondary,
+                              ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
 
               if (!isLastItem)
                 Container(

@@ -57,11 +57,11 @@ class _OnBoardingPageState extends OnBoardingPageBaseState {
               OnBoardingLeavesWidget(
                 animationController: animationController,
               ),
-              // if(false)
+
               OnBoardingShiftsWidget(
                 animationController: animationController,
               ),
-              // if(false)
+
               OnBoardingWelcomeWidget(
                 animationController: animationController,
               ),

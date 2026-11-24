@@ -141,7 +141,11 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         ),
                       ),
 
-                      ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
+                      /// extract -- RoleSelector
+                      SizedBox.shrink(),
+
+                      /// extract -- TypeSelector
+                      SizedBox.shrink(),
 
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,
@@ -157,6 +161,8 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         selectedNotifier: selectedSupervisorNotifier,
                         field: fieldSupervisor,
                       ),
+
+                      ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
                       /// extract -- SubmitButton
                         SubmitButton(

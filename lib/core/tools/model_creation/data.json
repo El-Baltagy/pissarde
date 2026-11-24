@@ -1,58 +1,30 @@
 {
-  "notifications": {
-    "current_page": 1,
-    "data": [
-      {
-        "id": "1",
-        "notifiable_id": 1,
-        "data": {
-          "title": "طلب إجازة جديد",
-          "body": "قدّم أحمد طلب إجازة.",
-          "data": {
-            "type": "leave_request",
-            "leave_id": 101,
-            "status": "pending"
-          }
-        },
-        "read_at": null,
-        "created_at": "2026-11-21T00:52:42.000000Z",
-        "updated_at": "2026-11-21T00:52:42.000000Z"
+  "data": [
+    {
+      "id": 3,
+      "name": "Kerem Yilmaz (Istanbul Supervisor)",
+      "email": "supervisor.istanbul@pissarde.com",
+      "employee_code": "EMP-SUP-001",
+      "phone": "+90 555 200 0001",
+      "role": {
+        "value": "supervisor"
       },
-      {
-        "id": "2",
-        "notifiable_id": 1,
-        "data": {
-          "title": "تمت الموافقة على الإجازة",
-          "body": "تمت الموافقة على طلب الإجازة رقم 98.",
-          "data": {
-            "type": "leave_review",
-            "leave_id": 98,
-            "status": "approved"
-          }
-        },
-        "read_at": null,
-        "created_at": "2026-11-21T00:52:42.000000Z",
-        "updated_at": "2026-11-21T00:52:42.000000Z"
+      "employee_type": {
+        "value": "sales"
       },
-      {
-        "id": "3",
-        "type": "App\\Notifications\\PushNotification",
-        "notifiable_type": "App\\Models\\User",
-        "notifiable_id": 1,
-        "data": {
-          "title": "تذكير",
-          "body": "لا تنسَ تسجيل الحضور اليوم.",
-          "data": {
-            "type": "reminder"
-          }
-        },
-        "read_at": null,
-        "created_at": "2026-11-21T00:52:42.000000Z",
-        "updated_at": "2026-11-21T00:52:42.000000Z"
-      }
-    ],
-
-    "last_page": 1,
-     "total": 3
-  }
+      "work_type": {
+        "value": "in_office"
+      },
+      "branch": {
+        "id": 1,
+        "name": "Istanbul Headquarters",
+        "code": "IST-HQ",
+        "latitude": 41.0784000000000020236257114447653293609619140625,
+        "longitude": 29.01180000000000092086338554508984088897705078125,
+        "geofence_radius_meters": 150
+      } ,
+      "is_active": true,
+      "created_at": "2026-10-25T09:49:38+00:00"
+    }
+  ]
 }

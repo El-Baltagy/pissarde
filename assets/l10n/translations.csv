@@ -300,3 +300,6 @@ tap_to_select,tap to select,انقر لتحديد,seçmek için dokunun
 supervisor,supervisor,مشرف,gözetmen
 branch,branch,فرع,dal
 shift,shift,الورديه,Vardiya
+
+please_select_branch_first,please select branch first,يرجى تحديد الفرع أولا,lütfen önce şubeyi seçin
+this_branch_has_no_supervisor,this branch has no supervisor,هذا الفرع ليس له مشرف,bu şubenin sorumlusu yok

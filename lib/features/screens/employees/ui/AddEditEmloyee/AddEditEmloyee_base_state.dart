@@ -19,7 +19,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldPhone = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldBranch = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldShift = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldSupervisor = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldSupervisor = (.new(), null);
 
   final TextEditingController controllerName = .new();
   final TextEditingController controllerEmail = .new();

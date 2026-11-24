@@ -1,4 +1,2 @@
- choose_from_one
- tap_to_select
-supervisor
-branch
+please_select_branch_first
+this_branch_has_no_supervisor

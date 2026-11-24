@@ -52,12 +52,6 @@ extension FormAutoScroll on GlobalKey<FormState> {
           // Optionally request focus if a FocusNode was provided.
           if (focus != null) {
             focus.requestFocus();
-          } else {
-            // Try to focus the field's focusable descendant if possible.
-            final focusable = Focus.maybeOf(ctx);
-            if (focusable != null) {
-              focusable.requestFocus();
-            }
           }
         }
         break;

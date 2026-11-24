@@ -35,7 +35,6 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   final ValueNotifier<List<int>> selectedTypeNotifier = .new([]);
   final ValueNotifier<List<int>> selectedWorkTypeNotifier = .new([]);
 
-  bool _isSuccessHandled = false;
 
   /// Whether we're editing an existing employee (true) or creating new (false).
   bool get _isEditMode => widget.args.employeeItem != null;
@@ -166,8 +165,6 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   }
 
   Future<void> createOrUpdateEmployee(bool isLoading) async {
-    if (isLoading) return;
-
 
 
     if (await formKey.validateAndScroll(
@@ -196,19 +193,18 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   }
 
   void addEditEmployeeListener(BuildContext context, EmployeesState state) {
-    if (state is EmployeesLoaded) {
-      // ── Create / Update success ──────────────────────────────────────
-      if (state.addEditEmployeeState is Success && !_isSuccessHandled) {
-        _isSuccessHandled = true;
-        final res = (state.addEditEmployeeState as Success).data;
+     if (state is EmployeesLoaded) {
+       // ── Create / Update success ──────────────────────────────────────
+      if (state.addEditEmployeeState is Success   ) {
+         final res = (state.addEditEmployeeState as Success).data;
         final message = res is CreateEmployeeRes
             ? res.message
             : (!_isEditMode
                 ? 'employee_created_success'.tr()
                 : 'employee_updated_success'.tr());
         context.showToast(message);
-        employeesCubit.resetStateAfterSuccess();
-        context.pop(true);
+        // employeesCubit.resetStateAfterSuccess();
+        context.pop( );
       } else if (state.addEditEmployeeState is ErrorState) {
         final err = state.addEditEmployeeState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);

@@ -20,19 +20,19 @@ class SubmitButton extends StatelessWidget {
               state is EmployeesLoaded &&
               (state.addEditEmployeeState is Loading ||
                   state.addEditEmployeeState is Loading);
-          return isLoading
-              ? CircularProgressIndicator(
-                  color: context.theme.scaffoldBackgroundColor,
-                )
-              : ElevatedButton(
-                  onPressed: () => onPress(isLoading),
+          return ElevatedButton(
+                  onPressed: isLoading?null:() => onPress(isLoading),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: context.theme.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppSizes.s8),
                     ),
                   ),
-                  child: Text(
+                  child: isLoading
+                      ? CircularProgressIndicator(
+                    color: context.theme.scaffoldBackgroundColor,
+                  )
+                      : Text(
                     isAdd ? 'add'.tr() : 'save'.tr(),
                     style: AppTextStyles.font16SemiBold.copyWith(
                       color: context.theme.scaffoldBackgroundColor,

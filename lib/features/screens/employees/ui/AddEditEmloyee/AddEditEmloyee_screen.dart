@@ -59,8 +59,8 @@ class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<EmployeesCubit>(
-          create: (context) => args.employeesCubit ?? AppLocator()()(),
+        BlocProvider.value  (
+          value:  args.employeesCubit  ,
         ),
         BlocProvider<BranchesCubit>(create: (context) => AppLocator()()()),
         BlocProvider<ShiftsCubit>(create: (context) => AppLocator()()()),
@@ -169,8 +169,8 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
 
 
                       SubmitButton(
-                        onPress: (bool isLoading) =>
-                            createOrUpdateEmployee(isLoading),
+                        onPress: (bool isLoading) async =>
+                            await createOrUpdateEmployee(isLoading),
                         isAdd: widget.args.employeeItem == null,
                       ),
                       SizedBox.shrink(),

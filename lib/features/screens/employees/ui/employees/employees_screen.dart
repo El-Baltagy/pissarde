@@ -2,8 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newf/core/shared/widgets/entrance_fader.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
@@ -54,18 +53,13 @@ class _EmployeesPageState extends EmployeesPageBaseState {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.theme.primaryColor,
-          onPressed: () async {
-            final res = await context.push(
-              AddEditEmloyeeRoute(
-                args: AddEditEmloyeeRouteArgs(
-                  employeesCubit: employeesCubit,
-                ),
+          onPressed: () async=>await context.push(
+            AddEditEmloyeeRoute(
+              args: AddEditEmloyeeRouteArgs(
+                employeesCubit: employeesCubit,
               ),
-            );
-            if (res == true) {
-              await employeesCubit.getListEmployeesFunc(Reload());
-            }
-          },
+            ),
+          ),
           child:
           const Icon(Icons.add, color: AppColors.roleSwitchSelectedBg),
         ),

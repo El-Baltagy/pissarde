@@ -45,26 +45,33 @@ class _OnBoardingPageState extends OnBoardingPageBaseState {
         body: ClipRect(
           child: Stack(
             children: [
+
               OnBoardingSplashWidget(
                 animationController: animationController,
               ),
+
               OnBoardingAttendanceWidget(
                 animationController: animationController,
               ),
+
               OnBoardingLeavesWidget(
                 animationController: animationController,
               ),
+              // if(false)
               OnBoardingShiftsWidget(
                 animationController: animationController,
               ),
+              // if(false)
               OnBoardingWelcomeWidget(
                 animationController: animationController,
               ),
+
               OnBoardingTopBarWidget(
                 animationController: animationController,
                 onBackClick: onBackClick,
                 onSkipClick: onSkipClick,
               ),
+
               OnBoardingNextButtonWidget(
                 animationController: animationController,
                 onNextClick: onNextClick,

@@ -198,19 +198,14 @@ class EmployeeCardWidget extends StatelessWidget {
     );
   }
 
-  Future<void> _onEdit(BuildContext context) async {
-    final res = await context.push(
-      AddEditEmloyeeRoute(
-        args: AddEditEmloyeeRouteArgs(
-          employeesCubit: employeesCubit,
-          employeeItem: employee,
-        ),
+  Future<void> _onEdit(BuildContext context) async=>await context.push(
+    AddEditEmloyeeRoute(
+      args: AddEditEmloyeeRouteArgs(
+        employeesCubit: employeesCubit,
+        employeeItem: employee,
       ),
-    );
-    if (res == true) {
-      await employeesCubit.getListEmployeesFunc(Reload());
-    }
-  }
+    ),
+  );
 
   void _onDelete(BuildContext context) {
     showDialog<void>(

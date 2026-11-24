@@ -6,6 +6,7 @@ import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
+import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
@@ -141,6 +142,9 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
                     .map((p) => p ?? const SizedBox.shrink())
                     .toList(),
               ),
+              floatingActionButton: FloatingActionButton(onPressed: () {
+                context.push(OnBoardingRoute(args: .new()));
+              },),
               bottomNavigationBar: CustomBottomNavBar(
                 currentIndex: selectedIndex,
                 onTap: (index) {

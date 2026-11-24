@@ -46,7 +46,7 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AddEditEmloyeeRoute.name: (routeData) {
-      final args = routeData.argsAs<AddEditEmloyeeRouteArgs>(orElse: () => AddEditEmloyeeRouteArgs.noArgs());
+      final args = routeData.argsAs<AddEditEmloyeeRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -464,10 +464,9 @@ class AddEditEmloyeeRoute extends PageRouteInfo<AddEditEmloyeeRouteArgs> {
   PageInfo<AddEditEmloyeeRouteArgs>(name);
 }
 class AddEditEmloyeeRouteArgs {
-  const AddEditEmloyeeRouteArgs({this.employeesCubit, this.employeeItem});
-  final EmployeesCubit? employeesCubit;
+  const AddEditEmloyeeRouteArgs({required this.employeesCubit, this.employeeItem});
+  final EmployeesCubit  employeesCubit;
   final emp.DataItem? employeeItem;
-  static AddEditEmloyeeRouteArgs noArgs() => const AddEditEmloyeeRouteArgs();
 }
 
 /// generated route for

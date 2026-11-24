@@ -23,7 +23,7 @@ abstract class EmployeesPageBaseState extends State<EmployeesPage> {
 
   void _listener(BuildContext context, EmployeesState state) {
     if (state is EmployeesLoaded) {
-      // ── Add / Edit Employee success ──
+      // // ── Add / Edit Employee success ──
       if (state.addEditEmployeeState is Success) {
         employeesCubit.resetStateAfterSuccess();
         employeesCubit.getListEmployeesFunc(Reload());

@@ -10,7 +10,6 @@ import 'package:newf/core/extension/context.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
-import 'package:newf/core/shared/widgets/one_item_drop_down_sheet.dart';
 import 'package:newf/core/shared/widgets/text_inputs/name_text_input_data.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
@@ -21,14 +20,13 @@ import 'package:newf/features/screens/shifts/controller/shifts_cubit.dart';
 import 'package:newf/features/screens/branches/data/model/branches/get_branches_list/branches_list.dart'
     as branches_model;
 import 'package:newf/features/screens/employees/data/model/employees/1-create_employee_req_param.dart';
- import 'package:newf/features/screens/employees/data/model/employees/create_employee_res/create_employee_res.dart';
+import 'package:newf/features/screens/employees/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/employees/data/model/employees/get_all_employees_res/get_all_employees_res.dart'
     as employees_model;
 import 'package:newf/features/screens/shifts/data/model/shifts/get_all_shifts_res/get_all_shifts_res.dart';
 import 'package:newf/features/screens/employees/ui/AddEditEmloyee/widgets/BottomSheetSelector.dart';
 import 'package:newf/features/screens/shifts/ui/AddEditShift/widgets/title_with_input.dart';
 
-import '../../../../../core/shared/widgets/text_inputs/drop_down_select.dart';
 import '../../../../../core/shared/widgets/text_inputs/email_text_input_data.dart';
 import '../../../../../core/shared/widgets/text_inputs/password_text_input_data.dart';
 import '../../data/model/get_supervisors_list/get_supervisors_list.dart';
@@ -42,7 +40,12 @@ part 'widgets/supervisor_selector_widget.dart';
 part 'widgets/shift_selector_widget.dart';
 
 part 'widgets/branch_selector.dart';
+
 part 'widgets/submit_button.dart';
+
+part 'widgets/role_selector.dart';
+
+part 'widgets/type_selector.dart';
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -57,12 +60,8 @@ class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
         BlocProvider<EmployeesCubit>(
           create: (context) => args.employeesCubit ?? AppLocator()()(),
         ),
-        BlocProvider<BranchesCubit>(
-          create: (context) => AppLocator()()(),
-        ),
-        BlocProvider<ShiftsCubit>(
-          create: (context) => AppLocator()()(),
-        ),
+        BlocProvider<BranchesCubit>(create: (context) => AppLocator()()()),
+        BlocProvider<ShiftsCubit>(create: (context) => AppLocator()()()),
       ],
       child: this,
     );
@@ -114,7 +113,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         'email'.tr(),
                         EmailInputData(
                           isLabel: false,
-                           field: fieldEmail,
+                          field: fieldEmail,
                           labelText: 'email'.tr(),
                           controller: controllerEmail,
                         ),
@@ -141,11 +140,15 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         ),
                       ),
 
-                      /// extract -- RoleSelector
-                      SizedBox.shrink(),
+                      RoleSelector(
+                        selectedNotifier: selectedRoleNotifier,
+                        field: fieldRole,
+                      ),
 
-                      /// extract -- TypeSelector
-                      SizedBox.shrink(),
+                        TypeSelector(
+                        selectedNotifier: selectedRoleNotifier,
+                        field: fieldRole,
+                      ),
 
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,
@@ -164,11 +167,12 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
 
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
-                      /// extract -- SubmitButton
-                        SubmitButton(
-                          onPress: (bool isLoading) =>createOrUpdateEmployee(isLoading), isAdd: widget.args.employeeItem == null,
 
-                        ),
+                      SubmitButton(
+                        onPress: (bool isLoading) =>
+                            createOrUpdateEmployee(isLoading),
+                        isAdd: widget.args.employeeItem == null,
+                      ),
                       SizedBox.shrink(),
                     ],
                   ),

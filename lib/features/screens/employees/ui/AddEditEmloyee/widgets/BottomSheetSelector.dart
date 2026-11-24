@@ -190,7 +190,10 @@ class _BottomSheetSelectorState extends State<BottomSheetSelector> {
 }
 class UIApiKeys<P>{
 
-  UIApiKeys(this.uiTxt, this.apiValue);
+  UIApiKeys(this.uiTxt, this.apiValue,{
+    this.secUiTxt,
+  });
   final String uiTxt ;
+  final String? secUiTxt ;
   final P apiValue;
 }

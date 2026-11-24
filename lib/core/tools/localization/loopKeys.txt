@@ -1,2 +1,0 @@
-please_select_branch_first
-this_branch_has_no_supervisor

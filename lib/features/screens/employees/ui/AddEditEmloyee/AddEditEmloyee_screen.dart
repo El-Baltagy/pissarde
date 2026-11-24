@@ -121,7 +121,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                       ),
                       if (!_isEditMode)
                         TitleWithInputField(
-                          'password'.tr(),
+                           'password'.tr(),
                           PasswordInputData(
                             isLabel: false,
                             field: listFileds[2],
@@ -201,19 +201,19 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
               valueListenable: selectedBranchNotifier,
               builder: (context, value, child) {
 
-                // if (value.isEmpty || RoleSelector.list[selectedRoleNotifier.value.first].$2.apiValue)) {
-                if (value.isEmpty || [0,1,2].contains(roleValue.firstOrNull)) {
-                  return SizedBox.shrink();
+                 if (value.isNotEmpty && !RoleSelector.selectedIndexes.contains(selectedRoleNotifier.value.firstOrNull)) {
+
+                  return Padding(
+                    padding: const EdgeInsets.only(top: AppSizes.s20),
+                    child: SupervisorSelectorWidget(
+                      selectedBranchNotifier: selectedBranchNotifier,
+                      selectedNotifier: selectedSupervisorNotifier,
+                      preselectId: widget.args.employeeItem?.supervisor?.id
+                          .toString(),
+                    ),
+                  );
                 }
-                return Padding(
-                  padding: const EdgeInsets.only(top: AppSizes.s20),
-                  child: SupervisorSelectorWidget(
-                    selectedBranchNotifier: selectedBranchNotifier,
-                    selectedNotifier: selectedSupervisorNotifier,
-                    preselectId: widget.args.employeeItem?.supervisor?.id
-                        .toString(),
-                  ),
-                );
+                 return SizedBox.shrink();
               },
             );
           },

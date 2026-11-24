@@ -77,7 +77,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
   @override
   Widget build(BuildContext context) {
     return BlocListener<EmployeesCubit, EmployeesState>(
-      listener: createEmployeeListener,
+      listener: addEditEmployeeListener,
       child: Semantics(
         label: 'Add or Edit Employee Screen',
         child: Scaffold(
@@ -106,7 +106,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         NameInputData(
                           isLabel: false,
                           widgetPrefix: const SizedBox.shrink(),
-                          field: fieldName,
+                          field: listFileds[0],
                           labelText: 'employee_name'.tr(),
                           controller: controllerName,
                         ),
@@ -115,7 +115,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         'email'.tr(),
                         EmailInputData(
                           isLabel: false,
-                          field: fieldEmail,
+                          field: listFileds[1],
                           labelText: 'email'.tr(),
                           controller: controllerEmail,
                         ),
@@ -125,7 +125,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                           'password'.tr(),
                           PasswordInputData(
                             isLabel: false,
-                            field: fieldPassword,
+                            field: listFileds[2],
                             labelText: 'password'.tr(),
                             controller: controllerPassword,
                           ),
@@ -134,32 +134,32 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         'phone'.tr(),
                         PhoneInputData(
                           isLabel: false,
-                           field: fieldPhone,
+                           field: listFileds[3],
                            controller: controllerPhone,
                         ),
                       ),
 
                       RoleSelector(
                         selectedNotifier: selectedRoleNotifier,
-                        field: fieldRole,
+                        field: listFileds[4],
                         preselectValue: widget.args.employeeItem?.role.value,
                       ),
 
                         TypeSelector(
                         selectedNotifier: selectedTypeNotifier,
-                        field: fieldType,
+                        field: listFileds[5],
                         preselectValue: widget.args.employeeItem?.employee_type.value,
                       ),
 
                         WorkTypeSelector(
                           selectedNotifier: selectedWorkTypeNotifier,
-                          field: fieldWorkType,
+                          field: listFileds[6],
                           preselectValue: widget.args.employeeItem?.work_type.value,
                         ),
 
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,
-                        field: fieldShift,
+                        field: listFileds[7],
                         preselectId: widget.args.employeeItem?.shift.id.toString(),
                       ),
 
@@ -190,7 +190,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                      children: [
                        BranchSelector(
                          selectedNotifier: selectedBranchNotifier,
-                         field: fieldBranch,
+                         field: listFileds[8],
                          preselectId: widget.args.employeeItem?.branch.id.toString(),
                        ),
                        ValueListenableBuilder(valueListenable:selectedRoleNotifier , builder: (context, roleValue, child) {

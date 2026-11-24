@@ -11,18 +11,8 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   late final ShiftsCubit shiftsCubit;
 
   final formKey = GlobalKey<FormState>();
+  late List<(GlobalKey<FormFieldState<dynamic>>, FocusNode?)> listFileds=List.generate( 9, (index) =>  (.new(), .new()));
 
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldName = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldEmail = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldPassword = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldCode = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldPhone = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldBranch = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldShift = (.new(), .new());
-  // (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldSupervisor = (.new(), null);
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldRole = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldType = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldWorkType = (.new(), .new());
 
   final TextEditingController controllerName = .new();
   final TextEditingController controllerEmail = .new();
@@ -78,14 +68,9 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
 
   @override
   void dispose() {
-    fieldName.$2?.dispose();
-    fieldEmail.$2?.dispose();
-    fieldPassword.$2?.dispose();
-    fieldCode.$2?.dispose();
-    fieldPhone.$2?.dispose();
-    fieldBranch.$2?.dispose();
-    fieldShift.$2?.dispose();
-    // fieldSupervisor.$2?.dispose();
+  for (int i=0;i<listFileds.length;i++){
+    listFileds[i].$2?.dispose();
+  }
 
     controllerName.dispose();
     controllerEmail.dispose();
@@ -183,21 +168,11 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   Future<void> createOrUpdateEmployee(bool isLoading) async {
     if (isLoading) return;
 
-    final fieldsToValidate = _isEditMode
-        ? [fieldName, fieldPhone]
-        : [
-            fieldName,
-            fieldEmail,
-            fieldPassword,
-            fieldCode,
-            fieldPhone,
-            fieldBranch,
-            fieldShift
-          ];
+
 
     if (await formKey.validateAndScroll(
       context,
-      listRecorder: fieldsToValidate,
+      listRecorder: listFileds,
     )) {
 
         final param = CreateEmployeeReqParam(
@@ -215,12 +190,12 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
           shift_id: _selectedShiftId(),
           is_active: isActiveNotifier.value ? '1' : '0',
         );
-        await employeesCubit.addEditEmployeeFunc(Init(), parameter: param);
+        await employeesCubit.addEditEmployeeFunc(  parameter: param);
 
     }
   }
 
-  void createEmployeeListener(BuildContext context, EmployeesState state) {
+  void addEditEmployeeListener(BuildContext context, EmployeesState state) {
     if (state is EmployeesLoaded) {
       // ── Create / Update success ──────────────────────────────────────
       if (state.addEditEmployeeState is Success && !_isSuccessHandled) {

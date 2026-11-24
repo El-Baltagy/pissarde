@@ -55,12 +55,12 @@ class EmployeesCubit extends BaseCubit<EmployeesState> {
     BaseRequestBackType baseRequestBackType, {
     EmployeesListParam? parameter,
   }) async {
-    await CancelManager.runCancelableFun(getListEmployeesKeyCode, (token) async {
+    // await CancelManager.runCancelableFun(getListEmployeesKeyCode, (token) async {
       await _service.getListEmployeesServ(
         RequestCallbackObserver<GetAllEmployeesRes, EmployeesListParam>(
           baseRequestBackType: baseRequestBackType,
           parameter: parameter,
-          cancelToken: token,
+          // cancelToken: token,
           onLoadCallback: () => safeEmit(
             _current.copyWith(
               getListEmployeesState: (baseRequestBackType is Reload)
@@ -82,17 +82,15 @@ class EmployeesCubit extends BaseCubit<EmployeesState> {
           ),
         ),
       );
-    });
+    // });
   }
 
-  Future<void> addEditEmployeeFunc(
-    BaseRequestBackType baseRequestBackType, {
+  Future<void> addEditEmployeeFunc( {
     CreateEmployeeReqParam? parameter,
   }) async {
     await CancelManager.runCancelableFun(addEditEmployeeKeyCode, (token) async {
       await _service.addEditEmployeeServ(
         RequestCallbackObserver<CreateEmployeeRes, CreateEmployeeReqParam>(
-          baseRequestBackType: baseRequestBackType,
           parameter: parameter,
           cancelToken: token,
           onLoadCallback: () =>

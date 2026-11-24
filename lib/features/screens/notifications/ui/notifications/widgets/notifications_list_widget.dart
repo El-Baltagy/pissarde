@@ -67,8 +67,8 @@ class _NotificationsListWidgetState extends State<NotificationsListWidget> {
       }
 
       final filteredItems = _getFilteredItems(allItems);
-      final counts = _calculateCounts(allItems);
-      final int totalCount = data?.notifications.total ?? allItems.length;
+      // final counts = _calculateCounts(allItems);
+      // final int totalCount = data?.notifications.total ?? allItems.length;
 
       return RefreshIndicator(
         onRefresh: () async => widget.onRefresh(),
@@ -80,14 +80,14 @@ class _NotificationsListWidgetState extends State<NotificationsListWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  12.verticalSpace,
-                  NotificationsSummaryHeaderWidget(total: totalCount),
-                  12.verticalSpace,
-                  NotificationsFilterChipsWidget(
-                    selectedFilter: _selectedFilter,
-                    onFilterChanged: (filter) => setState(() => _selectedFilter = filter),
-                    counts: counts,
-                  ),
+                  // 12.verticalSpace,
+                  // NotificationsSummaryHeaderWidget(total: totalCount),
+                  // 12.verticalSpace,
+                  // NotificationsFilterChipsWidget(
+                  //   selectedFilter: _selectedFilter,
+                  //   onFilterChanged: (filter) => setState(() => _selectedFilter = filter),
+                  //   counts: counts,
+                  // ),
                   12.verticalSpace,
                 ],
               ),

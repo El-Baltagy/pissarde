@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newf/core/shared/widgets/entrance_fader.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
@@ -10,12 +11,11 @@ import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/core/extension/context.dart';
-import 'package:newf/core/extension/double.dart';
-import 'package:newf/features/screens/employees/controller/employees_cubit.dart';
+ import 'package:newf/features/screens/employees/controller/employees_cubit.dart';
 import 'package:newf/features/screens/employees/data/model/employees/get_all_employees_res/get_all_employees_res.dart';
 import 'package:newf/features/screens/employees/data/model/pagination.dart';
 import 'package:newf/features/screens/employees/data/model/list_employees_param.dart';
-import 'package:newf/features/screens/employees/ui/employees/widgets/employees_list_widget.dart';
+import 'package:newf/features/screens/employees/ui/employees/widgets/employee_card_widget.dart';
 
 part 'employees_base_state.dart';
 
@@ -35,7 +35,6 @@ class EmployeesPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _EmployeesPageState extends EmployeesPageBaseState {
-  GetAllEmployeesRes? data;
   @override
   Widget build(BuildContext context) {
     return BlocListener<EmployeesCubit, EmployeesState>(
@@ -56,12 +55,6 @@ class _EmployeesPageState extends EmployeesPageBaseState {
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.theme.primaryColor,
           onPressed: () async {
-
-              print(data?.pagination.current_page );
-              print(data?.pagination.last_page );
-
-
-            return ;
             final res = await context.push(
               AddEditEmloyeeRoute(
                 args: AddEditEmloyeeRouteArgs(
@@ -74,43 +67,45 @@ class _EmployeesPageState extends EmployeesPageBaseState {
             }
           },
           child:
-              const Icon(Icons.add, color: AppColors.roleSwitchSelectedBg),
+          const Icon(Icons.add, color: AppColors.roleSwitchSelectedBg),
         ),
-
         body: Semantics(
           label: 'Employees list',
           child: BlocSelector<EmployeesCubit, EmployeesState, BaseEmit?>(
             selector: (state) =>
-                state is EmployeesLoaded ? state.getListEmployeesState : null,
+            state is EmployeesLoaded ? state.getListEmployeesState : null,
             builder: (context, emit) {
-
+              GetAllEmployeesRes? data;
               if (emit is Success<GetAllEmployeesRes>) {
                 data = emit.data;
               } else if (emit is Loading<GetAllEmployeesRes>) {
                 data = emit.item;
               }
               final pagination = data?.pagination;
+              final items = data?.data ?? [];
+              final isInitialLoading = data == null;
+
               return SmartRefresher(
                 controller: refreshController,
-                onRefresh: () async => await _loadData(Reload()).whenComplete(() {
+                onRefresh: () async =>
+                await _loadData(Reload()).whenComplete(() {
                   refreshController.loadComplete();
                   refreshController.refreshCompleted();
                 }),
                 onLoading: () async {
-                  print('...................');
                   if (pagination == null) {
                     refreshController.loadComplete();
                     return;
                   }
                   await employeesCubit.getListEmployeesFunc(
                     pagination.toGetPaginationInfo(data),
-                    parameter: EmployeesListParam(page: pagination.current_page),
+                    parameter: EmployeesListParam(
+                        page: pagination.current_page),
                   );
                   refreshController.loadComplete();
                 },
                 enablePullUp: (pagination != null &&
                     pagination.current_page < pagination.last_page),
-                // enablePullUp:true,
                 footer: CustomFooter(
                   height: 50,
                   builder: (BuildContext context, LoadStatus? mode) {
@@ -120,9 +115,33 @@ class _EmployeesPageState extends EmployeesPageBaseState {
                     return const SizedBox.shrink();
                   },
                 ),
-                child: EmployeesListWidget(
-                  emit: emit,
-                  employeesCubit: employeesCubit,
+                child: isInitialLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : (emit is ErrorState)
+                    ? Center(
+                  child: Text(
+                    (emit).failure.message,
+                    style: AppTextStyles.font14Regular.copyWith(
+                        color: AppColors.primaryActionRed),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+                    : (items.isEmpty)
+                    ? Center(
+                  child: Text('no_employees'.tr(),
+                      style: AppTextStyles.font14Regular),
+                )
+                    : ListView.separated(
+                  padding:
+                  const EdgeInsets.all(AppPadding.p16),
+                  itemCount: items.length,
+                  separatorBuilder: (_, __) =>
+                  const SizedBox(height: AppSizes.s12),
+                  itemBuilder: (_, i) =>
+                      EmployeeCardWidget(
+                        employee: items[i],
+                        employeesCubit: employeesCubit,
+                      ),
                 ),
               );
             },

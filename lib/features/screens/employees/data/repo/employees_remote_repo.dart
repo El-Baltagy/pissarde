@@ -45,7 +45,8 @@ class EmployeesRemoteRepo implements BaseEmployeesRepo {
     return handleResponse(
       onCallData: dio.getData(
         uri: EndPoints.listEmployees,
-        query: (parameter??EmployeesListParam(page: 0)).toJsonParameters(),
+        query:  parameter?.toJsonParameters(),
+        // query: (parameter??EmployeesListParam(page: 0)).toJsonParameters(),
         cancelToken: cancelToken,
         caller: callerTag(),
       ),

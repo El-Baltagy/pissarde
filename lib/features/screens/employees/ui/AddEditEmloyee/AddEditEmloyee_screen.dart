@@ -7,6 +7,7 @@ import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/widgets/text_inputs/phone_text_input_data.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
@@ -131,13 +132,10 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         ),
                       TitleWithInputField(
                         'phone'.tr(),
-                        NameInputData(
+                        PhoneInputData(
                           isLabel: false,
-                          widgetPrefix: const SizedBox.shrink(),
-                          field: fieldPhone,
-                          keyboardType: TextInputType.phone,
-                          labelText: 'phone'.tr(),
-                          controller: controllerPhone,
+                           field: fieldPhone,
+                           controller: controllerPhone,
                         ),
                       ),
 
@@ -195,18 +193,20 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                          field: fieldBranch,
                          preselectId: widget.args.employeeItem?.branch.id.toString(),
                        ),
-                       ValueListenableBuilder(valueListenable:selectedBranchNotifier , builder: (context, value, child) {
-                       if(value.isEmpty){
-                         return SizedBox.shrink();
-                       }
-                         return Padding(
-                           padding: const EdgeInsets.only(top:AppSizes.s20),
-                           child: SupervisorSelectorWidget(
-                             selectedBranchNotifier: selectedBranchNotifier,
-                             selectedNotifier: selectedSupervisorNotifier,
-                             preselectId: widget.args.employeeItem?.supervisor?.id.toString(),
-                           ),
-                         ) ;
+                       ValueListenableBuilder(valueListenable:selectedRoleNotifier , builder: (context, roleValue, child) {
+                         return ValueListenableBuilder(valueListenable:selectedBranchNotifier , builder: (context, value, child) {
+                           if(value.isEmpty||roleValue.firstOrNull==0){
+                             return SizedBox.shrink();
+                           }
+                           return Padding(
+                             padding: const EdgeInsets.only(top:AppSizes.s20),
+                             child: SupervisorSelectorWidget(
+                               selectedBranchNotifier: selectedBranchNotifier,
+                               selectedNotifier: selectedSupervisorNotifier,
+                               preselectId: widget.args.employeeItem?.supervisor?.id.toString(),
+                             ),
+                           ) ;
+                         },);
                        },)
                      ],
                    );

@@ -74,18 +74,18 @@ class LoginCubit extends BaseCubit<LoginState> {
   }
 
   Future<void> getProfileFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
-    await CancelManager.runCancelableFun(getProfileKeyCode, (token) async {
+    // await CancelManager.runCancelableFun(getProfileKeyCode, (token) async {
       await _service.getProfileServ(
         RequestCallbackObserver<User, NoParameters>(
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
-          cancelToken: token,
+          // cancelToken: token,
           onLoadCallback: () => safeEmit(GetProfileState(Loading())),
           onRightCallback: (data) => safeEmit(GetProfileState(Success(data))),
           onLeftCallback: (failure) =>
               safeEmit(GetProfileState(ErrorState(failure))),
         ),
       );
-    });
+    // });
   }
 }

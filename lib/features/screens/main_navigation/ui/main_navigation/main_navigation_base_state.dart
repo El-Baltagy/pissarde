@@ -12,7 +12,7 @@ abstract class MainNavigationPageBaseState extends State<MainNavigationPage> {
     notificationsCubit = NotificationsCubit.get(context: context);
 
 
-    loginCubit.getProfileFunc(Init());
+
 
     if (MainNavigationCubit.pendingTabIndex != null) {
       final initialTab = MainNavigationCubit.pendingTabIndex!;
@@ -22,8 +22,11 @@ abstract class MainNavigationPageBaseState extends State<MainNavigationPage> {
         notificationsCubit .getNotificationFunc(Reload());
       });
     }
+     super.initState();
 
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await loginCubit.getProfileFunc(Init());
+    },);
   }
 
   @override

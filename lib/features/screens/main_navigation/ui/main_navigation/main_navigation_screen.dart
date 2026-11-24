@@ -52,21 +52,34 @@ class MainNavigationPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _MainNavigationPageState extends MainNavigationPageBaseState {
-  late final List<Widget> _pages;
+  // Pages are created lazily: only the initially selected tab is built up front,
+  // the rest are created (and their init runs) the first time their icon is pressed.
+  late final List<Widget?> _pages;
 
   @override
   void initState() {
     super.initState();
-    _pages = [
-      const HomePage(args: HomeRouteArgs()).wrappedRoute(context),
-        NotificationsPage(args: NotificationsRouteArgs(
-          notificationsCubit
-      )).wrappedRoute(context),
-      const RequestsPage(args: RequestsRouteArgs()).wrappedRoute(context),
-       ProfilePage(args: ProfileRouteArgs(
-        LoginCubit.get(context: context),
-      )).wrappedRoute(context),
-    ];
+    _pages = List<Widget?>.filled(4, null);
+    _pages[0] = _createPage(0);
+  }
+
+  Widget _createPage(int index) {
+    switch (index) {
+      case 0:
+        return const HomePage(args: HomeRouteArgs()).wrappedRoute(context);
+      case 1:
+        return NotificationsPage(
+          args: NotificationsRouteArgs(notificationsCubit),
+        ).wrappedRoute(context);
+      case 2:
+        return const RequestsPage(args: RequestsRouteArgs()).wrappedRoute(context);
+      case 3:
+        return ProfilePage(
+          args: ProfileRouteArgs(LoginCubit.get(context: context)),
+        ).wrappedRoute(context);
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   @override
@@ -119,31 +132,26 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
         return BlocBuilder<MainNavigationCubit, MainNavigationState>(
           builder: (context, state) {
             final selectedIndex = state is MainNavigationLoaded ? state.selectedIndex : 0;
-            // final isManagerTabSelected = selectedIndex == 3;
 
             return Scaffold(
               extendBody: true,
-              // floatingActionButton: kDebugMode?
-              // Padding(
-              //   padding: const EdgeInsets.all(40.0),
-              //   child: FloatingActionButton(onPressed:() async {
-              //     notificationsCubit.setFcmTokenIntoDBFunc(
-              //         SendFcmParameter(userId: StorageHelper.userData!.id.toString(),
-              //             fcmToken:await FcmHandler.fcmToken()??''));
-              //   },
-              //     child: Icon(Icons.add),
-              //   ),
-              // ):null
-              // ,
               body: IndexedStack(
                 index: selectedIndex,
-                children: _pages,
-              ) ,
+                children: _pages
+                    .map((p) => p ?? const SizedBox.shrink())
+                    .toList(),
+              ),
               bottomNavigationBar: CustomBottomNavBar(
                 currentIndex: selectedIndex,
                 onTap: (index) {
+                  final isNew = _pages[index] == null;
+                  if (isNew) {
+                    _pages[index] = _createPage(index);
+                  }
                   mainNavigationCubit.changeTab(index);
-                  if(index==1){
+                  // Call the required init function on revisit (first creation
+                  // already triggers the page's own initState/init).
+                  if (!isNew && index == 1) {
                     notificationsCubit.getNotificationFunc(Reload());
                   }
                 },

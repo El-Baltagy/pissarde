@@ -11,14 +11,14 @@ class TypeSelector extends StatelessWidget {
   final ValueNotifier<List<int>> selectedNotifier;
   final (GlobalKey<FormFieldState<dynamic>>, FocusNode?)? field;
   final String? preselectValue;
+ static List<UIApiKeys<String>> list = [
+    UIApiKeys('sales'.tr(), 'sales', secUiTxt: ''.tr()),
+    UIApiKeys('administrative'.tr(), 'administrative'),
 
+  ];
   @override
   Widget build(BuildContext context) {
-    List<UIApiKeys<String>> list = [
-      UIApiKeys('sales'.tr(), 'sales', secUiTxt: ''.tr()),
-      UIApiKeys('administrative'.tr(), 'administrative'),
 
-    ];
 
     if (preselectValue != null &&
         selectedNotifier.value.isEmpty &&

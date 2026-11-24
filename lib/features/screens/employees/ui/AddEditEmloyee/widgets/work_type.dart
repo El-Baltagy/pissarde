@@ -11,14 +11,14 @@ class WorkTypeSelector extends StatelessWidget {
   final ValueNotifier<List<int>> selectedNotifier;
   final (GlobalKey<FormFieldState<dynamic>>, FocusNode?)? field;
   final String? preselectValue;
+  static List<UIApiKeys<String>> list = [
+    UIApiKeys('in_office'.tr(), 'in_office'),
+    UIApiKeys('from_home'.tr(), 'Online'),
 
+  ];
   @override
   Widget build(BuildContext context) {
-    List<UIApiKeys<String>> list = [
-      UIApiKeys('in_office'.tr(), 'in_office'),
-      UIApiKeys('from_home'.tr(), 'Online'),
 
-    ];
 
     if (preselectValue != null &&
         selectedNotifier.value.isEmpty &&

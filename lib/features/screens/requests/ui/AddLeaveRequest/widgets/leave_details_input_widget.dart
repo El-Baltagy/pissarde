@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
@@ -91,8 +92,12 @@ class LeaveDetailsInputWidget extends StatelessWidget {
                   controller: controllerEmergencyPhone,
                   keyboardType: TextInputType.phone,
                   style: AppTextStyles.font14Regular,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   decoration: InputDecoration(
                     filled: true,
+
                     fillColor: AppColors.metricContainerBg,
                     hintText: '05xxxxxxxx',
                     hintStyle: AppTextStyles.font14Regular.copyWith(

@@ -5,14 +5,15 @@ typedef BranchesList = branches_model.BranchesList;
 typedef DataItemBranch = branches_model.DataItem;
 typedef GetAllEmployeesRes = employees_model.GetAllEmployeesRes;
 typedef DataItemEmployee = employees_model.DataItem;
+
 abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   late final EmployeesCubit employeesCubit;
   late final BranchesCubit branchesCubit;
   late final ShiftsCubit shiftsCubit;
 
   final formKey = GlobalKey<FormState>();
-  late List<(GlobalKey<FormFieldState<dynamic>>, FocusNode?)> listFileds=List.generate( 9, (index) =>  (.new(), .new()));
-
+  late List<(GlobalKey<FormFieldState<dynamic>>, FocusNode?)> listFileds =
+      List.generate(9, (index) => (.new(), .new()));
 
   final TextEditingController controllerName = .new();
   final TextEditingController controllerEmail = .new();
@@ -21,7 +22,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   final TextEditingController controllerPhone = .new();
 
   final ValueNotifier<bool> isActiveNotifier = .new(true);
-   late final ValueNotifier<bool> isLoadingNotifier;
+  late final ValueNotifier<bool> isLoadingNotifier;
 
   /// Holds the selected branch index (single-select → list of one index).
   final ValueNotifier<List<int>> selectedBranchNotifier = .new([]);
@@ -32,13 +33,12 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   /// Holds the selected supervisor index.
   final ValueNotifier<List<int>> selectedSupervisorNotifier = .new([]);
   final ValueNotifier<List<int>> selectedRoleNotifier = .new([]);
-  final ValueNotifier<List<int>> selectedTypeNotifier = .new([]);
+  final ValueNotifier<List<int>> selectedEmployeeTypeNotifier = .new([]);
   final ValueNotifier<List<int>> selectedWorkTypeNotifier = .new([]);
-
 
   /// Whether we're editing an existing employee (true) or creating new (false).
   bool get _isEditMode => widget.args.employeeItem != null;
-      var employee  ;
+
   @override
   void initState() {
     super.initState();
@@ -55,7 +55,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
       controllerCode.text = employee.employee_code;
       controllerPhone.text = employee.phone;
       isActiveNotifier.value = employee.is_active;
-     }
+    }
     Future.wait([
       branchesCubit.getListBranchesFunc(Init()),
       shiftsCubit.getListShiftsFunc(Init()),
@@ -63,28 +63,24 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     ]);
   }
 
-
-
   @override
   void dispose() {
-  for (int i=0;i<listFileds.length;i++){
-    listFileds[i].$2?.dispose();
-  }
+    for (int i = 0; i < listFileds.length; i++) {
+      listFileds[i].$2?.dispose();
+    }
 
     controllerName.dispose();
     controllerEmail.dispose();
     controllerPassword.dispose();
     controllerCode.dispose();
     controllerPhone.dispose();
-
-    isActiveNotifier.dispose();
+     isActiveNotifier.dispose();
     isLoadingNotifier.dispose();
-
-    selectedBranchNotifier.dispose();
+     selectedBranchNotifier.dispose();
     selectedShiftNotifier.dispose();
     selectedSupervisorNotifier.dispose();
     selectedRoleNotifier.dispose();
-    selectedTypeNotifier.dispose();
+    selectedEmployeeTypeNotifier.dispose();
     selectedWorkTypeNotifier.dispose();
 
     super.dispose();
@@ -123,93 +119,56 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     if (state is! EmployeesLoaded) return '';
     if (state.getListEmployeesState is! Success<GetAllEmployeesRes>) return '';
     final employees =
-        (state.getListEmployeesState as Success<GetAllEmployeesRes>).data?.data ??
-            [];
+        (state.getListEmployeesState as Success<GetAllEmployeesRes>)
+            .data
+            ?.data ??
+        [];
     final idx = selectedSupervisorNotifier.value.first;
     if (idx < 0 || idx >= employees.length) return '';
     return employees[idx].id.toString();
   }
 
-  /// Returns the selected role's api value, or 'employee' when none selected.
-  String _selectedRoleId() {
-    if (selectedRoleNotifier.value.isEmpty) return 'employee';
-    const roles = [
-      'admin',
-      'hr',
-      'supervisor',
-      'sales_employee',
-      'admin_employee',
-      'duty_employee',
-    ];
-    final idx = selectedRoleNotifier.value.first;
-    if (idx < 0 || idx >= roles.length) return 'employee';
-    return roles[idx];
-  }
-
-  /// Returns the selected employee type's api value, or 'full_time' when none selected.
-  String _selectedTypeId() {
-    if (selectedTypeNotifier.value.isEmpty) return 'full_time';
-    const types = ['sales', 'administrative'];
-    final idx = selectedTypeNotifier.value.first;
-    if (idx < 0 || idx >= types.length) return 'full_time';
-    return types[idx];
-  }
-
-  /// Returns the selected work type's api value, or 'office' when none selected.
-  String _selectedWorkTypeId() {
-    if (selectedWorkTypeNotifier.value.isEmpty) return 'office';
-    const types = ['in_office', 'from_home'];
-    final idx = selectedWorkTypeNotifier.value.first;
-    if (idx < 0 || idx >= types.length) return 'office';
-    return types[idx];
-  }
 
   Future<void> createOrUpdateEmployee(bool isLoading) async {
+    if (await formKey.validateAndScroll(context, listRecorder: listFileds)) {
+      final param = CreateEmployeeReqParam(
+        employee_id: widget.args.employeeItem?.id.toString(),
+        name: controllerName.text.trim(),
+        email: controllerEmail.text.trim(),
+        password: controllerPassword.text.trim(),
+        employee_code: controllerCode.text.trim(),
+        phone: controllerPhone.text.trim(),
+        role: RoleSelector.list[selectedRoleNotifier.value.first].apiValue,
+        employee_type:
+            TypeSelector.list[selectedEmployeeTypeNotifier.value.first].apiValue,
+        work_type: WorkTypeSelector.list[selectedWorkTypeNotifier.value.first].apiValue,
 
-
-    if (await formKey.validateAndScroll(
-      context,
-      listRecorder: listFileds,
-    )) {
-
-        final param = CreateEmployeeReqParam(
-          employee_id:widget.args.employeeItem?.id.toString() ,
-          name: controllerName.text.trim(),
-          email: controllerEmail.text.trim(),
-          password: controllerPassword.text.trim(),
-          employee_code: controllerCode.text.trim(),
-          phone: controllerPhone.text.trim(),
-          role: _selectedRoleId(),
-          employee_type: _selectedTypeId(),
-          work_type: _selectedWorkTypeId(),
-          branch_id: _selectedBranchId(),
-          supervisor_id: _selectedSupervisorId(),
-          shift_id: _selectedShiftId(),
-          is_active: isActiveNotifier.value ? '1' : '0',
-        );
-        await employeesCubit.addEditEmployeeFunc(  parameter: param);
-
+        branch_id:_selectedBranchId(),
+        supervisor_id: _selectedSupervisorId(),
+        shift_id: _selectedShiftId(),
+        is_active: isActiveNotifier.value ? '1' : '0',
+      );
+      await employeesCubit.addEditEmployeeFunc(parameter: param);
     }
   }
 
   void addEditEmployeeListener(BuildContext context, EmployeesState state) {
-     if (state is EmployeesLoaded) {
-       // ── Create / Update success ──────────────────────────────────────
-      if (state.addEditEmployeeState is Success   ) {
-         final res = (state.addEditEmployeeState as Success).data;
+    if (state is EmployeesLoaded) {
+      // ── Create / Update success ──────────────────────────────────────
+      if (state.addEditEmployeeState is Success) {
+        final res = (state.addEditEmployeeState as Success).data;
         final message = res is CreateEmployeeRes
             ? res.message
             : (!_isEditMode
-                ? 'employee_created_success'.tr()
-                : 'employee_updated_success'.tr());
+                  ? 'employee_created_success'.tr()
+                  : 'employee_updated_success'.tr());
         context.showToast(message);
         // employeesCubit.resetStateAfterSuccess();
-        context.pop( );
+        context.pop();
       } else if (state.addEditEmployeeState is ErrorState) {
         final err = state.addEditEmployeeState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);
       }
-
     }
   }
 }

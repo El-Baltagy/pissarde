@@ -260,6 +260,7 @@ branch,branch,فرع,dal
 shift,shift,الورديه,Vardiya
 please_select_branch_first,please select branch first,يرجى تحديد الفرع أولا,lütfen önce şubeyi seçin
 this_branch_has_no_supervisor,this branch has no supervisor,هذا الفرع ليس له مشرف,bu şubenin sorumlusu yok
+
 admin_hint,The app manager who has access to the CRM,مدير التطبيق  وله صلاحية الوصول إلى CRM,CRM'ye erişimi olan uygulama yöneticisi
 hr_hint,Human resources has access to CRM and supervises HR,الموارد البشرية؛ له صلاحية الوصول إلى CRM وإشراف HR ,İnsan kaynaklarının CRM'ye erişimi vardır ve İK'yı denetler
 supervisor_hint,A Supervisor that can check on their staff and review their leave requests,مشرف يمكنه الاطلاع على موظفيه التابعين ومراجعة طلبات إجازاتهم ,Personelini kontrol edebilen ve izin taleplerini inceleyebilen bir Süpervizör

@@ -47,6 +47,7 @@ part 'widgets/submit_button.dart';
 part 'widgets/role_selector.dart';
 
 part 'widgets/type_selector.dart';
+
 part 'widgets/work_type.dart';
 
 @RoutePage()
@@ -59,9 +60,7 @@ class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value  (
-          value:  args.employeesCubit  ,
-        ),
+        BlocProvider.value(value: args.employeesCubit),
         BlocProvider<BranchesCubit>(create: (context) => AppLocator()()()),
         BlocProvider<ShiftsCubit>(create: (context) => AppLocator()()()),
       ],
@@ -134,8 +133,8 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         'phone'.tr(),
                         PhoneInputData(
                           isLabel: false,
-                           field: listFileds[3],
-                           controller: controllerPhone,
+                          field: listFileds[3],
+                          controller: controllerPhone,
                         ),
                       ),
 
@@ -145,28 +144,30 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         preselectValue: widget.args.employeeItem?.role.value,
                       ),
 
-                        TypeSelector(
-                        selectedNotifier: selectedTypeNotifier,
+                      TypeSelector(
+                        selectedNotifier: selectedEmployeeTypeNotifier,
                         field: listFileds[5],
-                        preselectValue: widget.args.employeeItem?.employee_type.value,
+                        preselectValue:
+                            widget.args.employeeItem?.employee_type.value,
                       ),
 
-                        WorkTypeSelector(
-                          selectedNotifier: selectedWorkTypeNotifier,
-                          field: listFileds[6],
-                          preselectValue: widget.args.employeeItem?.work_type.value,
-                        ),
+                      WorkTypeSelector(
+                        selectedNotifier: selectedWorkTypeNotifier,
+                        field: listFileds[6],
+                        preselectValue:
+                            widget.args.employeeItem?.work_type.value,
+                      ),
 
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,
                         field: listFileds[7],
-                        preselectId: widget.args.employeeItem?.shift.id.toString(),
+                        preselectId: widget.args.employeeItem?.shift.id
+                            .toString(),
                       ),
 
-                     buildSupervisor(),
+                      buildSupervisor(),
 
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
-
 
                       SubmitButton(
                         onPress: (bool isLoading) async =>
@@ -187,28 +188,35 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
 
   Column buildSupervisor() {
     return Column(
-                     children: [
-                       BranchSelector(
-                         selectedNotifier: selectedBranchNotifier,
-                         field: listFileds[8],
-                         preselectId: widget.args.employeeItem?.branch.id.toString(),
-                       ),
-                       ValueListenableBuilder(valueListenable:selectedRoleNotifier , builder: (context, roleValue, child) {
-                         return ValueListenableBuilder(valueListenable:selectedBranchNotifier , builder: (context, value, child) {
-                           if(value.isEmpty||roleValue.firstOrNull==0){
-                             return SizedBox.shrink();
-                           }
-                           return Padding(
-                             padding: const EdgeInsets.only(top:AppSizes.s20),
-                             child: SupervisorSelectorWidget(
-                               selectedBranchNotifier: selectedBranchNotifier,
-                               selectedNotifier: selectedSupervisorNotifier,
-                               preselectId: widget.args.employeeItem?.supervisor?.id.toString(),
-                             ),
-                           ) ;
-                         },);
-                       },)
-                     ],
-                   );
+      children: [
+        BranchSelector(
+          selectedNotifier: selectedBranchNotifier,
+          field: listFileds[8],
+          preselectId: widget.args.employeeItem?.branch.id.toString(),
+        ),
+        ValueListenableBuilder(
+          valueListenable: selectedRoleNotifier,
+          builder: (context, roleValue, child) {
+            return ValueListenableBuilder(
+              valueListenable: selectedBranchNotifier,
+              builder: (context, value, child) {
+                if (value.isEmpty || roleValue.firstOrNull == 0) {
+                  return SizedBox.shrink();
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(top: AppSizes.s20),
+                  child: SupervisorSelectorWidget(
+                    selectedBranchNotifier: selectedBranchNotifier,
+                    selectedNotifier: selectedSupervisorNotifier,
+                    preselectId: widget.args.employeeItem?.supervisor?.id
+                        .toString(),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
+    );
   }
 }

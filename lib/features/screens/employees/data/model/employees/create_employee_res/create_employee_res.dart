@@ -38,7 +38,7 @@ class Employee with _$Employee, EquatableMixin {
     required Employeetype employee_type,
     required Worktype work_type,
     required Branch branch,
-    required Supervisor supervisor,
+    Supervisor? supervisor,
     required Shift shift,
     required dynamic duty_authorized_branch_ids,
     required bool is_active,

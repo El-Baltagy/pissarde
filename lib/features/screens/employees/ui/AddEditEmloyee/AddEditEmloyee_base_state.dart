@@ -20,6 +20,9 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldBranch = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldShift = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldSupervisor = (.new(), null);
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldRole = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldType = (.new(), .new());
+  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldWorkType = (.new(), .new());
 
   final TextEditingController controllerName = .new();
   final TextEditingController controllerEmail = .new();
@@ -38,6 +41,9 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
 
   /// Holds the selected supervisor index.
   final ValueNotifier<List<int>> selectedSupervisorNotifier = .new([]);
+  final ValueNotifier<List<int>> selectedRoleNotifier = .new([]);
+  final ValueNotifier<List<int>> selectedTypeNotifier = .new([]);
+  final ValueNotifier<List<int>> selectedWorkTypeNotifier = .new([]);
 
   bool _isSuccessHandled = false;
 
@@ -88,12 +94,14 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     controllerPhone.dispose();
 
     isActiveNotifier.dispose();
-    // isPasswordVisibleNotifier.dispose();
     isLoadingNotifier.dispose();
 
     selectedBranchNotifier.dispose();
     selectedShiftNotifier.dispose();
     selectedSupervisorNotifier.dispose();
+    selectedRoleNotifier.dispose();
+    selectedTypeNotifier.dispose();
+    selectedWorkTypeNotifier.dispose();
 
     super.dispose();
   }
@@ -213,6 +221,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     final idx = employees.indexWhere((e) => e.id == supervisorId);
     if (idx != -1) selectedSupervisorNotifier.value = [idx];
   }
+
   void createEmployeeListener(BuildContext context, EmployeesState state) {
     if (state is EmployeesLoaded) {
       // ── Create / Update success ──────────────────────────────────────

@@ -46,6 +46,7 @@ part 'widgets/submit_button.dart';
 part 'widgets/role_selector.dart';
 
 part 'widgets/type_selector.dart';
+part 'widgets/work_type.dart';
 
 @RoutePage()
 class AddEditEmloyeePage extends StatefulWidget implements AutoRouteWrapper {
@@ -146,9 +147,14 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                       ),
 
                         TypeSelector(
-                        selectedNotifier: selectedRoleNotifier,
-                        field: fieldRole,
+                        selectedNotifier: selectedTypeNotifier,
+                        field: fieldType,
                       ),
+
+                        WorkTypeSelector(
+                          selectedNotifier: selectedWorkTypeNotifier,
+                          field: fieldWorkType,
+                        ),
 
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,

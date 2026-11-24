@@ -268,3 +268,15 @@ admin_employee_hint,Administrative employee,موظف إداري ,İdari çalış
 duty_employee_hint,A Shift employee that has permissions related to shift attendance,موظف مناوب  له صلاحيات مرتبطة بالحضور المناوب ,Vardiyaya katılımla ilgili izinlere sahip bir Vardiya çalışanı
 sales_employee,sales employee,موظف مبيعات,satış elemanı
 administrative_employee,administrative employee,موظف إداري,idari çalışan
+
+employee_type,employee type,نوع الموظف,çalışan türü
+work_type,work type,نوع العمل,iş türü
+role,role,دور,rol
+human_resources,human resources,الموارد البشرية,insan kaynakları
+admin,admin,مسؤل,yönetici
+admin_employee,admin employee,موظف إداري,yönetici çalışan
+duty_employee,duty employee,موظف واجب,görevli çalışan
+sales,sales,مبيعات,satış
+administrative,administrative,إداري,idari
+in_office,in office,في المكتب,ofiste
+from_home,from home,من المنزل,evden

@@ -19,7 +19,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldPhone = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldBranch = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldShift = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldSupervisor = (.new(), null);
+  // (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldSupervisor = (.new(), null);
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldRole = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldType = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldWorkType = (.new(), .new());
@@ -85,7 +85,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     fieldPhone.$2?.dispose();
     fieldBranch.$2?.dispose();
     fieldShift.$2?.dispose();
-    fieldSupervisor.$2?.dispose();
+    // fieldSupervisor.$2?.dispose();
 
     controllerName.dispose();
     controllerEmail.dispose();
@@ -133,8 +133,8 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
   }
 
   /// Returns the selected supervisor's id from [getListEmployeesState], or empty string.
-  String _selectedSupervisorId() {
-    if (selectedSupervisorNotifier.value.isEmpty) return '';
+  String? _selectedSupervisorId() {
+    if (selectedSupervisorNotifier.value.isEmpty) return null;
     final state = employeesCubit.state;
     if (state is! EmployeesLoaded) return '';
     if (state.getListEmployeesState is! Success<GetAllEmployeesRes>) return '';
@@ -144,6 +144,40 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
     final idx = selectedSupervisorNotifier.value.first;
     if (idx < 0 || idx >= employees.length) return '';
     return employees[idx].id.toString();
+  }
+
+  /// Returns the selected role's api value, or 'employee' when none selected.
+  String _selectedRoleId() {
+    if (selectedRoleNotifier.value.isEmpty) return 'employee';
+    const roles = [
+      'admin',
+      'hr',
+      'supervisor',
+      'sales_employee',
+      'admin_employee',
+      'duty_employee',
+    ];
+    final idx = selectedRoleNotifier.value.first;
+    if (idx < 0 || idx >= roles.length) return 'employee';
+    return roles[idx];
+  }
+
+  /// Returns the selected employee type's api value, or 'full_time' when none selected.
+  String _selectedTypeId() {
+    if (selectedTypeNotifier.value.isEmpty) return 'full_time';
+    const types = ['sales', 'administrative'];
+    final idx = selectedTypeNotifier.value.first;
+    if (idx < 0 || idx >= types.length) return 'full_time';
+    return types[idx];
+  }
+
+  /// Returns the selected work type's api value, or 'office' when none selected.
+  String _selectedWorkTypeId() {
+    if (selectedWorkTypeNotifier.value.isEmpty) return 'office';
+    const types = ['in_office', 'from_home'];
+    final idx = selectedWorkTypeNotifier.value.first;
+    if (idx < 0 || idx >= types.length) return 'office';
+    return types[idx];
   }
 
   Future<void> createOrUpdateEmployee(bool isLoading) async {
@@ -158,8 +192,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
             fieldCode,
             fieldPhone,
             fieldBranch,
-            fieldShift,
-            fieldSupervisor,
+            fieldShift
           ];
 
     if (await formKey.validateAndScroll(
@@ -174,9 +207,9 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
           password: controllerPassword.text.trim(),
           employee_code: controllerCode.text.trim(),
           phone: controllerPhone.text.trim(),
-          role: 'employee',
-          employee_type: 'full_time',
-          work_type: 'office',
+          role: _selectedRoleId(),
+          employee_type: _selectedTypeId(),
+          work_type: _selectedWorkTypeId(),
           branch_id: _selectedBranchId(),
           supervisor_id: _selectedSupervisorId(),
           shift_id: _selectedShiftId(),
@@ -185,41 +218,6 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
         await employeesCubit.addEditEmployeeFunc(Init(), parameter: param);
 
     }
-  }
-  /// Pre-selects the branch that matches the employee's current branch.
-  void _preselectBranch(DataItemEmployee employee) {
-    final state = branchesCubit.state;
-    if (state is! BranchesLoaded) return;
-    if (state.getListBranchesState is! Success<BranchesList>) return;
-    final branches =
-        (state.getListBranchesState as Success<BranchesList>).data?.data ?? [];
-    final idx = branches.indexWhere((b) => b.id == employee.branch.id);
-    if (idx != -1) selectedBranchNotifier.value = [idx];
-  }
-
-  /// Pre-selects the shift that matches the employee's current shift.
-  void _preselectShift(DataItemEmployee employee) {
-    final state = shiftsCubit.state;
-    if (state is! ShiftsLoaded) return;
-    if (state.getListShiftsState is! Success<GetAllShiftsRes>) return;
-    final shifts =
-        (state.getListShiftsState as Success<GetAllShiftsRes>).data?.data ?? [];
-    final idx = shifts.indexWhere((s) => s.id == employee.shift.id);
-    if (idx != -1) selectedShiftNotifier.value = [idx];
-  }
-
-  /// Pre-selects the supervisor that matches the employee's current supervisor.
-  void _preselectSupervisor(DataItemEmployee employee) {
-    final supervisorId = employee.supervisor?.id;
-    if (supervisorId == null) return;
-    final state = employeesCubit.state;
-    if (state is! EmployeesLoaded) return;
-    if (state.getListEmployeesState is! Success<GetAllEmployeesRes>) return;
-    final employees =
-        (state.getListEmployeesState as Success<GetAllEmployeesRes>).data?.data ??
-            [];
-    final idx = employees.indexWhere((e) => e.id == supervisorId);
-    if (idx != -1) selectedSupervisorNotifier.value = [idx];
   }
 
   void createEmployeeListener(BuildContext context, EmployeesState state) {
@@ -239,18 +237,6 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
       } else if (state.addEditEmployeeState is ErrorState) {
         final err = state.addEditEmployeeState as ErrorState;
         context.showToast(err.failure.message, isSuccess: false);
-      }
-
-      if(employee!=null){
-        if(  branchesCubit.state is BranchesLoaded && (branchesCubit.state as BranchesLoaded).getListBranchesState is Success){
-          _preselectBranch(employee);
-        }
-        if(  shiftsCubit.state is ShiftsLoaded && (shiftsCubit.state as ShiftsLoaded).getListShiftsState is Success){
-          _preselectShift(employee);
-        }
-        if(  employeesCubit.state is EmployeesLoaded && (employeesCubit.state as EmployeesLoaded).getListEmployeesState is Success){
-          _preselectSupervisor(employee);
-        }
       }
 
     }

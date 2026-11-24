@@ -144,31 +144,37 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                       RoleSelector(
                         selectedNotifier: selectedRoleNotifier,
                         field: fieldRole,
+                        preselectValue: widget.args.employeeItem?.role.value,
                       ),
 
                         TypeSelector(
                         selectedNotifier: selectedTypeNotifier,
                         field: fieldType,
+                        preselectValue: widget.args.employeeItem?.employee_type.value,
                       ),
 
                         WorkTypeSelector(
                           selectedNotifier: selectedWorkTypeNotifier,
                           field: fieldWorkType,
+                          preselectValue: widget.args.employeeItem?.work_type.value,
                         ),
 
                       ShiftSelectorWidget(
                         selectedNotifier: selectedShiftNotifier,
                         field: fieldShift,
+                        preselectId: widget.args.employeeItem?.shift.id.toString(),
                       ),
 
                       BranchSelector(
                         selectedNotifier: selectedBranchNotifier,
                         field: fieldBranch,
+                        preselectId: widget.args.employeeItem?.branch.id.toString(),
                       ),
                       SupervisorSelectorWidget(
                         selectedBranchNotifier: selectedBranchNotifier,
                         selectedNotifier: selectedSupervisorNotifier,
-                        field: fieldSupervisor,
+                        // field: fieldSupervisor,
+                        preselectId: widget.args.employeeItem?.supervisor?.id?.toString(),
                       ),
 
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),

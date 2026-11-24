@@ -1,6 +1,6 @@
 class CreateEmployeeReqParam {
   final String name;
-  final String? employee_id;
+  final String? employee_id,supervisor_id;
   final String email;
   final String password;
   final String employee_code;
@@ -9,7 +9,6 @@ class CreateEmployeeReqParam {
   final String employee_type;
   final String work_type;
   final String branch_id;
-  final String supervisor_id;
   final String shift_id;
   final String is_active;
 

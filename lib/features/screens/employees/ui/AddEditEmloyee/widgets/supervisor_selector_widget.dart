@@ -7,11 +7,13 @@ class SupervisorSelectorWidget extends StatelessWidget {
     required this.selectedNotifier,
     this.field,
     required this.selectedBranchNotifier,
+    this.preselectId,
   });
 
   final ValueNotifier<List<int>> selectedNotifier;
   final (GlobalKey<FormFieldState<dynamic>>, FocusNode?)? field;
   final ValueNotifier<List<int>> selectedBranchNotifier;
+  final String? preselectId;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,15 @@ class SupervisorSelectorWidget extends StatelessWidget {
             );
             bool emptyBranch = value.isEmpty;
             bool emptySupervisor = list.isEmpty;
+
+            if (preselectId != null &&
+                selectedNotifier.value.isEmpty &&
+                supervisors.isNotEmpty) {
+              final idx = supervisors.indexWhere((s) => s.id.toString() == preselectId);
+              if (idx != -1) {
+                selectedNotifier.value = [idx];
+              }
+            }
 
             return Skeletonizer(
               enabled: isLoading,

@@ -2,9 +2,16 @@ part of '../AddEditEmloyee_screen.dart';
 
 /// Extracted mini widget: [BranchSelector]
 class BranchSelector extends StatelessWidget {
-  const BranchSelector({super.key, required this.selectedNotifier, this.field});
+  const BranchSelector({
+    super.key,
+    required this.selectedNotifier,
+    this.field,
+    this.preselectId,
+  });
   final ValueNotifier<List<int>> selectedNotifier;
   final (GlobalKey<FormFieldState<dynamic>>, FocusNode?)? field;
+  final String? preselectId;
+
   @override
   Widget build(BuildContext context) {
     return BlocSelector<BranchesCubit, BranchesState, BaseEmit?>(
@@ -19,6 +26,17 @@ class BranchSelector extends StatelessWidget {
           branches.length,
               (i) => UIApiKeys(branches[i].name, branches[i].id.toString()),
         );
+
+        // Auto-select the branch matching [preselectId] once the list loads.
+        if (preselectId != null &&
+            selectedNotifier.value.isEmpty &&
+            branches.isNotEmpty) {
+          final idx = branches.indexWhere((b) => b.id.toString() == preselectId);
+          if (idx != -1) {
+            selectedNotifier.value = [idx];
+          }
+        }
+
         return Skeletonizer(
           enabled: isLoading,
           child: BottomSheetSelector(

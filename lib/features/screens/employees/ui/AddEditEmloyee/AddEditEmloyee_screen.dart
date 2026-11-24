@@ -200,7 +200,9 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
             return ValueListenableBuilder(
               valueListenable: selectedBranchNotifier,
               builder: (context, value, child) {
-                if (value.isEmpty || roleValue.firstOrNull == 0) {
+
+                // if (value.isEmpty || RoleSelector.list[selectedRoleNotifier.value.first].$2.apiValue)) {
+                if (value.isEmpty || [0,1,2].contains(roleValue.firstOrNull)) {
                   return SizedBox.shrink();
                 }
                 return Padding(

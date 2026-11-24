@@ -138,7 +138,7 @@ abstract class AddEditEmloyeePageBaseState extends State<AddEditEmloyeePage> {
         password: controllerPassword.text.trim(),
         employee_code: controllerCode.text.trim(),
         phone: controllerPhone.text.trim(),
-        role: RoleSelector.list[selectedRoleNotifier.value.first].apiValue,
+        role: RoleSelector.list[selectedRoleNotifier.value.first].$2.apiValue,
         employee_type:
             TypeSelector.list[selectedEmployeeTypeNotifier.value.first].apiValue,
         work_type: WorkTypeSelector.list[selectedWorkTypeNotifier.value.first].apiValue,

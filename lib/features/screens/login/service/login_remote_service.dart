@@ -46,13 +46,14 @@ class LoginRemoteService implements BaseLoginService {
   Future<void> logoutServ(
     RequestCallbackObserver<bool, NoParameters> requestInfo,
   ) {
-    const cacheKey = AppConstant.userKeyCash;
+
+
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.logoutApi(
         requestInfo.parameter,
         cancelToken: token,
       ),
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearAllData(),
     );
   }
 
@@ -79,7 +80,7 @@ class LoginRemoteService implements BaseLoginService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 }

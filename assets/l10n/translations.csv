@@ -280,3 +280,7 @@ sales,sales,مبيعات,satış
 administrative,administrative,إداري,idari
 in_office,in office,في المكتب,ofiste
 from_home,from home,من المنزل,evden
+
+created_at,created at,تاريخ الانشاء,oluşturuldu
+close,close,اغلاق,kapalı
+status,status,حالة,durum

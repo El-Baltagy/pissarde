@@ -43,13 +43,21 @@ class BaseLocalRepo {
   }
 
   /// Remove data from local storage by key.
-  Future<void> clearData(String key) async {
+  Future<void> clearDataToKey(String key, {String? boxName  }) async {
     try {
+      await HiveStorage().deleteData(key,boxName:boxName );
     } catch (e) {
       // Log error or handle as needed
     }
   }
-
+  /// Remove all data from local storage at sprcific box.
+  Future<void> clearAllData ( ) async {
+    try {
+      await HiveStorage().clearAllData(  );
+    } catch (e) {
+      // Log error or handle as needed
+    }
+  }
   /// Read data from local storage by key and return as Map.
   Future<(Map<String, dynamic>, Map<String, dynamic>)?> readData(String key) async {
     try {

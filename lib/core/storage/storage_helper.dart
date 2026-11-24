@@ -35,6 +35,8 @@ abstract class StorageHelper{
       return null;
     }
   }
-  static  bool  get hasViewedOnboarding =>HiveStorage().readData(AppConstant.onboardingKeyCash)!=null;
+  static  bool  get hasViewedOnboarding =>HiveStorage().readData(AppConstant.onboardingKeyCash,
+  boxName:  HiveStorage().secBoxName
+  )!=null;
 
 }

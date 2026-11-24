@@ -56,7 +56,9 @@ abstract class OnBoardingPageBaseState extends State<OnBoardingPage>
 
   Future<void> onCompleteOnBoarding() async {
     try {
-      await HiveStorage().writeData(AppConstant.onboardingKeyCash, true);
+      await HiveStorage().writeData(AppConstant.onboardingKeyCash, true,
+      boxName: HiveStorage().secBoxName
+      );
     } catch (_) {}
 
     if (mounted) {

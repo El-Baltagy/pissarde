@@ -41,7 +41,7 @@ class HomeRemoteService implements BaseHomeService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 
@@ -68,7 +68,7 @@ class HomeRemoteService implements BaseHomeService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 
@@ -95,7 +95,7 @@ class HomeRemoteService implements BaseHomeService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 }

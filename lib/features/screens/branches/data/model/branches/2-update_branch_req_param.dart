@@ -1,7 +1,9 @@
+import 'dart:math';
+
 class UpdateBranchReqParam {
   final dynamic id;
   final String name;
-  final String code;
+  // final String code;
   final String address;
   final String latitude;
   final String longitude;
@@ -11,7 +13,7 @@ class UpdateBranchReqParam {
   const UpdateBranchReqParam({
     this.id,
     required this.name,
-    required this.code,
+    // required this.code,
     required this.address,
     required this.latitude,
     required this.longitude,
@@ -21,7 +23,7 @@ class UpdateBranchReqParam {
 
   Map<String, dynamic> toJson() => {
         'name': name,
-        'code': code,
+        // 'code': Random().nextInt(5555).toString(),
         'address': address,
         'latitude': latitude,
         'longitude': longitude,

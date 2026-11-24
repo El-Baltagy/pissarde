@@ -87,16 +87,16 @@ class _AddEditBranchPageState extends AddEditBranchPageBaseState {
                           controller: controllerName,
                         ),
                       ),
-                      TitleWithInputField(
-                        'branch_code'.tr(),
-                        NameInputData(
-                          isLabel: false,
-                          widgetPrefix: const SizedBox.shrink(),
-                          field: fieldCode,
-                          labelText: 'branch_code'.tr(),
-                          controller: controllerCode,
-                        ),
-                      ),
+                      // TitleWithInputField(
+                      //   'branch_code'.tr(),
+                      //   NameInputData(
+                      //     isLabel: false,
+                      //     widgetPrefix: const SizedBox.shrink(),
+                      //     field: fieldCode,
+                      //     labelText: 'branch_code'.tr(),
+                      //     controller: controllerCode,
+                      //   ),
+                      // ),
                       TitleWithInputField(
                         'select_location'.tr(),
                         DropDownSingleSelectData(

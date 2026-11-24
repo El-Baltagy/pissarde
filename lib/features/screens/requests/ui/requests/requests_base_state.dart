@@ -16,6 +16,7 @@ abstract class RequestsPageBaseState extends State<RequestsPage>
       Init(),
       parameter: LeaveBalancesReqParam(year: DateTime.now().year.toString()),
     );
+
   }
 
   @override

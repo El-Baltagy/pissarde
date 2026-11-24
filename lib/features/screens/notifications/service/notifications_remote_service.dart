@@ -3,7 +3,10 @@ import 'package:newf/core/base/base_service.dart';
 import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
 import 'package:newf/core/base/base_local_repo.dart';
+import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/features/screens/notifications/data/model/get_notifications_res/get_notifications_res.dart';
+import 'package:newf/features/screens/notifications/data/model/notifications_list_param.dart';
+import 'package:newf/features/screens/notifications/data/model/pagination.dart';
 import 'package:newf/features/screens/notifications/data/repo/base_notifications_repo.dart';
 import 'package:newf/features/screens/notifications/service/base_notifications_service.dart';
 
@@ -19,7 +22,7 @@ class NotificationsRemoteService implements BaseNotificationsService {
 
   @override
   Future<void> getNotificationServ(
-    RequestCallbackObserver<GetNotificationsRes, NoParameters> requestInfo,
+    RequestCallbackObserver<GetNotificationsRes, NotificationsListParam> requestInfo,
   ) {
     const cacheKey = AppConstant.getNotificationKeyCash;
     return requestInfo.handleRequest(
@@ -28,19 +31,31 @@ class NotificationsRemoteService implements BaseNotificationsService {
         cancelToken: token,
       ),
       fetchLocal: () async {
+        if (requestInfo.baseRequestBackType is PaginationInfo) {
+          return (requestInfo.baseRequestBackType
+                  as PaginationInfo<GetNotificationsRes>)
+              .oldDataToCombine;
+        }
         final tuple = await _localRepo.readData(cacheKey);
-
         if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
           return GetNotificationsRes.fromJson(tuple!.$2);
         }
         return null;
       },
       saveLocal: (old, newData) async {
-        if (newData != null) {
+        if (newData != null &&
+            requestInfo.baseRequestBackType is! PaginationInfo) {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
+      combinePagination: (oldData, newData) {
+        return newData.copyWith(
+          notifications: newData.notifications.copyWith(
+            data: [...oldData.notifications.data, ...newData.notifications.data],
+          ),
+        );
+      },
     );
   }
 

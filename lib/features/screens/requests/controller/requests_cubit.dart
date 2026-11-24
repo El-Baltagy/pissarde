@@ -49,6 +49,7 @@ class RequestsCubit extends BaseCubit<RequestsState> {
     BaseRequestBackType baseRequestBackType, {
     MyLeaveRequestsReqParam? parameter,
   }) async {
+    // print('.........aaaaaaaaaaaaaaaaaaaaaaaaaaa1');
     await CancelManager.runCancelableFun(getMyLeaveRequestsKeyCode, (token) async {
       await _service.getMyLeaveRequestsServ(
         RequestCallbackObserver<GetMyLeavesRequestsRes, MyLeaveRequestsReqParam>(
@@ -82,6 +83,7 @@ class RequestsCubit extends BaseCubit<RequestsState> {
     BaseRequestBackType baseRequestBackType, {
     NoParameters? parameter,
   }) async {
+    // print('.........aaaaaaaaaaaaaaaaaaaaaaaaaaa2');
     await CancelManager.runCancelableFun(getLeaveTypesKeyCode, (token) async {
       await _service.getLeaveTypesServ(
         RequestCallbackObserver<GetLeavesTypesRes, NoParameters>(
@@ -103,6 +105,7 @@ class RequestsCubit extends BaseCubit<RequestsState> {
     BaseRequestBackType baseRequestBackType, {
     LeaveBalancesReqParam? parameter,
   }) async {
+    // print('.........aaaaaaaaaaaaaaaaaaaaaaaaaaaaa3');
     await CancelManager.runCancelableFun(getLeaveBalancesKeyCode, (token) async {
       await _service.getLeaveBalancesServ(
         RequestCallbackObserver<GetLeavesBalanceRes, LeaveBalancesReqParam>(

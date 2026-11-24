@@ -48,7 +48,7 @@ class EmployeesRemoteService implements BaseEmployeesService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
       combinePagination: (oldData, newData) {
         return newData.copyWith(
           data: [...oldData.data, ...newData.data],
@@ -103,7 +103,7 @@ class EmployeesRemoteService implements BaseEmployeesService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:newf/core/base/base_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/features/screens/notifications/data/model/get_notifications_res/get_notifications_res.dart';
+import 'package:newf/features/screens/notifications/data/model/pagination.dart';
+import 'package:newf/features/screens/notifications/data/model/notifications_list_param.dart';
 import 'package:newf/main.dart';
 import 'package:newf/features/screens/notifications/service/base_notifications_service.dart';
 
@@ -40,16 +42,30 @@ class NotificationsCubit extends BaseCubit<NotificationsState> {
     await getNotificationFunc(Reload());
   }
 
-  Future<void> getNotificationFunc(BaseRequestBackType baseRequestBackType, {NoParameters? parameter}) async {
+  Future<void> getNotificationFunc(BaseRequestBackType baseRequestBackType, {NotificationsListParam? parameter}) async {
     await CancelManager.runCancelableFun(getNotificationKeyCode, (token) async {
       await _service.getNotificationServ(
-        RequestCallbackObserver<GetNotificationsRes, NoParameters>(
+        RequestCallbackObserver<GetNotificationsRes, NotificationsListParam>(
           baseRequestBackType: baseRequestBackType,
           parameter: parameter,
           cancelToken: token,
-          onLoadCallback: () => safeEmit(_current.copyWith(getNotificationState: Loading())),
-          onRightCallback: (data) => safeEmit(_current.copyWith(getNotificationState: Success(data))),
-          onLeftCallback: (failure) => safeEmit(_current.copyWith(getNotificationState: ErrorState(failure))),
+          onLoadCallback: () => safeEmit(
+            _current.copyWith(
+              getNotificationState: (baseRequestBackType is Reload)
+                  ? Loading<GetNotificationsRes>()
+                  : Loading<GetNotificationsRes>(
+                      _current.getNotificationState is Success<GetNotificationsRes>
+                          ? (_current.getNotificationState as Success<GetNotificationsRes>).data
+                          : null,
+                    ),
+            ),
+          ),
+          onRightCallback: (data) => safeEmit(
+            _current.copyWith(getNotificationState: Success(data, baseRequestBackType)),
+          ),
+          onLeftCallback: (failure) => safeEmit(
+            _current.copyWith(getNotificationState: ErrorState(failure)),
+          ),
         ),
       );
     });

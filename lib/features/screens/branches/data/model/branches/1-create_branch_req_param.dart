@@ -1,6 +1,9 @@
+import 'dart:math';
+
 class CreateBranchReqParam {
   final String name;
-  final String code;
+
+  // final String code;
   final String address;
   final String latitude;
   final String longitude;
@@ -9,7 +12,7 @@ class CreateBranchReqParam {
 
   const CreateBranchReqParam({
     required this.name,
-    required this.code,
+    // required this.code,
     required this.address,
     required this.latitude,
     required this.longitude,
@@ -18,12 +21,13 @@ class CreateBranchReqParam {
   });
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'code': code,
-        'address': address,
-        'latitude': latitude,
-        'longitude': longitude,
-        'geofence_radius_meters': geofence_radius_meters,
-        'is_active': is_active,
-      };
+    'name': name,
+    // 'code': code,
+    // 'code': Random().nextInt(5555).toString(),
+    'address': address,
+    'latitude': latitude,
+    'longitude': longitude,
+    'geofence_radius_meters': geofence_radius_meters,
+    'is_active': is_active,
+  };
 }

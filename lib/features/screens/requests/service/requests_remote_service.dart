@@ -35,7 +35,9 @@ class RequestsRemoteService implements BaseRequestsService {
       ),
       fetchLocal: () async {
         final tuple = await _localRepo.readData(cacheKey);
-
+        print('wasd.........................');
+        print(tuple?.$1['pr']);
+        print(_localRepo.primarySessionId);
         if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
           return GetMyLeavesRequestsRes.fromJson(tuple!.$2);
         }
@@ -46,7 +48,7 @@ class RequestsRemoteService implements BaseRequestsService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 
@@ -73,7 +75,7 @@ class RequestsRemoteService implements BaseRequestsService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 
@@ -100,7 +102,7 @@ class RequestsRemoteService implements BaseRequestsService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 
@@ -172,7 +174,7 @@ class RequestsRemoteService implements BaseRequestsService {
           await _localRepo.saveData(cacheKey, savedData: newData.toJson());
         }
       },
-      clearLocal: () => _localRepo.clearData(cacheKey),
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 }

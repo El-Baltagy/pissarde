@@ -6,13 +6,13 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
   final formKey = GlobalKey<FormState>();
 
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldName = (.new(), .new());
-  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldCode = (.new(), .new());
+  // (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldCode = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldAddress = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldLocation = (.new(), .new());
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) fieldRadius = (.new(), .new());
 
   final TextEditingController controllerName = .new();
-  final TextEditingController controllerCode = .new();
+  // final TextEditingController controllerCode = .new();
   final TextEditingController controllerAddress = .new();
   final TextEditingController controllerLocation = .new();
   final TextEditingController controllerLat = .new();
@@ -37,7 +37,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
     final branch = widget.args.branchItem;
     if (branch != null) {
       controllerName.text = branch.name;
-      controllerCode.text = branch.code;
+      // controllerCode.text = branch.code;
       controllerAddress.text = branch.address;
       controllerLat.text = branch.latitude.toString();
       controllerLng.text = branch.longitude.toString();
@@ -52,13 +52,13 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
   @override
   void dispose() {
     fieldName.$2?.dispose();
-    fieldCode.$2?.dispose();
+    // fieldCode.$2?.dispose();
     fieldAddress.$2?.dispose();
     fieldLocation.$2?.dispose();
     fieldRadius.$2?.dispose();
 
     controllerName.dispose();
-    controllerCode.dispose();
+    // controllerCode.dispose();
     controllerAddress.dispose();
     controllerLocation.dispose();
     controllerLat.dispose();
@@ -103,7 +103,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
       context,
       listRecorder: [
         fieldName,
-        fieldCode,
+        // fieldCode,
         fieldLocation,
         fieldAddress,
          fieldRadius,
@@ -113,7 +113,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
         final param = UpdateBranchReqParam(
           id: widget.args.branchItem?.id,
           name: controllerName.text.trim(),
-          code: controllerCode.text.trim(),
+          // code: controllerCode.text.trim(),
           address: controllerAddress.text.trim(),
           latitude: controllerLat.text.trim(),
           longitude: controllerLng.text.trim(),
@@ -126,7 +126,7 @@ abstract class AddEditBranchPageBaseState extends State<AddEditBranchPage> {
       } else {
         final param = CreateBranchReqParam(
           name: controllerName.text.trim(),
-          code: controllerCode.text.trim(),
+          // code: controllerCode.text.trim(),
           address: controllerAddress.text.trim(),
           latitude: controllerLat.text.trim(),
           longitude: controllerLng.text.trim(),

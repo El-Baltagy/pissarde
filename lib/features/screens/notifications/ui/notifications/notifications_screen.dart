@@ -45,14 +45,14 @@ class _NotificationsPageState extends NotificationsPageBaseState {
         appBar: CustomAppBar(
           title: 'notifications_title'.tr(),
           actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.refresh_rounded,
-                color: AppColors.roleSwitchSelectedBg,
-              ),
-              tooltip: 'notifications_retry'.tr(),
-              onPressed: () => notificationsCubit.getNotificationFunc(Reload()),
-            ),
+            // IconButton(
+            //   icon: const Icon(
+            //     Icons.refresh_rounded,
+            //     color: AppColors.roleSwitchSelectedBg,
+            //   ),
+            //   tooltip: 'notifications_retry'.tr(),
+            //   onPressed: () => notificationsCubit.getNotificationFunc(Reload()),
+            // ),
           ],
         ),
         body: Semantics(

@@ -123,18 +123,18 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
 
             return Scaffold(
               extendBody: true,
-              floatingActionButton: kDebugMode?
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: FloatingActionButton(onPressed:() async {
-                  notificationsCubit.setFcmTokenIntoDBFunc(
-                      SendFcmParameter(userId: StorageHelper.userData!.id.toString(),
-                          fcmToken:await FcmHandler.fcmToken()??''));
-                },
-                  child: Icon(Icons.add),
-                ),
-              ):null
-              ,
+              // floatingActionButton: kDebugMode?
+              // Padding(
+              //   padding: const EdgeInsets.all(40.0),
+              //   child: FloatingActionButton(onPressed:() async {
+              //     notificationsCubit.setFcmTokenIntoDBFunc(
+              //         SendFcmParameter(userId: StorageHelper.userData!.id.toString(),
+              //             fcmToken:await FcmHandler.fcmToken()??''));
+              //   },
+              //     child: Icon(Icons.add),
+              //   ),
+              // ):null
+              // ,
               body: IndexedStack(
                 index: selectedIndex,
                 children: _pages,

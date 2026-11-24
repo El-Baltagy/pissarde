@@ -6,6 +6,7 @@ import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/widgets/entrance_fader.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/shifts/controller/shifts_cubit.dart';
@@ -66,9 +67,12 @@ class _ShiftsPageState extends ShiftsPageBaseState {
           child: BlocSelector<ShiftsCubit, ShiftsState, BaseEmit?>(
             selector: (state) =>
                 state is ShiftsLoaded ? state.getListShiftsState : null,
-            builder: (context, emit) => ShiftsListWidget(
-              emit: emit,
-              shiftsCubit: shiftsCubit,
+            builder: (context, emit) => EntranceFader(
+              dx: context.isLTR?-20:20,
+              child: ShiftsListWidget(
+                emit: emit,
+                shiftsCubit: shiftsCubit,
+              ),
             ),
           ),
         ),

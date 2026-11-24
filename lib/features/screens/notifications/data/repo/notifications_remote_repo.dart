@@ -8,6 +8,7 @@ import 'package:newf/core/api_helper/dio_helper.dart';
 import 'package:newf/core/api_helper/response_handler.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
 import 'package:newf/features/screens/notifications/data/model/get_notifications_res/get_notifications_res.dart';
+import 'package:newf/features/screens/notifications/data/model/notifications_list_param.dart';
 import 'package:newf/features/screens/notifications/data/repo/base_notifications_repo.dart';
 
 import '../model/send_fcm_parameter.dart';
@@ -19,12 +20,13 @@ class NotificationsRemoteRepo implements BaseNotificationsRepo {
 
   @override
   Future<Either<Failure, GetNotificationsRes>> getNotificationApi(
-    NoParameters? parameter, {
+    NotificationsListParam? parameter, {
     CancelToken? cancelToken,
   }) async {
     return handleResponse(
       onCallData: dio.getData(
         uri: EndPoints.getNotification,
+        query: parameter?.toJsonParameters(),
         cancelToken: cancelToken,
         caller: callerTag(),
       ),

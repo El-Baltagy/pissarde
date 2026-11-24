@@ -1,11 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
 import 'package:newf/features/screens/notifications/data/model/get_notifications_res/get_notifications_res.dart';
+import 'package:newf/features/screens/notifications/data/model/pagination.dart';
+import 'package:newf/features/screens/notifications/data/model/notifications_list_param.dart';
 import 'package:newf/features/screens/notifications/ui/notifications/widgets/notification_card_widget.dart';
 import 'package:newf/features/screens/notifications/ui/notifications/widgets/notification_detail_bottom_sheet.dart';
 import 'package:newf/features/screens/notifications/ui/notifications/widgets/notifications_empty_widget.dart';
@@ -30,14 +34,63 @@ class NotificationsListWidget extends StatefulWidget {
 
 class _NotificationsListWidgetState extends State<NotificationsListWidget> {
   String _selectedFilter = 'all';
+  final RefreshController _refreshController = RefreshController();
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _onRefresh() async {
+    widget.onRefresh();
+    _refreshController.refreshCompleted();
+  }
+
+  Future<void> _onLoading() async {
+    final cubit = NotificationsCubit.get(context: context);
+    final emit = widget.emit;
+    GetNotificationsRes? data;
+    if (emit is Success<GetNotificationsRes>) {
+      data = emit.data;
+    } else if (emit is Loading<GetNotificationsRes>) {
+      data = emit.item;
+    }
+    final pagination = data?.pagination;
+    if (pagination == null) {
+      _refreshController.loadComplete();
+      return;
+    }
+    await cubit.getNotificationFunc(
+      pagination.toGetPaginationInfo(data),
+      parameter: NotificationsListParam(page: pagination.current_page),
+    );
+    _refreshController.loadComplete();
+  }
 
   @override
   Widget build(BuildContext context) {
     final emit = widget.emit;
 
-    if (emit == null || emit is Loading) {
-      return RefreshIndicator(
-        onRefresh: () async => widget.onRefresh(),
+    if (emit == null) {
+      return SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        enablePullUp: false,
+        child: const SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: NotificationsLoadingWidget(),
+        ),
+      );
+    }
+
+    if (emit is Loading<GetNotificationsRes> && (emit as Loading<GetNotificationsRes>).item == null) {
+      return SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        enablePullUp: false,
         child: const SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: NotificationsLoadingWidget(),
@@ -46,23 +99,41 @@ class _NotificationsListWidgetState extends State<NotificationsListWidget> {
     }
 
     if (emit is ErrorState) {
-      return RefreshIndicator(
-        onRefresh: () async => widget.onRefresh(),
-        child: NotificationsErrorWidget(
-          message: emit.failure.message,
-          onRetry: widget.onRefresh,
+      return SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        enablePullUp: false,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: NotificationsErrorWidget(
+            message: emit.failure.message,
+            onRetry: widget.onRefresh,
+          ),
         ),
       );
     }
 
+    GetNotificationsRes? data;
     if (emit is Success<GetNotificationsRes>) {
-      final GetNotificationsRes? data = emit.data;
-      final List<NotificationItem> allItems = data?.notifications.data ?? [];
+      data = emit.data;
+    } else if (emit is Loading<GetNotificationsRes>) {
+      data = emit.item;
+    }
+
+    if (data != null) {
+      final List<NotificationItem> allItems = data.notifications.data;
 
       if (allItems.isEmpty) {
-        return RefreshIndicator(
-          onRefresh: () async => widget.onRefresh(),
-          child: NotificationsEmptyWidget(onRefresh: widget.onRefresh),
+        return SmartRefresher(
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+          enablePullUp: false,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: NotificationsEmptyWidget(onRefresh: widget.onRefresh),
+          ),
         );
       }
 
@@ -70,9 +141,22 @@ class _NotificationsListWidgetState extends State<NotificationsListWidget> {
       // final counts = _calculateCounts(allItems);
       // final int totalCount = data?.notifications.total ?? allItems.length;
 
-      return RefreshIndicator(
-        onRefresh: () async => widget.onRefresh(),
-        color: AppColors.headerBackground,
+      final pagination = data?.pagination;
+      final enablePullUp = pagination != null && pagination.current_page < pagination.last_page;
+      return SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        enablePullUp: enablePullUp,
+        footer: CustomFooter(
+          height: 50,
+          builder: (BuildContext context, LoadStatus? mode) {
+            if (mode == LoadStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return const SizedBox.shrink();
+          },
+        ),
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [

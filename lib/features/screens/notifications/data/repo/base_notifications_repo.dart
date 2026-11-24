@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:newf/core/base/base_remote_repo.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
 import 'package:newf/features/screens/notifications/data/model/get_notifications_res/get_notifications_res.dart';
+import 'package:newf/features/screens/notifications/data/model/notifications_list_param.dart';
 
 import '../model/send_fcm_parameter.dart';
 
@@ -14,7 +15,7 @@ abstract class BaseNotificationsRepo extends BaseRepo {
 
   /// Abstract contract — implemented by [NotificationsRemoteRepo].
   Future<Either<Failure, GetNotificationsRes>> getNotificationApi(
-    NoParameters? parameter, {
+    NotificationsListParam? parameter, {
     CancelToken? cancelToken,
   });
 

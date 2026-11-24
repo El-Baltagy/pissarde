@@ -63,11 +63,13 @@ class EmployeesCubit extends BaseCubit<EmployeesState> {
           cancelToken: token,
           onLoadCallback: () => safeEmit(
             _current.copyWith(
-              getListEmployeesState: Loading<GetAllEmployeesRes>(
-                _current.getListEmployeesState is Success<GetAllEmployeesRes>
-                    ? (_current.getListEmployeesState as Success<GetAllEmployeesRes>).data
-                    : null,
-              ),
+              getListEmployeesState: (baseRequestBackType is Reload)
+                  ? Loading<GetAllEmployeesRes>()
+                  : Loading<GetAllEmployeesRes>(
+                      _current.getListEmployeesState is Success<GetAllEmployeesRes>
+                          ? (_current.getListEmployeesState as Success<GetAllEmployeesRes>).data
+                          : null,
+                    ),
             ),
           ),
           onRightCallback: (data) => safeEmit(

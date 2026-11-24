@@ -93,7 +93,7 @@ abstract class AddLeaveRequestPageBaseState extends State<AddLeaveRequestPage> {
       if (state.createLeaveRequestState is Success && !_isSuccessHandled) {
         _isSuccessHandled = true;
         requestsCubit.resetCreateLeaveRequest();
-        context.showToast('leave_created_success'.tr());
+        context.showToast('request_sent_and_it_is_under_review_right_now'.tr());
         context.pop(true);
       } else if (state.createLeaveRequestState is ErrorState) {
         final err = state.createLeaveRequestState as ErrorState;

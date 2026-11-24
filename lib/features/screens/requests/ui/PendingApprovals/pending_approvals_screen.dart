@@ -14,6 +14,9 @@ import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
 import 'package:newf/features/screens/requests/data/model/get_pending_approval_leaves_res/get_pending_approval_leaves_res.dart';
 import 'package:newf/features/screens/requests/data/model/review_leave_request_req_param.dart';
 
+import '../../../../../core/shared/methods/date_helper.dart';
+import '../requests/widgets/ship_icon.dart';
+
 part 'pending_approvals_base_state.dart';
 
 @RoutePage()
@@ -237,19 +240,37 @@ class _PendingApprovalCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSizes.s12),
+
             Row(
               children: [
+                InfoShip(Icons.calendar_today_outlined, DateTimeHelper.formatDateTimeFromString(
+                  item.start_date,
+                  DateFormat(
+                    (DateTimeHelper.formatDateOnly ),
+                  ),
+                ),),
+                const SizedBox(width: AppSizes.s8),
                 const Icon(
-                  Icons.calendar_today_outlined,
-                  size: AppSizes.s12,
+                  Icons.arrow_forward,
+                  size: AppSizes.s14,
                   color: AppColors.contractorGreyText,
                 ),
-                const SizedBox(width: AppSizes.s4),
-                Text(
-                  '${item.start_date} → ${item.end_date}',
-                  style: AppTextStyles.font12Regular,
+                const SizedBox(width: AppSizes.s8),
+                InfoShip(
+                  Icons.calendar_today_outlined,
+                  DateTimeHelper.formatDateTimeFromString(
+                    item.start_date,
+                    DateFormat(
+                      (DateTimeHelper.formatDateOnly ),
+                    ),
+                  ),
                 ),
-                const SizedBox(width: AppSizes.s12),
+              ],
+            ),
+            const SizedBox(height: AppSizes.s12),
+            Row(
+              children: [
+
                 const Icon(
                   Icons.access_time_outlined,
                   size: AppSizes.s12,
@@ -262,6 +283,9 @@ class _PendingApprovalCard extends StatelessWidget {
                 ),
               ],
             ),
+
+
+
             if (item.reason.isNotEmpty) ...[
               const SizedBox(height: AppSizes.s8),
               Text(

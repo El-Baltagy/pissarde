@@ -31,13 +31,13 @@ class LoginCubit extends BaseCubit<LoginState> {
   Future<void> init() async {}
 
   Future<void> login({required LoginReqParam parameter}) async {
-    final deviceId = parameter.device_id ?? await getOrCreateDeviceUniqueId();
-    final enrichedParam = parameter.copyWith(device_id: deviceId);
+    // final deviceId = parameter.device_id ?? await getOrCreateDeviceUniqueId();
+    // final enrichedParam = parameter.copyWith(device_id: deviceId);
     await CancelManager.runCancelableFun(loginKeyCode, (token) async {
       await _service.loginServ(
         RequestCallbackObserver<LoginRes, LoginReqParam>(
           baseRequestBackType: Reload(),
-          parameter: enrichedParam,
+          parameter: parameter,
           cancelToken: token,
           onLoadCallback: () => safeEmit(LoginResState(Loading())),
           onRightCallback: (data) => safeEmit(LoginResState(Success(data))),

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:device_unique_id/device_unique_id.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,8 @@ import 'package:newf/core/shared/widgets/text_inputs/text_input_widget.dart';
 import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
-
-import '../../data/model/login_req_param.dart';
-
-part 'login_base_state.dart';
+ import '../../data/model/login_req_param.dart';
+ part 'login_base_state.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget implements AutoRouteWrapper {
@@ -87,15 +86,12 @@ class _LoginPageState extends LoginPageBaseState {
                               context,
                               listRecorder: [field1, field2],
                             )) {
-                              // await HWSecureSaver.save(
-                              //     'wasd', '1444s');
-                              // print(await HWSecureSaver.get('wasd'));
-                              // return ;
+
                               await argData.login(
                                 parameter: LoginReqParam(
-                                email:    emailController.text.trim(),
-                                 password:   passwordController.text.trim(),
-                                  device_name: 'Postman'
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                  device_id: await DeviceUniqueId.getDeviceId(),
                                 ),
                               );
 

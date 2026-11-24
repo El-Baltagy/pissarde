@@ -142,9 +142,9 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
                     .map((p) => p ?? const SizedBox.shrink())
                     .toList(),
               ),
-              floatingActionButton: FloatingActionButton(heroTag: null, onPressed: () {
-                context.push(OnBoardingRoute(args: .new()));
-              },),
+              // floatingActionButton: FloatingActionButton(heroTag: null, onPressed: () {
+              //   context.push(OnBoardingRoute(args: .new()));
+              // },),
               bottomNavigationBar: CustomBottomNavBar(
                 currentIndex: selectedIndex,
                 onTap: (index) {

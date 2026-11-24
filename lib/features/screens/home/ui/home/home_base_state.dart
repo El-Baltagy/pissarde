@@ -7,7 +7,9 @@ abstract class HomePageBaseState extends State<HomePage> {
   void initState() {
     homeCubit = HomeCubit.get(context: context);
     super.initState();
-    homeCubit.init();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    await  homeCubit.init();
+    },);
 
   }
 

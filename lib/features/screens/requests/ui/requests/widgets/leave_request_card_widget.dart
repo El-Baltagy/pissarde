@@ -9,6 +9,7 @@ import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
 import 'package:newf/features/screens/requests/data/model/cancel_leave_req_param.dart';
 import 'package:newf/features/screens/requests/data/model/get_my_leaves_requests_res/get_my_leaves_requests_res.dart';
+import 'package:newf/features/screens/requests/ui/requests/widgets/ship_icon.dart';
 
 class LeaveRequestCardWidget extends StatelessWidget {
   const LeaveRequestCardWidget({
@@ -75,7 +76,7 @@ class LeaveRequestCardWidget extends StatelessWidget {
             // Dates row
             Row(
               children: [
-                _infoChip(Icons.calendar_today_outlined, DateTimeHelper.formatDateTimeFromString(
+                InfoShip (Icons.calendar_today_outlined, DateTimeHelper.formatDateTimeFromString(
                   request.start_date,
                   DateFormat(
                     (DateTimeHelper.formatDateOnly ),
@@ -88,7 +89,7 @@ class LeaveRequestCardWidget extends StatelessWidget {
                   color: AppColors.contractorGreyText,
                 ),
                 const SizedBox(width: AppSizes.s8),
-                _infoChip(
+                InfoShip (
                   Icons.calendar_today_outlined,
                   DateTimeHelper.formatDateTimeFromString(
                     request.end_date,
@@ -112,6 +113,7 @@ class LeaveRequestCardWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ],
+
             // Cancel button (only if pending)
             if (request.status == 'pending') ...[
               const SizedBox(height: AppSizes.s12),
@@ -188,15 +190,7 @@ class LeaveRequestCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _infoChip(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon, size: AppSizes.s12, color: AppColors.contractorGreyText),
-        const SizedBox(width: AppSizes.s4),
-        Text(text, style: AppTextStyles.font12Regular),
-      ],
-    );
-  }
+
 
   void _onCancel(BuildContext context) {
     showDialog<void>(

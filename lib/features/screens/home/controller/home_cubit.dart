@@ -29,7 +29,7 @@ class HomeCubit extends BaseCubit<HomeState> {
        ? state as HomeLoaded
        : HomeLoaded();
        
-      int get attendanceTodayKeyCode => AppConstant.attendanceTodayKeyCode;
+      // int get attendanceTodayKeyCode => AppConstant.attendanceTodayKeyCode;
 
     int get checkInKeyCode => AppConstant.checkInKeyCode;
 
@@ -42,18 +42,17 @@ class HomeCubit extends BaseCubit<HomeState> {
   
 
   Future<void> attendanceTodayFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
-    await CancelManager.runCancelableFun(attendanceTodayKeyCode, (token) async {
+
       await _service.attendanceTodayServ(
         RequestCallbackObserver<CheckInTodayStatusRes, NoParameters>(
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
-          cancelToken: token,
           onLoadCallback: () => safeEmit(_current.copyWith(attendanceTodayState: Loading())),
           onRightCallback: (data) => safeEmit(_current.copyWith(attendanceTodayState: Success(data))),
           onLeftCallback: (failure) => safeEmit(_current.copyWith(attendanceTodayState: ErrorState(failure))),
         ),
       );
-    });
+
   }
   @override
   Future<void> close() {
@@ -63,8 +62,6 @@ class HomeCubit extends BaseCubit<HomeState> {
     // add every key in file
     CancelManager.cancel(checkInKeyCode);
 
-    // add every key in file
-    CancelManager.cancel(attendanceTodayKeyCode);
     return super.close();
   }
 

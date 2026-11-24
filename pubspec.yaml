@@ -57,6 +57,8 @@ dependencies:
   skeletonizer: ^2.1.2
   token_saver:
     path: packages/token_saver
+  device_unique_id:
+    path: packages/device_unique_id
   crypto: ^3.0.3
 #  http_certificate_pinning: ^2.0.0
   app_attest_integrity: ^1.0.0

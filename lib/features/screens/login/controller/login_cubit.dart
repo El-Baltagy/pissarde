@@ -10,6 +10,7 @@ import 'package:newf/features/screens/login/data/model/login_res/login_res.dart'
 import 'package:newf/features/screens/login/service/base_login_service.dart';
 import 'package:newf/main.dart';
 
+import '../../../../core/shared/methods/device_unique_id.dart';
 import '../../../../core/shared/methods/no_parameter.dart';
 import '../data/model/login_req_param.dart';
 
@@ -30,11 +31,13 @@ class LoginCubit extends BaseCubit<LoginState> {
   Future<void> init() async {}
 
   Future<void> login({required LoginReqParam parameter}) async {
+    final deviceId = parameter.device_id ?? await getOrCreateDeviceUniqueId();
+    final enrichedParam = parameter.copyWith(device_id: deviceId);
     await CancelManager.runCancelableFun(loginKeyCode, (token) async {
       await _service.loginServ(
         RequestCallbackObserver<LoginRes, LoginReqParam>(
           baseRequestBackType: Reload(),
-          parameter: parameter,
+          parameter: enrichedParam,
           cancelToken: token,
           onLoadCallback: () => safeEmit(LoginResState(Loading())),
           onRightCallback: (data) => safeEmit(LoginResState(Success(data))),
@@ -74,18 +77,15 @@ class LoginCubit extends BaseCubit<LoginState> {
   }
 
   Future<void> getProfileFunc(BaseRequestBackType baseRequestBackType,{NoParameters? parameter}) async {
-    // await CancelManager.runCancelableFun(getProfileKeyCode, (token) async {
-      await _service.getProfileServ(
+       await _service.getProfileServ(
         RequestCallbackObserver<User, NoParameters>(
           baseRequestBackType: baseRequestBackType ,
           parameter: parameter,
-          // cancelToken: token,
-          onLoadCallback: () => safeEmit(GetProfileState(Loading())),
+           onLoadCallback: () => safeEmit(GetProfileState(Loading())),
           onRightCallback: (data) => safeEmit(GetProfileState(Success(data))),
           onLeftCallback: (failure) =>
               safeEmit(GetProfileState(ErrorState(failure))),
         ),
       );
-    // });
-  }
+   }
 }

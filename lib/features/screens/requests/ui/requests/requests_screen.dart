@@ -77,7 +77,7 @@ class _RequestsPageState extends RequestsPageBaseState {
           builder: (context, typeState) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 80),
-              child: FloatingActionButton(
+              child: FloatingActionButton(heroTag: null, 
                 backgroundColor: context.theme.primaryColor,
                 onPressed: () async {
                   final types = typeState is Success

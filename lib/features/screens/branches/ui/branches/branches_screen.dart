@@ -49,7 +49,7 @@ class _BranchesPageState extends BranchesPageBaseState {
                 .copyWith(color: AppColors.roleSwitchSelectedBg),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(heroTag: null, 
           backgroundColor: context.theme.primaryColor,
           onPressed: () async {
             final res = await context.push(

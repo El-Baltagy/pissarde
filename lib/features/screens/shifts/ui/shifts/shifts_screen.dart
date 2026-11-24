@@ -47,7 +47,7 @@ class _ShiftsPageState extends ShiftsPageBaseState {
                 .copyWith(color: AppColors.roleSwitchSelectedBg),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(heroTag: null, 
           backgroundColor: context.theme.primaryColor,
           onPressed: () async {
             final res = await context.push(

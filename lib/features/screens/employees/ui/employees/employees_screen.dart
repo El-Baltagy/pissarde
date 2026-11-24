@@ -51,7 +51,7 @@ class _EmployeesPageState extends EmployeesPageBaseState {
                 .copyWith(color: AppColors.roleSwitchSelectedBg),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(heroTag: null, 
           backgroundColor: context.theme.primaryColor,
           onPressed: () async=>await context.push(
             AddEditEmloyeeRoute(

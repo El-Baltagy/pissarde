@@ -117,5 +117,7 @@ abstract class AppConstant {
   static const String getSupervisorsKeyCash = 'employees_getSupervisors_cache';
 
   static const int getSupervisorsKeyCode = 3879;
+
+  static const String deviceUniqueIdKeyCash = 'device_unique_id_cache';
 }
 

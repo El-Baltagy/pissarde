@@ -22,7 +22,17 @@ class EmployeesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (emit == null || emit is Loading) {
+    GetAllEmployeesRes? data;
+    if (emit is Success<GetAllEmployeesRes>) {
+      data = (emit as Success<GetAllEmployeesRes>).data;
+    } else if (emit is Loading<GetAllEmployeesRes>) {
+      data = (emit as Loading<GetAllEmployeesRes>).item;
+    }
+
+    final bool isInitialLoading = data == null;
+    final items = data?.data ?? [];
+
+    if (isInitialLoading) {
       return const Center(child: CircularProgressIndicator());
     }
     if (emit is ErrorState) {
@@ -36,25 +46,21 @@ class EmployeesListWidget extends StatelessWidget {
         ),
       );
     }
-    if (emit is Success<GetAllEmployeesRes>) {
-      final items = (emit as Success<GetAllEmployeesRes>).data?.data ?? [];
-      if (items.isEmpty) {
-        return Center(
-          child: Text('no_employees'.tr(),
-              style: AppTextStyles.font14Regular),
-        );
-      }
-      return ListView.separated(
-        padding: const EdgeInsets.all(AppPadding.p16),
-        itemCount: items.length,
-        separatorBuilder: (_, __) =>
-            const SizedBox(height: AppSizes.s12),
-        itemBuilder: (_, i) => EmployeeCardWidget(
-          employee: items[i],
-          employeesCubit: employeesCubit,
-        ),
+    if (items.isEmpty) {
+      return Center(
+        child: Text('no_employees'.tr(),
+            style: AppTextStyles.font14Regular),
       );
     }
-    return const SizedBox.shrink();
+    return ListView.separated(
+      padding: const EdgeInsets.all(AppPadding.p16),
+      itemCount: items.length,
+      separatorBuilder: (_, __) =>
+          const SizedBox(height: AppSizes.s12),
+      itemBuilder: (_, i) => EmployeeCardWidget(
+        employee: items[i],
+        employeesCubit: employeesCubit,
+      ),
+    );
   }
 }

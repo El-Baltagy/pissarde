@@ -28,7 +28,8 @@ class LoggerInterceptor extends Interceptor {
         '🌐 SENDING REQUEST............. \n'
         '   └─ Method  : ${options.method}\n'
         '   └─ URL     : ${options.baseUrl}${options.path}$query\n'
-        '   └─ Headers :\n$headers'
+        '   ${ headers.isEmpty ?'':'└─ Headers :\n$headers'}'
+        '   ${ query.isEmpty ?'':'└─ query :\n$query'}'
         '$body',
         LoggerType.warning,
         'HTTP',

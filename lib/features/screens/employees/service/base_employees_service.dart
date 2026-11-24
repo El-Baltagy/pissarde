@@ -4,6 +4,7 @@ import 'package:newf/features/screens/employees/data/model/employees/get_all_emp
 import 'package:newf/features/screens/employees/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/employees/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/employees/data/model/employees/3-delete_employee_req_param.dart';
+import 'package:newf/features/screens/employees/data/model/list_employees_param.dart';
 
 import '../../../../core/shared/methods/no_parameter.dart';
 import '../../../../core/shared/methods/print.dart';
@@ -11,7 +12,7 @@ import '../data/model/get_supervisors_list/get_supervisors_list.dart';
 
 abstract class BaseEmployeesService extends BaseService {
   Future<void> getListEmployeesServ(
-    RequestCallbackObserver<GetAllEmployeesRes, NoParameters> requestInfo,
+    RequestCallbackObserver<GetAllEmployeesRes, EmployeesListParam> requestInfo,
   );
 
   Future<void> addEditEmployeeServ(

@@ -6,6 +6,7 @@ import 'package:newf/features/screens/employees/data/model/employees/get_all_emp
 import 'package:newf/features/screens/employees/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/employees/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/employees/data/model/employees/3-delete_employee_req_param.dart';
+import 'package:newf/features/screens/employees/data/model/list_employees_param.dart';
 
 import '../../../../../core/shared/methods/no_parameter.dart';
 import '../../../../../core/shared/methods/print.dart';
@@ -19,7 +20,7 @@ abstract class BaseEmployeesRepo extends BaseRepo {
   });
 
   Future<Either<Failure, GetAllEmployeesRes>> getListEmployeesApi(
-    NoParameters? parameter, {
+    EmployeesListParam? parameter, {
     CancelToken? cancelToken,
   });
 

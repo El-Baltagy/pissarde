@@ -1,11 +1,1 @@
-employee_type
-work_type
-role
-human_resources
-admin
-admin_employee
-duty_employee
-sales
-administrative
-in_office
-from_home
+no_employees

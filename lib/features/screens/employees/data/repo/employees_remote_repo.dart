@@ -9,6 +9,7 @@ import 'package:newf/features/screens/employees/data/model/employees/get_all_emp
 import 'package:newf/features/screens/employees/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/employees/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/employees/data/model/employees/3-delete_employee_req_param.dart';
+import 'package:newf/features/screens/employees/data/model/list_employees_param.dart';
 
 import '../../../../../core/api_helper/caller_tag.dart';
 import '../../../../../core/api_helper/response_handler.dart';
@@ -38,12 +39,13 @@ class EmployeesRemoteRepo implements BaseEmployeesRepo {
 
   @override
   Future<Either<Failure, GetAllEmployeesRes>> getListEmployeesApi(
-    NoParameters? parameter, {
+    EmployeesListParam? parameter, {
     CancelToken? cancelToken,
   }) async {
     return handleResponse(
       onCallData: dio.getData(
         uri: EndPoints.listEmployees,
+        query: (parameter??EmployeesListParam(page: 0)).toJsonParameters(),
         cancelToken: cancelToken,
         caller: callerTag(),
       ),

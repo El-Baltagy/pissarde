@@ -324,7 +324,8 @@ class EmployeesRoute extends PageRouteInfo<EmployeesRouteArgs> {
   PageInfo<EmployeesRouteArgs>(name);
 }
 class EmployeesRouteArgs {
-  const EmployeesRouteArgs( );
+  const EmployeesRouteArgs(this.employeesCubit);
+  final EmployeesCubit employeesCubit;
 }
 
 
@@ -347,7 +348,8 @@ class ShiftsRoute extends PageRouteInfo<ShiftsRouteArgs> {
   PageInfo<ShiftsRouteArgs>(name);
 }
 class ShiftsRouteArgs {
-  const ShiftsRouteArgs( );
+  const ShiftsRouteArgs(this.shiftsCubit);
+  final ShiftsCubit shiftsCubit;
 }
 /// generated route for
 /// [BranchesPage]
@@ -367,7 +369,8 @@ class BranchesRoute extends PageRouteInfo<BranchesRouteArgs> {
   PageInfo<BranchesRouteArgs>(name);
 }
 class BranchesRouteArgs {
-  const BranchesRouteArgs( );
+  const BranchesRouteArgs(this.branchesCubit);
+  final BranchesCubit branchesCubit;
 }
 
 

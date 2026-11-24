@@ -9,6 +9,8 @@ import 'package:newf/features/screens/employees/data/model/employees/get_all_emp
 import 'package:newf/features/screens/employees/data/model/employees/create_employee_res/create_employee_res.dart';
 import 'package:newf/features/screens/employees/data/model/employees/1-create_employee_req_param.dart';
 import 'package:newf/features/screens/employees/data/model/employees/3-delete_employee_req_param.dart';
+import 'package:newf/features/screens/employees/data/model/list_employees_param.dart';
+import 'package:newf/features/screens/employees/data/model/pagination.dart';
 
 import '../../../../core/base/base_service.dart';
 import '../../../../core/constants/app_constant.dart';
@@ -51,18 +53,28 @@ class EmployeesCubit extends BaseCubit<EmployeesState> {
 
   Future<void> getListEmployeesFunc(
     BaseRequestBackType baseRequestBackType, {
-    NoParameters? parameter,
+    EmployeesListParam? parameter,
   }) async {
     await CancelManager.runCancelableFun(getListEmployeesKeyCode, (token) async {
       await _service.getListEmployeesServ(
-        RequestCallbackObserver<GetAllEmployeesRes, NoParameters>(
+        RequestCallbackObserver<GetAllEmployeesRes, EmployeesListParam>(
           baseRequestBackType: baseRequestBackType,
           parameter: parameter,
           cancelToken: token,
-          onLoadCallback: () =>
-              safeEmit(_current.copyWith(getListEmployeesState: Loading())),
-          onRightCallback: (data) =>
-              safeEmit(_current.copyWith(getListEmployeesState: Success(data))),
+          onLoadCallback: () => safeEmit(
+            _current.copyWith(
+              getListEmployeesState: Loading<GetAllEmployeesRes>(
+                _current.getListEmployeesState is Success<GetAllEmployeesRes>
+                    ? (_current.getListEmployeesState as Success<GetAllEmployeesRes>).data
+                    : null,
+              ),
+            ),
+          ),
+          onRightCallback: (data) => safeEmit(
+            _current.copyWith(
+              getListEmployeesState: Success(data, baseRequestBackType),
+            ),
+          ),
           onLeftCallback: (failure) => safeEmit(
             _current.copyWith(getListEmployeesState: ErrorState(failure)),
           ),

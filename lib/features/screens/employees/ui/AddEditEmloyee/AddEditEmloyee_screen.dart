@@ -165,17 +165,7 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
                         preselectId: widget.args.employeeItem?.shift.id.toString(),
                       ),
 
-                      BranchSelector(
-                        selectedNotifier: selectedBranchNotifier,
-                        field: fieldBranch,
-                        preselectId: widget.args.employeeItem?.branch.id.toString(),
-                      ),
-                      SupervisorSelectorWidget(
-                        selectedBranchNotifier: selectedBranchNotifier,
-                        selectedNotifier: selectedSupervisorNotifier,
-                        // field: fieldSupervisor,
-                        preselectId: widget.args.employeeItem?.supervisor?.id?.toString(),
-                      ),
+                     buildSupervisor(),
 
                       ActiveSwitchWidget(isActiveNotifier: isActiveNotifier),
 
@@ -195,5 +185,30 @@ class _AddEditEmloyeePageState extends AddEditEmloyeePageBaseState {
         ),
       ),
     );
+  }
+
+  Column buildSupervisor() {
+    return Column(
+                     children: [
+                       BranchSelector(
+                         selectedNotifier: selectedBranchNotifier,
+                         field: fieldBranch,
+                         preselectId: widget.args.employeeItem?.branch.id.toString(),
+                       ),
+                       ValueListenableBuilder(valueListenable:selectedBranchNotifier , builder: (context, value, child) {
+                       if(value.isEmpty){
+                         return SizedBox.shrink();
+                       }
+                         return Padding(
+                           padding: const EdgeInsets.only(top:AppSizes.s20),
+                           child: SupervisorSelectorWidget(
+                             selectedBranchNotifier: selectedBranchNotifier,
+                             selectedNotifier: selectedSupervisorNotifier,
+                             preselectId: widget.args.employeeItem?.supervisor?.id.toString(),
+                           ),
+                         ) ;
+                       },)
+                     ],
+                   );
   }
 }

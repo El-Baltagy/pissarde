@@ -12,6 +12,8 @@ import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 import 'package:newf/features/screens/home/data/repo/base_home_repo.dart';
 
 import '../model/check_in_today_status_res/check_in_today_status_res.dart';
+import '../model/history_attendacne_res/history_attendacne_res.dart';
+import '../model/attendance_history_req_param.dart';
 
 /// Concrete remote implementation of [BaseHomeRepo].
 class HomeRemoteRepo implements BaseHomeRepo {
@@ -30,6 +32,22 @@ class HomeRemoteRepo implements BaseHomeRepo {
         caller: callerTag(),
       ),
       asObject: CheckInTodayStatusRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, HistoryAttendacneRes>> getAttendanceHistoryApi(
+    AttendanceHistoryReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.attendanceHistory,
+        query: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: HistoryAttendacneRes.fromJson,
     );
   }
 

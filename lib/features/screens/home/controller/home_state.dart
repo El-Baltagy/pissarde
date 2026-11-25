@@ -9,16 +9,18 @@ class HomeLoaded extends HomeState {
     this.checkOutState,
     this.checkInState,
     this.attendanceTodayState,
+    this.attendanceHistoryState,
      this.allWorkersEmit,
     this.refreshOrInit,
    });
-  final BaseEmit? allWorkersEmit , attendanceTodayState, checkInState, checkOutState;
+  final BaseEmit? allWorkersEmit , attendanceTodayState, checkInState, checkOutState, attendanceHistoryState;
   final HomeState? refreshOrInit;
 
   HomeLoaded copyWith({
     BaseEmit? checkOutState,
     BaseEmit? checkInState,
     BaseEmit? attendanceTodayState,
+    BaseEmit? attendanceHistoryState,
     BaseEmit? allWorkersEmit, 
     HomeState? refreshOrInit,
   }) {
@@ -26,6 +28,7 @@ class HomeLoaded extends HomeState {
       checkOutState: checkOutState ?? this.checkOutState,
       checkInState: checkInState ?? this.checkInState,
       attendanceTodayState: attendanceTodayState ?? this.attendanceTodayState,
+      attendanceHistoryState: attendanceHistoryState ?? this.attendanceHistoryState,
       refreshOrInit: refreshOrInit ?? this.refreshOrInit,
        allWorkersEmit: allWorkersEmit ?? this.allWorkersEmit,
      );

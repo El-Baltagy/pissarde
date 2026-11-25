@@ -8,6 +8,8 @@ import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 
 import '../model/check_in_today_status_res/check_in_today_status_res.dart';
+import '../model/history_attendacne_res/history_attendacne_res.dart';
+import '../model/attendance_history_req_param.dart';
 
 /// Abstract contract for the home data layer.
 /// High-level modules (services) depend on this, not on concrete implementations.
@@ -17,6 +19,12 @@ abstract class BaseHomeRepo extends BaseRepo {
   /// Abstract contract — implemented by [HomeRemoteRepo].
   Future<Either<Failure, CheckInTodayStatusRes>> attendanceTodayApi(
     NoParameters? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [HomeRemoteRepo].
+  Future<Either<Failure, HistoryAttendacneRes>> getAttendanceHistoryApi(
+    AttendanceHistoryReqParam? parameter, {
     CancelToken? cancelToken,
   });
 

@@ -295,3 +295,14 @@ create_attendance_correction,Create Attendance Correction,إنشاء تصحيح 
 
 check_qr_branch_validation,Check QR Branch Validation,تحقق من التحقق من صحة فرع QR,QR Şube Doğrulamasını Kontrol Edin
 check_in_instead_of_another_employee,Check In Instead of Another Employee,قم بتسجيل الوصول بدلاً من موظف آخر,Başka Bir Çalışanın Yerine Check-in Yapmak
+
+date,date,تاريخ,tarih
+open,open,يفتح,açık
+closed,closed,مغلق,kapalı
+check_in_status,check in status,تحقق في الحالة,durumu kontrol et
+checked_in,checked in,تم تسجيل الوصول,check-in yapıldı
+not_checked_in,not checked in,لم يتم تسجيل الوصول,check-in yapılmadı
+no_data,no data,لا توجد بيانات,veri yok
+
+worked,worked,عملت,çalıştı
+no_attendance_history,no attendance history,لا يوجد سجل الحضور,katılım geçmişi yok

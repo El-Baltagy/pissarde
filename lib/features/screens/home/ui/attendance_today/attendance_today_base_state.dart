@@ -5,14 +5,13 @@ abstract class AttendanceTodayPageBaseState extends State<AttendanceTodayPage> {
 
   @override
   void initState() {
-    homeCubit = HomeCubit.get(context: context);
-    // TODO: implement initState
     super.initState();
+    homeCubit = HomeCubit.get(context: context);
+    homeCubit.attendanceTodayFunc(Reload());
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

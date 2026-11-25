@@ -13,6 +13,9 @@ import 'package:newf/main.dart';
 import 'package:newf/features/screens/home/service/base_home_service.dart';
 
 import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
+import '../data/model/history_attendacne_res/history_attendacne_res.dart';
+import '../data/model/history_pagination.dart';
+import '../data/model/attendance_history_req_param.dart';
 part 'home_state.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {
@@ -53,6 +56,32 @@ class HomeCubit extends BaseCubit<HomeState> {
         ),
       );
 
+  }
+
+  Future<void> getAttendanceHistoryFunc(BaseRequestBackType baseRequestBackType, {AttendanceHistoryReqParam? parameter}) async {
+    await _service.getAttendanceHistoryServ(
+      RequestCallbackObserver<HistoryAttendacneRes, AttendanceHistoryReqParam>(
+        baseRequestBackType: baseRequestBackType,
+        parameter: parameter,
+        onLoadCallback: () => safeEmit(
+          _current.copyWith(
+            attendanceHistoryState: (baseRequestBackType is Reload)
+                ? Loading<HistoryAttendacneRes>()
+                : Loading<HistoryAttendacneRes>(
+                    _current.attendanceHistoryState is Success<HistoryAttendacneRes>
+                        ? (_current.attendanceHistoryState as Success<HistoryAttendacneRes>).data
+                        : null,
+                  ),
+          ),
+        ),
+        onRightCallback: (data) => safeEmit(
+          _current.copyWith(attendanceHistoryState: Success(data, baseRequestBackType)),
+        ),
+        onLeftCallback: (failure) => safeEmit(
+          _current.copyWith(attendanceHistoryState: ErrorState(failure)),
+        ),
+      ),
+    );
   }
   @override
   Future<void> close() {

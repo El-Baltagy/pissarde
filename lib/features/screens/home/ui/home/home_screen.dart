@@ -9,6 +9,7 @@ import 'package:newf/features/screens/home/controller/home_cubit.dart';
 import 'package:newf/features/screens/home/ui/home/widgets/attendance_action_section_widget.dart';
 
 part 'home_base_state.dart';
+part 'widgets/list_options_attendance.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -51,8 +52,8 @@ class _HomePageState extends HomePageBaseState {
                 label: 'Check Out Action Section',
                 child: const AttendanceActionSectionWidget(),
               ),
-              /// extract --ListOptionsAttendance
-              SizedBox.shrink(),
+
+              const ListOptionsAttendance(),
 
 
 

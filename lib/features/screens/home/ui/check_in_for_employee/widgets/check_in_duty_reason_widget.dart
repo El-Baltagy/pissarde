@@ -57,7 +57,7 @@ class CheckInDutyReasonWidget extends StatelessWidget {
               return TextFormField(
                 controller: controllerDutyReason,
                 maxLines: 2,
-                maxLength: 8,
+                maxLength: 30,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 style: AppTextStyles.font14Regular,
                 onChanged: (v) => dutyReasonNotifier.value = v.trim(),

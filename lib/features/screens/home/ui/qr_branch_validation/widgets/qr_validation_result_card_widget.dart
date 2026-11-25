@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/base/base_state.dart';
@@ -44,7 +45,7 @@ class QrValidationResultCardWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  res.reason,
+                  res.valid?'valid'.tr() : (res.reason??'invalid'.tr()),
                   style: AppTextStyles.font14SemiBold.copyWith(color: color),
                 ),
               ),

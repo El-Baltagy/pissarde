@@ -67,12 +67,11 @@ abstract class QrBranchValidationPageBaseState
     if (state is HomeLoaded) {
       if (state.verifyBranchQrState is Success) {
         final res = (state.verifyBranchQrState as Success).data;
-        final msg = res is VerifyBranchQrCodeRes
-            ? res.reason
-            : (res?.valid == true ? 'valid'.tr() : 'invalid'.tr());
+        bool isValid= res is VerifyBranchQrCodeRes ? res.valid : false;
+        final msg =  isValid?'valid'.tr() : (res.reason??'invalid'.tr()) ;
         context.showToast(
           msg,
-          isSuccess: res is VerifyBranchQrCodeRes ? res.valid : false,
+          isSuccess:isValid,
         );
       } else if (state.verifyBranchQrState is ErrorState) {
         final err = state.verifyBranchQrState as ErrorState;

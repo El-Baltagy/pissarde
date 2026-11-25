@@ -363,7 +363,11 @@ status_not_checked_in,status not checked in,لم يتم التحقق من الح
 location_unavailable,Location unavailable,الموقع غير متاح,Konum kullanılamıyor
 
 location_permission_required,location permission required,إذن الموقع مطلوب,konum izni gerekli
-location_services_are_disabled_please_enable_gps_to_continue,location services are disabled please enable gps to continue,تم تعطيل خدمات الموقع يرجى تفعيل نظام تحديد المواقع للمتابعة,konum hizmetleri devre dışı bırakıldı, devam etmek için lütfen gps'i etkinleştirin
+location_services_are_disabled_please_enable_gps_to_continue,location services are disabled please enable gps to continue,تم تعطيل خدمات الموقع يرجى تفعيل نظام تحديد المواقع للمتابعة,konum hizmetleri devre dışı bırakıldı
 enable_location,enable location,تمكين الموقع,konumu etkinleştir
 grant_permission,grant permission,منح الإذن,izin ver
 location_permission_denied_please_grant_location_access_from_app_settings,location permission denied please grant location access from app settings,تم رفض إذن الموقع، يرجى منح الوصول إلى الموقع من إعدادات التطبيق,konum izni reddedildi lütfen uygulama ayarlarından konum erişimine izin verin
+
+btn_check_in_gps,btn check in gps,BTN تحقق في نظام تحديد المواقع,btn gps'i kontrol et
+status_checked_in,status checked in,تم التحقق من الحالة,durum kontrol edildi
+status_checked_out,status checked out,تم التحقق من الحالة,durum kontrol edildi

@@ -1,5 +1,0 @@
-location_permission_required
-location_services_are_disabled_please_enable_gps_to_continue
-enable_location
-grant_permission
-location_permission_denied_please_grant_location_access_from_app_settings

@@ -194,6 +194,14 @@ class HomeCubit extends BaseCubit<HomeState> {
     });
   }
 
+  void resetCheckInState() {
+    safeEmit(_current.copyWith(resetCheckIn: true));
+  }
+
+  void resetCheckOutState() {
+    safeEmit(_current.copyWith(resetCheckOut: true));
+  }
+
   Future<void> rotateBranchQrFunc( {RotateBranchQrParam? parameter}) async {
     await CancelManager.runCancelableFun(rotateBranchQrKeyCode, (token) async {
       await _service.rotateBranchQrServ(

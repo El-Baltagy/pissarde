@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/shared/methods/position_helper.dart';
+import 'package:newf/core/shared/methods/qr_token_validator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -51,6 +53,7 @@ class _CheckInForEmployeePageState extends CheckInForEmployeePageBaseState {
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, HomeState>(
+      listenWhen: _shouldListen,
       listener: _listener,
       child: Scaffold(
         backgroundColor: AppColors.lightSurface,
@@ -79,9 +82,11 @@ class _CheckInForEmployeePageState extends CheckInForEmployeePageBaseState {
                 ),
                 CheckInDutyReasonWidget(
                   controllerDutyReason: controllerDutyReason,
+                  dutyReasonNotifier: dutyReasonNotifier,
                 ),
                 CheckInEmployeeButtonWidget(
                   isLocatingNotifier: isLocatingNotifier,
+                  dutyReasonNotifier: dutyReasonNotifier,
                   onCheckIn: _onCheckInPressed,
                 ),
               ],

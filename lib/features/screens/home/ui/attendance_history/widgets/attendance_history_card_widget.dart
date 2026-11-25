@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -72,14 +73,14 @@ class AttendanceHistoryCardWidget extends StatelessWidget {
               Expanded(
                 child: _buildTimeBox(
                   label: 'check_in'.tr(),
-                  value: item.check_in_at ?? '--',
+                  value: DateTimeHelper.formatDateTimeFromString(item.check_in_at ,DateFormat(DateTimeHelper.formatTimeOnly))  ,
                   subLabel: item.check_in_method.label,
                 ),
               ),
               Expanded(
                 child: _buildTimeBox(
                   label: 'check_out'.tr(),
-                  value: item.check_out_at ?? '--',
+                  value: DateTimeHelper.formatDateTimeFromString(item.check_out_at ,DateFormat(DateTimeHelper.formatTimeOnly)),
                   subLabel: item.check_out_method.label,
                 ),
               ),
@@ -109,13 +110,13 @@ class AttendanceHistoryCardWidget extends StatelessWidget {
               children: [
                 if ((item.late_minutes??0 )> 0)
                   _buildMetricChip(
-                    '${'late'.tr()}: ${item.late_minutes}m',
+                    '${'late'.tr()}: ${item.late_minutes} m',
                     AppColors.tagReviewBg,
                     AppColors.tagReviewText,
                   ),
                 if ((item.early_departure_minutes??0) > 0)
                   _buildMetricChip(
-                    '${'early_departure'.tr()}: ${item.early_departure_minutes}m',
+                    '${'early_departure'.tr()}: ${item.early_departure_minutes} m',
                     AppColors.tagReviewBg,
                     AppColors.tagReviewText,
                   ),

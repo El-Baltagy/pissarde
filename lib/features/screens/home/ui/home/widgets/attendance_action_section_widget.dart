@@ -234,6 +234,17 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
+      listenWhen: (previous, current) {
+        if (current is! HomeLoaded) return false;
+        if (ModalRoute.of(context)?.isCurrent == false) return false;
+        final prevCheckIn = previous is HomeLoaded ? previous.checkInState : null;
+        final prevCheckOut = previous is HomeLoaded ? previous.checkOutState : null;
+        final checkInChanged = prevCheckIn != current.checkInState &&
+            (current.checkInState is Success<ChechInRes> || current.checkInState is ErrorState);
+        final checkOutChanged = prevCheckOut != current.checkOutState &&
+            (current.checkOutState is Success<ChechInRes> || current.checkOutState is ErrorState);
+        return checkInChanged || checkOutChanged;
+      },
       listener: _cubitListener,
       builder: (context, state) {
         CheckInTodayStatusRes? status;
@@ -281,21 +292,26 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
 
   void _cubitListener(BuildContext context, HomeState state) {
     if (state is! HomeLoaded) return;
+    final cubit = context.read<HomeCubit>();
 
     if (state.checkInState is Success<ChechInRes>) {
       final ChechInRes? res = (state.checkInState as Success<ChechInRes>).data;
       context.showToast(res?.message.isNotEmpty == true ? res!.message : 'check_in_successfully'.tr());
+      cubit.resetCheckInState();
     } else if (state.checkInState is ErrorState) {
       final ErrorState error = state.checkInState as ErrorState;
       context.showToast(error.failure.message, isSuccess: false);
+      cubit.resetCheckInState();
     }
 
     if (state.checkOutState is Success<ChechInRes>) {
       final ChechInRes? res = (state.checkOutState as Success<ChechInRes>).data;
       context.showToast(res?.message.isNotEmpty == true ? res!.message : 'check_out_successfully'.tr());
+      cubit.resetCheckOutState();
     } else if (state.checkOutState is ErrorState) {
       final ErrorState error = state.checkOutState as ErrorState;
       context.showToast(error.failure.message, isSuccess: false);
+      cubit.resetCheckOutState();
     }
   }
 
@@ -345,13 +361,13 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
             ),
           ],
         ),
-        Center(
-          child: Text(
-            statusText,
-            style: AppTextStyles.font12Medium.copyWith(color: AppColors.lightTextSecondary),
-            textAlign: TextAlign.center,
-          ),
-        ),
+        // Center(
+        //   child: Text(
+        //     statusText,
+        //     style: AppTextStyles.font12Medium.copyWith(color: AppColors.lightTextSecondary),
+        //     textAlign: TextAlign.center,
+        //   ),
+        // ),
         if (status != null && status.shift.name.isNotEmpty)
           Text(
             '${status.shift.name} • ${status.branch.name}',

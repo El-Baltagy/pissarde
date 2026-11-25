@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/methods/qr_token_validator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -24,7 +25,10 @@ class RotateQrDisplayWidget extends StatelessWidget {
           return const SizedBox.shrink();
         }
         final res = emit.data;
-        if (res == null || res.qr_data.qr_token.isEmpty) {
+        if (res == null
+        // ||
+            // !qrTokenRegex.hasMatch(res.qr_data.qr_token.trim())
+        ) {
           return const SizedBox.shrink();
         }
 

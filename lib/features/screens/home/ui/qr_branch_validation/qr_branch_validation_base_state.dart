@@ -45,7 +45,11 @@ abstract class QrBranchValidationPageBaseState
       MaterialPageRoute(builder: (_) => const QrCameraScannerPage()),
     );
 
-    if (!mounted || scannedToken == null || scannedToken.trim().isEmpty) {
+    if (!mounted || scannedToken == null) {
+      return;
+    }
+
+    if (!validateQrToken(context, scannedToken)) {
       return;
     }
 

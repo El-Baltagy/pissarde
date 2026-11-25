@@ -348,3 +348,22 @@ select_an_employee_and_scan_branch_qr_code_to_check_in,Select an employee and sc
 please_select_employee_first,Please select employee first,الرجاء تحديد الموظف أولا,Lütfen önce çalışanı seçin
 duty_reason,Duty Reason,سبب الواجب,Görev Sebebi
 employee,Employee,موظف,Çalışan
+
+invalid_qr_code,Invalid QR Code,رمز الاستجابة السريعة غير صالح,Geçersiz QR Kodu
+
+check_in_successfully,check in successfully,تم تسجيل الدخول بنجاح,başarıyla giriş yap
+
+check_in,check in,تسجيل الحضور,katılım kaydı
+check_out,check out,تسجيل الانصراف,Çıkış kaydı
+check_out_successfully,check out successfully,تم التحقق بنجاح,başarıyla kontrol et
+
+current_status_not_checked_in,current status not checked in,الوضع الحالي لم يتم التحقق منه,mevcut durum kontrol edilmedi
+status_not_checked_in,status not checked in,لم يتم التحقق من الحالة,durum kontrol edilmedi
+
+location_unavailable,Location unavailable,الموقع غير متاح,Konum kullanılamıyor
+
+location_permission_required,location permission required,إذن الموقع مطلوب,konum izni gerekli
+location_services_are_disabled_please_enable_gps_to_continue,location services are disabled please enable gps to continue,تم تعطيل خدمات الموقع يرجى تفعيل نظام تحديد المواقع للمتابعة,konum hizmetleri devre dışı bırakıldı, devam etmek için lütfen gps'i etkinleştirin
+enable_location,enable location,تمكين الموقع,konumu etkinleştir
+grant_permission,grant permission,منح الإذن,izin ver
+location_permission_denied_please_grant_location_access_from_app_settings,location permission denied please grant location access from app settings,تم رفض إذن الموقع، يرجى منح الوصول إلى الموقع من إعدادات التطبيق,konum izni reddedildi lütfen uygulama ayarlarından konum erişimine izin verin

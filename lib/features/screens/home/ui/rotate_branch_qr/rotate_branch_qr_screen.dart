@@ -7,6 +7,7 @@ import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/methods/qr_token_validator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';

@@ -50,8 +50,13 @@ abstract class RotateBranchQrPageBaseState extends State<RotateBranchQrPage> {
       if (state.rotateBranchQrState is Success<RotateBranchQrCodeRes>) {
         final res =
             (state.rotateBranchQrState as Success<RotateBranchQrCodeRes>).data;
-        if (res != null && res.message.isNotEmpty) {
-          context.showToast(res.message, isSuccess: res.success);
+        if (res != null) {
+          if (!validateQrToken(context, res.qr_data.qr_token)) {
+            return;
+          }
+          if (res.message.isNotEmpty) {
+            context.showToast(res.message, isSuccess: res.success);
+          }
         }
       } else if (state.rotateBranchQrState is ErrorState) {
         final err = state.rotateBranchQrState as ErrorState;

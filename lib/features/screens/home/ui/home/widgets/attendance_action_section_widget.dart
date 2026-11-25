@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/shared/methods/position_helper.dart';
+import 'package:newf/core/shared/methods/qr_token_validator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -25,6 +27,209 @@ class AttendanceActionSectionWidget extends StatefulWidget {
 
 class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionWidget> {
   bool _isLocating = false;
+
+  // ─── Permission + GPS gate ────────────────────────────────────────────────
+
+  /// Returns [true] only when both location permission is granted AND the GPS
+  /// service is active. Shows an appropriate dialog / toast otherwise.
+  Future<bool> _ensureLocationReady() async {
+    // 1. Check & request permission
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (!mounted) return false;
+
+    if (permission == LocationPermission.deniedForever) {
+      // User permanently denied – open app settings
+      await _showPermissionDeniedDialog();
+      return false;
+    }
+
+    if (permission == LocationPermission.denied) {
+      context.showToast('location_permission_required'.tr(), isSuccess: false);
+      return false;
+    }
+
+    // 2. Check GPS service
+    final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!mounted) return false;
+
+    if (!serviceEnabled) {
+      await _showGpsDisabledDialog();
+      return false;
+    }
+
+    return true;
+  }
+
+  /// Dialog shown when GPS service is OFF – offers to open Location Settings.
+  Future<void> _showGpsDisabledDialog() async {
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.r16),
+        ),
+        title: Row(
+          spacing: AppSizes.s8,
+          children: [
+            Icon(Icons.location_off_rounded, color: AppColors.notificationRed, size: AppSizes.s24),
+            Text(
+              'location_permission_required'.tr(),
+              style: AppTextStyles.font16Bold,
+            ),
+          ],
+        ),
+        content: Text(
+          'location_services_are_disabled_please_enable_gps_to_continue'.tr(),
+          style: AppTextStyles.font14Regular.copyWith(color: AppColors.lightTextSecondary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(
+              'cancel'.tr(),
+              style: AppTextStyles.font14Medium.copyWith(color: AppColors.lightTextSecondary),
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () async {
+              Navigator.of(ctx).pop();
+              await Geolocator.openLocationSettings();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: context.theme.primaryColor,
+              foregroundColor: AppColors.roleSwitchSelectedBg,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSizes.r10),
+              ),
+            ),
+            icon: const Icon(Icons.settings_rounded, size: AppSizes.s18),
+            label: Text(
+              'enable_location'.tr(),
+              style: AppTextStyles.font14SemiBold.copyWith(color: AppColors.roleSwitchSelectedBg),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Dialog shown when permission is permanently denied – opens App Settings.
+  Future<void> _showPermissionDeniedDialog() async {
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.r16),
+        ),
+        title: Row(
+          spacing: AppSizes.s8,
+          children: [
+            Icon(Icons.location_disabled_rounded, color: AppColors.notificationRed, size: AppSizes.s24),
+            Expanded(
+              child: Text(
+                'location_permission_required'.tr(),
+                style: AppTextStyles.font16Bold,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          'location_permission_denied_please_grant_location_access_from_app_settings'.tr(),
+          style: AppTextStyles.font14Regular.copyWith(color: AppColors.lightTextSecondary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(
+              'cancel'.tr(),
+              style: AppTextStyles.font14Medium.copyWith(color: AppColors.lightTextSecondary),
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () async {
+              Navigator.of(ctx).pop();
+              await Geolocator.openAppSettings();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: context.theme.primaryColor,
+              foregroundColor: AppColors.roleSwitchSelectedBg,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSizes.r10),
+              ),
+            ),
+            icon: const Icon(Icons.app_settings_alt_rounded, size: AppSizes.s18),
+            label: Text(
+              'grant_permission'.tr(),
+              style: AppTextStyles.font14SemiBold.copyWith(color: AppColors.roleSwitchSelectedBg),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Main action ──────────────────────────────────────────────────────────
+
+  Future<void> _handleToggleAction({required bool isCheckedIn}) async {
+    setState(() => _isLocating = true);
+
+    try {
+      // 1. Gate: permission + GPS must be ready before anything else
+      final bool ready = await _ensureLocationReady();
+      if (!mounted || !ready) return;
+
+      // 2. Fetch GPS coordinates (service is on + permission granted)
+      final pos = await PositionHelper.instance.getLatLng();
+      if (!mounted) return;
+
+      if (pos == null) {
+        context.showToast('location_unavailable'.tr(), isSuccess: false);
+        return;
+      }
+
+      setState(() => _isLocating = false);
+
+      // 3. Open QR scanner
+      final scannedToken = await Navigator.of(context).push<String>(
+        MaterialPageRoute(builder: (_) => const QrCameraScannerPage()),
+      );
+
+      if (!mounted || scannedToken == null || scannedToken.trim().isEmpty) return;
+
+      if (!validateQrToken(context, scannedToken)) return;
+
+      setState(() => _isLocating = true);
+
+      // 4. Submit
+      final cubit = context.read<HomeCubit>();
+      final String latitude = pos.latitude.toString();
+      final String longitude = pos.longitude.toString();
+      final String qrToken = scannedToken.trim();
+
+      if (isCheckedIn) {
+        await cubit.checkOutFunc(
+          Reload(),
+          parameter: CheckOutReqParam(qr_token: qrToken, latitude: latitude, longitude: longitude),
+        );
+      } else {
+        await cubit.checkInFunc(
+          Reload(),
+          parameter: CheckInReqParam(qr_token: qrToken, latitude: latitude, longitude: longitude),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLocating = false);
+    }
+  }
+
+  // ─── Build ────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +284,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
 
     if (state.checkInState is Success<ChechInRes>) {
       final ChechInRes? res = (state.checkInState as Success<ChechInRes>).data;
-      context.showToast(res?.message.isNotEmpty == true ? res!.message : 'btn_check_in_gps'.tr());
+      context.showToast(res?.message.isNotEmpty == true ? res!.message : 'check_in_successfully'.tr());
     } else if (state.checkInState is ErrorState) {
       final ErrorState error = state.checkInState as ErrorState;
       context.showToast(error.failure.message, isSuccess: false);
@@ -87,60 +292,14 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
 
     if (state.checkOutState is Success<ChechInRes>) {
       final ChechInRes? res = (state.checkOutState as Success<ChechInRes>).data;
-      context.showToast(res?.message.isNotEmpty == true ? res!.message : 'btn_check_out_gps'.tr());
+      context.showToast(res?.message.isNotEmpty == true ? res!.message : 'check_out_successfully'.tr());
     } else if (state.checkOutState is ErrorState) {
       final ErrorState error = state.checkOutState as ErrorState;
       context.showToast(error.failure.message, isSuccess: false);
     }
   }
 
-  Future<void> _handleToggleAction({
-    required bool isCheckedIn,
-  }) async {
-    final scannedToken = await Navigator.of(context).push<String>(
-      MaterialPageRoute(builder: (_) => const QrCameraScannerPage()),
-    );
-
-    if (!mounted || scannedToken == null || scannedToken.trim().isEmpty) {
-      return;
-    }
-
-    setState(() => _isLocating = true);
-
-    try {
-      final pos = await PositionHelper.instance.getLatLng();
-      if (!mounted) return;
-
-      final cubit = context.read<HomeCubit>();
-      final String latitude = pos?.latitude.toString() ?? '0.0';
-      final String longitude = pos?.longitude.toString() ?? '0.0';
-      final String qrToken = scannedToken.trim();
-
-      if (isCheckedIn) {
-        await cubit.checkOutFunc(
-          Reload(),
-          parameter: CheckOutReqParam(
-            qr_token: qrToken,
-            latitude: latitude,
-            longitude: longitude,
-          ),
-        );
-      } else {
-        await cubit.checkInFunc(
-          Reload(),
-          parameter: CheckInReqParam(
-            qr_token: qrToken,
-            latitude: latitude,
-            longitude: longitude,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isLocating = false);
-      }
-    }
-  }
+  // ─── Helpers ─────────────────────────────────────────────────────────────
 
   Widget _buildStatusHeader({
     required CheckInTodayStatusRes? status,
@@ -159,10 +318,11 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     final String statusText = _resolveStatusText(status, isCheckedIn);
 
     return Column(
-      spacing: AppSizes.s6,
+      spacing: AppSizes.s4,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          spacing: AppSizes.s6,
           children: [
             Container(
               width: AppSizes.s8,
@@ -172,7 +332,6 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
                 color: isCheckedIn ? AppColors.onlineGreen : AppColors.notificationRed,
               ),
             ),
-            const SizedBox(width: AppSizes.s6),
             Text(
               isCheckedIn
                   ? 'status_checked_in'.tr()
@@ -204,23 +363,17 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
   }
 
   String _resolveStatusText(CheckInTodayStatusRes? status, bool isCheckedIn) {
-    if (status == null) {
-      return 'current_status_attendance_time'.tr();
-    }
+    if (status == null) return 'current_status_attendance_time'.tr();
 
     if (isCheckedIn) {
       final String time = _formatTime(status.active_attendance.check_in_at);
-      if (time.isNotEmpty) {
-        return 'current_status_checked_in_at'.tr(args: [time]);
-      }
+      if (time.isNotEmpty) return 'current_status_checked_in_at'.tr(args: [time]);
       return 'current_status_attendance_time'.tr();
     }
 
     if (status.has_checked_in) {
       final String time = _formatTime(status.active_attendance.check_out_at);
-      if (time.isNotEmpty) {
-        return 'current_status_checked_out_at'.tr(args: [time]);
-      }
+      if (time.isNotEmpty) return 'current_status_checked_out_at'.tr(args: [time]);
       return 'status_checked_out'.tr();
     }
 
@@ -256,9 +409,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     final IconData buttonIcon = isCheckedIn ? Icons.logout_rounded : Icons.login_rounded;
 
     return ElevatedButton(
-      onPressed: isLoading
-          ? null
-          : () => _handleToggleAction(isCheckedIn: isCheckedIn),
+      onPressed: isLoading ? null : () => _handleToggleAction(isCheckedIn: isCheckedIn),
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
         foregroundColor: AppColors.roleSwitchSelectedBg,
@@ -288,25 +439,6 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
                 Icon(buttonIcon, color: AppColors.roleSwitchSelectedBg, size: AppSizes.s20),
               ],
             ),
-    );
-  }
-
-
-
-  Widget _buildQuickLink({required IconData icon, required String labelKey}) {
-    return Row(
-      spacing: AppSizes.s6,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: context.theme.primaryColor, size: AppSizes.s16),
-        Text(
-          labelKey.tr(),
-          style: AppTextStyles.font12Medium.copyWith(
-            fontSize: 11,
-            color: context.theme.primaryColor,
-          ),
-        ),
-      ],
     );
   }
 }

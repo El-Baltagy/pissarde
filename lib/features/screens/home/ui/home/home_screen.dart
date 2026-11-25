@@ -7,14 +7,6 @@ import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/features/screens/home/controller/home_cubit.dart';
 import 'package:newf/features/screens/home/ui/home/widgets/attendance_action_section_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/attendance_header_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/branch_status_card_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/current_shift_card_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/gps_verification_card_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/policy_notice_card_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/recent_requests_card_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/role_selector_widget.dart';
-import 'package:newf/features/screens/home/ui/home/widgets/weekly_summary_card_widget.dart';
 
 part 'home_base_state.dart';
 
@@ -56,30 +48,12 @@ class _HomePageState extends HomePageBaseState {
               SizedBox.shrink(),
 
               Semantics(
-                label: 'Branch Status Overview',
-                child: const BranchStatusCardWidget(),
-              ),
-
-              Semantics(
-                label: 'Current Shift Details',
-                child: const CurrentShiftCardWidget(),
-              ),
-
-
-              Semantics(
                 label: 'Check Out Action Section',
                 child: const AttendanceActionSectionWidget(),
               ),
+              /// extract --ListOptionsAttendance
+              SizedBox.shrink(),
 
-              Semantics(
-                label: 'Weekly Performance Summary',
-                child: const WeeklySummaryCardWidget(),
-              ),
-
-              Semantics(
-                label: 'Recent Requests and Alerts',
-                child: const RecentRequestsCardWidget(),
-              ),
 
 
               8.verticalSpace,

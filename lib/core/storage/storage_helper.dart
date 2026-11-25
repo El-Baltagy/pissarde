@@ -4,7 +4,9 @@ import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/storage/hive_storage.dart';
  import 'package:token_saver/secure_token_manager.dart';
 
-import '../../features/screens/home/data/model/chech_in_res/chech_in_res.dart';
+import '../../features/screens/login/data/model/login_res/login_res.dart';
+
+// import '../../features/screens/home/data/model/chech_in_res/chech_in_res.dart';
 
 abstract class StorageHelper{
   static Future<void>   deleteUserData   ()async{
@@ -35,6 +37,8 @@ abstract class StorageHelper{
       return null;
     }
   }
+  static bool get isFullMode=>['admin' ].contains(userData?.role.value);
+  // static bool get isFullMode=>['admin','hr'].contains(userData?.role.value);
   static  bool  get hasViewedOnboarding =>HiveStorage().readData(AppConstant.onboardingKeyCash,
   boxName:  HiveStorage().secBoxName
   )!=null;

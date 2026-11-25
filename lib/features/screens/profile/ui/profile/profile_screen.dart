@@ -8,6 +8,7 @@ import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/features/screens/profile/controller/profile_cubit.dart';
+import 'package:newf/features/screens/profile/ui/profile/widgets/container_list.dart';
 
 import '../../../../../core/base/base_state.dart';
 import '../../../../../core/theming/app_values.dart';

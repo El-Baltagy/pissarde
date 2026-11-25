@@ -16,6 +16,8 @@ import 'package:newf/features/screens/requests/data/model/leave_balances_req_par
 import 'package:newf/features/screens/requests/ui/requests/widgets/leave_balance_list_widget.dart';
 import 'package:newf/features/screens/requests/ui/requests/widgets/my_requests_list_widget.dart';
 
+import '../../../../../core/storage/storage_helper.dart';
+
 part 'requests_base_state.dart';
 
 @RoutePage()
@@ -45,6 +47,7 @@ class _RequestsPageState extends RequestsPageBaseState {
         appBar: CustomAppBar(
           title: 'nav_requests'.tr(),
           actions: [
+            if(StorageHelper.isFullMode)
             IconButton(
               icon: const Icon(
                 Icons.pending_actions_outlined,

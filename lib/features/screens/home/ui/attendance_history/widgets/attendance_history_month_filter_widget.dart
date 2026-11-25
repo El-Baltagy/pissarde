@@ -15,8 +15,8 @@ class AttendanceHistoryMonthFilterWidget extends StatelessWidget {
   });
 
   final DateTime selectedMonth;
-  final VoidCallback onPreviousMonth;
-  final VoidCallback onNextMonth;
+  final VoidCallback? onPreviousMonth;
+  final VoidCallback? onNextMonth;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,9 @@ class AttendanceHistoryMonthFilterWidget extends StatelessWidget {
             onPressed: onPreviousMonth,
             icon: Icon(
               Icons.chevron_left_rounded,
-              color: context.theme.primaryColor,
+              color: onPreviousMonth != null
+                  ? context.theme.primaryColor
+                  : AppColors.contractorGreyText,
             ),
           ),
           Row(
@@ -66,7 +68,9 @@ class AttendanceHistoryMonthFilterWidget extends StatelessWidget {
             onPressed: onNextMonth,
             icon: Icon(
               Icons.chevron_right_rounded,
-              color: context.theme.primaryColor,
+              color: onNextMonth != null
+                  ? context.theme.primaryColor
+                  : AppColors.contractorGreyText,
             ),
           ),
         ],

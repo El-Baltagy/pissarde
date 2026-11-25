@@ -48,8 +48,8 @@ class _AttendanceHistoryPageState extends AttendanceHistoryPageBaseState {
             children: [
               AttendanceHistoryMonthFilterWidget(
                 selectedMonth: selectedMonth,
-                onPreviousMonth: onPreviousMonth,
-                onNextMonth: onNextMonth,
+                onPreviousMonth: canGoPrevious ? onPreviousMonth : null,
+                onNextMonth: canGoNext ? onNextMonth : null,
               ),
               Expanded(
                 child: BlocSelector<HomeCubit, HomeState, BaseEmit?>(

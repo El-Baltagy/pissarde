@@ -31,6 +31,7 @@ abstract class EndPoints {
 
   // جلب رمز الـ QR الثابت الحالي لشاشة الفرع
   static const String branchLiveQr = "/api/branches/1/live-qr";
+  static   String rotateBranchQr (String id)=> "/api/branches/$id/rotate-secret";
 
 
 

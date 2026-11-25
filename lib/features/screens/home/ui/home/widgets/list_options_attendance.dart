@@ -53,7 +53,7 @@ final HomeCubit homeCubit;
           ),
         ),
       ),
-      if(StorageHelper.isDutyEmployee)
+      // if(StorageHelper.isDutyEmployee)
       (
         icon: Icons.person_add_alt_1_outlined,
         title: 'check_in_instead_of_another_employee'.tr(),

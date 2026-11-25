@@ -37,20 +37,65 @@ abstract class CreateAttendanceCorrectionPageBaseState
     }
   }
 
+  TimeOfDay? _parseTime(String value) {
+    final parts = value.trim().split(':');
+    if (parts.length != 2) return null;
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+    if (hour == null || minute == null) return null;
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  int _toMinutes(TimeOfDay time) => time.hour * 60 + time.minute;
+
   /// Opens a time picker and formats the chosen time as `HH:mm`.
   Future<void> _pickTime(
     BuildContext context,
-    TextEditingController controller,
-  ) async {
+    TextEditingController controller, {
+    bool isCheckOut = false,
+  }) async {
+    TimeOfDay? checkInTime;
+    if (isCheckOut) {
+      checkInTime = _parseTime(controllerCheckIn.text);
+      if (checkInTime == null) {
+        context.showToast('please_select_check_in_first'.tr(), isSuccess: false);
+        return;
+      }
+    }
+
+    final initialTime = _parseTime(controller.text) ??
+        (isCheckOut ? checkInTime! : TimeOfDay.now());
+
     final picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: initialTime,
     );
-    if (picked != null) {
-      controller.text =
-          '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
-      setState(() {});
+    if (picked == null) return;
+
+    if (isCheckOut &&
+        checkInTime != null &&
+        _toMinutes(picked) <= _toMinutes(checkInTime)) {
+      if (context.mounted) {
+        context.showToast(
+          'check_out_time_must_be_after_check_in_time'.tr(),
+          isSuccess: false,
+        );
+      }
+      return;
     }
+
+    controller.text =
+        '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
+
+    if (!isCheckOut) {
+      final existingCheckOut = _parseTime(controllerCheckOut.text);
+      if (existingCheckOut != null &&
+          _toMinutes(existingCheckOut) <= _toMinutes(picked)) {
+        controllerCheckOut.clear();
+      }
+    }
+
+    setState(() {});
   }
 
   /// Validates the form and submits the attendance correction request.
@@ -65,8 +110,8 @@ abstract class CreateAttendanceCorrectionPageBaseState
     final String date=controllerDate.text.trim();
     final param = CreateAttendanceCorrectionReqParam(
       date: date,
-      requested_check_in_at:date+" "+ controllerCheckIn.text.trim(),
-      requested_check_out_at:date+" "+ controllerCheckOut.text.trim(),
+      requested_check_in_at: '$date ${controllerCheckIn.text.trim()}',
+      requested_check_out_at: '$date ${controllerCheckOut.text.trim()}',
       reason: controllerReason.text.trim(),
     );
     await cubit.createAttendanceCorrectionFunc(Init(), parameter: param);

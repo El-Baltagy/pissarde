@@ -328,3 +328,6 @@ early_departure,Early Departure,المغادرة المبكرة,Erken Ayrılış
 open_session,Open Session,جلسة مفتوحة,Açık oturum
 closed_session,Closed Session,جلسة مغلقة,Kapalı Oturum
 grace_period,Grace Period,فترة السماح,Ek Süre
+
+please_select_check_in_first,Please select check in first,الرجاء تحديد تسجيل الوصول أولاً,Lütfen önce check-in'i seçin
+check_out_time_must_be_after_check_in_time,Check out time must be after check in time,يجب أن يكون وقت الخروج بعد وقت تسجيل الدخول,Çıkış saati giriş saatinden sonra olmalıdır

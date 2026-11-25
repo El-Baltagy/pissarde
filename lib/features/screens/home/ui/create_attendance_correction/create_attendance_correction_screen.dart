@@ -74,8 +74,11 @@ class _CreateAttendanceCorrectionPageState
                     controllerCheckOut: controllerCheckOut,
                     onPickDate: () => _pickDate(context),
                     onPickCheckIn: () => _pickTime(context, controllerCheckIn),
-                    onPickCheckOut: () =>
-                        _pickTime(context, controllerCheckOut),
+                    onPickCheckOut: () => _pickTime(
+                      context,
+                      controllerCheckOut,
+                      isCheckOut: true,
+                    ),
                   ),
                   CorrectionReasonInputWidget(
                     controllerReason: controllerReason,

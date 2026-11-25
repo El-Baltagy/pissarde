@@ -39,6 +39,7 @@ import 'package:newf/features/screens/home/ui/attendance_corrections/attendance_
 import 'package:newf/features/screens/home/ui/create_attendance_correction/create_attendance_correction_screen.dart';
 import 'package:newf/features/screens/home/ui/qr_branch_validation/qr_branch_validation_screen.dart';
 import 'package:newf/features/screens/home/ui/check_in_for_employee/check_in_for_employee_screen.dart';
+import 'package:newf/features/screens/home/ui/rotate_branch_qr/rotate_branch_qr_screen.dart';
 part 'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -47,6 +48,10 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
+      AutoRoute(
+        page: RotateBranchQrRoute.page,
+        // initial: true,
+      ),
       AutoRoute(
         page: CheckInForEmployeeRoute.page,
         // initial: true,

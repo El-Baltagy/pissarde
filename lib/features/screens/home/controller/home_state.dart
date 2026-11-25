@@ -6,6 +6,7 @@ abstract class HomeState {}
 class HomeLoaded extends HomeState {
 
   HomeLoaded({
+    this.rotateBranchQrState,
     this.checkOutState,
     this.checkInState,
     this.attendanceTodayState,
@@ -16,10 +17,11 @@ class HomeLoaded extends HomeState {
      this.allWorkersEmit,
     this.refreshOrInit,
    });
-  final BaseEmit? allWorkersEmit , attendanceTodayState, checkInState, checkOutState, attendanceHistoryState, attendanceCorrectionsState, createAttendanceCorrectionState, verifyBranchQrState;
+  final BaseEmit? allWorkersEmit , attendanceTodayState, checkInState, checkOutState, attendanceHistoryState, attendanceCorrectionsState, createAttendanceCorrectionState, verifyBranchQrState, rotateBranchQrState;
   final HomeState? refreshOrInit;
 
   HomeLoaded copyWith({
+    BaseEmit? rotateBranchQrState,
     BaseEmit? checkOutState,
     BaseEmit? checkInState,
     BaseEmit? attendanceTodayState,
@@ -31,6 +33,7 @@ class HomeLoaded extends HomeState {
     HomeState? refreshOrInit,
   }) {
     return HomeLoaded(
+      rotateBranchQrState: rotateBranchQrState ?? this.rotateBranchQrState,
       checkOutState: checkOutState ?? this.checkOutState,
       checkInState: checkInState ?? this.checkInState,
       attendanceTodayState: attendanceTodayState ?? this.attendanceTodayState,

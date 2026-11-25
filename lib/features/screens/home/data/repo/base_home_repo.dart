@@ -8,6 +8,8 @@ import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 
 import '../model/check_in_today_status_res/check_in_today_status_res.dart';
+import '../model/rotate_branch_qr_code_res/rotate_branch_qr_code_res.dart';
+import '../model/rotate_branch_qr_param.dart';
 import '../model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../model/verify_branch_qr_param.dart';
 import '../model/history_attendacne_res/history_attendacne_res.dart';
@@ -61,6 +63,12 @@ abstract class BaseHomeRepo extends BaseRepo {
   /// Abstract contract — implemented by [HomeRemoteRepo].
   Future<Either<Failure, ListAttendanceCorrectionsRes>> getAttendanceCorrectionsApi(
     AttendanceCorrectionsParam? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [HomeRemoteRepo].
+  Future<Either<Failure, RotateBranchQrCodeRes>> rotateBranchQrApi(
+    RotateBranchQrParam? parameter, {
     CancelToken? cancelToken,
   });
 }

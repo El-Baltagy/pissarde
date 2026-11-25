@@ -119,5 +119,9 @@ abstract class AppConstant {
   static const int getSupervisorsKeyCode = 3879;
 
   static const String deviceUniqueIdKeyCash = 'device_unique_id_cache';
+
+  static const String rotateBranchQrKeyCash = 'home_rotateBranchQr_cache';
+
+  static const int rotateBranchQrKeyCode = 8185;
 }
 

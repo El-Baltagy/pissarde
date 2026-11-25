@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    RotateBranchQrRoute.name: (routeData) {
+      final args = routeData.argsAs<RotateBranchQrRouteArgs>( );
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: RotateBranchQrPage(
+           args: args ,
+        )),
+      );
+    },
     CheckInForEmployeeRoute.name: (routeData) {
       final args = routeData.argsAs<CheckInForEmployeeRouteArgs>( );
       return AutoRoutePage<dynamic>(
@@ -770,5 +780,27 @@ class CheckInForEmployeeRoute extends PageRouteInfo<CheckInForEmployeeRouteArgs>
 }
 class CheckInForEmployeeRouteArgs {
   const CheckInForEmployeeRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
+}
+
+/// generated route for
+/// [RotateBranchQrPage]
+class RotateBranchQrRoute extends PageRouteInfo<RotateBranchQrRouteArgs> {
+  RotateBranchQrRoute({
+   required RotateBranchQrRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    RotateBranchQrRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'RotateBranchQrRoute';
+
+  static const PageInfo<RotateBranchQrRouteArgs> page =
+  PageInfo<RotateBranchQrRouteArgs>(name);
+}
+class RotateBranchQrRouteArgs {
+  const RotateBranchQrRouteArgs(this.homeCubit);
   final HomeCubit homeCubit;
 }

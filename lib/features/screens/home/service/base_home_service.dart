@@ -1,3 +1,4 @@
+import 'package:newf/core/constants/app_typedef.dart';
 import 'package:newf/core/base/base_service.dart';
 import 'package:newf/core/shared/methods/no_parameter.dart';
  import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
@@ -8,6 +9,8 @@ import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../data/model/history_attendacne_res/history_attendacne_res.dart';
 import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
 import '../data/model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../data/model/rotate_branch_qr_code_res/rotate_branch_qr_code_res.dart';
+import '../data/model/rotate_branch_qr_param.dart';
 import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../data/model/attendance_history_req_param.dart';
 import '../data/model/attendance_corrections_param.dart';
@@ -48,5 +51,10 @@ abstract class BaseHomeService extends BaseService {
   /// Abstract contract — implemented by [HomeRemoteService].
   Future<void> checkOutServ(
     RequestCallbackObserver<ChechInRes, CheckOutReqParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [HomeRemoteService].
+  Future<void> rotateBranchQrServ(
+    RequestCallbackObserver<RotateBranchQrCodeRes, RotateBranchQrParam> requestInfo,
   );
 }

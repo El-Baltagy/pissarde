@@ -74,6 +74,7 @@ dependencies:
   latlong2: ^0.10.1
   flutter_local_notifications:
   mobile_scanner: ^7.5.0
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

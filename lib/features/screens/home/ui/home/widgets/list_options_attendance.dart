@@ -33,8 +33,26 @@ final HomeCubit homeCubit;
           ),
         ),
         ),
+        (
+        icon: Icons.qr_code_2_outlined,
+        title: 'rotate_branch_qr'.tr(),
+        onTap: () => context.router.push(
+          RotateBranchQrRoute(
+            args: RotateBranchQrRouteArgs(homeCubit),
+          ),
+        ),
+        ),
 
       ],
+      (
+      icon: Icons.qr_code_scanner_outlined,
+      title: 'check_qr_branch_validation'.tr(),
+      onTap: () => context.router.push(
+        QrBranchValidationRoute(
+          args: QrBranchValidationRouteArgs (homeCubit),
+        ),
+      ),
+      ),
       (
         icon: Icons.edit_calendar_outlined,
         title: 'btn_request_correction'.tr(),
@@ -44,15 +62,7 @@ final HomeCubit homeCubit;
           ),
         ),
       ),
-      (
-        icon: Icons.qr_code_scanner_outlined,
-        title: 'check_qr_branch_validation'.tr(),
-        onTap: () => context.router.push(
-          QrBranchValidationRoute(
-            args: QrBranchValidationRouteArgs (homeCubit),
-          ),
-        ),
-      ),
+
       // if(StorageHelper.isDutyEmployee)
       (
         icon: Icons.person_add_alt_1_outlined,

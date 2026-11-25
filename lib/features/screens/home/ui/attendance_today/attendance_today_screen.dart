@@ -20,9 +20,8 @@ class AttendanceTodayPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (context) => AppLocator()()(),
-      child: this,
+    return BlocProvider.value(value: args.homeCubit,
+    child: this,
     );
   }
 

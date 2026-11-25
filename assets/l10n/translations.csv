@@ -338,3 +338,13 @@ verify,Verify,تحقق,Doğrulamak
 
 check_out_date,check out date,تاريخ الخروج,çıkış tarihi
 check_in_date,check in date,تاريخ الوصول,giriş tarihi
+
+rotate_branch_qr,Rotate Branch QR,تدوير فرع QR,Şube QR'sini Döndür
+select_a_branch_to_rotate_its_qr_code,Select a branch to rotate its QR code,حدد فرعًا لتدوير رمز الاستجابة السريعة الخاص به,QR kodunu döndürmek için bir şube seçin
+rotate_qr,Rotate QR,تدوير QR,QR'yi döndür
+qr_code,QR Code,رمز الاستجابة السريعة,QR Kodu
+
+select_an_employee_and_scan_branch_qr_code_to_check_in,Select an employee and scan branch QR code to check in,حدد موظفًا وقم بمسح رمز QR الخاص بالفرع لتسجيل الدخول,Bir çalışan seçin ve check-in yapmak için şube QR kodunu tarayın
+please_select_employee_first,Please select employee first,الرجاء تحديد الموظف أولا,Lütfen önce çalışanı seçin
+duty_reason,Duty Reason,سبب الواجب,Görev Sebebi
+employee,Employee,موظف,Çalışan

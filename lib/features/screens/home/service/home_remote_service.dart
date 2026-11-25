@@ -1,3 +1,4 @@
+import 'package:newf/core/constants/app_typedef.dart';
 import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/base/base_local_repo.dart';
 import 'package:newf/core/base/base_service.dart';
@@ -12,6 +13,8 @@ import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../data/model/history_attendacne_res/history_attendacne_res.dart';
 import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
 import '../data/model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../data/model/rotate_branch_qr_code_res/rotate_branch_qr_code_res.dart';
+import '../data/model/rotate_branch_qr_param.dart';
 import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../data/model/attendance_history_req_param.dart';
 import '../data/model/attendance_corrections_param.dart';
@@ -33,26 +36,11 @@ class HomeRemoteService implements BaseHomeService {
   Future<void> attendanceTodayServ(
     RequestCallbackObserver<CheckInTodayStatusRes, NoParameters> requestInfo,
   ) {
-    const cacheKey = AppConstant.attendanceTodayKeyCash;
-    return requestInfo.handleRequest(
+     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.attendanceTodayApi(
         requestInfo.parameter,
         cancelToken: token,
-      ),
-      fetchLocal: () async {
-        final tuple = await _localRepo.readData(cacheKey);
-
-        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
-          return CheckInTodayStatusRes.fromJson(tuple!.$2);
-        }
-        return null;
-      },
-      saveLocal: (old, newData) async {
-        if (newData != null) {
-          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
-        }
-      },
-      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
+      )
     );
   }
 
@@ -134,26 +122,11 @@ class HomeRemoteService implements BaseHomeService {
   Future<void> checkInServ(
     RequestCallbackObserver<ChechInRes, CheckInReqParam> requestInfo,
   ) {
-    const cacheKey = AppConstant.checkInKeyCash;
-    return requestInfo.handleRequest(
+     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.checkInApi(
         requestInfo.parameter,
         cancelToken: token,
       ),
-      fetchLocal: () async {
-        final tuple = await _localRepo.readData(cacheKey);
-
-        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
-          return ChechInRes.fromJson(tuple!.$2);
-        }
-        return null;
-      },
-      saveLocal: (old, newData) async {
-        if (newData != null) {
-          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
-        }
-      },
-      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 
@@ -161,26 +134,23 @@ class HomeRemoteService implements BaseHomeService {
   Future<void> checkOutServ(
     RequestCallbackObserver<ChechInRes, CheckOutReqParam> requestInfo,
   ) {
-    const cacheKey = AppConstant.checkOutKeyCash;
     return requestInfo.handleRequest(
       fetchFromClient: (token) => _remoteRepo.checkOutApi(
         requestInfo.parameter,
         cancelToken: token,
       ),
-      fetchLocal: () async {
-        final tuple = await _localRepo.readData(cacheKey);
+    );
+  }
 
-        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
-          return ChechInRes.fromJson(tuple!.$2);
-        }
-        return null;
-      },
-      saveLocal: (old, newData) async {
-        if (newData != null) {
-          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
-        }
-      },
-      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
+  @override
+  Future<void> rotateBranchQrServ(
+    RequestCallbackObserver<RotateBranchQrCodeRes, RotateBranchQrParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.rotateBranchQrApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
     );
   }
 }

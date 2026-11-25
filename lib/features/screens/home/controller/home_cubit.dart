@@ -20,6 +20,8 @@ import '../data/model/list_attendance_corrections_res/list_attendance_correction
 import '../data/model/corrections_pagination.dart';
 import '../data/model/attendance_corrections_param.dart';
 import '../data/model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../data/model/rotate_branch_qr_code_res/rotate_branch_qr_code_res.dart';
+import '../data/model/rotate_branch_qr_param.dart';
 import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../data/model/create_attendance_correction_req_param.dart';
 import '../data/model/verify_branch_qr_param.dart';
@@ -44,6 +46,8 @@ class HomeCubit extends BaseCubit<HomeState> {
     int get checkInKeyCode => AppConstant.checkInKeyCode;
 
     int get checkOutKeyCode => AppConstant.checkOutKeyCode;
+
+    int get rotateBranchQrKeyCode => AppConstant.rotateBranchQrKeyCode;
 
   @override
   Future<void> init() async {
@@ -143,6 +147,9 @@ class HomeCubit extends BaseCubit<HomeState> {
   @override
   Future<void> close() {
     // add every key in file
+    CancelManager.cancel(rotateBranchQrKeyCode);
+
+    // add every key in file
     CancelManager.cancel(checkOutKeyCode);
 
     // add every key in file
@@ -182,6 +189,20 @@ class HomeCubit extends BaseCubit<HomeState> {
             attendanceTodayFunc(Reload());
           },
           onLeftCallback: (failure) => safeEmit(_current.copyWith(checkOutState: ErrorState(failure))),
+        ),
+      );
+    });
+  }
+
+  Future<void> rotateBranchQrFunc( {RotateBranchQrParam? parameter}) async {
+    await CancelManager.runCancelableFun(rotateBranchQrKeyCode, (token) async {
+      await _service.rotateBranchQrServ(
+        RequestCallbackObserver<RotateBranchQrCodeRes, RotateBranchQrParam>(
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(rotateBranchQrState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(rotateBranchQrState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(rotateBranchQrState: ErrorState(failure))),
         ),
       );
     });

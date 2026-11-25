@@ -10,8 +10,9 @@ import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/home/controller/home_cubit.dart';
 import 'package:newf/features/screens/home/data/model/chech_in_res/chech_in_res.dart';
- import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
+import 'package:newf/features/screens/home/data/model/check_in_req_param.dart';
 import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
+import 'package:newf/features/screens/home/ui/qr_branch_validation/widgets/qr_camera_scanner_widget.dart';
 
 import '../../../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 
@@ -35,7 +36,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
           status = (state.attendanceTodayState as Success<CheckInTodayStatusRes>).data;
         }
 
-        final bool isCheckedIn = status?.has_checked_in ?? false;
+        final bool isCheckedIn = status?.is_open ?? false;
         final bool isCheckingIn = state is HomeLoaded && state.checkInState is Loading;
         final bool isCheckingOut = state is HomeLoaded && state.checkOutState is Loading;
         final bool isActionLoading = isCheckingIn || isCheckingOut || _isLocating;
@@ -96,6 +97,14 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
   Future<void> _handleToggleAction({
     required bool isCheckedIn,
   }) async {
+    final scannedToken = await Navigator.of(context).push<String>(
+      MaterialPageRoute(builder: (_) => const QrCameraScannerPage()),
+    );
+
+    if (!mounted || scannedToken == null || scannedToken.trim().isEmpty) {
+      return;
+    }
+
     setState(() => _isLocating = true);
 
     try {
@@ -105,11 +114,13 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
       final cubit = context.read<HomeCubit>();
       final String latitude = pos?.latitude.toString() ?? '0.0';
       final String longitude = pos?.longitude.toString() ?? '0.0';
+      final String qrToken = scannedToken.trim();
 
       if (isCheckedIn) {
         await cubit.checkOutFunc(
           Reload(),
           parameter: CheckOutReqParam(
+            qr_token: qrToken,
             latitude: latitude,
             longitude: longitude,
           ),
@@ -118,6 +129,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
         await cubit.checkInFunc(
           Reload(),
           parameter: CheckInReqParam(
+            qr_token: qrToken,
             latitude: latitude,
             longitude: longitude,
           ),

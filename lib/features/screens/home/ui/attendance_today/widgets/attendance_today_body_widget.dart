@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/extension/context.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -70,7 +71,7 @@ class AttendanceTodayBodyWidget extends StatelessWidget {
                   (label: 'shift_code'.tr(), value: data.shift.code),
                   (
                     label: 'shift_hours_label'.tr(),
-                    value: '${data.shift.start_time} - ${data.shift.end_time}',
+                    value: '${DateTimeHelper.toHourMinute(data.shift.start_time)} - ${DateTimeHelper.toHourMinute(data.shift.end_time)}',
                   ),
                   (
                     label: 'grace_period'.tr(),

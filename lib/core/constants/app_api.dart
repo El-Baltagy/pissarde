@@ -79,5 +79,4 @@ abstract class EndPoints {
   static const String baseUrl = "https://team.pissarde.com";
 
 
-
 }

@@ -1,3 +1,4 @@
+import 'package:newf/core/constants/app_constant.dart';
 import 'package:newf/core/api_helper/caller_tag.dart';
 import 'package:newf/core/api_helper/dio_error_handler.dart';
 import 'package:newf/core/api_helper/response_handler.dart';
@@ -15,6 +16,8 @@ import '../model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../model/history_attendacne_res/history_attendacne_res.dart';
 import '../model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
 import '../model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../model/rotate_branch_qr_code_res/rotate_branch_qr_code_res.dart';
+import '../model/rotate_branch_qr_param.dart';
 import '../model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../model/attendance_history_req_param.dart';
 import '../model/attendance_corrections_param.dart';
@@ -134,6 +137,21 @@ class HomeRemoteRepo implements BaseHomeRepo {
         caller: callerTag(),
       ),
       asObject: ChechInRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, RotateBranchQrCodeRes>> rotateBranchQrApi(
+    RotateBranchQrParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.postData(
+        uri: EndPoints.rotateBranchQr(parameter?.branchId ?? ''),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: RotateBranchQrCodeRes.fromJson,
     );
   }
 }

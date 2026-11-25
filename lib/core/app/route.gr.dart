@@ -15,8 +15,28 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    CheckInForEmployeeRoute.name: (routeData) {
+      final args = routeData.argsAs<CheckInForEmployeeRouteArgs>( );
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: CheckInForEmployeePage(
+           args: args ,
+        )),
+      );
+    },
+    QrBranchValidationRoute.name: (routeData) {
+      final args = routeData.argsAs<QrBranchValidationRouteArgs>( );
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: QrBranchValidationPage(
+           args: args ,
+        )),
+      );
+    },
     CreateAttendanceCorrectionRoute.name: (routeData) {
-      final args = routeData.argsAs<CreateAttendanceCorrectionRouteArgs>(orElse: () =>   CreateAttendanceCorrectionRouteArgs.noArgs());
+      final args = routeData.argsAs<CreateAttendanceCorrectionRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -26,7 +46,7 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AttendanceCorrectionsRoute.name: (routeData) {
-      final args = routeData.argsAs<AttendanceCorrectionsRouteArgs>(orElse: () =>   AttendanceCorrectionsRouteArgs.noArgs());
+      final args = routeData.argsAs<AttendanceCorrectionsRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -36,7 +56,7 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AttendanceHistoryRoute.name: (routeData) {
-      final args = routeData.argsAs<AttendanceHistoryRouteArgs>(orElse: () =>   AttendanceHistoryRouteArgs.noArgs());
+      final args = routeData.argsAs<AttendanceHistoryRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -46,7 +66,7 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AttendanceTodayRoute.name: (routeData) {
-      final args = routeData.argsAs<AttendanceTodayRouteArgs>(orElse: () =>   AttendanceTodayRouteArgs.noArgs());
+      final args = routeData.argsAs<AttendanceTodayRouteArgs>( );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(
@@ -639,8 +659,8 @@ class AttendanceTodayRoute extends PageRouteInfo<AttendanceTodayRouteArgs> {
   PageInfo<AttendanceTodayRouteArgs>(name);
 }
 class AttendanceTodayRouteArgs {
-  const AttendanceTodayRouteArgs( );
-   static AttendanceTodayRouteArgs noArgs()=>AttendanceTodayRouteArgs();
+  const AttendanceTodayRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
 }
 
 /// generated route for
@@ -661,8 +681,8 @@ class AttendanceHistoryRoute extends PageRouteInfo<AttendanceHistoryRouteArgs> {
   PageInfo<AttendanceHistoryRouteArgs>(name);
 }
 class AttendanceHistoryRouteArgs {
-  const AttendanceHistoryRouteArgs( );
-   static AttendanceHistoryRouteArgs noArgs()=>AttendanceHistoryRouteArgs();
+  const AttendanceHistoryRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
 }
 
 /// generated route for
@@ -683,8 +703,8 @@ class AttendanceCorrectionsRoute extends PageRouteInfo<AttendanceCorrectionsRout
   PageInfo<AttendanceCorrectionsRouteArgs>(name);
 }
 class AttendanceCorrectionsRouteArgs {
-  const AttendanceCorrectionsRouteArgs( );
-   static AttendanceCorrectionsRouteArgs noArgs()=>AttendanceCorrectionsRouteArgs();
+  const AttendanceCorrectionsRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
 }
 
 /// generated route for
@@ -705,6 +725,50 @@ class CreateAttendanceCorrectionRoute extends PageRouteInfo<CreateAttendanceCorr
   PageInfo<CreateAttendanceCorrectionRouteArgs>(name);
 }
 class CreateAttendanceCorrectionRouteArgs {
-  const CreateAttendanceCorrectionRouteArgs( );
-   static CreateAttendanceCorrectionRouteArgs noArgs()=>CreateAttendanceCorrectionRouteArgs();
+  const CreateAttendanceCorrectionRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
+}
+
+/// generated route for
+/// [QrBranchValidationPage]
+class QrBranchValidationRoute extends PageRouteInfo<QrBranchValidationRouteArgs> {
+  QrBranchValidationRoute({
+   required QrBranchValidationRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    QrBranchValidationRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'QrBranchValidationRoute';
+
+  static const PageInfo<QrBranchValidationRouteArgs> page =
+  PageInfo<QrBranchValidationRouteArgs>(name);
+}
+class QrBranchValidationRouteArgs {
+  const QrBranchValidationRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
+}
+
+/// generated route for
+/// [CheckInForEmployeePage]
+class CheckInForEmployeeRoute extends PageRouteInfo<CheckInForEmployeeRouteArgs> {
+  CheckInForEmployeeRoute({
+   required CheckInForEmployeeRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    CheckInForEmployeeRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'CheckInForEmployeeRoute';
+
+  static const PageInfo<CheckInForEmployeeRouteArgs> page =
+  PageInfo<CheckInForEmployeeRouteArgs>(name);
+}
+class CheckInForEmployeeRouteArgs {
+  const CheckInForEmployeeRouteArgs(this.homeCubit );
+  final HomeCubit homeCubit;
 }

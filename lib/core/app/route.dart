@@ -14,6 +14,7 @@ import 'package:newf/features/screens/profile/ui/official_holidays/official_holi
 import 'package:newf/features/screens/login/ui/login/login_screen.dart';
 import 'package:newf/features/screens/splash/ui/splash_screen.dart';
 
+import '../../features/screens/home/controller/home_cubit.dart';
 import '../../features/screens/login/controller/login_cubit.dart';
 import '../../features/screens/notifications/controller/notifications_cubit.dart';
 import '../storage/storage_helper.dart';
@@ -36,6 +37,8 @@ import 'package:newf/features/screens/home/ui/attendance_today/attendance_today_
 import 'package:newf/features/screens/home/ui/attendance_history/attendance_history_screen.dart';
 import 'package:newf/features/screens/home/ui/attendance_corrections/attendance_corrections_screen.dart';
 import 'package:newf/features/screens/home/ui/create_attendance_correction/create_attendance_correction_screen.dart';
+import 'package:newf/features/screens/home/ui/qr_branch_validation/qr_branch_validation_screen.dart';
+import 'package:newf/features/screens/home/ui/check_in_for_employee/check_in_for_employee_screen.dart';
 part 'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -44,6 +47,14 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
+      AutoRoute(
+        page: CheckInForEmployeeRoute.page,
+        // initial: true,
+      ),
+      AutoRoute(
+        page: QrBranchValidationRoute.page,
+        // initial: true,
+      ),
       AutoRoute(
         page: CreateAttendanceCorrectionRoute.page,
         // initial: true,

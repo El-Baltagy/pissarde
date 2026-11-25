@@ -292,3 +292,6 @@ attendance_today,Attendance Today,الحضور اليوم,Bugünkü Katılım
 attendance_history,Attendance History,تاريخ الحضور,Katılım Geçmişi
 list_attendance_corrections,List Attendance Corrections,قائمة تصحيحات الحضور,Devam Düzeltmelerini Listeleme
 create_attendance_correction,Create Attendance Correction,إنشاء تصحيح الحضور,Devam Düzeltmesi Oluştur
+
+check_qr_branch_validation,Check QR Branch Validation,تحقق من التحقق من صحة فرع QR,QR Şube Doğrulamasını Kontrol Edin
+check_in_instead_of_another_employee,Check In Instead of Another Employee,قم بتسجيل الوصول بدلاً من موظف آخر,Başka Bir Çalışanın Yerine Check-in Yapmak

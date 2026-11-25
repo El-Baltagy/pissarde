@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/double.dart';
+import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/home/controller/home_cubit.dart';
@@ -58,7 +59,9 @@ class _HomePageState extends HomePageBaseState {
 
               Semantics(
                 label: 'Attendance Options List',
-                child: const ListOptionsAttendance(),
+                child:   ListOptionsAttendance(
+                  homeCubit: homeCubit,
+                ),
               ),
 
 

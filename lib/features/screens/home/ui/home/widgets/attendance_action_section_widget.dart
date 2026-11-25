@@ -66,7 +66,6 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
                 isCheckedIn: isCheckedIn,
                 isLoading: isActionLoading,
               ),
-              _buildQuickActionLinks(),
             ],
           ),
         );
@@ -280,19 +279,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     );
   }
 
-  Widget _buildQuickActionLinks() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildQuickLink(icon: Icons.description_outlined, labelKey: 'btn_request_correction'),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p6),
-          child: Text('•', style: AppTextStyles.font14Regular.copyWith(color: AppColors.lightBorder)),
-        ),
-        _buildQuickLink(icon: Icons.access_time_rounded, labelKey: 'btn_request_permission'),
-      ],
-    );
-  }
+
 
   Widget _buildQuickLink({required IconData icon, required String labelKey}) {
     return Row(

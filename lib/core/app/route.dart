@@ -32,6 +32,10 @@ import 'package:newf/features/screens/requests/controller/requests_cubit.dart';
 import 'package:newf/features/screens/profile/ui/privacy_policy/privacy_policy_screen.dart';
 import 'package:newf/features/screens/on_boarding/ui/on_boarding/on_boarding_screen.dart';
 
+import 'package:newf/features/screens/home/ui/attendance_today/attendance_today_screen.dart';
+import 'package:newf/features/screens/home/ui/attendance_history/attendance_history_screen.dart';
+import 'package:newf/features/screens/home/ui/attendance_corrections/attendance_corrections_screen.dart';
+import 'package:newf/features/screens/home/ui/create_attendance_correction/create_attendance_correction_screen.dart';
 part 'route.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -40,6 +44,22 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
+      AutoRoute(
+        page: CreateAttendanceCorrectionRoute.page,
+        // initial: true,
+      ),
+      AutoRoute(
+        page: AttendanceCorrectionsRoute.page,
+        // initial: true,
+      ),
+      AutoRoute(
+        page: AttendanceHistoryRoute.page,
+        // initial: true,
+      ),
+      AutoRoute(
+        page: AttendanceTodayRoute.page,
+        // initial: true,
+      ),
     AutoRoute(
       page: OnBoardingRoute.page,
       // initial: true,

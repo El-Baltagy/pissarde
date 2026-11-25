@@ -15,6 +15,46 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    CreateAttendanceCorrectionRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateAttendanceCorrectionRouteArgs>(orElse: () =>   CreateAttendanceCorrectionRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: CreateAttendanceCorrectionPage(
+           args: args ,
+        )),
+      );
+    },
+    AttendanceCorrectionsRoute.name: (routeData) {
+      final args = routeData.argsAs<AttendanceCorrectionsRouteArgs>(orElse: () =>   AttendanceCorrectionsRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AttendanceCorrectionsPage(
+           args: args ,
+        )),
+      );
+    },
+    AttendanceHistoryRoute.name: (routeData) {
+      final args = routeData.argsAs<AttendanceHistoryRouteArgs>(orElse: () =>   AttendanceHistoryRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AttendanceHistoryPage(
+           args: args ,
+        )),
+      );
+    },
+    AttendanceTodayRoute.name: (routeData) {
+      final args = routeData.argsAs<AttendanceTodayRouteArgs>(orElse: () =>   AttendanceTodayRouteArgs.noArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AttendanceTodayPage(
+           args: args ,
+        )),
+      );
+    },
     OnBoardingRoute.name: (routeData) {
       final args = routeData.argsAs<OnBoardingRouteArgs>(orElse: () =>   OnBoardingRouteArgs.noArgs());
       return AutoRoutePage<dynamic>(
@@ -579,4 +619,92 @@ class OnBoardingRoute extends PageRouteInfo<OnBoardingRouteArgs> {
 class OnBoardingRouteArgs {
   const OnBoardingRouteArgs( );
    static OnBoardingRouteArgs noArgs()=>OnBoardingRouteArgs();
+}
+
+/// generated route for
+/// [AttendanceTodayPage]
+class AttendanceTodayRoute extends PageRouteInfo<AttendanceTodayRouteArgs> {
+  AttendanceTodayRoute({
+   required AttendanceTodayRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    AttendanceTodayRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'AttendanceTodayRoute';
+
+  static const PageInfo<AttendanceTodayRouteArgs> page =
+  PageInfo<AttendanceTodayRouteArgs>(name);
+}
+class AttendanceTodayRouteArgs {
+  const AttendanceTodayRouteArgs( );
+   static AttendanceTodayRouteArgs noArgs()=>AttendanceTodayRouteArgs();
+}
+
+/// generated route for
+/// [AttendanceHistoryPage]
+class AttendanceHistoryRoute extends PageRouteInfo<AttendanceHistoryRouteArgs> {
+  AttendanceHistoryRoute({
+   required AttendanceHistoryRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    AttendanceHistoryRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'AttendanceHistoryRoute';
+
+  static const PageInfo<AttendanceHistoryRouteArgs> page =
+  PageInfo<AttendanceHistoryRouteArgs>(name);
+}
+class AttendanceHistoryRouteArgs {
+  const AttendanceHistoryRouteArgs( );
+   static AttendanceHistoryRouteArgs noArgs()=>AttendanceHistoryRouteArgs();
+}
+
+/// generated route for
+/// [AttendanceCorrectionsPage]
+class AttendanceCorrectionsRoute extends PageRouteInfo<AttendanceCorrectionsRouteArgs> {
+  AttendanceCorrectionsRoute({
+   required AttendanceCorrectionsRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    AttendanceCorrectionsRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'AttendanceCorrectionsRoute';
+
+  static const PageInfo<AttendanceCorrectionsRouteArgs> page =
+  PageInfo<AttendanceCorrectionsRouteArgs>(name);
+}
+class AttendanceCorrectionsRouteArgs {
+  const AttendanceCorrectionsRouteArgs( );
+   static AttendanceCorrectionsRouteArgs noArgs()=>AttendanceCorrectionsRouteArgs();
+}
+
+/// generated route for
+/// [CreateAttendanceCorrectionPage]
+class CreateAttendanceCorrectionRoute extends PageRouteInfo<CreateAttendanceCorrectionRouteArgs> {
+  CreateAttendanceCorrectionRoute({
+   required CreateAttendanceCorrectionRouteArgs args  ,
+    List<PageRouteInfo>? children,
+  }) : super(
+    CreateAttendanceCorrectionRoute.name,
+    args: args,
+    initialChildren: children,
+  );
+
+  static const String name = 'CreateAttendanceCorrectionRoute';
+
+  static const PageInfo<CreateAttendanceCorrectionRouteArgs> page =
+  PageInfo<CreateAttendanceCorrectionRouteArgs>(name);
+}
+class CreateAttendanceCorrectionRouteArgs {
+  const CreateAttendanceCorrectionRouteArgs( );
+   static CreateAttendanceCorrectionRouteArgs noArgs()=>CreateAttendanceCorrectionRouteArgs();
 }

@@ -287,3 +287,8 @@ close,close,اغلاق,kapalı
 status,status,حالة,durum
 
 request_sent_and_it_is_under_review_right_now,request sent and it is under review right now,تم إرسال الطلب وهو قيد المراجعة الآن,istek gönderildi ve şu anda inceleniyor
+
+attendance_today,Attendance Today,الحضور اليوم,Bugünkü Katılım
+attendance_history,Attendance History,تاريخ الحضور,Katılım Geçmişi
+list_attendance_corrections,List Attendance Corrections,قائمة تصحيحات الحضور,Devam Düzeltmelerini Listeleme
+create_attendance_correction,Create Attendance Correction,إنشاء تصحيح الحضور,Devam Düzeltmesi Oluştur

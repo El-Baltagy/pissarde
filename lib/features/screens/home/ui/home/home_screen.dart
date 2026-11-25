@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/theming/app_colors.dart';
+import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/home/controller/home_cubit.dart';
 import 'package:newf/features/screens/home/ui/home/widgets/attendance_action_section_widget.dart';
+import 'package:newf/features/screens/profile/ui/profile/widgets/container_list.dart';
 
 part 'home_base_state.dart';
 part 'widgets/list_options_attendance.dart';
@@ -53,7 +56,10 @@ class _HomePageState extends HomePageBaseState {
                 child: const AttendanceActionSectionWidget(),
               ),
 
-              const ListOptionsAttendance(),
+              Semantics(
+                label: 'Attendance Options List',
+                child: const ListOptionsAttendance(),
+              ),
 
 
 

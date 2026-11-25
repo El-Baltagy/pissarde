@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newf/core/shared/methods/date_helper.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
@@ -102,7 +103,7 @@ class _AttendanceCorrectionsPageState
                     : (emit is ErrorState)
                         ? Center(
                             child: Text(
-                              (emit as ErrorState).failure.message,
+                              (emit).failure.message,
                               style: AppTextStyles.font14Regular.copyWith(
                                   color: AppColors.primaryActionRed),
                               textAlign: TextAlign.center,
@@ -183,13 +184,13 @@ class _CorrectionCard extends StatelessWidget {
             children: [
               _TimeChip(
                 icon: Icons.login_rounded,
-                label: 'requested_check_in'.tr(),
-                value: item.requested_check_in_at,
+                label: 'check_in_date'.tr(),
+                value: DateTimeHelper.formatDateTimeFromString(item.requested_check_in_at, DateFormat(DateTimeHelper.formatTimeOnly)),
               ),
               _TimeChip(
                 icon: Icons.logout_rounded,
-                label: 'requested_check_out'.tr(),
-                value: item.requested_check_out_at,
+                label: 'check_out_date'.tr(),
+                value: DateTimeHelper.formatDateTimeFromString(item.requested_check_out_at, DateFormat(DateTimeHelper.formatTimeOnly)),
               ),
             ],
           ),

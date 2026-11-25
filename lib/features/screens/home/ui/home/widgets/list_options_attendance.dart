@@ -7,16 +7,16 @@ final HomeCubit homeCubit;
   @override
   Widget build(BuildContext context) {
     final List<({IconData icon, String title, VoidCallback onTap})> items = [
+      (
+      icon: Icons.today_outlined,
+      title: 'attendance_today'.tr(),
+      onTap: () => context.router.push(
+        AttendanceTodayRoute(args: AttendanceTodayRouteArgs (homeCubit)),
+      ),
+      ),
       if(StorageHelper.isFullMode)
-
       ...[
-        (
-        icon: Icons.today_outlined,
-        title: 'attendance_today'.tr(),
-        onTap: () => context.router.push(
-          AttendanceTodayRoute(args: AttendanceTodayRouteArgs (homeCubit)),
-        ),
-        ),
+
         (
         icon: Icons.history_outlined,
         title: 'attendance_history'.tr(),
@@ -32,7 +32,8 @@ final HomeCubit homeCubit;
             args: AttendanceCorrectionsRouteArgs (homeCubit),
           ),
         ),
-        )
+        ),
+
       ],
       (
         icon: Icons.edit_calendar_outlined,

@@ -69,7 +69,7 @@ class CorrectionDateTimeCardWidget extends StatelessWidget {
                 Expanded(
                   child: _buildPickerField(
                     context: context,
-                    label: 'requested_check_in'.tr(),
+                    label: 'check_in_date'.tr(),
                     icon: Icons.login_rounded,
                     controller: controllerCheckIn,
                     onTap: onPickCheckIn,
@@ -81,7 +81,7 @@ class CorrectionDateTimeCardWidget extends StatelessWidget {
                 Expanded(
                   child: _buildPickerField(
                     context: context,
-                    label: 'requested_check_out'.tr(),
+                    label: 'check_out_date'.tr(),
                     icon: Icons.logout_rounded,
                     controller: controllerCheckOut,
                     onTap: onPickCheckOut,
@@ -106,56 +106,44 @@ class CorrectionDateTimeCardWidget extends StatelessWidget {
     required VoidCallback onTap,
     required String? Function(String?) validator,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppSizes.s6,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.font12Regular.copyWith(
-            color: AppColors.lightTextSecondary,
+    return TextFormField(
+      controller: controller,
+      readOnly: true,
+      onTap: onTap,
+      validator: validator,
+      style: AppTextStyles.font14Regular,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.metricContainerBg,
+        hintText: label,
+        hintStyle: AppTextStyles.font13Regular.copyWith(
+          color: AppColors.lightTextSecondary,
+        ),
+        suffixIcon: Icon(
+          icon,
+          size: AppSizes.s18,
+          color: context.theme.primaryColor,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p12,
+          vertical: AppPadding.p12,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.r10),
+          borderSide: const BorderSide(color: AppColors.cardBorder),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.r10),
+          borderSide: const BorderSide(color: AppColors.cardBorder),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSizes.r10),
+          borderSide: BorderSide(
+            color: context.theme.primaryColor,
+            width: AppSizes.s1_5,
           ),
         ),
-        TextFormField(
-          controller: controller,
-          readOnly: true,
-          onTap: onTap,
-          validator: validator,
-          style: AppTextStyles.font14Regular,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.metricContainerBg,
-            hintText: label,
-            hintStyle: AppTextStyles.font13Regular.copyWith(
-              color: AppColors.lightTextSecondary,
-            ),
-            suffixIcon: Icon(
-              icon,
-              size: AppSizes.s18,
-              color: context.theme.primaryColor,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppPadding.p12,
-              vertical: AppPadding.p12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.r10),
-              borderSide: const BorderSide(color: AppColors.cardBorder),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.r10),
-              borderSide: const BorderSide(color: AppColors.cardBorder),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.r10),
-              borderSide: BorderSide(
-                color: context.theme.primaryColor,
-                width: AppSizes.s1_5,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+      ),
+    ) ;
   }
 }

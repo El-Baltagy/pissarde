@@ -1,3 +1,2 @@
-created_at
-close
-status
+check_out_date
+check_in_date

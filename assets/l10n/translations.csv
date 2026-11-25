@@ -311,7 +311,7 @@ requested_check_in,requested check in,طلب تسجيل الوصول,check-in ta
 requested_check_out,requested check out,طلب الخروج,çıkış talep edildi
 no_attendance_corrections,no attendance corrections,لا يوجد تصحيحات الحضور,katılım düzeltmesi yok
 
-verify,verify,يؤكد,doğrulamak
+verify,verify,تحقق,doğrulamak
 branch_id,branch id,معرف الفرع,şube kimliği
 branch_token,branch token,رمز الفرع,şube jetonu
 valid,valid,صالح,geçerli
@@ -331,3 +331,10 @@ grace_period,Grace Period,فترة السماح,Ek Süre
 
 please_select_check_in_first,Please select check in first,الرجاء تحديد تسجيل الوصول أولاً,Lütfen önce check-in'i seçin
 check_out_time_must_be_after_check_in_time,Check out time must be after check in time,يجب أن يكون وقت الخروج بعد وقت تسجيل الدخول,Çıkış saati giriş saatinden sonra olmalıdır
+
+scan_branch_qr_code_to_verify_validity,Scan branch QR code to verify validity,مسح رمز QR الخاص بالفرع للتحقق من صحته,Geçerliliğini doğrulamak için şube QR kodunu tarayın
+scan_qr_code,Scan QR Code,مسح رمز الاستجابة السريعة,QR Kodunu Tara
+verify,Verify,تحقق,Doğrulamak
+
+check_out_date,check out date,تاريخ الخروج,çıkış tarihi
+check_in_date,check in date,تاريخ الوصول,giriş tarihi

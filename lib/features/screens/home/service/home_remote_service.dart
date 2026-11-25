@@ -11,8 +11,12 @@ import 'package:newf/features/screens/home/service/base_home_service.dart';
 import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../data/model/history_attendacne_res/history_attendacne_res.dart';
 import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
+import '../data/model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../data/model/attendance_history_req_param.dart';
 import '../data/model/attendance_corrections_param.dart';
+import '../data/model/create_attendance_correction_req_param.dart';
+import '../data/model/verify_branch_qr_param.dart';
 import '../data/model/history_pagination.dart';
 import '../data/model/corrections_pagination.dart';
 import 'package:newf/core/base/base_cubit.dart';
@@ -99,6 +103,30 @@ class HomeRemoteService implements BaseHomeService {
           data: [...oldData.data, ...newData.data],
         );
       },
+    );
+  }
+
+  @override
+  Future<void> createAttendanceCorrectionServ(
+    RequestCallbackObserver<AttendanceCorrectionRequestRes, CreateAttendanceCorrectionReqParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.createAttendanceCorrectionApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+    );
+  }
+
+  @override
+  Future<void> verifyBranchQrServ(
+    RequestCallbackObserver<VerifyBranchQrCodeRes, VerifyBranchQrParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.verifyBranchQrApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
     );
   }
 

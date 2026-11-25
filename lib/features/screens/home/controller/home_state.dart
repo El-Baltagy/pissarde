@@ -11,10 +11,12 @@ class HomeLoaded extends HomeState {
     this.attendanceTodayState,
     this.attendanceHistoryState,
     this.attendanceCorrectionsState,
+    this.createAttendanceCorrectionState,
+    this.verifyBranchQrState,
      this.allWorkersEmit,
     this.refreshOrInit,
    });
-  final BaseEmit? allWorkersEmit , attendanceTodayState, checkInState, checkOutState, attendanceHistoryState, attendanceCorrectionsState;
+  final BaseEmit? allWorkersEmit , attendanceTodayState, checkInState, checkOutState, attendanceHistoryState, attendanceCorrectionsState, createAttendanceCorrectionState, verifyBranchQrState;
   final HomeState? refreshOrInit;
 
   HomeLoaded copyWith({
@@ -23,6 +25,8 @@ class HomeLoaded extends HomeState {
     BaseEmit? attendanceTodayState,
     BaseEmit? attendanceHistoryState,
     BaseEmit? attendanceCorrectionsState,
+    BaseEmit? createAttendanceCorrectionState,
+    BaseEmit? verifyBranchQrState,
     BaseEmit? allWorkersEmit, 
     HomeState? refreshOrInit,
   }) {
@@ -32,6 +36,8 @@ class HomeLoaded extends HomeState {
       attendanceTodayState: attendanceTodayState ?? this.attendanceTodayState,
       attendanceHistoryState: attendanceHistoryState ?? this.attendanceHistoryState,
       attendanceCorrectionsState: attendanceCorrectionsState ?? this.attendanceCorrectionsState,
+      createAttendanceCorrectionState: createAttendanceCorrectionState ?? this.createAttendanceCorrectionState,
+      verifyBranchQrState: verifyBranchQrState ?? this.verifyBranchQrState,
       refreshOrInit: refreshOrInit ?? this.refreshOrInit,
        allWorkersEmit: allWorkersEmit ?? this.allWorkersEmit,
      );

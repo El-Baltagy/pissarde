@@ -7,8 +7,12 @@ import 'package:newf/features/screens/home/data/model/check_out_req_param.dart';
 import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../data/model/history_attendacne_res/history_attendacne_res.dart';
 import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
+import '../data/model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../data/model/attendance_history_req_param.dart';
 import '../data/model/attendance_corrections_param.dart';
+import '../data/model/create_attendance_correction_req_param.dart';
+import '../data/model/verify_branch_qr_param.dart';
 
 /// Abstract contract for the home service layer.
 /// The cubit depends on this, not on a concrete implementation.
@@ -26,6 +30,14 @@ abstract class BaseHomeService extends BaseService {
 
   Future<void> getAttendanceCorrectionsServ(
     RequestCallbackObserver<ListAttendanceCorrectionsRes, AttendanceCorrectionsParam> requestInfo,
+  );
+
+  Future<void> createAttendanceCorrectionServ(
+    RequestCallbackObserver<AttendanceCorrectionRequestRes, CreateAttendanceCorrectionReqParam> requestInfo,
+  );
+
+  Future<void> verifyBranchQrServ(
+    RequestCallbackObserver<VerifyBranchQrCodeRes, VerifyBranchQrParam> requestInfo,
   );
 
   /// Abstract contract — implemented by [HomeRemoteService].

@@ -14,8 +14,12 @@ import 'package:newf/features/screens/home/data/repo/base_home_repo.dart';
 import '../model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../model/history_attendacne_res/history_attendacne_res.dart';
 import '../model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
+import '../model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../model/attendance_history_req_param.dart';
 import '../model/attendance_corrections_param.dart';
+import '../model/create_attendance_correction_req_param.dart';
+import '../model/verify_branch_qr_param.dart';
 
 /// Concrete remote implementation of [BaseHomeRepo].
 class HomeRemoteRepo implements BaseHomeRepo {
@@ -66,6 +70,38 @@ class HomeRemoteRepo implements BaseHomeRepo {
         caller: callerTag(),
       ),
       asObject: ListAttendanceCorrectionsRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, AttendanceCorrectionRequestRes>> createAttendanceCorrectionApi(
+    CreateAttendanceCorrectionReqParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.postData(
+        uri: EndPoints.createAttendanceCorrection,
+        data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: AttendanceCorrectionRequestRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, VerifyBranchQrCodeRes>> verifyBranchQrApi(
+    VerifyBranchQrParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.postData(
+        uri: EndPoints.verifyBranchQr,
+        data: parameter?.toJson(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: VerifyBranchQrCodeRes.fromJson,
     );
   }
 

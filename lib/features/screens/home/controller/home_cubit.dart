@@ -19,6 +19,10 @@ import '../data/model/attendance_history_req_param.dart';
 import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
 import '../data/model/corrections_pagination.dart';
 import '../data/model/attendance_corrections_param.dart';
+import '../data/model/attendance_correction_request_res/attendance_correction_request_res.dart';
+import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
+import '../data/model/create_attendance_correction_req_param.dart';
+import '../data/model/verify_branch_qr_param.dart';
 part 'home_state.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {
@@ -109,6 +113,30 @@ class HomeCubit extends BaseCubit<HomeState> {
         onLeftCallback: (failure) => safeEmit(
           _current.copyWith(attendanceCorrectionsState: ErrorState(failure)),
         ),
+      ),
+    );
+  }
+
+  Future<void> createAttendanceCorrectionFunc(BaseRequestBackType baseRequestBackType, {CreateAttendanceCorrectionReqParam? parameter}) async {
+    await _service.createAttendanceCorrectionServ(
+      RequestCallbackObserver<AttendanceCorrectionRequestRes, CreateAttendanceCorrectionReqParam>(
+        baseRequestBackType: baseRequestBackType,
+        parameter: parameter,
+        onLoadCallback: () => safeEmit(_current.copyWith(createAttendanceCorrectionState: Loading())),
+        onRightCallback: (data) => safeEmit(_current.copyWith(createAttendanceCorrectionState: Success(data))),
+        onLeftCallback: (failure) => safeEmit(_current.copyWith(createAttendanceCorrectionState: ErrorState(failure))),
+      ),
+    );
+  }
+
+  Future<void> verifyBranchQrFunc(BaseRequestBackType baseRequestBackType, {VerifyBranchQrParam? parameter}) async {
+    await _service.verifyBranchQrServ(
+      RequestCallbackObserver<VerifyBranchQrCodeRes, VerifyBranchQrParam>(
+        baseRequestBackType: baseRequestBackType,
+        parameter: parameter,
+        onLoadCallback: () => safeEmit(_current.copyWith(verifyBranchQrState: Loading())),
+        onRightCallback: (data) => safeEmit(_current.copyWith(verifyBranchQrState: Success(data))),
+        onLeftCallback: (failure) => safeEmit(_current.copyWith(verifyBranchQrState: ErrorState(failure))),
       ),
     );
   }

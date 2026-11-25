@@ -1,18 +1,17 @@
 part of 'create_attendance_correction_screen.dart';
 
-abstract class CreateAttendanceCorrectionPageBaseState extends State<CreateAttendanceCorrectionPage> {
+abstract class CreateAttendanceCorrectionPageBaseState
+    extends State<CreateAttendanceCorrectionPage> {
   late final HomeCubit homeCubit;
 
   @override
   void initState() {
-    homeCubit = HomeCubit.get(context: context);
-    // TODO: implement initState
     super.initState();
+    homeCubit = HomeCubit.get(context: context);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

@@ -316,3 +316,15 @@ branch_id,branch id,معرف الفرع,şube kimliği
 branch_token,branch token,رمز الفرع,şube jetonu
 valid,valid,صالح,geçerli
 invalid,invalid,غير صالح,geçersiz
+
+correction_date,Correction Date,تاريخ التصحيح,Düzeltme Tarihi
+correction_date_required,Correction Date Required,تاريخ التصحيح مطلوب,Düzeltme Tarihi Gerekli
+requested_check_in_required,Requested Check In Required,طلب تسجيل الوصول مطلوب,İstenen Check-in Gerekli
+requested_check_out_required,Requested Check Out Required,طلب الخروج مطلوب,İstenen Çıkış Gerekli
+attendance_correction_sent_successfully,Attendance Correction Sent Successfully,تم إرسال تصحيح الحضور بنجاح,Devam Düzeltmesi Başarıyla Gönderildi
+submit_a_request_to_adjust_your_check_in_or_check_out_time,Submit a request to adjust your check in or check out time,أرسل طلبًا لضبط وقت تسجيل الوصول أو المغادرة,Giriş veya çıkış saatinizi ayarlamak için bir istek gönderin
+worked_time,Worked Time,وقت العمل,Çalışılan Süre
+early_departure,Early Departure,المغادرة المبكرة,Erken Ayrılış
+open_session,Open Session,جلسة مفتوحة,Açık oturum
+closed_session,Closed Session,جلسة مغلقة,Kapalı Oturum
+grace_period,Grace Period,فترة السماح,Ek Süre

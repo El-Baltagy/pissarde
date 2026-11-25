@@ -365,14 +365,25 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
   String _resolveStatusText(CheckInTodayStatusRes? status, bool isCheckedIn) {
     if (status == null) return 'current_status_attendance_time'.tr();
 
+    // active_attendance is typed as `dynamic` (raw map from JSON), so access
+    // it safely via map key lookup to avoid NoSuchMethodError.
+    final Map<String, dynamic>? attendance =
+        status.active_attendance is Map<String, dynamic>
+            ? status.active_attendance as Map<String, dynamic>
+            : null;
+
     if (isCheckedIn) {
-      final String time = _formatTime(status.active_attendance.check_in_at);
+      final String time = _formatTime(
+        (attendance?['check_in_at'] as String?) ?? '',
+      );
       if (time.isNotEmpty) return 'current_status_checked_in_at'.tr(args: [time]);
       return 'current_status_attendance_time'.tr();
     }
 
     if (status.has_checked_in) {
-      final String time = _formatTime(status.active_attendance.check_out_at);
+      final String time = _formatTime(
+        (attendance?['check_out_at'] as String?) ?? '',
+      );
       if (time.isNotEmpty) return 'current_status_checked_out_at'.tr(args: [time]);
       return 'status_checked_out'.tr();
     }

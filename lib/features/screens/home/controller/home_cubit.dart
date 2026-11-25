@@ -16,6 +16,9 @@ import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../data/model/history_attendacne_res/history_attendacne_res.dart';
 import '../data/model/history_pagination.dart';
 import '../data/model/attendance_history_req_param.dart';
+import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
+import '../data/model/corrections_pagination.dart';
+import '../data/model/attendance_corrections_param.dart';
 part 'home_state.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {
@@ -79,6 +82,32 @@ class HomeCubit extends BaseCubit<HomeState> {
         ),
         onLeftCallback: (failure) => safeEmit(
           _current.copyWith(attendanceHistoryState: ErrorState(failure)),
+        ),
+      ),
+    );
+  }
+
+  Future<void> getAttendanceCorrectionsFunc(BaseRequestBackType baseRequestBackType, {AttendanceCorrectionsParam? parameter}) async {
+    await _service.getAttendanceCorrectionsServ(
+      RequestCallbackObserver<ListAttendanceCorrectionsRes, AttendanceCorrectionsParam>(
+        baseRequestBackType: baseRequestBackType,
+        parameter: parameter,
+        onLoadCallback: () => safeEmit(
+          _current.copyWith(
+            attendanceCorrectionsState: (baseRequestBackType is Reload)
+                ? Loading<ListAttendanceCorrectionsRes>()
+                : Loading<ListAttendanceCorrectionsRes>(
+                    _current.attendanceCorrectionsState is Success<ListAttendanceCorrectionsRes>
+                        ? (_current.attendanceCorrectionsState as Success<ListAttendanceCorrectionsRes>).data
+                        : null,
+                  ),
+          ),
+        ),
+        onRightCallback: (data) => safeEmit(
+          _current.copyWith(attendanceCorrectionsState: Success(data, baseRequestBackType)),
+        ),
+        onLeftCallback: (failure) => safeEmit(
+          _current.copyWith(attendanceCorrectionsState: ErrorState(failure)),
         ),
       ),
     );

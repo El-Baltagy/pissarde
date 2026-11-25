@@ -10,8 +10,11 @@ import 'package:newf/features/screens/home/service/base_home_service.dart';
 
 import '../data/model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../data/model/history_attendacne_res/history_attendacne_res.dart';
+import '../data/model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
 import '../data/model/attendance_history_req_param.dart';
+import '../data/model/attendance_corrections_param.dart';
 import '../data/model/history_pagination.dart';
+import '../data/model/corrections_pagination.dart';
 import 'package:newf/core/base/base_cubit.dart';
 
 /// Concrete implementation of [BaseHomeService].
@@ -62,6 +65,31 @@ class HomeRemoteService implements BaseHomeService {
         if (requestInfo.baseRequestBackType is PaginationInfo) {
           return (requestInfo.baseRequestBackType
                   as PaginationInfo<HistoryAttendacneRes>)
+              .oldDataToCombine;
+        }
+        return null;
+      },
+      combinePagination: (oldData, newData) {
+        return newData.copyWith(
+          data: [...oldData.data, ...newData.data],
+        );
+      },
+    );
+  }
+
+  @override
+  Future<void> getAttendanceCorrectionsServ(
+    RequestCallbackObserver<ListAttendanceCorrectionsRes, AttendanceCorrectionsParam> requestInfo,
+  ) {
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.getAttendanceCorrectionsApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+      fetchLocal: () async {
+        if (requestInfo.baseRequestBackType is PaginationInfo) {
+          return (requestInfo.baseRequestBackType
+                  as PaginationInfo<ListAttendanceCorrectionsRes>)
               .oldDataToCombine;
         }
         return null;

@@ -13,7 +13,9 @@ import 'package:newf/features/screens/home/data/repo/base_home_repo.dart';
 
 import '../model/check_in_today_status_res/check_in_today_status_res.dart';
 import '../model/history_attendacne_res/history_attendacne_res.dart';
+import '../model/list_attendance_corrections_res/list_attendance_corrections_res.dart';
 import '../model/attendance_history_req_param.dart';
+import '../model/attendance_corrections_param.dart';
 
 /// Concrete remote implementation of [BaseHomeRepo].
 class HomeRemoteRepo implements BaseHomeRepo {
@@ -48,6 +50,22 @@ class HomeRemoteRepo implements BaseHomeRepo {
         caller: callerTag(),
       ),
       asObject: HistoryAttendacneRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, ListAttendanceCorrectionsRes>> getAttendanceCorrectionsApi(
+    AttendanceCorrectionsParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.listAttendanceCorrections,
+        query: parameter?.toJsonParameters(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: ListAttendanceCorrectionsRes.fromJson,
     );
   }
 

@@ -306,3 +306,7 @@ no_data,no data,لا توجد بيانات,veri yok
 
 worked,worked,عملت,çalıştı
 no_attendance_history,no attendance history,لا يوجد سجل الحضور,katılım geçmişi yok
+
+requested_check_in,requested check in,طلب تسجيل الوصول,check-in talep edildi
+requested_check_out,requested check out,طلب الخروج,çıkış talep edildi
+no_attendance_corrections,no attendance corrections,لا يوجد تصحيحات الحضور,katılım düzeltmesi yok

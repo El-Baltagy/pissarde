@@ -14,7 +14,7 @@ class AttendanceHistoryCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLate = item.late_minutes > 0;
+    final isLate = (item.late_minutes??0) > 0;
 
     return Container(
       padding: const EdgeInsets.all(AppPadding.p16),
@@ -102,18 +102,18 @@ class AttendanceHistoryCardWidget extends StatelessWidget {
               ),
             ],
           ),
-          if (item.late_minutes > 0 || item.early_departure_minutes > 0)
+          if ((item.late_minutes??0) > 0 || (item.early_departure_minutes??0) > 0)
             Wrap(
               spacing: AppSizes.s8,
               runSpacing: AppSizes.s6,
               children: [
-                if (item.late_minutes > 0)
+                if ((item.late_minutes??0 )> 0)
                   _buildMetricChip(
                     '${'late'.tr()}: ${item.late_minutes}m',
                     AppColors.tagReviewBg,
                     AppColors.tagReviewText,
                   ),
-                if (item.early_departure_minutes > 0)
+                if ((item.early_departure_minutes??0) > 0)
                   _buildMetricChip(
                     '${'early_departure'.tr()}: ${item.early_departure_minutes}m',
                     AppColors.tagReviewBg,

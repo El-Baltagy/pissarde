@@ -1,30 +1,98 @@
 {
   "data": [
     {
-      "id": 3,
-      "name": "Kerem Yilmaz (Istanbul Supervisor)",
-      "email": "supervisor.istanbul@pissarde.com",
-      "employee_code": "EMP-SUP-001",
-      "phone": "+90 555 200 0001",
-      "role": {
-        "value": "supervisor"
-      },
-      "employee_type": {
-        "value": "sales"
-      },
-      "work_type": {
-        "value": "in_office"
+      "id": 9,
+      "user": {
+        "id": 1,
+        "name": "Alexander Vance (App Manager)",
+        "employee_code": "EMP-ADM-000"
       },
       "branch": {
         "id": 1,
         "name": "Istanbul Headquarters",
-        "code": "IST-HQ",
-        "latitude": 41.0784000000000020236257114447653293609619140625,
-        "longitude": 29.01180000000000092086338554508984088897705078125,
-        "geofence_radius_meters": 150
-      } ,
-      "is_active": true,
-      "created_at": "2026-10-25T09:49:38+00:00"
+        "code": "IST-HQ"
+      },
+      "shift": {
+        "id": 1,
+        "name": "Evening Sales Shift",
+        "start_time": "14:00:00",
+        "end_time": "23:00:00",
+        "is_overnight": false
+      },
+      "date": "2026-11-16",
+      "check_in_at": "2026-11-16T15:56:27+00:00",
+      "check_out_at": "2026-11-17T13:13:48+00:00",
+      "check_in_method": {
+        "value": "qr_in_office",
+        "label": "In-Office (QR & Geofence)"
+      },
+      "check_out_method": {
+        "value": "qr_in_office",
+        "label": "In-Office (QR & Geofence)"
+      },
+      "recorded_by": null,
+      "duty_reason": null,
+      "status": {
+        "value": "late",
+        "label": "Late Arrival"
+      },
+      "late_minutes": 116,
+      "early_departure_minutes": 0,
+      "total_work_minutes": 1277,
+      "overtime_minutes": 797,
+      "is_open": false,
+      "is_working": false,
+      "worked_minutes": 1277,
+      "worked_time": "21:17"
+    },
+    {
+      "id": 8,
+      "user": {
+        "id": 1,
+        "name": "Alexander Vance (App Manager)",
+        "employee_code": "EMP-ADM-000"
+      },
+      "branch": {
+        "id": 1,
+        "name": "Istanbul Headquarters",
+        "code": "IST-HQ"
+      },
+      "shift": {
+        "id": 1,
+        "name": "Evening Sales Shift",
+        "start_time": "14:00:00",
+        "end_time": "23:00:00",
+        "is_overnight": false
+      },
+      "date": "2026-11-15",
+      "check_in_at": "2026-11-15T01:51:53+00:00",
+      "check_out_at": "2026-11-15T01:52:28+00:00",
+      "check_in_method": {
+        "value": "qr_in_office",
+        "label": "In-Office (QR & Geofence)"
+      },
+      "check_out_method": {
+        "value": "qr_in_office",
+        "label": "In-Office (QR & Geofence)"
+      },
+      "recorded_by": null,
+      "duty_reason": null,
+      "status": {
+        "value": "early_leave",
+        "label": "Early Departure"
+      },
+      "late_minutes": 0,
+      "early_departure_minutes": 907,
+      "total_work_minutes": 0,
+      "overtime_minutes": 0,
+      "is_open": false,
+      "is_working": false,
+      "worked_minutes": 0,
+      "worked_time": "00:00"
     }
-  ]
+  ],
+  "meta": {
+    "current_page": 1,
+    "last_page": 1
+  }
 }

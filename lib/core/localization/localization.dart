@@ -14,10 +14,10 @@ class CodegenLoader extends RootBundleAssetLoader {
   final Map<String, Map<String, dynamic>> _cache = {};
 
   static const String assetTranslationsPath = 'assets/l10n';
-  static Locale get fallBackLocale => const Locale('ar');
-  static List<Locale> supportedLocales = [const Locale('ar'), const Locale('en')];
+  static Locale get fallBackLocale => const Locale('tr');
+  static List<Locale> supportedLocales = [const Locale('ar'), const Locale('en'), const Locale('tr')];
 
-  Locale _currentLocale = const Locale('ar');
+  Locale _currentLocale = const Locale('tr');
   Locale get currentLocale => _currentLocale;
 
   void setLocale(Locale locale) {
@@ -53,7 +53,7 @@ class CodegenLoader extends RootBundleAssetLoader {
     }
     
     // Set default locale via singleton instance
-    _instance.setLocale(const Locale('ar'));
+    _instance.setLocale(const Locale('tr'));
   }
 
   @override

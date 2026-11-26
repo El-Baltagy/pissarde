@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:newf/core/api_helper/interceptor/auth_interceptor.dart';
 import 'package:newf/core/api_helper/interceptor/logger_interceptor.dart';
 import 'package:newf/core/api_helper/interceptor/retry_interceptor.dart';
+import 'package:newf/core/base/base_local_repo.dart';
 import 'package:newf/core/constants/app_api.dart';
 import 'package:newf/core/constants/app_constant.dart';
+import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/storage/hive_storage.dart';
 import 'package:newf/core/storage/storage_helper.dart';
 
@@ -25,6 +27,7 @@ class DioHelper {
       LoggerInterceptor(),
       AuthInterceptor(
         dio: _dio,
+        localRepo: AppLocator()()(),
         getAccessToken: () async => await StorageHelper.getToken,
         refreshToken: () async => null,
       ),

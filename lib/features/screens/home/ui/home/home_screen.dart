@@ -12,8 +12,14 @@ import 'package:newf/features/screens/home/controller/home_cubit.dart';
 import 'package:newf/features/screens/home/ui/home/widgets/attendance_action_section_widget.dart';
 import 'package:newf/features/screens/profile/ui/profile/widgets/container_list.dart';
 
+import '../../../../../core/extension/context.dart';
+import '../../../../../core/shared/widgets/ticker_text.dart';
+import '../../../../../core/theming/app_text_styles.dart';
+
 part 'home_base_state.dart';
 part 'widgets/list_options_attendance.dart';
+part 'widgets/current_shift_card_widget.dart';
+part 'widgets/branch_status_widget.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -51,7 +57,15 @@ class _HomePageState extends HomePageBaseState {
             spacing:16 ,
             children: [
               SizedBox.shrink(),
+              Semantics(
+                label: 'Branch Status Overview',
+                child: const BranchStatusCardWidget(),
+              ),
 
+              Semantics(
+                label: 'Current Shift Details',
+                child: const CurrentShiftCardWidget(),
+              ),
               Semantics(
                 label: 'Check Out Action Section',
                 child: const AttendanceActionSectionWidget(),

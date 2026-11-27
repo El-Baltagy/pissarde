@@ -31,7 +31,7 @@ gps_accuracy,GPS accuracy: 4 meters,دقة 4 :GPS أمتار,GPS doğruluğu: 4 
 gps_allowed_range,Allowed range: 150 meters,النطاق المسموح: 150 متر,İzin verilen menzil: 150 metre
 gps_current_distance,Current distance: 18 meters,المسافة الحالية: 18 متر,Mevcut mesafe: 18 metre
 current_status_attendance_time,Your current status: Attendance recorded at 08:14 AM,حالتك الحالية: تم تسجيل الحضور الساعة 08:14 ص,Şu anki durumunuz: Katılım 08:14'te kaydedildi
-btn_check_out_gps,Check-out (GPS),تسجيل الانصراف (GPS),Çıkış (GPS)
+
 btn_request_correction,Request Fingerprint Correction,طلب تصحيح بصمة,Parmak İzi Düzeltme İste
 btn_request_permission,Request Permission,طلب استئذان,İzin İste
 weekly_summary_title,Weekly Performance Summary,ملخص الأداء الأسبوعي,Haftalık Performans Özeti
@@ -357,9 +357,6 @@ check_in,check in,تسجيل الحضور,katılım kaydı
 check_out,check out,تسجيل الانصراف,Çıkış kaydı
 check_out_successfully,check out successfully,تم التحقق بنجاح,başarıyla kontrol et
 
-current_status_not_checked_in,current status not checked in,الوضع الحالي لم يتم التحقق منه,mevcut durum kontrol edilmedi
-status_not_checked_in,status not checked in,لم يتم التحقق من الحالة,durum kontrol edilmedi
-
 location_unavailable,Location unavailable,الموقع غير متاح,Konum kullanılamıyor
 
 location_permission_required,location permission required,إذن الموقع مطلوب,konum izni gerekli
@@ -368,6 +365,5 @@ enable_location,enable location,تمكين الموقع,konumu etkinleştir
 grant_permission,grant permission,منح الإذن,izin ver
 location_permission_denied_please_grant_location_access_from_app_settings,location permission denied please grant location access from app settings,تم رفض إذن الموقع، يرجى منح الوصول إلى الموقع من إعدادات التطبيق,konum izni reddedildi lütfen uygulama ayarlarından konum erişimine izin verin
 
-btn_check_in_gps,btn check in gps,BTN تحقق في نظام تحديد المواقع,btn gps'i kontrol et
-status_checked_in,status checked in,تم التحقق من الحالة,durum kontrol edildi
-status_checked_out,status checked out,تم التحقق من الحالة,durum kontrol edildi
+you_r_status_is_checked_in,you'r status is checked in,تم تسجيل الدخول بالفعل,durumunuz kontrol edildi
+you_r_status_is_checked_out,you'r status is checked out,تم تسجيل الانصراف بالفعل,durumunuz kontrol edildi

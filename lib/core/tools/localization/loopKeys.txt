@@ -1,0 +1,3 @@
+
+you'r_status_is_checked_in
+you'r_status_is_checked_out

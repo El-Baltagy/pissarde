@@ -18,7 +18,8 @@ import 'package:newf/core/shared/widgets/text_inputs/text_input_widget.dart';
 import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
 import 'package:newf/features/screens/login/data/model/login_res/login_res.dart';
- import '../../data/model/login_req_param.dart';
+ import '../../../../../core/shared/widgets/text_inputs/phone_text_input_data.dart';
+import '../../data/model/login_req_param.dart';
  part 'login_base_state.dart';
 
 @RoutePage()
@@ -65,7 +66,12 @@ class _LoginPageState extends LoginPageBaseState {
                         field: field1,
                       ),
                     ),
-
+                    TextInputWidget(
+                      data: PhoneInputData(
+                        controller: phoneController,
+                        field: field3,
+                      ),
+                    ),
                     TextInputWidget(
                       data: PasswordInputData(
                         controller: passwordController,
@@ -84,7 +90,7 @@ class _LoginPageState extends LoginPageBaseState {
                             if (isLoading) return;
                             if (await formKey.validateAndScroll(
                               context,
-                              listRecorder: [field1, field2],
+                              listRecorder: [field1,field3, field2],
                             )) {
 
                               await argData.login(

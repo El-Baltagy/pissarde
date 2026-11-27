@@ -3,15 +3,19 @@ part of 'login_screen.dart';
 abstract class LoginPageBaseState extends State<LoginPage> {
   late final LoginCubit argData;
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) field1 = (
     GlobalKey<FormFieldState<dynamic>>(),
-    FocusNode()
+      .new()
   );
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) field2 = (
     GlobalKey<FormFieldState<dynamic>>(),
-    FocusNode()
+    .new()
+  );  (GlobalKey<FormFieldState<dynamic>>, FocusNode?) field3 = (
+    GlobalKey<FormFieldState<dynamic>>(),
+      .new()
   );
 
   @override
@@ -28,8 +32,10 @@ abstract class LoginPageBaseState extends State<LoginPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    phoneController.dispose();
     field1.$2?.dispose();
     field2.$2?.dispose();
+    field3.$2?.dispose();
     super.dispose();
   }
 

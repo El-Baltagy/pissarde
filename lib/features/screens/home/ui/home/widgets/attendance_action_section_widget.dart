@@ -252,7 +252,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
           status = (state.attendanceTodayState as Success<CheckInTodayStatusRes>).data;
         }
 
-        final bool isCheckedIn = status?.is_open ?? false;
+        final bool isCheckedIn = status?.has_checked_in ?? false;
         final bool isCheckingIn = state is HomeLoaded && state.checkInState is Loading;
         final bool isCheckingOut = state is HomeLoaded && state.checkOutState is Loading;
         final bool isActionLoading = isCheckingIn || isCheckingOut || _isLocating;
@@ -277,7 +277,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
             crossAxisAlignment: CrossAxisAlignment.stretch,
             spacing: AppSizes.s12,
             children: [
-              _buildStatusHeader(status: status, isCheckedIn: isCheckedIn, isLoading: isStatusLoading),
+              _buildStatusHeader(status: status,   isLoading: isStatusLoading),
               _buildToggleButton(
                 context: context,
                 isCheckedIn: isCheckedIn,
@@ -319,7 +319,6 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
 
   Widget _buildStatusHeader({
     required CheckInTodayStatusRes? status,
-    required bool isCheckedIn,
     required bool isLoading,
   }) {
     if (isLoading && status == null) {
@@ -331,7 +330,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
       );
     }
 
-    final String statusText = _resolveStatusText(status, isCheckedIn);
+
 
     return Column(
       spacing: AppSizes.s4,
@@ -345,29 +344,21 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
               height: AppSizes.s8,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isCheckedIn ? AppColors.onlineGreen : AppColors.notificationRed,
+                color: status?.has_checked_in==true ? AppColors.onlineGreen : AppColors.notificationRed,
               ),
             ),
+
             Text(
-              isCheckedIn
-                  ? 'status_checked_in'.tr()
-                  : (status?.has_checked_in == true
-                      ? 'status_checked_out'.tr()
-                      : 'status_not_checked_in'.tr()),
+              status?.has_checked_in==true
+                  ? 'you_r_status_is_checked_in'.tr()   : 'you_r_status_is_checked_out'.tr() ,
               style: AppTextStyles.font12Medium.copyWith(
-                color: isCheckedIn ? AppColors.statusPresentText : AppColors.lightTextSecondary,
+                color: status?.has_checked_in==true ? AppColors.statusPresentText : AppColors.lightTextSecondary,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
-        // Center(
-        //   child: Text(
-        //     statusText,
-        //     style: AppTextStyles.font12Medium.copyWith(color: AppColors.lightTextSecondary),
-        //     textAlign: TextAlign.center,
-        //   ),
-        // ),
+
         if (status != null && status.shift.name.isNotEmpty)
           Text(
             '${status.shift.name} • ${status.branch.name}',
@@ -378,53 +369,8 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     );
   }
 
-  String _resolveStatusText(CheckInTodayStatusRes? status, bool isCheckedIn) {
-    if (status == null) return 'current_status_attendance_time'.tr();
 
-    // active_attendance is typed as `dynamic` (raw map from JSON), so access
-    // it safely via map key lookup to avoid NoSuchMethodError.
-    final Map<String, dynamic>? attendance =
-        status.active_attendance is Map<String, dynamic>
-            ? status.active_attendance as Map<String, dynamic>
-            : null;
 
-    if (isCheckedIn) {
-      final String time = _formatTime(
-        (attendance?['check_in_at'] as String?) ?? '',
-      );
-      if (time.isNotEmpty) return 'current_status_checked_in_at'.tr(args: [time]);
-      return 'current_status_attendance_time'.tr();
-    }
-
-    if (status.has_checked_in) {
-      final String time = _formatTime(
-        (attendance?['check_out_at'] as String?) ?? '',
-      );
-      if (time.isNotEmpty) return 'current_status_checked_out_at'.tr(args: [time]);
-      return 'status_checked_out'.tr();
-    }
-
-    return 'current_status_not_checked_in'.tr();
-  }
-
-  String _formatTime(String rawTime) {
-    if (rawTime.isEmpty) return '';
-    try {
-      if (rawTime.contains('T') || rawTime.contains('-')) {
-        final dt = DateTime.parse(rawTime);
-        return DateFormat('hh:mm a').format(dt);
-      }
-      final parts = rawTime.split(':');
-      if (parts.length >= 2) {
-        final hour = int.tryParse(parts[0]) ?? 0;
-        final minute = int.tryParse(parts[1]) ?? 0;
-        final now = DateTime.now();
-        final dt = DateTime(now.year, now.month, now.day, hour, minute);
-        return DateFormat('hh:mm a').format(dt);
-      }
-    } catch (_) {}
-    return rawTime;
-  }
 
   Widget _buildToggleButton({
     required BuildContext context,
@@ -432,7 +378,7 @@ class _AttendanceActionSectionWidgetState extends State<AttendanceActionSectionW
     required bool isLoading,
   }) {
     final Color buttonColor = isCheckedIn ? AppColors.primaryActionRed : AppColors.onlineGreen;
-    final String buttonLabel = isCheckedIn ? 'btn_check_out_gps'.tr() : 'btn_check_in_gps'.tr();
+    final String buttonLabel = isCheckedIn ? 'check_out'.tr() : 'check_in'.tr();
     final IconData buttonIcon = isCheckedIn ? Icons.logout_rounded : Icons.login_rounded;
 
     return ElevatedButton(

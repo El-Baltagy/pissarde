@@ -16,8 +16,7 @@ final HomeCubit homeCubit;
       ),
       if(StorageHelper.isFullMode)
       ...[
-
-        (
+         (
         icon: Icons.history_outlined,
         title: 'attendance_history'.tr(),
         onTap: () => context.router.push(

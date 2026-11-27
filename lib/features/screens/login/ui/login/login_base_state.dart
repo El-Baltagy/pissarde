@@ -6,6 +6,7 @@ abstract class LoginPageBaseState extends State<LoginPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final ValueNotifier<int> selectedTabNotifier = ValueNotifier<int>(0);
   (GlobalKey<FormFieldState<dynamic>>, FocusNode?) field1 = (
     GlobalKey<FormFieldState<dynamic>>(),
       .new()
@@ -33,6 +34,7 @@ abstract class LoginPageBaseState extends State<LoginPage> {
     emailController.dispose();
     passwordController.dispose();
     phoneController.dispose();
+    selectedTabNotifier.dispose();
     field1.$2?.dispose();
     field2.$2?.dispose();
     field3.$2?.dispose();

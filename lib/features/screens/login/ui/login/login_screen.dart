@@ -10,10 +10,13 @@ import 'package:newf/core/constants/app_assets.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/extension/form_auto_scroll.dart';
+import 'package:newf/core/shared/widgets/entrance_fader.dart';
 import 'package:newf/core/shared/widgets/loading_widget_app.dart';
 import 'package:newf/core/shared/widgets/text_inputs/email_text_input_data.dart';
 import 'package:newf/core/shared/widgets/text_inputs/password_text_input_data.dart';
 import 'package:newf/core/shared/widgets/text_inputs/text_input_widget.dart';
+ import 'package:newf/core/theming/app_colors.dart';
+ import 'package:newf/core/theming/app_text_styles.dart';
  import 'package:newf/core/theming/app_values.dart';
 import 'package:newf/features/screens/login/controller/login_cubit.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
@@ -47,90 +50,135 @@ class _LoginPageState extends LoginPageBaseState {
         key: formKey,
         child: Scaffold(
           backgroundColor: context.theme.scaffoldBackgroundColor,
-          body: SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
-                child: Column(
-                  spacing: AppSizes.s16,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Logo
-                    Image.asset(AppAssets.imagesLogoPng, height: 120),
-                    const SizedBox(height: AppSizes.s32),
-
-                    TextInputWidget(
-                      data: EmailInputData(
-                        controller: emailController,
-                        field: field1,
+          body: EntranceFader(
+            dx: context.locale.languageCode=='ar'?32:-32,
+            child: SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                  child: Column(
+                    spacing: AppSizes.s16,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Logo
+                      Image.asset(AppAssets.imagesLogoPng, height: 120),
+                      Text(
+                        'pissarde',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.font20Bold.copyWith(
+                          color: context.theme.primaryColor,
+                        ),
                       ),
-                    ),
-                    TextInputWidget(
-                      data: PhoneInputData(
-                        controller: phoneController,
-                        field: field3,
-                      ),
-                    ),
-                    TextInputWidget(
-                      data: PasswordInputData(
-                        controller: passwordController,
-                        field: field2,
-                      ),
-                    ),
+                      const SizedBox(height: AppSizes.s10),
 
-
-                    // Login Button
-                    BlocBuilder<LoginCubit, LoginState>(
-                      builder: (context, state) {
-                        final isLoading =
-                            state is LoginResState && state.baseEmit is Loading;
-                        return ElevatedButton(
-                          onPressed: () async {
-                            if (isLoading) return;
-                            if (await formKey.validateAndScroll(
-                              context,
-                              listRecorder: [field1,field3, field2],
-                            )) {
-
-                              await argData.login(
-                                parameter: LoginReqParam(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                  device_id: await DeviceUniqueId.getDeviceId(),
+                      // Toggle tab: Email or Phone
+                      ValueListenableBuilder<int>(
+                        valueListenable: selectedTabNotifier,
+                        builder: (context, selectedTab, _) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.roleSwitchBg,
+                              borderRadius: BorderRadius.circular(AppSizes.r12),
+                            ),
+                            child: Row(
+                              children: [
+                                _TabButton(
+                                  label: 'email'.tr(),
+                                  isSelected: selectedTab == 0,
+                                  onTap: () => selectedTabNotifier.value = 0,
                                 ),
-                              );
+                                _TabButton(
+                                  label: 'phone'.tr(),
+                                  isSelected: selectedTab == 1,
+                                  onTap: () => selectedTabNotifier.value = 1,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox.shrink(),
 
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: AppPadding.p16,
+                      ValueListenableBuilder<int>(
+                        valueListenable: selectedTabNotifier,
+                        builder: (context, selectedTab, _) {
+                          if (selectedTab == 0) {
+                            return TextInputWidget(
+                              data: EmailInputData(
+                                controller: emailController,
+                                field: field1,
+                              ),
+                            );
+                          }
+                          return TextInputWidget(
+                            data: PhoneInputData(
+                              controller: phoneController,
+                              field: field3,
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppSizes.r12),
-                            ),
-                            backgroundColor: context.theme.primaryColor,
-                          ),
-                          child: isLoading
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: LoadingWidgetApp(),
-                                )
-                              : Text(
-                                  'login'.tr(),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                          );
+                        },
+                      ),
+                      TextInputWidget(
+                        data: PasswordInputData(
+                          controller: passwordController,
+                          field: field2,
+                        ),
+                      ),
+
+
+                      // Login Button
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          final isLoading =
+                              state is LoginResState && state.baseEmit is Loading;
+                          return ElevatedButton(
+                            onPressed: () async {
+                              if (isLoading) return;
+                              if (await formKey.validateAndScroll(
+                                context,
+                                listRecorder: [field1,field3, field2],
+                              )) {
+
+                                await argData.login(
+                                  parameter: LoginReqParam(
+                                    email: (selectedTabNotifier.value == 0 ? emailController.text.trim() : phoneController.text.trim()),
+                                    password: passwordController.text.trim(),
+                                    device_id: await DeviceUniqueId.getDeviceId(),
                                   ),
-                                ),
-                        );
-                      },
-                    ),
-                  ],
+                                );
+
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: AppPadding.p16,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(AppSizes.r12),
+                              ),
+                              backgroundColor: context.theme.primaryColor,
+                            ),
+                            child: isLoading
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: LoadingWidgetApp(),
+                                  )
+                                : Text(
+                                    'login'.tr(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -141,4 +189,33 @@ class _LoginPageState extends LoginPageBaseState {
   }
 
 
+}
+class _TabButton extends StatelessWidget {
+  const _TabButton({required this.label, required this.isSelected, required this.onTap});
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(vertical: AppPadding.p12),
+          decoration: BoxDecoration(
+            color: isSelected ? context.theme.primaryColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppSizes.r12),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            style: AppTextStyles.font14SemiBold.copyWith(
+              color: isSelected ? AppColors.roleSwitchSelectedBg : AppColors.lightTextSecondary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

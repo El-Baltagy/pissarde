@@ -16,6 +16,8 @@ import '../../../login/controller/login_cubit.dart';
 import '../../../login/controller/login_state.dart';
 import 'package:newf/core/extension/context.dart' as c;
 
+import '../../../requests/controller/requests_cubit.dart';
+
 part 'profile_base_state.dart';
 
 part 'widgets/list_options.dart';
@@ -77,7 +79,7 @@ class _ProfilePageState extends ProfilePageBaseState {
                 spacing: AppSizes.s16,
                 children: [
 
-                  ProfileCardWidget(),
+                  ProfileCardWidget(  ),
                   LanguageSelectorWidget(),
                   ListOptionsWidget(
                     profileCubit: profileCubit

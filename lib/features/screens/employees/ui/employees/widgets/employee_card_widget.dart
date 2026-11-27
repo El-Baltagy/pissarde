@@ -130,6 +130,7 @@ class EmployeeCardWidget extends StatelessWidget {
               ],
             ),
             // ── Action buttons ───────────────────────────────────────────
+            if(employee.role.value!='admin')
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               spacing: AppSizes.s8,

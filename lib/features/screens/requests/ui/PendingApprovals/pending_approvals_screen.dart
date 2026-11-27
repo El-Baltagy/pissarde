@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
+import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/context.dart';
 import 'package:newf/core/shared/widgets/app_bar.dart';
 import 'package:newf/core/theming/app_colors.dart';
@@ -26,7 +27,11 @@ class PendingApprovalsPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(value: args.requestsCubit, child: this);
+    if(args.requestsCubit!=null){
+      return BlocProvider.value(value: args.requestsCubit!, child: this);
+    }
+    return BlocProvider<RequestsCubit>(create: (context) => AppLocator()()(),
+    child: this,);
   }
 
   @override

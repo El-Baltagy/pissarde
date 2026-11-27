@@ -8,14 +8,10 @@ import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
- import 'package:newf/features/screens/home/ui/home/home_screen.dart';
 import 'package:newf/features/screens/login/controller/login_state.dart';
 import 'package:newf/features/screens/main_navigation/controller/main_navigation_cubit.dart';
 import 'package:newf/features/screens/main_navigation/ui/main_navigation/widgets/custom_bottom_nav_bar.dart';
-import 'package:newf/features/screens/notifications/ui/notifications/notifications_screen.dart';
 import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
- import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
-import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
 import '../../../login/controller/login_cubit.dart';
 
 part 'main_navigation_base_state.dart';
@@ -55,28 +51,10 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
   @override
   void initState() {
     super.initState();
-    _pages = List<Widget?>.filled(4, null);
+    _pages = List<Widget?>.filled(CustomBottomNavBar.listBottom(loginCubit,notificationsCubit).length, null);
     _pages[0] = _createPage(0);
   }
-
-  Widget _createPage(int index) {
-    switch (index) {
-      case 0:
-        return const HomePage(args: HomeRouteArgs()).wrappedRoute(context);
-      case 1:
-        return NotificationsPage(
-          args: NotificationsRouteArgs(notificationsCubit),
-        ).wrappedRoute(context);
-      case 2:
-        return const RequestsPage(args: RequestsRouteArgs()).wrappedRoute(context);
-      case 3:
-        return ProfilePage(
-          args: ProfileRouteArgs(LoginCubit.get(context: context)),
-        ).wrappedRoute(context);
-      default:
-        return const SizedBox.shrink();
-    }
-  }
+  Widget _createPage(int index)=>CustomBottomNavBar.listBottom(loginCubit,notificationsCubit)[index].widget;
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +131,7 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
                   if (!isNew && index == 1) {
                     notificationsCubit.getNotificationFunc(Reload());
                   }
-                },
+                }, loginCubit: loginCubit, notificationsCubit: notificationsCubit,
               ),
             );
           },

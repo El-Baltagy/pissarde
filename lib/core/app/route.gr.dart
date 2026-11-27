@@ -603,8 +603,8 @@ class PendingApprovalsRoute extends PageRouteInfo<PendingApprovalsRouteArgs> {
   PageInfo<PendingApprovalsRouteArgs>(name);
 }
 class PendingApprovalsRouteArgs {
-  const PendingApprovalsRouteArgs({required this.requestsCubit});
-  final RequestsCubit requestsCubit;
+  const PendingApprovalsRouteArgs(   {this.requestsCubit} );
+  final RequestsCubit? requestsCubit;
 }
 
 /// generated route for

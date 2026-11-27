@@ -3,8 +3,7 @@ part of '../profile_screen.dart';
 
 /// Extracted mini widget: [ProfileCardWidget]
 class ProfileCardWidget extends StatelessWidget {
-  const ProfileCardWidget({super.key});
-
+  const ProfileCardWidget({super.key });
   @override
   Widget build(BuildContext context) {
     if(StorageHelper.userData==null){
@@ -49,6 +48,23 @@ class ProfileCardWidget extends StatelessWidget {
               )
             ],
           ),
+      if(StorageHelper.isAdmin)
+      ...[
+        Spacer(),
+        IconButton(
+          icon: const Icon(
+            Icons.pending_actions_outlined,
+            color: AppColors.roleSwitchSelectedBg,
+          ),
+          tooltip: 'pending_approvals'.tr(),
+          // onPressed:(){}
+          onPressed: () => context.push(
+            PendingApprovalsRoute(
+              args: PendingApprovalsRouteArgs( ),
+            ),
+          ),
+        )
+      ]
         ],
       ),
     );

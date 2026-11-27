@@ -5,8 +5,9 @@ abstract class PendingApprovalsPageBaseState extends State<PendingApprovalsPage>
 
   @override
   void initState() {
+
+    requestsCubit = widget.args.requestsCubit??RequestsCubit.get(context: context);
     super.initState();
-    requestsCubit = widget.args.requestsCubit;
     requestsCubit.resetReviewLeaveRequest();
     requestsCubit.getPendingApprovalLeavesFunc(Init());
   }

@@ -37,9 +37,10 @@ abstract class StorageHelper{
       return null;
     }
   }
-  static bool get isFullMode=>['admin' ].contains(userData?.role.value);
+  static bool get isAdmin =>userData?.role.value=='admin';
   static bool get isDutyEmployee=>userData?.role.value=='duty_employee';
-  // static bool get isFullMode=>['admin','hr'].contains(userData?.role.value);
+  static bool get isAdminOrHrOrSupervisor=>isAdminOrHr||userData?.role.value=='supervisor';
+  static bool get isAdminOrHr=>['admin','hr'].contains(userData?.role.value);
   static  bool  get hasViewedOnboarding =>HiveStorage().readData(AppConstant.onboardingKeyCash,
   boxName:  HiveStorage().secBoxName
   )!=null;

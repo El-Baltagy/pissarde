@@ -1,3 +1,38 @@
 {
+  "message": "Login successful",
+  "token": "103|4RTaOlwJ8pnDGVMaNYdh7zLAIqy0ExgqZcDiKgFV31228ecc",
+  "token_type": "Bearer",
+  "user": {
+    "id": 1,
+    "name": "SALEH (App Manager)",
+    "email": "admin@pissarde.com",
+    "employee_code": "EMP-ADM-000",
+    "phone": "+905550000001",
+    "role": {
+      "value": "admin",
+      "label": "App Manager"
+    },
+    "employee_type": {
+      "value": "administrative",
+      "label": "Administrative"
+    },
+    "work_type": {
+      "value": "in_office",
+      "label": "In-Office (\u062d\u0636\u0648\u0631\u064a)",
+      "requires_qr": true
+    },
+    "branch": {
+      "id": 1,
+      "name": "Istanbul",
+      "code": "IST-001",
+      "latitude": 41.00638099999999752753865323029458522796630859375,
+      "longitude": 28.975871500000000224872565013356506824493408203125,
+      "geofence_radius_meters": 100
+    },
+    "shift": null,
+    "duty_authorized_branch_ids": null,
+    "is_active": true,
+    "created_at": "2026-10-25T09:49:38+00:00"
+  },
   "success": true
 }

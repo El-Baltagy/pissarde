@@ -57,15 +57,18 @@ class _HomePageState extends HomePageBaseState {
             spacing:16 ,
             children: [
               SizedBox.shrink(),
-              Semantics(
-                label: 'Branch Status Overview',
-                child: const BranchStatusCardWidget(),
-              ),
+              if( StorageHelper.isAdminOrHrOrSupervisor)
+                 Semantics(
+                  label: 'Branch Status Overview',
+                  child: const BranchStatusCardWidget(),
+                ),
 
-              Semantics(
+               Semantics(
                 label: 'Current Shift Details',
                 child: const CurrentShiftCardWidget(),
               ),
+
+              if(!StorageHelper.isAdmin)
               Semantics(
                 label: 'Check Out Action Section',
                 child: const AttendanceActionSectionWidget(),

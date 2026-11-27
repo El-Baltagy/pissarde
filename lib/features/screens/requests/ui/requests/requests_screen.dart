@@ -47,7 +47,7 @@ class _RequestsPageState extends RequestsPageBaseState {
         appBar: CustomAppBar(
           title: 'nav_requests'.tr(),
           actions: [
-            if(StorageHelper.isFullMode)
+            if(StorageHelper.isAdminOrHr)
             IconButton(
               icon: const Icon(
                 Icons.pending_actions_outlined,

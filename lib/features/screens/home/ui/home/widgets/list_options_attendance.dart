@@ -14,7 +14,8 @@ final HomeCubit homeCubit;
         AttendanceTodayRoute(args: AttendanceTodayRouteArgs (homeCubit)),
       ),
       ),
-      if(StorageHelper.isFullMode)
+
+      if(StorageHelper.isAdminOrHr)
       ...[
          (
         icon: Icons.history_outlined,
@@ -43,6 +44,7 @@ final HomeCubit homeCubit;
         ),
 
       ],
+if(StorageHelper.isAdminOrHrOrSupervisor)
       (
       icon: Icons.qr_code_scanner_outlined,
       title: 'check_qr_branch_validation'.tr(),

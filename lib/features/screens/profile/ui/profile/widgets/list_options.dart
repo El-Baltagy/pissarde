@@ -9,7 +9,7 @@ class ListOptionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<({IconData icon, String title, VoidCallback onTap})> items = [
-      if(StorageHelper.isFullMode)
+      if(StorageHelper.isAdminOrHr)
 ...[
   (
   icon: Icons.people_alt_outlined,

@@ -14,6 +14,7 @@ class LoginRes with _$LoginRes, EquatableMixin {
     required String token,
     required String token_type,
     required User user,
+    required bool success,
   }) = _LoginRes;
 
   factory LoginRes.fromJson(Map<String, dynamic> json) => _$LoginResFromJson(json);
@@ -24,6 +25,7 @@ class LoginRes with _$LoginRes, EquatableMixin {
     token,
     token_type,
     user,
+    success,
   ];
 
 }
@@ -39,11 +41,10 @@ class User with _$User, EquatableMixin {
     required String employee_code,
     required String phone,
     required Role role,
-    required Employeetype employee_type,
-    required Worktype work_type,
-    required Branch branch,
-    required dynamic supervisor,
-    required Shift shift,
+    required Employeetype  employee_type,
+    required Worktype  work_type,
+    required Branch? branch,
+    required Shift? shift,
     required dynamic duty_authorized_branch_ids,
     required bool is_active,
     required String created_at,
@@ -62,7 +63,6 @@ class User with _$User, EquatableMixin {
     employee_type,
     work_type,
     branch,
-    supervisor,
     shift,
     duty_authorized_branch_ids,
     is_active,
@@ -70,7 +70,36 @@ class User with _$User, EquatableMixin {
   ];
 
 }
+@freezed
+class Shift with _$Shift, EquatableMixin {
+  const Shift._();
+  @JsonSerializable(explicitToJson: true)
+  const factory Shift({
+    required int id,
+    required String name,
+    required String code,
+    required String start_time,
+    required String end_time,
+    required bool is_overnight,
+    required int grace_period_minutes,
+    required List<int> working_days,
+  }) = _Shift;
 
+  factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    code,
+    start_time,
+    end_time,
+    is_overnight,
+    grace_period_minutes,
+    working_days,
+  ];
+
+}
 @freezed
 class Role with _$Role, EquatableMixin {
   const Role._();
@@ -153,37 +182,6 @@ class Branch with _$Branch, EquatableMixin {
     latitude,
     longitude,
     geofence_radius_meters,
-  ];
-
-}
-
-@freezed
-class Shift with _$Shift, EquatableMixin {
-  const Shift._();
-  @JsonSerializable(explicitToJson: true)
-  const factory Shift({
-    required int id,
-    required String name,
-    required String code,
-    required String start_time,
-    required String end_time,
-    required bool is_overnight,
-    required int grace_period_minutes,
-    required List<int> working_days,
-  }) = _Shift;
-
-  factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
-
-  @override
-  List<Object?> get props => [
-    id,
-    name,
-    code,
-    start_time,
-    end_time,
-    is_overnight,
-    grace_period_minutes,
-    working_days,
   ];
 
 }

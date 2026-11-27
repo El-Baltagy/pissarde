@@ -12,6 +12,7 @@ _$LoginResImpl _$$LoginResImplFromJson(Map<String, dynamic> json) =>
       token: json['token'] as String,
       token_type: json['token_type'] as String,
       user: User.fromJson(json['user'] as Map<String, dynamic>),
+      success: json['success'] as bool,
     );
 
 Map<String, dynamic> _$$LoginResImplToJson(_$LoginResImpl instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$LoginResImplToJson(_$LoginResImpl instance) =>
       'token': instance.token,
       'token_type': instance.token_type,
       'user': instance.user.toJson(),
+      'success': instance.success,
     };
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
@@ -32,9 +34,12 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       employee_type:
           Employeetype.fromJson(json['employee_type'] as Map<String, dynamic>),
       work_type: Worktype.fromJson(json['work_type'] as Map<String, dynamic>),
-      branch: Branch.fromJson(json['branch'] as Map<String, dynamic>),
-      supervisor: json['supervisor'],
-      shift: Shift.fromJson(json['shift'] as Map<String, dynamic>),
+      branch: json['branch'] == null
+          ? null
+          : Branch.fromJson(json['branch'] as Map<String, dynamic>),
+      shift: json['shift'] == null
+          ? null
+          : Shift.fromJson(json['shift'] as Map<String, dynamic>),
       duty_authorized_branch_ids: json['duty_authorized_branch_ids'],
       is_active: json['is_active'] as bool,
       created_at: json['created_at'] as String,
@@ -50,12 +55,36 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'role': instance.role.toJson(),
       'employee_type': instance.employee_type.toJson(),
       'work_type': instance.work_type.toJson(),
-      'branch': instance.branch.toJson(),
-      'supervisor': instance.supervisor,
-      'shift': instance.shift.toJson(),
+      'branch': instance.branch?.toJson(),
+      'shift': instance.shift?.toJson(),
       'duty_authorized_branch_ids': instance.duty_authorized_branch_ids,
       'is_active': instance.is_active,
       'created_at': instance.created_at,
+    };
+
+_$ShiftImpl _$$ShiftImplFromJson(Map<String, dynamic> json) => _$ShiftImpl(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      code: json['code'] as String,
+      start_time: json['start_time'] as String,
+      end_time: json['end_time'] as String,
+      is_overnight: json['is_overnight'] as bool,
+      grace_period_minutes: (json['grace_period_minutes'] as num).toInt(),
+      working_days: (json['working_days'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
+    );
+
+Map<String, dynamic> _$$ShiftImplToJson(_$ShiftImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'code': instance.code,
+      'start_time': instance.start_time,
+      'end_time': instance.end_time,
+      'is_overnight': instance.is_overnight,
+      'grace_period_minutes': instance.grace_period_minutes,
+      'working_days': instance.working_days,
     };
 
 _$RoleImpl _$$RoleImplFromJson(Map<String, dynamic> json) => _$RoleImpl(
@@ -112,29 +141,4 @@ Map<String, dynamic> _$$BranchImplToJson(_$BranchImpl instance) =>
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'geofence_radius_meters': instance.geofence_radius_meters,
-    };
-
-_$ShiftImpl _$$ShiftImplFromJson(Map<String, dynamic> json) => _$ShiftImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      code: json['code'] as String,
-      start_time: json['start_time'] as String,
-      end_time: json['end_time'] as String,
-      is_overnight: json['is_overnight'] as bool,
-      grace_period_minutes: (json['grace_period_minutes'] as num).toInt(),
-      working_days: (json['working_days'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-    );
-
-Map<String, dynamic> _$$ShiftImplToJson(_$ShiftImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'code': instance.code,
-      'start_time': instance.start_time,
-      'end_time': instance.end_time,
-      'is_overnight': instance.is_overnight,
-      'grace_period_minutes': instance.grace_period_minutes,
-      'working_days': instance.working_days,
     };

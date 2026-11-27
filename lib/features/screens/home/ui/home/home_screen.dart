@@ -81,10 +81,7 @@ class _HomePageState extends HomePageBaseState {
                 ),
               ),
 
-
-
-              8.verticalSpace,
-            ],
+             ],
           ),
         ),
       ),

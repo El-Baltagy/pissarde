@@ -24,6 +24,7 @@ mixin _$LoginRes {
   String get token => throw _privateConstructorUsedError;
   String get token_type => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
+  bool get success => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,12 @@ abstract class $LoginResCopyWith<$Res> {
   factory $LoginResCopyWith(LoginRes value, $Res Function(LoginRes) then) =
       _$LoginResCopyWithImpl<$Res, LoginRes>;
   @useResult
-  $Res call({String message, String token, String token_type, User user});
+  $Res call(
+      {String message,
+      String token,
+      String token_type,
+      User user,
+      bool success});
 
   $UserCopyWith<$Res> get user;
 }
@@ -58,6 +64,7 @@ class _$LoginResCopyWithImpl<$Res, $Val extends LoginRes>
     Object? token = null,
     Object? token_type = null,
     Object? user = null,
+    Object? success = null,
   }) {
     return _then(_value.copyWith(
       message: null == message
@@ -76,6 +83,10 @@ class _$LoginResCopyWithImpl<$Res, $Val extends LoginRes>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -96,7 +107,12 @@ abstract class _$$LoginResImplCopyWith<$Res>
       __$$LoginResImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String message, String token, String token_type, User user});
+  $Res call(
+      {String message,
+      String token,
+      String token_type,
+      User user,
+      bool success});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -117,6 +133,7 @@ class __$$LoginResImplCopyWithImpl<$Res>
     Object? token = null,
     Object? token_type = null,
     Object? user = null,
+    Object? success = null,
   }) {
     return _then(_$LoginResImpl(
       message: null == message
@@ -135,6 +152,10 @@ class __$$LoginResImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -147,7 +168,8 @@ class _$LoginResImpl extends _LoginRes {
       {required this.message,
       required this.token,
       required this.token_type,
-      required this.user})
+      required this.user,
+      required this.success})
       : super._();
 
   factory _$LoginResImpl.fromJson(Map<String, dynamic> json) =>
@@ -161,6 +183,8 @@ class _$LoginResImpl extends _LoginRes {
   final String token_type;
   @override
   final User user;
+  @override
+  final bool success;
 
   @JsonKey(ignore: true)
   @override
@@ -181,7 +205,8 @@ abstract class _LoginRes extends LoginRes {
       {required final String message,
       required final String token,
       required final String token_type,
-      required final User user}) = _$LoginResImpl;
+      required final User user,
+      required final bool success}) = _$LoginResImpl;
   const _LoginRes._() : super._();
 
   factory _LoginRes.fromJson(Map<String, dynamic> json) =
@@ -195,6 +220,8 @@ abstract class _LoginRes extends LoginRes {
   String get token_type;
   @override
   User get user;
+  @override
+  bool get success;
   @override
   @JsonKey(ignore: true)
   _$$LoginResImplCopyWith<_$LoginResImpl> get copyWith =>
@@ -215,9 +242,8 @@ mixin _$User {
   Role get role => throw _privateConstructorUsedError;
   Employeetype get employee_type => throw _privateConstructorUsedError;
   Worktype get work_type => throw _privateConstructorUsedError;
-  Branch get branch => throw _privateConstructorUsedError;
-  dynamic get supervisor => throw _privateConstructorUsedError;
-  Shift get shift => throw _privateConstructorUsedError;
+  Branch? get branch => throw _privateConstructorUsedError;
+  Shift? get shift => throw _privateConstructorUsedError;
   dynamic get duty_authorized_branch_ids => throw _privateConstructorUsedError;
   bool get is_active => throw _privateConstructorUsedError;
   String get created_at => throw _privateConstructorUsedError;
@@ -241,9 +267,8 @@ abstract class $UserCopyWith<$Res> {
       Role role,
       Employeetype employee_type,
       Worktype work_type,
-      Branch branch,
-      dynamic supervisor,
-      Shift shift,
+      Branch? branch,
+      Shift? shift,
       dynamic duty_authorized_branch_ids,
       bool is_active,
       String created_at});
@@ -251,8 +276,8 @@ abstract class $UserCopyWith<$Res> {
   $RoleCopyWith<$Res> get role;
   $EmployeetypeCopyWith<$Res> get employee_type;
   $WorktypeCopyWith<$Res> get work_type;
-  $BranchCopyWith<$Res> get branch;
-  $ShiftCopyWith<$Res> get shift;
+  $BranchCopyWith<$Res>? get branch;
+  $ShiftCopyWith<$Res>? get shift;
 }
 
 /// @nodoc
@@ -276,9 +301,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? role = null,
     Object? employee_type = null,
     Object? work_type = null,
-    Object? branch = null,
-    Object? supervisor = freezed,
-    Object? shift = null,
+    Object? branch = freezed,
+    Object? shift = freezed,
     Object? duty_authorized_branch_ids = freezed,
     Object? is_active = null,
     Object? created_at = null,
@@ -316,18 +340,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.work_type
           : work_type // ignore: cast_nullable_to_non_nullable
               as Worktype,
-      branch: null == branch
+      branch: freezed == branch
           ? _value.branch
           : branch // ignore: cast_nullable_to_non_nullable
-              as Branch,
-      supervisor: freezed == supervisor
-          ? _value.supervisor
-          : supervisor // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      shift: null == shift
+              as Branch?,
+      shift: freezed == shift
           ? _value.shift
           : shift // ignore: cast_nullable_to_non_nullable
-              as Shift,
+              as Shift?,
       duty_authorized_branch_ids: freezed == duty_authorized_branch_ids
           ? _value.duty_authorized_branch_ids
           : duty_authorized_branch_ids // ignore: cast_nullable_to_non_nullable
@@ -369,16 +389,24 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 
   @override
   @pragma('vm:prefer-inline')
-  $BranchCopyWith<$Res> get branch {
-    return $BranchCopyWith<$Res>(_value.branch, (value) {
+  $BranchCopyWith<$Res>? get branch {
+    if (_value.branch == null) {
+      return null;
+    }
+
+    return $BranchCopyWith<$Res>(_value.branch!, (value) {
       return _then(_value.copyWith(branch: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ShiftCopyWith<$Res> get shift {
-    return $ShiftCopyWith<$Res>(_value.shift, (value) {
+  $ShiftCopyWith<$Res>? get shift {
+    if (_value.shift == null) {
+      return null;
+    }
+
+    return $ShiftCopyWith<$Res>(_value.shift!, (value) {
       return _then(_value.copyWith(shift: value) as $Val);
     });
   }
@@ -400,9 +428,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       Role role,
       Employeetype employee_type,
       Worktype work_type,
-      Branch branch,
-      dynamic supervisor,
-      Shift shift,
+      Branch? branch,
+      Shift? shift,
       dynamic duty_authorized_branch_ids,
       bool is_active,
       String created_at});
@@ -414,9 +441,9 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   $WorktypeCopyWith<$Res> get work_type;
   @override
-  $BranchCopyWith<$Res> get branch;
+  $BranchCopyWith<$Res>? get branch;
   @override
-  $ShiftCopyWith<$Res> get shift;
+  $ShiftCopyWith<$Res>? get shift;
 }
 
 /// @nodoc
@@ -437,9 +464,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? role = null,
     Object? employee_type = null,
     Object? work_type = null,
-    Object? branch = null,
-    Object? supervisor = freezed,
-    Object? shift = null,
+    Object? branch = freezed,
+    Object? shift = freezed,
     Object? duty_authorized_branch_ids = freezed,
     Object? is_active = null,
     Object? created_at = null,
@@ -477,18 +503,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.work_type
           : work_type // ignore: cast_nullable_to_non_nullable
               as Worktype,
-      branch: null == branch
+      branch: freezed == branch
           ? _value.branch
           : branch // ignore: cast_nullable_to_non_nullable
-              as Branch,
-      supervisor: freezed == supervisor
-          ? _value.supervisor
-          : supervisor // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      shift: null == shift
+              as Branch?,
+      shift: freezed == shift
           ? _value.shift
           : shift // ignore: cast_nullable_to_non_nullable
-              as Shift,
+              as Shift?,
       duty_authorized_branch_ids: freezed == duty_authorized_branch_ids
           ? _value.duty_authorized_branch_ids
           : duty_authorized_branch_ids // ignore: cast_nullable_to_non_nullable
@@ -519,7 +541,6 @@ class _$UserImpl extends _User {
       required this.employee_type,
       required this.work_type,
       required this.branch,
-      required this.supervisor,
       required this.shift,
       required this.duty_authorized_branch_ids,
       required this.is_active,
@@ -546,11 +567,9 @@ class _$UserImpl extends _User {
   @override
   final Worktype work_type;
   @override
-  final Branch branch;
+  final Branch? branch;
   @override
-  final dynamic supervisor;
-  @override
-  final Shift shift;
+  final Shift? shift;
   @override
   final dynamic duty_authorized_branch_ids;
   @override
@@ -582,9 +601,8 @@ abstract class _User extends User {
       required final Role role,
       required final Employeetype employee_type,
       required final Worktype work_type,
-      required final Branch branch,
-      required final dynamic supervisor,
-      required final Shift shift,
+      required final Branch? branch,
+      required final Shift? shift,
       required final dynamic duty_authorized_branch_ids,
       required final bool is_active,
       required final String created_at}) = _$UserImpl;
@@ -609,11 +627,9 @@ abstract class _User extends User {
   @override
   Worktype get work_type;
   @override
-  Branch get branch;
+  Branch? get branch;
   @override
-  dynamic get supervisor;
-  @override
-  Shift get shift;
+  Shift? get shift;
   @override
   dynamic get duty_authorized_branch_ids;
   @override
@@ -623,6 +639,267 @@ abstract class _User extends User {
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Shift _$ShiftFromJson(Map<String, dynamic> json) {
+  return _Shift.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Shift {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  String get start_time => throw _privateConstructorUsedError;
+  String get end_time => throw _privateConstructorUsedError;
+  bool get is_overnight => throw _privateConstructorUsedError;
+  int get grace_period_minutes => throw _privateConstructorUsedError;
+  List<int> get working_days => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ShiftCopyWith<Shift> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ShiftCopyWith<$Res> {
+  factory $ShiftCopyWith(Shift value, $Res Function(Shift) then) =
+      _$ShiftCopyWithImpl<$Res, Shift>;
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String code,
+      String start_time,
+      String end_time,
+      bool is_overnight,
+      int grace_period_minutes,
+      List<int> working_days});
+}
+
+/// @nodoc
+class _$ShiftCopyWithImpl<$Res, $Val extends Shift>
+    implements $ShiftCopyWith<$Res> {
+  _$ShiftCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? code = null,
+    Object? start_time = null,
+    Object? end_time = null,
+    Object? is_overnight = null,
+    Object? grace_period_minutes = null,
+    Object? working_days = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      start_time: null == start_time
+          ? _value.start_time
+          : start_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      end_time: null == end_time
+          ? _value.end_time
+          : end_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      is_overnight: null == is_overnight
+          ? _value.is_overnight
+          : is_overnight // ignore: cast_nullable_to_non_nullable
+              as bool,
+      grace_period_minutes: null == grace_period_minutes
+          ? _value.grace_period_minutes
+          : grace_period_minutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      working_days: null == working_days
+          ? _value.working_days
+          : working_days // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ShiftImplCopyWith<$Res> implements $ShiftCopyWith<$Res> {
+  factory _$$ShiftImplCopyWith(
+          _$ShiftImpl value, $Res Function(_$ShiftImpl) then) =
+      __$$ShiftImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String code,
+      String start_time,
+      String end_time,
+      bool is_overnight,
+      int grace_period_minutes,
+      List<int> working_days});
+}
+
+/// @nodoc
+class __$$ShiftImplCopyWithImpl<$Res>
+    extends _$ShiftCopyWithImpl<$Res, _$ShiftImpl>
+    implements _$$ShiftImplCopyWith<$Res> {
+  __$$ShiftImplCopyWithImpl(
+      _$ShiftImpl _value, $Res Function(_$ShiftImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? code = null,
+    Object? start_time = null,
+    Object? end_time = null,
+    Object? is_overnight = null,
+    Object? grace_period_minutes = null,
+    Object? working_days = null,
+  }) {
+    return _then(_$ShiftImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      start_time: null == start_time
+          ? _value.start_time
+          : start_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      end_time: null == end_time
+          ? _value.end_time
+          : end_time // ignore: cast_nullable_to_non_nullable
+              as String,
+      is_overnight: null == is_overnight
+          ? _value.is_overnight
+          : is_overnight // ignore: cast_nullable_to_non_nullable
+              as bool,
+      grace_period_minutes: null == grace_period_minutes
+          ? _value.grace_period_minutes
+          : grace_period_minutes // ignore: cast_nullable_to_non_nullable
+              as int,
+      working_days: null == working_days
+          ? _value._working_days
+          : working_days // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(explicitToJson: true)
+class _$ShiftImpl extends _Shift {
+  const _$ShiftImpl(
+      {required this.id,
+      required this.name,
+      required this.code,
+      required this.start_time,
+      required this.end_time,
+      required this.is_overnight,
+      required this.grace_period_minutes,
+      required final List<int> working_days})
+      : _working_days = working_days,
+        super._();
+
+  factory _$ShiftImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ShiftImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String code;
+  @override
+  final String start_time;
+  @override
+  final String end_time;
+  @override
+  final bool is_overnight;
+  @override
+  final int grace_period_minutes;
+  final List<int> _working_days;
+  @override
+  List<int> get working_days {
+    if (_working_days is EqualUnmodifiableListView) return _working_days;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_working_days);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
+      __$$ShiftImplCopyWithImpl<_$ShiftImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ShiftImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Shift extends Shift {
+  const factory _Shift(
+      {required final int id,
+      required final String name,
+      required final String code,
+      required final String start_time,
+      required final String end_time,
+      required final bool is_overnight,
+      required final int grace_period_minutes,
+      required final List<int> working_days}) = _$ShiftImpl;
+  const _Shift._() : super._();
+
+  factory _Shift.fromJson(Map<String, dynamic> json) = _$ShiftImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+  @override
+  String get code;
+  @override
+  String get start_time;
+  @override
+  String get end_time;
+  @override
+  bool get is_overnight;
+  @override
+  int get grace_period_minutes;
+  @override
+  List<int> get working_days;
+  @override
+  @JsonKey(ignore: true)
+  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1266,266 +1543,5 @@ abstract class _Branch extends Branch {
   @override
   @JsonKey(ignore: true)
   _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Shift _$ShiftFromJson(Map<String, dynamic> json) {
-  return _Shift.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Shift {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get code => throw _privateConstructorUsedError;
-  String get start_time => throw _privateConstructorUsedError;
-  String get end_time => throw _privateConstructorUsedError;
-  bool get is_overnight => throw _privateConstructorUsedError;
-  int get grace_period_minutes => throw _privateConstructorUsedError;
-  List<int> get working_days => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ShiftCopyWith<Shift> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ShiftCopyWith<$Res> {
-  factory $ShiftCopyWith(Shift value, $Res Function(Shift) then) =
-      _$ShiftCopyWithImpl<$Res, Shift>;
-  @useResult
-  $Res call(
-      {int id,
-      String name,
-      String code,
-      String start_time,
-      String end_time,
-      bool is_overnight,
-      int grace_period_minutes,
-      List<int> working_days});
-}
-
-/// @nodoc
-class _$ShiftCopyWithImpl<$Res, $Val extends Shift>
-    implements $ShiftCopyWith<$Res> {
-  _$ShiftCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? code = null,
-    Object? start_time = null,
-    Object? end_time = null,
-    Object? is_overnight = null,
-    Object? grace_period_minutes = null,
-    Object? working_days = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      start_time: null == start_time
-          ? _value.start_time
-          : start_time // ignore: cast_nullable_to_non_nullable
-              as String,
-      end_time: null == end_time
-          ? _value.end_time
-          : end_time // ignore: cast_nullable_to_non_nullable
-              as String,
-      is_overnight: null == is_overnight
-          ? _value.is_overnight
-          : is_overnight // ignore: cast_nullable_to_non_nullable
-              as bool,
-      grace_period_minutes: null == grace_period_minutes
-          ? _value.grace_period_minutes
-          : grace_period_minutes // ignore: cast_nullable_to_non_nullable
-              as int,
-      working_days: null == working_days
-          ? _value.working_days
-          : working_days // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ShiftImplCopyWith<$Res> implements $ShiftCopyWith<$Res> {
-  factory _$$ShiftImplCopyWith(
-          _$ShiftImpl value, $Res Function(_$ShiftImpl) then) =
-      __$$ShiftImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int id,
-      String name,
-      String code,
-      String start_time,
-      String end_time,
-      bool is_overnight,
-      int grace_period_minutes,
-      List<int> working_days});
-}
-
-/// @nodoc
-class __$$ShiftImplCopyWithImpl<$Res>
-    extends _$ShiftCopyWithImpl<$Res, _$ShiftImpl>
-    implements _$$ShiftImplCopyWith<$Res> {
-  __$$ShiftImplCopyWithImpl(
-      _$ShiftImpl _value, $Res Function(_$ShiftImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? code = null,
-    Object? start_time = null,
-    Object? end_time = null,
-    Object? is_overnight = null,
-    Object? grace_period_minutes = null,
-    Object? working_days = null,
-  }) {
-    return _then(_$ShiftImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      start_time: null == start_time
-          ? _value.start_time
-          : start_time // ignore: cast_nullable_to_non_nullable
-              as String,
-      end_time: null == end_time
-          ? _value.end_time
-          : end_time // ignore: cast_nullable_to_non_nullable
-              as String,
-      is_overnight: null == is_overnight
-          ? _value.is_overnight
-          : is_overnight // ignore: cast_nullable_to_non_nullable
-              as bool,
-      grace_period_minutes: null == grace_period_minutes
-          ? _value.grace_period_minutes
-          : grace_period_minutes // ignore: cast_nullable_to_non_nullable
-              as int,
-      working_days: null == working_days
-          ? _value._working_days
-          : working_days // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-    ));
-  }
-}
-
-/// @nodoc
-
-@JsonSerializable(explicitToJson: true)
-class _$ShiftImpl extends _Shift {
-  const _$ShiftImpl(
-      {required this.id,
-      required this.name,
-      required this.code,
-      required this.start_time,
-      required this.end_time,
-      required this.is_overnight,
-      required this.grace_period_minutes,
-      required final List<int> working_days})
-      : _working_days = working_days,
-        super._();
-
-  factory _$ShiftImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ShiftImplFromJson(json);
-
-  @override
-  final int id;
-  @override
-  final String name;
-  @override
-  final String code;
-  @override
-  final String start_time;
-  @override
-  final String end_time;
-  @override
-  final bool is_overnight;
-  @override
-  final int grace_period_minutes;
-  final List<int> _working_days;
-  @override
-  List<int> get working_days {
-    if (_working_days is EqualUnmodifiableListView) return _working_days;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_working_days);
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
-      __$$ShiftImplCopyWithImpl<_$ShiftImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ShiftImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _Shift extends Shift {
-  const factory _Shift(
-      {required final int id,
-      required final String name,
-      required final String code,
-      required final String start_time,
-      required final String end_time,
-      required final bool is_overnight,
-      required final int grace_period_minutes,
-      required final List<int> working_days}) = _$ShiftImpl;
-  const _Shift._() : super._();
-
-  factory _Shift.fromJson(Map<String, dynamic> json) = _$ShiftImpl.fromJson;
-
-  @override
-  int get id;
-  @override
-  String get name;
-  @override
-  String get code;
-  @override
-  String get start_time;
-  @override
-  String get end_time;
-  @override
-  bool get is_overnight;
-  @override
-  int get grace_period_minutes;
-  @override
-  List<int> get working_days;
-  @override
-  @JsonKey(ignore: true)
-  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
-import 'package:newf/core/extension/context.dart';
-import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -19,9 +16,7 @@ import 'package:newf/features/screens/notifications/ui/notifications/notificatio
 import 'package:newf/features/screens/notifications/controller/notifications_cubit.dart';
  import 'package:newf/features/screens/profile/ui/profile/profile_screen.dart';
 import 'package:newf/features/screens/requests/ui/requests/requests_screen.dart';
- import '../../../../../core/notification_helper/fcm_handler.dart';
 import '../../../login/controller/login_cubit.dart';
-import '../../../notifications/data/model/send_fcm_parameter.dart';
 
 part 'main_navigation_base_state.dart';
 

@@ -26,8 +26,7 @@ class BranchStatusCardWidget extends StatelessWidget {
         children: [
           _buildHeaderRow(  context),
           _buildStatusMetricsRow(),
-          _buildPendingApprovalNotice(context),
-        ],
+         ],
       ),
     );
   }
@@ -107,39 +106,6 @@ class BranchStatusCardWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildPendingApprovalNotice(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        /// RTL-first: warning icon + text (right)
-        Row(
-          spacing: AppSizes.s6,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.warning_amber_rounded, color: AppColors.statusLateText, size: AppSizes.s18),
-            SizedBox(
-              width: context.width * 0.5, // Adjust width as needed
-              child: TickerText(
-                child: Text(
-                  'pending_fingerprint_requests'.tr(),
-                  style: AppTextStyles.font12Medium.copyWith(color: AppColors.alertWarningText),
-                ),
-              ),
-            ),
-          ],
-        ),
-        /// review link (left)
-        Text(
-          'review_requests'.tr(),
-          style: AppTextStyles.font12SemiBold.copyWith(
-            color: context.theme.primaryColor,
-            decoration: TextDecoration.underline,
-          ),
-        ),
-      ],
     );
   }
 }

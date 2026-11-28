@@ -68,6 +68,8 @@ abstract class EndPoints {
   static const String checkOut = "/api/attendance/check-out";
   static const String checkIn = "/api/attendance/check-in";
 
+  static const String attendanceSummary = "/attendance/daily-summary";
+
 
   static const String logout = "/api/auth/logout";
   static const String getProfile = "/api/auth/me";

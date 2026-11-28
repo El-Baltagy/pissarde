@@ -27,6 +27,7 @@ part 'home_base_state.dart';
 part 'widgets/list_options_attendance.dart';
 part 'widgets/current_shift_card_widget.dart';
 part 'widgets/branch_status_widget.dart';
+part 'widgets/options_view_toggle_divider_widget.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -73,7 +74,19 @@ class _HomePageState extends HomePageBaseState {
                   child: const BranchStatusCardWidget(),
                 ),
 
-                ///
+              Semantics(
+                label: 'Toggle Options View Mode',
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: isGridOptionsNotifier,
+                  builder: (context, isGrid, _) {
+                    return OptionsViewToggleDividerWidget(
+                      isGrid: isGrid,
+                      onToggle: () =>
+                          isGridOptionsNotifier.value = !isGrid,
+                    );
+                  },
+                ),
+              ),
 
               if(!StorageHelper.isAdmin)
               Semantics(
@@ -83,8 +96,14 @@ class _HomePageState extends HomePageBaseState {
 
               Semantics(
                 label: 'Attendance Options List',
-                child:   ListOptionsAttendance(
-                  homeCubit: homeCubit,
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: isGridOptionsNotifier,
+                  builder: (context, isGrid, _) {
+                    return ListOptionsAttendance(
+                      homeCubit: homeCubit,
+                      isGrid: isGrid,
+                    );
+                  },
                 ),
               ),
 

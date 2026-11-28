@@ -2,6 +2,7 @@ part of 'home_screen.dart';
 
 abstract class HomePageBaseState extends State<HomePage> {
   late final HomeCubit homeCubit;
+  final ValueNotifier<bool> isGridOptionsNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ abstract class HomePageBaseState extends State<HomePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    isGridOptionsNotifier.dispose();
     super.dispose();
   }
 }

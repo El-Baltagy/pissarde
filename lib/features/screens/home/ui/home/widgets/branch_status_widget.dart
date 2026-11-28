@@ -119,6 +119,7 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
     BuildContext context,
     DailyAttendanceSummaryRes? summary,
     bool isLoading,
+
   ) {
     final totalEmployees = summary?.total_employees ?? 0;
 
@@ -169,14 +170,13 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
         ),
 
         /// Branch dropdown selector (left)
-        _buildBranchDropdown(context),
+        _buildBranchDropdown(context,),
       ],
     );
   }
 
   /// Builds the branch filter dropdown menu with "All Branches" (null) option.
-  Widget _buildBranchDropdown(BuildContext context) {
-    final isSupervisor = StorageHelper.isSupervisor;
+  Widget _buildBranchDropdown(BuildContext context,bool disableSelection,ValueNotifier<int?>notifierId) {
     return BlocSelector<BranchesCubit, BranchesState, BaseEmit?>(
       selector: (state) =>
           state is BranchesLoaded ? state.getListBranchesState : null,
@@ -185,77 +185,65 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
             ? branchState.data?.data ?? <DataItem>[]
             : <DataItem>[];
 
-        final selectedBranchName = isSupervisor
-            ? (StorageHelper.userData?.branch?.name ?? 'all_branches'.tr())
-            : (_selectedBranchId == null
-                ? 'all_branches'.tr()
-                : branches
-                        .where((b) => b.id.toString() == _selectedBranchId)
-                        .map((b) => b.name)
-                        .firstOrNull ??
-                    'all_branches'.tr());
 
-        return PopupMenuButton<String>(
-          enabled: !isSupervisor,
-          initialValue: _selectedBranchId ?? _allBranchesKey,
-          onSelected: _onBranchSelected,
-          itemBuilder: (context) => [
-            PopupMenuItem<String>(
-              value: _allBranchesKey,
+        List<(int?,String)>list=[
+          ( null,'all_branches'.tr()),
+          ...branches.map((e) =>( e.id,e.name))];
+
+        return ValueListenableBuilder(valueListenable: notifierId, builder: (context, value, child) {
+
+          return PopupMenuButton<int?>(
+            enabled: disableSelection,
+            initialValue: value,
+            onSelected: (value) =>  notifierId.value=value,
+            itemBuilder:(context) =>  list.map((e) => PopupMenuItem<int?>(
+              value: e.$1 ,
               child: Text(
-                'all_branches'.tr(),
+                e.$2,
                 style: AppTextStyles.font13Medium,
               ),
-            ),
-            ...branches.map(
-              (branch) => PopupMenuItem<String>(
-                value: branch.id.toString(),
-                child: Text(
-                  branch.name,
-                  style: AppTextStyles.font13Medium,
+            ) ).toList(),
+
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppPadding.p10,
+                vertical: AppPadding.p6,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.roleSwitchBg,
+                borderRadius: BorderRadius.circular(AppSizes.r12),
+                border: Border.all(
+                  color: AppColors.cardBorder,
+                  width: AppSizes.s1,
                 ),
               ),
-            ),
-          ],
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppPadding.p10,
-              vertical: AppPadding.p6,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.roleSwitchBg,
-              borderRadius: BorderRadius.circular(AppSizes.r12),
-              border: Border.all(
-                color: AppColors.cardBorder,
-                width: AppSizes.s1,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              spacing: AppSizes.s4,
-              children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: AppSizes.s100),
-                  child: Text(
-                    selectedBranchName,
-                    style: AppTextStyles.font11Regular.copyWith(
-                      color: context.theme.primaryColor,
-                      fontWeight: FontWeight.w600,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: AppSizes.s4,
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: AppSizes.s100),
+                    child: Text(
+                      list[value??0].$2,
+                      style: AppTextStyles.font11Regular.copyWith(
+                        color: context.theme.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                if (!isSupervisor)
-                  Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: context.theme.primaryColor,
-                    size: AppSizes.s18,
-                  ),
-              ],
+                  if (!disableSelection)
+                    Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: context.theme.primaryColor,
+                      size: AppSizes.s18,
+                    ),
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        },);
       },
     );
   }

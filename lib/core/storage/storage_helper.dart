@@ -38,7 +38,7 @@ abstract class StorageHelper{
     }
   }
   static bool get isAdmin =>userData?.role.value=='admin';
-  static bool get isDutyEmployee=>userData?.role.value=='duty_employee';
+   static bool get isDutyEmployee=>userData?.role.value=='duty_employee';
   static bool get isSupervisor => userData?.role.value == 'supervisor';
   static bool get isAdminOrHrOrSupervisor=>isAdminOrHr||isSupervisor;
   static bool get isAdminOrHr=>['admin','hr'].contains(userData?.role.value);

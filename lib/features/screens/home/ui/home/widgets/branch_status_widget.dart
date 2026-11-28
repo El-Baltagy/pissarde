@@ -8,26 +8,33 @@ class BranchStatusCardWidget extends StatefulWidget {
 }
 
 class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
-  static const String _allBranchesKey = '__all_branches__';
-  String? _selectedBranchId;
-
+  static const int _allBranchesValue = -1;
+  late final ValueNotifier<int?> _selectedBranchIdNotifier;
+bool disableSelection=!StorageHelper.isAdmin;
   @override
   void initState() {
     super.initState();
-    if (StorageHelper.isSupervisor) {
-      _selectedBranchId = StorageHelper.userData?.branch?.id.toString();
-    }
+    _selectedBranchIdNotifier = ValueNotifier<int?>(
+      disableSelection ?StorageHelper.userData?.branch?.id:null  ,
+    );
+  }
+
+  @override
+  void dispose() {
+    _selectedBranchIdNotifier.dispose();
+    super.dispose();
   }
 
   /// Triggers the attendance summary API for the chosen branch (or null for all).
-  void _onBranchSelected(String value) {
-    if (StorageHelper.isSupervisor) return;
-    final nextBranchId = value == _allBranchesKey ? null : value;
-    if (nextBranchId == _selectedBranchId) return;
-    setState(() => _selectedBranchId = nextBranchId);
+  void _onBranchSelected(int? nextBranchId) {
+    if (disableSelection) return;
+    if (nextBranchId == _selectedBranchIdNotifier.value) return;
+    _selectedBranchIdNotifier.value = nextBranchId;
     HomeCubit.get(context: context).attendanceSummaryFunc(
       Reload(),
-      parameter: GetDailySummaryAttendanceParam(branch_id: nextBranchId),
+      parameter: GetDailySummaryAttendanceParam(
+        branch_id: nextBranchId?.toString(),
+      ),
     );
   }
 
@@ -99,7 +106,7 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
                 HomeCubit.get(context: context).attendanceSummaryFunc(
                   Reload(),
                   parameter: GetDailySummaryAttendanceParam(
-                    branch_id: _selectedBranchId,
+                    branch_id: _selectedBranchIdNotifier.value?.toString(),
                   ),
                 );
               },
@@ -170,13 +177,21 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
         ),
 
         /// Branch dropdown selector (left)
-        _buildBranchDropdown(context,),
+        _buildBranchDropdown(
+          context,
+          disableSelection,
+          _selectedBranchIdNotifier,
+        ),
       ],
     );
   }
 
   /// Builds the branch filter dropdown menu with "All Branches" (null) option.
-  Widget _buildBranchDropdown(BuildContext context,bool disableSelection,ValueNotifier<int?>notifierId) {
+  Widget _buildBranchDropdown(
+    BuildContext context,
+    bool disableSelection,
+    ValueNotifier<int?> notifierId,
+  ) {
     return BlocSelector<BranchesCubit, BranchesState, BaseEmit?>(
       selector: (state) =>
           state is BranchesLoaded ? state.getListBranchesState : null,
@@ -185,65 +200,82 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
             ? branchState.data?.data ?? <DataItem>[]
             : <DataItem>[];
 
+        final List<(int?, String)> list = [
+          (null, 'all_branches'.tr()),
+          ...branches.map((e) => (e.id, e.name)),
+        ];
 
-        List<(int?,String)>list=[
-          ( null,'all_branches'.tr()),
-          ...branches.map((e) =>( e.id,e.name))];
+        return ValueListenableBuilder<int?>(
+          valueListenable: notifierId,
+          builder: (context, value, child) {
+            final selectedLabel =
+            // disableSelection
+            //     ? (StorageHelper.userData?.branch?.name ?? 'all_branches'.tr())
+            //     :
+            list
+                        .where((e) => e.$1 == value)
+                        .map((e) => e.$2)
+                        .firstOrNull ??
+                    'all_branches'.tr();
 
-        return ValueListenableBuilder(valueListenable: notifierId, builder: (context, value, child) {
-
-          return PopupMenuButton<int?>(
-            enabled: disableSelection,
-            initialValue: value,
-            onSelected: (value) =>  notifierId.value=value,
-            itemBuilder:(context) =>  list.map((e) => PopupMenuItem<int?>(
-              value: e.$1 ,
-              child: Text(
-                e.$2,
-                style: AppTextStyles.font13Medium,
+            return PopupMenuButton<int>(
+              enabled: !disableSelection,
+              initialValue: value ?? _allBranchesValue,
+              onSelected: (selected) => _onBranchSelected(
+                selected == _allBranchesValue ? null : selected,
               ),
-            ) ).toList(),
-
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppPadding.p10,
-                vertical: AppPadding.p6,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.roleSwitchBg,
-                borderRadius: BorderRadius.circular(AppSizes.r12),
-                border: Border.all(
-                  color: AppColors.cardBorder,
-                  width: AppSizes.s1,
+              itemBuilder: (context) => list
+                  .map(
+                    (e) => PopupMenuItem<int>(
+                      value: e.$1 ?? _allBranchesValue,
+                      child: Text(
+                        e.$2,
+                        style: AppTextStyles.font13Medium,
+                      ),
+                    ),
+                  )
+                  .toList(),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p10,
+                  vertical: AppPadding.p6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.roleSwitchBg,
+                  borderRadius: BorderRadius.circular(AppSizes.r12),
+                  border: Border.all(
+                    color: AppColors.cardBorder,
+                    width: AppSizes.s1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: AppSizes.s4,
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: AppSizes.s100),
+                      child: Text(
+                        selectedLabel,
+                        style: AppTextStyles.font11Regular.copyWith(
+                          color: context.theme.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (!disableSelection)
+                      Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: context.theme.primaryColor,
+                        size: AppSizes.s18,
+                      ),
+                  ],
                 ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                spacing: AppSizes.s4,
-                children: [
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: AppSizes.s100),
-                    child: Text(
-                      list[value??0].$2,
-                      style: AppTextStyles.font11Regular.copyWith(
-                        color: context.theme.primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  if (!disableSelection)
-                    Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: context.theme.primaryColor,
-                      size: AppSizes.s18,
-                    ),
-                ],
-              ),
-            ),
-          );
-        },);
+            );
+          },
+        );
       },
     );
   }

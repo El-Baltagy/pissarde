@@ -121,40 +121,43 @@ if(StorageHelper.isAdminOrHrOrSupervisor)
         return InkWell(
           onTap: item.onTap,
           borderRadius: BorderRadius.circular(AppSizes.r14),
-          child: Container(
-            padding: const EdgeInsets.all(AppPadding.p12),
-            decoration: BoxDecoration(
-              color: AppColors.cardBackground,
-              borderRadius: BorderRadius.circular(AppSizes.r14),
-              border: Border.all(
-                color: AppColors.cardBorder,
-                width: AppSizes.s1,
+          child: EntranceFader(
+            delay: Duration(milliseconds: 200*index),
+            child: Container(
+              padding: const EdgeInsets.all(AppPadding.p12),
+              decoration: BoxDecoration(
+                color: AppColors.cardBackground,
+                borderRadius: BorderRadius.circular(AppSizes.r14),
+                border: Border.all(
+                  color: AppColors.cardBorder,
+                  width: AppSizes.s1,
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: AppSizes.s10,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppPadding.p10),
-                  decoration: BoxDecoration(
-                    color: AppColors.roleSwitchBg,
-                    borderRadius: BorderRadius.circular(AppSizes.r12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: AppSizes.s10,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(AppPadding.p10),
+                    decoration: BoxDecoration(
+                      color: AppColors.roleSwitchBg,
+                      borderRadius: BorderRadius.circular(AppSizes.r12),
+                    ),
+                    child: Icon(
+                      item.icon,
+                      color: context.theme.primaryColor,
+                      size: AppSizes.s24,
+                    ),
                   ),
-                  child: Icon(
-                    item.icon,
-                    color: context.theme.primaryColor,
-                    size: AppSizes.s24,
+                  Text(
+                    item.title,
+                    style: AppTextStyles.font13Medium,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Text(
-                  item.title,
-                  style: AppTextStyles.font13Medium,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

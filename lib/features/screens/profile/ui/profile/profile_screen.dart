@@ -73,7 +73,7 @@ class _ProfilePageState extends ProfilePageBaseState {
             child: Padding(
               padding: const EdgeInsets.all(
                 AppPadding.p16,
-              ).copyWith(bottom: 120),
+              ).copyWith(bottom: 80),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 spacing: AppSizes.s16,

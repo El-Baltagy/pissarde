@@ -17,8 +17,8 @@ class PasswordInputData extends BaseTextInputData {
            if (val?.isEmpty == true) {
              return "can't_be_empty".tr();
            }
-           if ((val ?? '').toString().length < 6) {
-             return '${'the_password_must_be_at_least_6_characters'.tr()}.';
+           if ((val ?? '').toString().length < 8) {
+             return '${'the_password_must_be_at_least_8_characters'.tr()}.';
            }
            if (additionalValidator != null) {
              return additionalValidator(val);

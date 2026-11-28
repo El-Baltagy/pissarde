@@ -5,6 +5,7 @@ import 'package:newf/core/app/route.dart';
 import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
+import 'package:newf/core/shared/widgets/entrance_fader.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_text_styles.dart';
 import 'package:newf/core/theming/app_values.dart';
@@ -118,20 +119,24 @@ class _MainNavigationPageState extends MainNavigationPageBaseState {
               // floatingActionButton: FloatingActionButton(heroTag: null, onPressed: () {
               //   context.push(OnBoardingRoute(args: .new()));
               // },),
-              bottomNavigationBar: CustomBottomNavBar(
-                currentIndex: selectedIndex,
-                onTap: (index) {
-                  final isNew = _pages[index] == null;
-                  if (isNew) {
-                    _pages[index] = _createPage(index);
-                  }
-                  mainNavigationCubit.changeTab(index);
-                  // Call the required init function on revisit (first creation
-                  // already triggers the page's own initState/init).
-                  if (!isNew && index == 1) {
-                    notificationsCubit.getNotificationFunc(Reload());
-                  }
-                }, loginCubit: loginCubit, notificationsCubit: notificationsCubit,
+              bottomNavigationBar: EntranceFader(
+                dx: 0,
+                dy:  32,
+                child: CustomBottomNavBar(
+                  currentIndex: selectedIndex,
+                  onTap: (index) {
+                    final isNew = _pages[index] == null;
+                    if (isNew) {
+                      _pages[index] = _createPage(index);
+                    }
+                    mainNavigationCubit.changeTab(index);
+                    // Call the required init function on revisit (first creation
+                    // already triggers the page's own initState/init).
+                    if (!isNew && index == 1) {
+                      notificationsCubit.getNotificationFunc(Reload());
+                    }
+                  }, loginCubit: loginCubit, notificationsCubit: notificationsCubit,
+                ),
               ),
             );
           },

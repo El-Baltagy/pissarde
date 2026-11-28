@@ -7,6 +7,7 @@ import 'package:newf/core/base/base_cubit.dart';
 import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/double.dart';
+import 'package:newf/core/shared/widgets/entrance_fader.dart';
 import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_values.dart';

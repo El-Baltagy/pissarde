@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/Material.dart';
+import 'package:newf/core/shared/widgets/entrance_fader.dart';
 
 import '../../../../../../core/extension/context.dart';
 import '../../../../../../core/theming/app_colors.dart';
@@ -23,23 +25,27 @@ class ContainerListWidget extends StatelessWidget {
         children: items.asMap().entries.map((entry) {
           final index = entry.key;
           final item = entry.value;
-          return Column(
-            children: [
-              _buildSettingItem(
-                context,
-                icon: item.icon,
-                title: item.title,
-                onTap: item.onTap,
-              ),
-              if (index < items.length - 1)
-                const Divider(
-                  height: AppSizes.s1,
-                  thickness: AppSizes.s1,
-                  color: AppColors.cardBorder,
-                  indent: AppPadding.p16,
-                  endIndent: AppPadding.p16,
+          return EntranceFader(
+            dx: context.locale.languageCode=='ar'?32:32,
+            delay: Duration(milliseconds: 200*index),
+            child: Column(
+              children: [
+                _buildSettingItem(
+                  context,
+                  icon: item.icon,
+                  title: item.title,
+                  onTap: item.onTap,
                 ),
-            ],
+                if (index < items.length - 1)
+                  const Divider(
+                    height: AppSizes.s1,
+                    thickness: AppSizes.s1,
+                    color: AppColors.cardBorder,
+                    indent: AppPadding.p16,
+                    endIndent: AppPadding.p16,
+                  ),
+              ],
+            ),
           );
         }).toList(),
       ),

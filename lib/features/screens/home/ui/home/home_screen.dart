@@ -73,10 +73,7 @@ class _HomePageState extends HomePageBaseState {
                   child: const BranchStatusCardWidget(),
                 ),
 
-               Semantics(
-                label: 'Current Shift Details',
-                child: const CurrentShiftCardWidget(),
-              ),
+                ///
 
               if(!StorageHelper.isAdmin)
               Semantics(

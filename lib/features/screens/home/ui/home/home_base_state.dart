@@ -10,11 +10,16 @@ abstract class HomePageBaseState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await homeCubit.init();
       if (StorageHelper.isAdminOrHrOrSupervisor && mounted) {
+        final defaultBranchId = StorageHelper.isSupervisor
+            ? StorageHelper.userData?.branch?.id.toString()
+            : null;
         homeCubit.attendanceSummaryFunc(
           Init(),
-          parameter: GetDailySummaryAttendanceParam(branch_id: null),
+          parameter: GetDailySummaryAttendanceParam(branch_id: defaultBranchId),
         );
-        context.read<BranchesCubit>().getListBranchesFunc(Init());
+        if (!StorageHelper.isSupervisor) {
+          context.read<BranchesCubit>().getListBranchesFunc(Init());
+        }
       }
     });
 

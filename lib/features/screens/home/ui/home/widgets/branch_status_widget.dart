@@ -11,8 +11,17 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
   static const String _allBranchesKey = '__all_branches__';
   String? _selectedBranchId;
 
+  @override
+  void initState() {
+    super.initState();
+    if (StorageHelper.isSupervisor) {
+      _selectedBranchId = StorageHelper.userData?.branch?.id.toString();
+    }
+  }
+
   /// Triggers the attendance summary API for the chosen branch (or null for all).
   void _onBranchSelected(String value) {
+    if (StorageHelper.isSupervisor) return;
     final nextBranchId = value == _allBranchesKey ? null : value;
     if (nextBranchId == _selectedBranchId) return;
     setState(() => _selectedBranchId = nextBranchId);
@@ -167,6 +176,7 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
 
   /// Builds the branch filter dropdown menu with "All Branches" (null) option.
   Widget _buildBranchDropdown(BuildContext context) {
+    final isSupervisor = StorageHelper.isSupervisor;
     return BlocSelector<BranchesCubit, BranchesState, BaseEmit?>(
       selector: (state) =>
           state is BranchesLoaded ? state.getListBranchesState : null,
@@ -175,15 +185,18 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
             ? branchState.data?.data ?? <DataItem>[]
             : <DataItem>[];
 
-        final selectedBranchName = _selectedBranchId == null
-            ? 'all_branches'.tr()
-            : branches
-                    .where((b) => b.id.toString() == _selectedBranchId)
-                    .map((b) => b.name)
-                    .firstOrNull ??
-                'all_branches'.tr();
+        final selectedBranchName = isSupervisor
+            ? (StorageHelper.userData?.branch?.name ?? 'all_branches'.tr())
+            : (_selectedBranchId == null
+                ? 'all_branches'.tr()
+                : branches
+                        .where((b) => b.id.toString() == _selectedBranchId)
+                        .map((b) => b.name)
+                        .firstOrNull ??
+                    'all_branches'.tr());
 
         return PopupMenuButton<String>(
+          enabled: !isSupervisor,
           initialValue: _selectedBranchId ?? _allBranchesKey,
           onSelected: _onBranchSelected,
           itemBuilder: (context) => [
@@ -233,11 +246,12 @@ class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: context.theme.primaryColor,
-                  size: AppSizes.s18,
-                ),
+                if (!isSupervisor)
+                  Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: context.theme.primaryColor,
+                    size: AppSizes.s18,
+                  ),
               ],
             ),
           ),

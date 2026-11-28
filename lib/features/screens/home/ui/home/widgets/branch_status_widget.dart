@@ -10,7 +10,7 @@ class BranchStatusCardWidget extends StatefulWidget {
 class _BranchStatusCardWidgetState extends State<BranchStatusCardWidget> {
   static const int _allBranchesValue = -1;
   late final ValueNotifier<int?> _selectedBranchIdNotifier;
-bool disableSelection=!StorageHelper.isAdmin;
+bool disableSelection=StorageHelper.isSupervisor;
   @override
   void initState() {
     super.initState();

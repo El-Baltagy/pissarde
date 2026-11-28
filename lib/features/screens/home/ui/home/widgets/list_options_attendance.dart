@@ -13,7 +13,7 @@ class ListOptionsAttendance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<({IconData icon, String title, VoidCallback onTap})> items = [
-      // if(!StorageHelper.isAdmin)
+      if(!StorageHelper.isAdmin)
       (
       icon: Icons.today_outlined,
       title: 'attendance_today'.tr(),

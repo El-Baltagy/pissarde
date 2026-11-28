@@ -58,8 +58,7 @@ class _HomePageState extends HomePageBaseState {
       child: Scaffold(
         backgroundColor: AppColors.lightSurface,
         appBar: AppBar(
-          // title: const Text('Home'),
-          // centerTitle: true,
+
           leading:SizedBox.shrink(),
           toolbarHeight: 5,
         ),

@@ -3,14 +3,21 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newf/core/app/route.dart';
+import 'package:newf/core/base/base_cubit.dart';
+import 'package:newf/core/base/base_state.dart';
 import 'package:newf/core/constants/app_locator.dart';
 import 'package:newf/core/extension/double.dart';
 import 'package:newf/core/storage/storage_helper.dart';
 import 'package:newf/core/theming/app_colors.dart';
 import 'package:newf/core/theming/app_values.dart';
+import 'package:newf/features/screens/branches/controller/branches_cubit.dart';
+import 'package:newf/features/screens/branches/data/model/branches/get_branches_list/branches_list.dart';
 import 'package:newf/features/screens/home/controller/home_cubit.dart';
+import 'package:newf/features/screens/home/data/model/daily_attendance_summary_res/daily_attendance_summary_res.dart';
+import 'package:newf/features/screens/home/data/model/get_daily_summary_attendance_param.dart';
 import 'package:newf/features/screens/home/ui/home/widgets/attendance_action_section_widget.dart';
 import 'package:newf/features/screens/profile/ui/profile/widgets/container_list.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/extension/context.dart';
 import '../../../../../core/shared/widgets/ticker_text.dart';
@@ -28,8 +35,11 @@ class HomePage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (context) => AppLocator()()(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeCubit>(create: (context) => AppLocator()()()),
+        BlocProvider<BranchesCubit>(create: (context) => AppLocator()()()),
+      ],
       child: this,
     );
   }

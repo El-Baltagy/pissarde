@@ -18,6 +18,8 @@ import '../model/attendance_correction_request_res/attendance_correction_request
 import '../model/attendance_history_req_param.dart';
 import '../model/attendance_corrections_param.dart';
 import '../model/create_attendance_correction_req_param.dart';
+import 'package:newf/features/screens/home/data/model/daily_attendance_summary_res/daily_attendance_summary_res.dart';
+import 'package:newf/features/screens/home/data/model/get_daily_summary_attendance_param.dart';
 
 /// Abstract contract for the home data layer.
 /// High-level modules (services) depend on this, not on concrete implementations.
@@ -69,6 +71,12 @@ abstract class BaseHomeRepo extends BaseRepo {
   /// Abstract contract — implemented by [HomeRemoteRepo].
   Future<Either<Failure, RotateBranchQrCodeRes>> rotateBranchQrApi(
     RotateBranchQrParam? parameter, {
+    CancelToken? cancelToken,
+  });
+
+  /// Abstract contract — implemented by [HomeRemoteRepo].
+  Future<Either<Failure, DailyAttendanceSummaryRes>> attendanceSummaryApi(
+    GetDailySummaryAttendanceParam? parameter, {
     CancelToken? cancelToken,
   });
 }

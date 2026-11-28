@@ -7,6 +7,7 @@ final HomeCubit homeCubit;
   @override
   Widget build(BuildContext context) {
     final List<({IconData icon, String title, VoidCallback onTap})> items = [
+      if(!StorageHelper.isAdmin)
       (
       icon: Icons.today_outlined,
       title: 'attendance_today'.tr(),

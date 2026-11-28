@@ -16,6 +16,8 @@ import '../data/model/attendance_history_req_param.dart';
 import '../data/model/attendance_corrections_param.dart';
 import '../data/model/create_attendance_correction_req_param.dart';
 import '../data/model/verify_branch_qr_param.dart';
+import 'package:newf/features/screens/home/data/model/daily_attendance_summary_res/daily_attendance_summary_res.dart';
+import 'package:newf/features/screens/home/data/model/get_daily_summary_attendance_param.dart';
 
 /// Abstract contract for the home service layer.
 /// The cubit depends on this, not on a concrete implementation.
@@ -56,5 +58,10 @@ abstract class BaseHomeService extends BaseService {
   /// Abstract contract — implemented by [HomeRemoteService].
   Future<void> rotateBranchQrServ(
     RequestCallbackObserver<RotateBranchQrCodeRes, RotateBranchQrParam> requestInfo,
+  );
+
+  /// Abstract contract — implemented by [HomeRemoteService].
+  Future<void> attendanceSummaryServ(
+    RequestCallbackObserver<DailyAttendanceSummaryRes, GetDailySummaryAttendanceParam> requestInfo,
   );
 }

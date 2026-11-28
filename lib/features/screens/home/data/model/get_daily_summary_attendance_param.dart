@@ -1,7 +1,7 @@
-class VerifyBranchQrParam {
+class GetDailySummaryAttendanceParam {
   final String? branch_id;
 
-  VerifyBranchQrParam({
+  GetDailySummaryAttendanceParam({
     required this.branch_id,
   });
 

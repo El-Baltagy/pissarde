@@ -20,6 +20,8 @@ import '../data/model/attendance_history_req_param.dart';
 import '../data/model/attendance_corrections_param.dart';
 import '../data/model/create_attendance_correction_req_param.dart';
 import '../data/model/verify_branch_qr_param.dart';
+import 'package:newf/features/screens/home/data/model/daily_attendance_summary_res/daily_attendance_summary_res.dart';
+import 'package:newf/features/screens/home/data/model/get_daily_summary_attendance_param.dart';
 import '../data/model/history_pagination.dart';
 import '../data/model/corrections_pagination.dart';
 import 'package:newf/core/base/base_cubit.dart';
@@ -151,6 +153,33 @@ class HomeRemoteService implements BaseHomeService {
         requestInfo.parameter,
         cancelToken: token,
       ),
+    );
+  }
+
+  @override
+  Future<void> attendanceSummaryServ(
+    RequestCallbackObserver<DailyAttendanceSummaryRes, GetDailySummaryAttendanceParam> requestInfo,
+  ) {
+    const cacheKey = AppConstant.attendanceSummaryKeyCash;
+    return requestInfo.handleRequest(
+      fetchFromClient: (token) => _remoteRepo.attendanceSummaryApi(
+        requestInfo.parameter,
+        cancelToken: token,
+      ),
+      fetchLocal: () async {
+        final tuple = await _localRepo.readData(cacheKey);
+
+        if (tuple?.$1['pr'] == _localRepo.primarySessionId) {
+          return DailyAttendanceSummaryRes.fromJson(tuple!.$2);
+        }
+        return null;
+      },
+      saveLocal: (old, newData) async {
+        if (newData != null) {
+          await _localRepo.saveData(cacheKey, savedData: newData.toJson());
+        }
+      },
+      clearLocal: () => _localRepo.clearDataToKey(cacheKey),
     );
   }
 }

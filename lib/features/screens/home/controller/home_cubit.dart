@@ -25,6 +25,8 @@ import '../data/model/rotate_branch_qr_param.dart';
 import '../data/model/verify_branch_qr_code_res/verify_branch_qr_code_res.dart';
 import '../data/model/create_attendance_correction_req_param.dart';
 import '../data/model/verify_branch_qr_param.dart';
+import 'package:newf/features/screens/home/data/model/daily_attendance_summary_res/daily_attendance_summary_res.dart';
+import 'package:newf/features/screens/home/data/model/get_daily_summary_attendance_param.dart';
 part 'home_state.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {
@@ -48,6 +50,8 @@ class HomeCubit extends BaseCubit<HomeState> {
     int get checkOutKeyCode => AppConstant.checkOutKeyCode;
 
     int get rotateBranchQrKeyCode => AppConstant.rotateBranchQrKeyCode;
+
+    int get attendanceSummaryKeyCode => AppConstant.attendanceSummaryKeyCode;
 
   @override
   Future<void> init() async {
@@ -147,6 +151,9 @@ class HomeCubit extends BaseCubit<HomeState> {
   @override
   Future<void> close() {
     // add every key in file
+    CancelManager.cancel(attendanceSummaryKeyCode);
+
+    // add every key in file
     CancelManager.cancel(rotateBranchQrKeyCode);
 
     // add every key in file
@@ -211,6 +218,21 @@ class HomeCubit extends BaseCubit<HomeState> {
           onLoadCallback: () => safeEmit(_current.copyWith(rotateBranchQrState: Loading())),
           onRightCallback: (data) => safeEmit(_current.copyWith(rotateBranchQrState: Success(data))),
           onLeftCallback: (failure) => safeEmit(_current.copyWith(rotateBranchQrState: ErrorState(failure))),
+        ),
+      );
+    });
+  }
+
+  Future<void> attendanceSummaryFunc(BaseRequestBackType baseRequestBackType,{GetDailySummaryAttendanceParam? parameter}) async {
+    await CancelManager.runCancelableFun(attendanceSummaryKeyCode, (token) async {
+      await _service.attendanceSummaryServ(
+        RequestCallbackObserver<DailyAttendanceSummaryRes, GetDailySummaryAttendanceParam>(
+          baseRequestBackType: baseRequestBackType ,
+          parameter: parameter,
+          cancelToken: token,
+          onLoadCallback: () => safeEmit(_current.copyWith(attendanceSummaryState: Loading())),
+          onRightCallback: (data) => safeEmit(_current.copyWith(attendanceSummaryState: Success(data))),
+          onLeftCallback: (failure) => safeEmit(_current.copyWith(attendanceSummaryState: ErrorState(failure))),
         ),
       );
     });

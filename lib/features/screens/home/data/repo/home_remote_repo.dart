@@ -23,6 +23,8 @@ import '../model/attendance_history_req_param.dart';
 import '../model/attendance_corrections_param.dart';
 import '../model/create_attendance_correction_req_param.dart';
 import '../model/verify_branch_qr_param.dart';
+import 'package:newf/features/screens/home/data/model/daily_attendance_summary_res/daily_attendance_summary_res.dart';
+import 'package:newf/features/screens/home/data/model/get_daily_summary_attendance_param.dart';
 
 /// Concrete remote implementation of [BaseHomeRepo].
 class HomeRemoteRepo implements BaseHomeRepo {
@@ -152,6 +154,22 @@ class HomeRemoteRepo implements BaseHomeRepo {
         caller: callerTag(),
       ),
       asObject: RotateBranchQrCodeRes.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, DailyAttendanceSummaryRes>> attendanceSummaryApi(
+    GetDailySummaryAttendanceParam? parameter, {
+    CancelToken? cancelToken,
+  }) async {
+    return handleResponse(
+      onCallData: dio.getData(
+        uri: EndPoints.attendanceSummary,
+        query: parameter?.toJsonParameter(),
+        cancelToken: cancelToken,
+        caller: callerTag(),
+      ),
+      asObject: DailyAttendanceSummaryRes.fromJson,
     );
   }
 }

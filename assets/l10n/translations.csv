@@ -5,7 +5,6 @@ user_branch_dept,Main Riyadh Branch • Information Technology Department,فرع
 role_employee_view,Employee View,عرض الموظف,Çalışan Görünümü
 role_branch_manager,Branch Manager,مدير الفرع,Şube Müdürü
 role_hr,Human Resources,الموارد البشرية,İnsan kaynakları
-branch_status_title,Today's Branch Status (Branch Manager),حالة الفرع اليوم (مدير الفرع),Bugünkü Şube Durumu (Şube Müdürü)
 branch_total_employees,Total 48 employees in Riyadh branch,إجمالي 48 موظفاً بفرع الرياض,Riyad şubesinde toplam 48 çalışan
 status_present,Present,حاضر,Sunmak
 status_late,Late,متأخر,Geç
@@ -367,3 +366,11 @@ location_permission_denied_please_grant_location_access_from_app_settings,locati
 
 you_r_status_is_checked_in,you'r status is checked in,تم تسجيل الدخول بالفعل,durumunuz kontrol edildi
 you_r_status_is_checked_out,you'r status is checked out,تم تسجيل الانصراف بالفعل,durumunuz kontrol edildi
+
+all_branches,all branches,جميع الفروع,tüm şubeler
+
+
+branch_status_title,Today's Branch Status,حالة الفرع اليوم ,Bugünkü Şube Durumu
+
+
+total_employees,total employees,إجمالي الموظفين,toplam çalışan

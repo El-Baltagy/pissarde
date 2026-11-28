@@ -123,5 +123,9 @@ abstract class AppConstant {
   static const String rotateBranchQrKeyCash = 'home_rotateBranchQr_cache';
 
   static const int rotateBranchQrKeyCode = 8185;
+
+  static const String attendanceSummaryKeyCash = 'home_attendanceSummary_cache';
+
+  static const int attendanceSummaryKeyCode = 3765;
 }
 

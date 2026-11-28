@@ -8,8 +8,15 @@ abstract class HomePageBaseState extends State<HomePage> {
     homeCubit = HomeCubit.get(context: context);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-    await  homeCubit.init();
-    },);
+      await homeCubit.init();
+      if (StorageHelper.isAdminOrHrOrSupervisor && mounted) {
+        homeCubit.attendanceSummaryFunc(
+          Init(),
+          parameter: GetDailySummaryAttendanceParam(branch_id: null),
+        );
+        context.read<BranchesCubit>().getListBranchesFunc(Init());
+      }
+    });
 
   }
 
